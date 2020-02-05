@@ -16,7 +16,7 @@ net = AdjLeNet(num_classes = 10,
 
 data = MNIST_Data()
 
-model_trainer = Model_Trainer(net = net
+model_trainer = Model_Trainer(net = net,
                               data = data)
 
 # Fit Model
