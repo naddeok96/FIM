@@ -42,3 +42,5 @@ class MNIST_Data:
                                                     shuffle = True,
                                                     num_workers = 8,
                                                     pin_memory=True)
+
+        return(train_loader)
