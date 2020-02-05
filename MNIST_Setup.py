@@ -16,7 +16,7 @@ class MNIST_Data:
         
         # Pull in data
         self.transform = transforms.Compose([transforms.ToTensor(), # Images are of size (1, 28, 28)
-                                        transforms.Normalize((0.1307,), (0.3081,), (0.1307,), (0.3081,))]) # this will allow us to convert the images into tensors and normalize
+                                        transforms.Normalize((0.1307,), (0.3081,))]) # this will allow us to convert the images into tensors and normalize
 
         self.train_set = torchvision.datasets.MNIST(root='../data',
                                                 train=True,
