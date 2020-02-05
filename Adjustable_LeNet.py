@@ -25,13 +25,13 @@ class AdjLeNet(nn.Module):
         self.num_kernels_layer3 = num_kernels_layer3
         self.num_nodes_fc_layer = num_nodes_fc_layer
 
-        # Input (3,32,32)
+        # Input (1,28,28)
         # Layer 1
-        self.conv1 = nn.Conv2d(3, # Input channels
+        self.conv1 = nn.Conv2d(1, # Input channels
                                self.num_kernels_layer1, # Output Channel 
-                               kernel_size = 5, 
+                               kernel_size = 4, 
                                stride = 1, 
-                               padding = 0) # Output = (3,28,28)
+                               padding = 2) # Output = (1,28,28)
 
         # Layer 2
         self.pool1 = nn.MaxPool2d(kernel_size = 2, 
