@@ -15,7 +15,7 @@ class Model_Trainer:
                  net, 
                  data):
 
-        self.net = net
+        self.net = net.cuda()
         self.data = data
 
     def train(self, batch_size, 
