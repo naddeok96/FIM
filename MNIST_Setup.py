@@ -35,7 +35,7 @@ class MNIST_Data:
                                                        num_workers=8,
                                                        pin_memory=True)
 
-    def get_train_loader(self, batch_size)
+    def get_train_loader(self, batch_size):
 
         train_loader = torch.utils.data.DataLoader(self.train_set,
                                                     batch_size = batch_size,
