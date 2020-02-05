@@ -8,7 +8,7 @@ from MNIST_Setup import MNIST_Data
 from Model_Trainer import Model_Trainer
 
 # Initialize
-net_skeleton = AdjLeNet(num_classes = 10,
+net = AdjLeNet(num_classes = 10,
                         num_kernels_layer1 = 6, 
                         num_kernels_layer2 = 16, 
                         num_kernels_layer3 = 120,
@@ -16,12 +16,12 @@ net_skeleton = AdjLeNet(num_classes = 10,
 
 data = MNIST_Data()
 
-net = Model_Trainer(net = net_skeleton
-                    data = data)
+model_trainer = Model_Trainer(net = net
+                              data = data)
 
 # Fit Model
-results = net.train(batch_size = 124, 
-                    n_epochs = 1)
+results = model_trainer.train(batch_size = 124, 
+                              n_epochs = 1)
 
-pritn(results)
+print(results)
 
