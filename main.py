@@ -6,6 +6,8 @@ This code will be used as the main code to run all classes
 from Adjustable_LeNet import AdjLeNet
 from MNIST_Setup import MNIST_Data
 from Model_Trainer import Model_Trainer
+import osos.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 
 # Initialize
 net = AdjLeNet(num_classes = 10,
@@ -20,8 +22,9 @@ model_trainer = Model_Trainer(net = net,
                               data = data)
 
 # Fit Model
-results = model_trainer.train(batch_size = 124, 
+results1 = model_trainer.train(batch_size = 124, 
                               n_epochs = 1)
-
-print(results)
+results2 = model_trainer.train(batch_size = 124, 
+                              n_epochs = 1)
+print(results1, results2)
 
