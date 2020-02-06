@@ -6,7 +6,8 @@ This code will be used as the main code to run all classes
 from Adjustable_LeNet import AdjLeNet
 from MNIST_Setup import MNIST_Data
 from Model_Trainer import Model_Trainer
-import osos.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 
 # Initialize
