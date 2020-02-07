@@ -72,6 +72,10 @@ class Gym:
         return (correct/total_tested)
 
     def get_single_prediction(self, image):
+        
+        # Push Image to GPU 
+        image = image.cuda()
+
         output = self.net(image)
         _, predicted = torch.max(output.data, 1)
         

@@ -28,7 +28,7 @@ data = MNIST_Data()
 detministic_model = Gym(net = net, data = data)
 
 # Fit Model
-accuracy = detministic_model.train(n_epochs = 10)
+accuracy = detministic_model.train(n_epochs = 0)
 print("Deterministic Model Accuracy: ", accuracy)
 
 # Generate an Attack using OSSA

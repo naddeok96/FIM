@@ -15,7 +15,7 @@ class OSSA:
                        label, 
                        CONVERGE_LIMIT = 0.01):
 
-        self.net =net 
+        self.net =net.cuda()
         self.image = image
         self.label = label
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
@@ -35,12 +35,20 @@ class OSSA:
                           image):
 
         image = Variable(image, requires_grad = True)
+
+        # Push Image to GPU
+        image = image.cuda()
+
         output = net(image)
         soft_max_output = self.soft_max(output)
 
         losses = image_gradients = {}
         for i in range(10):
             label = torch.tensor([i])
+
+            # Push label to GPU
+            label = label.cuda()
+            
             loss = self.criterion(output, label)
             loss.backward(retain_graph = True)
             losses[i] = loss.item()
