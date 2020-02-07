@@ -3,15 +3,20 @@ This code will be used as the main code to run all classes
 '''
 
 # Imports
+import torch
 from Adjustable_LeNet import AdjLeNet
 from MNIST_Setup import MNIST_Data
 from Gym import Gym
 from One_Step_Spectral_Attack import OSSA
-from PIL import Image
 import torchvision.transforms.functional as F
+import matplotlib.pyplot as plt
+import operator
+
+'''
 import os
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+'''
 
 # Initialize
 net = AdjLeNet(num_classes = 10,
@@ -22,12 +27,14 @@ net = AdjLeNet(num_classes = 10,
 
 data = MNIST_Data()
 
-detministic_model = Gym(net = net,
-                        data = data)
+detministic_model = Gym(net = net, data = data)
+
+criterion = torch.nn.CrossEntropyLoss()
 
 # Fit Model
-print(data.get_single_image())
+accuracy = detministic_model.train(n_epochs = 0)
 
+image, label, show_image = data.get_single_image()
 
-
+attack = OSSA(net, image, label)
 

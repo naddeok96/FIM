@@ -15,11 +15,11 @@ class Gym:
                  net, 
                  data):
 
-        self.net = net.cuda()
+        self.net = net#.cuda()
         self.data = data
 
-    def train(self, batch_size, 
-                    n_epochs, 
+    def train(self, batch_size = 124, 
+                    n_epochs = 1, 
                     learning_rate = 0.001, 
                     momentum = 0.9, 
                     weight_decay = 0.0001):
@@ -43,7 +43,7 @@ class Gym:
                 inputs, labels = data
 
                 # Push input to gpus
-                inputs, labels = inputs.cuda(), labels.cuda()
+                #inputs, labels = inputs.cuda(), labels.cuda()
 
                 #Set the parameter gradients to zero
                 optimizer.zero_grad()
@@ -61,7 +61,7 @@ class Gym:
         for inputs, labels in self.data.test_loader:
             
             # Push input to gpu
-            inputs, labels = inputs.cuda(), labels.cuda()
+            #inputs, labels = inputs.cuda(), labels.cuda()
 
             #Forward pass
             outputs = self.net(inputs)
