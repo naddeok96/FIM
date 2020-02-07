@@ -71,3 +71,9 @@ class Gym:
             correct += (predicted == labels).sum().item()
         return (correct/total_tested)
 
+    def get_single_prediction(self, image):
+        output = self.net(image)
+        _, predicted = torch.max(output.data, 1)
+        
+        return predicted
+

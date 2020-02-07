@@ -66,6 +66,8 @@ class OSSA:
 
             dist = updated_dist
             self.attack_perturbation = updated_attack
+
+        
             
     def get_expectation(self):
 

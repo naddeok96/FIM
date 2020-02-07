@@ -54,6 +54,7 @@ class MNIST_Data:
 
 
         image = show_image = self.train_set.data[index]
+        show_image = show_image.float()
         target = self.train_set.targets[index]
         image = image[None, None]
         image = image.type('torch.FloatTensor')
