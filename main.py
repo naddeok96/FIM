@@ -12,11 +12,11 @@ import torchvision.transforms.functional as F
 import matplotlib.pyplot as plt
 import operator
 
-'''
+
 import os
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "5"
-'''
+
 
 # Initialize
 net = AdjLeNet(num_classes = 10,
