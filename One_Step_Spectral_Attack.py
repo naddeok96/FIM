@@ -37,7 +37,7 @@ class OSSA:
         image = Variable(image, requires_grad = True)
 
         # Push Image to GPU
-        image = image.cuda()
+        #image = image.cuda()
 
         output = net(image)
         soft_max_output = self.soft_max(output)
@@ -48,7 +48,7 @@ class OSSA:
 
             # Push label to GPU
             label = label.cuda()
-            
+
             loss = self.criterion(output, label)
             loss.backward(retain_graph = True)
             losses[i] = loss.item()
