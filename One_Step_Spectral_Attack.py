@@ -82,7 +82,7 @@ class OSSA:
         expectation = 0  
         for i in range(10):
             p = self.soft_max_output.squeeze(0)[i].item()
-            g = self.image_gradients[i]
+            g = self.image_gradients[i].cpu()
             expectation += p * (torch.t(g)*self.attack_perturbation) * g
 
 
