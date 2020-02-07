@@ -37,7 +37,7 @@ class OSSA:
         image = Variable(image, requires_grad = True)
 
         # Push Image to GPU
-        #image = image.cuda()
+        image = Variable(image.cuda(), requires_grad = True)
 
         output = net(image)
         soft_max_output = self.soft_max(output)
