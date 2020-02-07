@@ -12,7 +12,7 @@ class OSSA:
 
     def __init__(self, net, 
                        image, 
-                       label)
+                       label):
 
         self.net =net 
         self.image = image
