@@ -44,3 +44,8 @@ class MNIST_Data:
                                                     pin_memory=True)
 
         return(train_loader)
+
+    def get_single_image(self, index = 0):
+
+        return self.test_loader.dataset.data[index]
+
