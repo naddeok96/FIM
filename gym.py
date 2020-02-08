@@ -13,10 +13,12 @@ class Gym:
 
     def __init__(self,
                  net, 
-                 data):
+                 data,
+                 gpu = False):
 
-        self.net = net.cuda()
-        self.data = data
+        self.gpu = gpu
+        self.net = net if self.gpu == False else net.cuda()
+        self.data = data if self.gpu == False else data.cuda()
 
     def train(self, batch_size = 124, 
                     n_epochs = 1, 
@@ -42,9 +44,6 @@ class Gym:
                 #Reset the train loader and apply a counter
                 inputs, labels = data
 
-                # Push input to gpus
-                inputs, labels = inputs.cuda(), labels.cuda()
-
                 #Set the parameter gradients to zero
                 optimizer.zero_grad()
                 
@@ -59,9 +58,6 @@ class Gym:
         total_tested = 0
         correct = 0
         for inputs, labels in self.data.test_loader:
-            
-            # Push input to gpu
-            inputs, labels = inputs.cuda(), labels.cuda()
 
             #Forward pass
             outputs = self.net(inputs)
@@ -74,7 +70,7 @@ class Gym:
     def get_single_prediction(self, image):
         
         # Push Image to GPU 
-        image = image.cuda()
+        image = image if self.gpu == False else image.cuda()
 
         output = self.net(image)
         _, predicted = torch.max(output.data, 1)

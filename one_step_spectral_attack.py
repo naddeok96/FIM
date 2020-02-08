@@ -12,18 +12,19 @@ class OSSA:
     def __init__(self, net, 
                        image, 
                        label, 
-                       CONVERGE_LIMIT = 0.01):
+                       CONVERGE_LIMIT = 0.01,
+                       gpu = False):
 
-        self.net =net.cuda()
-        self.image = image
-        self.label = label
+        self.net = net if gpu == False else net.cuda()
+        self.image = image if gpu == False else image.cuda()
+        self.label = label if gpu == False else label.cuda()
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
 
         self.criterion = torch.nn.CrossEntropyLoss()
         self.soft_max = torch.nn.Softmax(dim = 1)
 
         self.soft_max_output, self.image_gradients, self.losses = self.get_outputs(self.net, 
-                                                                           self.image)
+                                                                                   self.image)
 
          # Initialize Attack
         self.attack_perturbation = torch.rand(self.image.size()).squeeze(0).squeeze(0)
@@ -35,18 +36,12 @@ class OSSA:
 
         image = Variable(image, requires_grad = True)
 
-        # Push Image to GPU
-        image = Variable(image.cuda(), requires_grad = True)
-
         output = net(image)
         soft_max_output = self.soft_max(output)
 
         losses = image_gradients = {}
         for i in range(10):
             label = torch.tensor([i])
-
-            # Push label to GPU
-            label = label.cuda()
 
             loss = self.criterion(output, label)
             loss.backward(retain_graph = True)
@@ -74,7 +69,7 @@ class OSSA:
             dist = updated_dist
             self.attack_perturbation = updated_attack
 
-        
+        self.attack_perturbation = -self.attack_perturbation
             
     def get_expectation(self):
 
