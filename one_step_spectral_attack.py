@@ -15,7 +15,7 @@ class OSSA:
                        CONVERGE_LIMIT = 0.01,
                        gpu = False):
 
-        self.net = net if gpu == False else net.cuda()
+        self.net   = net   if gpu == False else net.cuda()
         self.image = image if gpu == False else image.cuda()
         self.label = label if gpu == False else label.cuda()
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
