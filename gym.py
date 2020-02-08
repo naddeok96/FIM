@@ -18,7 +18,7 @@ class Gym:
 
         self.gpu = gpu
         self.net = net if self.gpu == False else net.cuda()
-        self.data = data if self.gpu == False else data.cuda()
+        self.data = data
 
     def train(self, batch_size = 124, 
                     n_epochs = 1, 
@@ -44,6 +44,10 @@ class Gym:
                 #Reset the train loader and apply a counter
                 inputs, labels = data
 
+                # Push to gpu
+                if self.gpu == True:
+                    inputs, labels = inputs.cuda(), labels.cuda()
+
                 #Set the parameter gradients to zero
                 optimizer.zero_grad()
                 
@@ -58,6 +62,10 @@ class Gym:
         total_tested = 0
         correct = 0
         for inputs, labels in self.data.test_loader:
+
+            # Push to gpu
+            if self.gpu == True:
+                inputs, labels = inputs.cuda(), labels.cuda()
 
             #Forward pass
             outputs = self.net(inputs)
