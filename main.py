@@ -15,7 +15,7 @@ import operator
 # Hyperparameters
 gpu = True
 plot = False
-n_epochs = 20
+n_epochs = 10
 
 if gpu == True:
     import os
@@ -37,7 +37,7 @@ accuracy = detministic_model.train(n_epochs = n_epochs)
 # Generate an Attack using OSSA
 image, label, show_image = data.get_single_image()
 
-attack = OSSA(net, image, label, gpu)
+attack = OSSA(net, image, label, gpu = gpu)
 
 # Test Attack
 prediction = detministic_model.get_single_prediction(image)

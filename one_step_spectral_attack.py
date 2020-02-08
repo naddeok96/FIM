@@ -16,7 +16,7 @@ class OSSA:
                        gpu = False):
 
         self.net   = net   if gpu == False else net.cuda()
-        self.image = image if gpu == False else image.cuda()
+        self.image = Variable(image, requires_grad = True) if gpu == False else Variable(image.cuda(), requires_grad = True)
         self.label = label if gpu == False else label.cuda()
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
 
@@ -33,8 +33,6 @@ class OSSA:
         
     def get_outputs(self, net,
                           image):
-
-        image = Variable(image, requires_grad = True)
 
         output = net(image)
         soft_max_output = self.soft_max(output)
