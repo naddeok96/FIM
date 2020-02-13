@@ -17,7 +17,11 @@ class Gym:
                  gpu = False):
 
         self.gpu = gpu
-        self.net = net if self.gpu == False else net.cuda()
+        if self.gpu == False:
+            self.net = net 
+        else:
+            self.net = net.cuda()
+            
         self.data = data
 
     def train(self, batch_size = 124, 
