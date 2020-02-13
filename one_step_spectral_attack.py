@@ -52,7 +52,7 @@ class OSSA:
             loss.backward(retain_graph = True)
             losses[i] = loss.item()
 
-            image_gradients[i] = image.grad.data.squeeze(0).squeeze(0)
+            image_gradients[i] = self.image.grad.data.squeeze(0).squeeze(0)
             
         return soft_max_output, image_gradients, losses
 
