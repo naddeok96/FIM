@@ -21,8 +21,8 @@ class OSSA:
             self.label = label
         else:
             self.net   = net.cuda()
-             self.image = Variable(image.cuda(), requires_grad = True)
-             self.label = label.cuda()
+            self.image = Variable(image.cuda(), requires_grad = True)
+            self.label = label.cuda()
 
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
 
