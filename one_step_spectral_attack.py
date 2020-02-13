@@ -15,9 +15,15 @@ class OSSA:
                        CONVERGE_LIMIT = 0.01,
                        gpu = False):
 
-        self.net   = net   if gpu == False else net.cuda()
-        self.image = Variable(image, requires_grad = True) if gpu == False else Variable(image.cuda(), requires_grad = True)
-        self.label = label if gpu == False else label.cuda()
+        if gpu == False:
+            self.net   = net
+            self.image = Variable(image, requires_grad = True)
+            self.label = label
+        else:
+             self.net = net.cuda()
+             self.image = Variable(image, requires_grad = True).cuda()
+             self.label = label.cuda()
+
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
 
         self.criterion = torch.nn.CrossEntropyLoss()

@@ -15,7 +15,7 @@ import operator
 # Hyperparameters
 gpu = True
 plot = False
-n_epochs = 10
+n_epochs = 0
 
 if gpu == True:
     import os
