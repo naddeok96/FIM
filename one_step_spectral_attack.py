@@ -21,7 +21,8 @@ class OSSA:
             self.label = label
         else:
              self.net   = net.cuda()
-             self.image = Variable(image.cuda(), requires_grad = True)
+             self.image = Variable(image, requires_grad = True)
+             self.image = self.image.cuda()
              self.label = label.cuda()
 
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
@@ -40,8 +41,6 @@ class OSSA:
     def get_outputs(self, net,
                           image):
 
-        print(type(net))
-        print(type(image))
         output = net(image)
         soft_max_output = self.soft_max(output)
 
