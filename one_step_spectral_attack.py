@@ -20,7 +20,7 @@ class OSSA:
             self.image = Variable(image, requires_grad = True)
             self.label = label
         else:
-             self.net = net.cuda()
+             self.net   = net.cuda()
              self.image = Variable(image, requires_grad = True).cuda()
              self.label = label.cuda()
 
@@ -45,7 +45,10 @@ class OSSA:
 
         losses = image_gradients = {}
         for i in range(10):
-            label = torch.tensor([i])
+            if self.gpu == False:
+                label = torch.tensor([i])
+            else:
+                label = torch.tensor([i]).cuda()
 
             loss = self.criterion(output, label)
             loss.backward(retain_graph = True)
