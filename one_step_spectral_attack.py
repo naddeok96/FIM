@@ -40,6 +40,8 @@ class OSSA:
     def get_outputs(self, net,
                           image):
 
+        print(type(net))
+        print(type(image))
         output = net(image)
         soft_max_output = self.soft_max(output)
 
