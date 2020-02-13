@@ -37,7 +37,10 @@ accuracy = detministic_model.train(n_epochs = n_epochs)
 # Generate an Attack using OSSA
 image, label, show_image = data.get_single_image() 
 
-attack = OSSA(detministic_model.net, image, label, gpu)
+attack = OSSA(net = detministic_model.net, 
+              image = image, 
+              label = label,
+              gpu = gpu)
 
 # Test Attack
 prediction = detministic_model.get_single_prediction(image)
