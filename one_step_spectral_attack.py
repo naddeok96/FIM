@@ -8,14 +8,14 @@ from torch.autograd import Variable
 import numpy as np
 
 class OSSA:
-
     def __init__(self, net, 
                        image, 
                        label, 
                        CONVERGE_LIMIT = 0.01,
                        gpu = False):
 
-        if gpu == False:
+        self.gpu = gpu
+        if self.gpu == False:
             self.net   = net
             self.image = Variable(image, requires_grad = True)
             self.label = label
