@@ -37,10 +37,9 @@ class OSSA:
 
         self.get_attack_elements()
         
-    def get_outputs(self, net,
-                          image):
+    def get_outputs(self):
 
-        output = net(image)
+        output = self.net(self.image)
         soft_max_output = self.soft_max(output)
 
         losses = image_gradients = {}
