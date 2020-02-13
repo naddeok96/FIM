@@ -52,10 +52,9 @@ class MNIST_Data:
     def get_single_image(self, index = 0,
                                show = False):
 
-
-        image = show_image = self.train_set.data[index]
+        image = show_image = self.test_set.data[index]
         show_image = show_image.float()
-        target = self.train_set.targets[index]
+        target = self.test_set.targets[index]
         image = image[None, None]
         image = image.type('torch.FloatTensor')
 

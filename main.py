@@ -15,7 +15,7 @@ import operator
 # Hyperparameters
 gpu = True
 plot = False
-n_epochs = 0
+n_epochs = 10
 
 if gpu == True:
     import os
@@ -35,25 +35,30 @@ detministic_model = Gym(net, data, gpu)
 accuracy = detministic_model.train(n_epochs = n_epochs)
 
 # Generate an Attack using OSSA
-image, label, show_image = data.get_single_image() 
+adverserial_image_set = {}
+adverserial_target_set = {}
+total_tests = data.test_set.data.size()[0]
+correct = 0
+for i in range(total_tests):
+    image, label, show_image = data.get_single_image(index = i) 
 
-attack = OSSA(net = detministic_model.net, 
-              image = image, 
-              label = label,
-              gpu = gpu)
+    attack = OSSA(net = detministic_model.net, 
+                  image = image, 
+                  label = label,
+                  gpu = gpu)
 
-# Test Attack
-prediction = detministic_model.get_single_prediction(image)
-attack_prediction = detministic_model.get_single_prediction(image - attack.attack_perturbation)
+    adverserial_image = image + attack.attack_perturbation
+    output = detministic_model.net(adverserial_image)
+    _, predicted = torch.max(output.data, 1)
+    correct += (predicted == label).item()
 
 
+adv_accuracy = correct/total_tests
 
 # Display
 print("--------------------------------------")
 print("Deterministic Model Accuracy: ", accuracy)
-print("Image Label: ", label.item())
-print("Deterministic Model Prediction: ", prediction.item())
-print("Deterministic Model Attack Prediction: ", attack_prediction.item())
+print("Adverserial Accuracy: ", adv_accuracy)
 print("--------------------------------------")
 
 if plot == True:
