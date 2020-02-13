@@ -15,14 +15,13 @@ class OSSA:
                        CONVERGE_LIMIT = 0.01,
                        gpu = False):
 
+
+        self.net   = net
         if gpu == False:
-            self.net   = net
             self.image = Variable(image, requires_grad = True)
             self.label = label
         else:
-             self.net   = net.cuda()
-             self.image = Variable(image, requires_grad = True)
-             self.image = self.image.cuda()
+             self.image = Variable(image.cuda(), requires_grad = True)
              self.label = label.cuda()
 
         self.CONVERGE_LIMIT = CONVERGE_LIMIT
