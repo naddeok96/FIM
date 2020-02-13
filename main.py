@@ -20,7 +20,7 @@ n_epochs = 10
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 # Initialize
 net = AdjLeNet(num_classes = 10,
