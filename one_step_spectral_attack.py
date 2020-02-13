@@ -29,8 +29,7 @@ class OSSA:
         self.criterion = torch.nn.CrossEntropyLoss()
         self.soft_max = torch.nn.Softmax(dim = 1)
 
-        self.soft_max_output, self.image_gradients, self.losses = self.get_outputs(self.net, 
-                                                                                   self.image)
+        self.soft_max_output, self.image_gradients, self.losses = self.get_outputs()
 
          # Initialize Attack
         self.attack_perturbation = torch.rand(self.image.size()).squeeze(0).squeeze(0)
