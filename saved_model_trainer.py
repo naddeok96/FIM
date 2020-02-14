@@ -8,7 +8,7 @@ from gym import Gym
 
 # Hyperparameters
 gpu = True
-n_epochs = 10
+n_epochs = 0
 
 if gpu == True:
     import os
@@ -28,5 +28,5 @@ detministic_model = Gym(net, data, gpu)
 accuracy = detministic_model.train(n_epochs = n_epochs)
 
 # Save Model
-filename = "trained_lenet" + round(accuracy, 2) + ".pt"
+filename = "trained_lenet" + str(round(accuracy, 2)) + ".pt"
 torch.save(detministic_model, filename)
