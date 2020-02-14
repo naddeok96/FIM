@@ -10,6 +10,11 @@ from gym import Gym
 gpu = True
 n_epochs = 10
 
+if gpu == True:
+    import os
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "4"
+
 # Initialize
 net = AdjLeNet(num_classes = 10,
                num_kernels_layer1 = 6, 
