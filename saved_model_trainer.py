@@ -2,6 +2,7 @@
 This script will train a model and save it
 '''
 # Imports
+import torch
 from adjustable_lenet import AdjLeNet
 from mnist_setup import MNIST_Data
 from gym import Gym
