@@ -1,7 +1,6 @@
 '''
 This code will be used as the main code to run all classes
 '''
-
 # Imports
 import torch
 from adjustable_lenet import AdjLeNet
@@ -13,7 +12,7 @@ import matplotlib.pyplot as plt
 import operator
 
 # Hyperparameters
-gpu = True
+gpu = False
 plot = False
 n_epochs = 10
 
@@ -35,8 +34,6 @@ detministic_model = Gym(net, data, gpu)
 accuracy = detministic_model.train(n_epochs = n_epochs)
 
 # Generate an Attack using OSSA
-adverserial_image_set = {}
-adverserial_target_set = {}
 total_tests = data.test_set.data.size()[0]
 correct = 0
 for i in range(total_tests):
