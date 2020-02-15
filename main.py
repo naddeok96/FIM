@@ -14,7 +14,6 @@ import operator
 # Hyperparameters
 gpu = False
 plot = False
-n_epochs = 10
 
 if gpu == True:
     import os
@@ -22,40 +21,39 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 # Initialize
-net = AdjLeNet(num_classes = 10,
-               num_kernels_layer1 = 6, 
-               num_kernels_layer2 = 16, 
-               num_kernels_layer3 = 120,
-               num_nodes_fc_layer = 84)
 data = MNIST_Data()
-detministic_model = Gym(net, data, gpu)
-
-# Fit Model
-accuracy = detministic_model.train(n_epochs = n_epochs)
+detministic_model = torch.load('trained_lenet_w_acc_98.pt', map_location=torch.device('cpu'))
 
 # Generate an Attack using OSSA
 total_tests = data.test_set.data.size()[0]
 correct = 0
+correct_adv = 0
 for i in range(total_tests):
     image, label, show_image = data.get_single_image(index = i) 
 
+    
     attack = OSSA(net = detministic_model.net, 
                   image = image, 
                   label = label,
                   gpu = gpu)
 
-    adverserial_image = image + attack.attack_perturbation
-    output = detministic_model.net(adverserial_image)
+    adverserial_image = image  + attack.attack_perturbation
+
+    output = detministic_model.net(image)
     _, predicted = torch.max(output.data, 1)
     correct += (predicted == label).item()
+    
+    output_adv = detministic_model.net(adverserial_image)
+    _, predicted_adv = torch.max(output_adv.data, 1)
+    correct_adv += (predicted_adv == label).item()
 
-
-adv_accuracy = correct/total_tests
+accuracy     = correct/total_tests
+accuracy_adv = correct_adv/total_tests
 
 # Display
 print("--------------------------------------")
-print("Deterministic Model Accuracy: ", accuracy)
-print("Adverserial Accuracy: ", adv_accuracy)
+print("Deterministic Accuracy: ", accuracy)
+print("Adverserial Accuracy: ", accuracy_adv)
 print("--------------------------------------")
 
 if plot == True:
