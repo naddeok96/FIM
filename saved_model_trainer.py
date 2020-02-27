@@ -28,7 +28,7 @@ print("Model's state_dict:")
 for param_tensor in net.state_dict():
     print(param_tensor, "\t", net.state_dict()[param_tensor].size())
 
-data = MNIST_Data()
+data = MNIST_Data(gpu)
 gym = Gym(net, data, gpu)
 
 # Fit Model

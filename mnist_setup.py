@@ -15,11 +15,12 @@ import matplotlib.pyplot as plt
 
 class MNIST_Data:
 
-    def __init__(self):
+    def __init__(self, gpu):
 
         super(MNIST_Data,self).__init__()
 
-        
+        self.gpu = gpu 
+
         # Pull in data
         self.transform = transforms.Compose([transforms.ToTensor(), # Images are of size (1, 28, 28)
                                         transforms.Normalize((0.1307,), (0.3081,))]) # this will allow us to convert the images into tensors and normalize
@@ -34,21 +35,30 @@ class MNIST_Data:
                                                 download=True,
                                                 transform=self.transform)
 
-        #Test and validation loaders have constant batch sizes, so we can define them directly
-        self.test_loader = torch.utils.data.DataLoader(self.test_set,
-                                                       batch_size=100,
-                                                       shuffle=False,
-                                                       num_workers=8,
-                                                       pin_memory=True)
+        #Test and validation loaders have constant batch sizes, so we can define them 
+        if self.gpu == False:
+            self.test_loader = torch.utils.data.DataLoader(self.test_set,
+                                                    batch_size=100,
+                                                    shuffle=False)
+        else:
+            self.test_loader = torch.utils.data.DataLoader(self.test_set,
+                                                        batch_size=100,
+                                                        shuffle=False,
+                                                        num_workers=8,
+                                                        pin_memory=True)
 
 
     def get_train_loader(self, batch_size):
-
-        train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                    batch_size = batch_size,
-                                                    shuffle = True,
-                                                    num_workers = 8,
-                                                    pin_memory=True)
+        if self.gpu ==False:
+            train_loader = torch.utils.data.DataLoader(self.train_set,
+                                                        batch_size = batch_size,
+                                                        shuffle = True)
+        else:
+            train_loader = torch.utils.data.DataLoader(self.train_set,
+                                                        batch_size = batch_size,
+                                                        shuffle = True,
+                                                        num_workers = 8,
+                                                        pin_memory=True)
 
         return(train_loader)
 

@@ -5,6 +5,7 @@ This code will be used as the main code to run all classes
 import torch
 from adjustable_lenet import AdjLeNet
 from mnist_setup import MNIST_Data
+from gym import Gym
 from information_geometry import InfoGeo
 import torchvision.transforms.functional as F
 import operator
@@ -20,7 +21,7 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 # Initialize
-data = MNIST_Data()
+data = MNIST_Data(gpu)
 
 detministic_model = AdjLeNet(num_classes = 10,
                              num_kernels_layer1 = 6, 
@@ -29,23 +30,13 @@ detministic_model = AdjLeNet(num_classes = 10,
                              num_nodes_fc_layer = 84)
 
 detministic_model.load_state_dict(torch.load('trained_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
+detministic_model.eval()
+
+gym = Gym(detministic_model, data, gpu)
 
 # Test model
-total_tested = 0
-correct = 0
+print(gym.test())
 
-# Test images in test loader
-for inputs, labels in data.test_loader:
-
-    #Forward pass
-    outputs = detministic_model(inputs)
-    _, predicted = torch.max(outputs.data, 1)
-
-    total_tested += labels.size(0)
-    correct += (predicted == labels).sum().item()
-print(correct)
-print(total_tested)
-print(correct/total_tested)
 
 '''
 if save_set == True:
