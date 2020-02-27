@@ -10,18 +10,17 @@ import torch.nn.functional as F
 import torchvision.transforms as transforms
 
 class Gym:
-
     def __init__(self,
                  net, 
                  data,
                  gpu = False):
 
-        self.gpu = gpu
-        if self.gpu == False:
-            self.net = net 
-        else:
-            self.net = net.cuda()
-            
+        super(Gym,self).__init__()
+
+        # Push net to CPU or GPU
+        self.net = net if self.gpu == False net.cuda()
+        
+        # Declare data
         self.data = data
 
     def train(self, batch_size = 124, 
@@ -45,7 +44,7 @@ class Gym:
         for epoch in range(n_epochs):            
             for i, data in enumerate(train_loader, 0):
                 
-                #Reset the train loader and apply a counter
+                # Get inputs and labels from train_loader
                 inputs, labels = data
 
                 # Push to gpu
@@ -56,17 +55,17 @@ class Gym:
                 optimizer.zero_grad()
                 
                 #Forward pass, backward pass, optimize
-                outputs = self.net(inputs) # Forward pass
-                loss = criterion(outputs, labels) # calculate loss
-                loss.backward() # Find the gradient for each parameter
-                optimizer.step() # Parameter update
+                outputs = self.net(inputs)        # Forward pass
+                loss = criterion(outputs, labels) # Calculate loss
+                loss.backward()                   # Find the gradient for each parameter
+                optimizer.step()                  # Parameter update
                 
-
+    def test(self):
         # At the end of training run a test
         total_tested = 0
         correct = 0
-        for inputs, labels in self.data.test_loader:
 
+        for inputs, labels in self.data.test_loader:
             # Push to gpu
             if self.gpu == True:
                 inputs, labels = inputs.cuda(), labels.cuda()
@@ -77,11 +76,12 @@ class Gym:
 
             total_tested += labels.size(0)
             correct += (predicted == labels).sum().item()
+            
         return (correct/total_tested)
 
     def get_single_prediction(self, image):
         
-        # Push Image to GPU 
+        # Push Image to CPU or GPU 
         image = image if self.gpu == False else image.cuda()
 
         output = self.net(image)

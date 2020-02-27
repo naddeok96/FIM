@@ -16,6 +16,9 @@ import matplotlib.pyplot as plt
 class MNIST_Data:
 
     def __init__(self):
+
+        super(MNIST_Data,self).__init__()
+
         
         # Pull in data
         self.transform = transforms.Compose([transforms.ToTensor(), # Images are of size (1, 28, 28)
