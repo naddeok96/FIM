@@ -22,13 +22,19 @@ net = AdjLeNet(num_classes = 10,
                num_kernels_layer2 = 16, 
                num_kernels_layer3 = 120,
                num_nodes_fc_layer = 84)
+
+# Print model's state_dict
+print("Model's state_dict:")
+for param_tensor in net.state_dict():
+    print(param_tensor, "\t", net.state_dict()[param_tensor].size())
+
 data = MNIST_Data()
-detministic_model = Gym(net, data, gpu)
+gym = Gym(net, data, gpu)
 
 # Fit Model
-detministic_model.train(n_epochs = n_epochs)
-accuracy = detministic_model.test()
+gym.train(n_epochs = n_epochs)
+accuracy = gym.test()
 
 # Save Model
 filename = "trained_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
-torch.save(detministic_model.state_dict(), filename)
+torch.save(gym.net.state_dict(), filename)

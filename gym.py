@@ -80,9 +80,9 @@ class Gym:
 
             total_tested += labels.size(0)
             correct += (predicted == labels).sum().item()
-        print(correct)
-        print(total_tested)
-        return (correct/total_tested)
+        
+        accuracy = (correct/total_tested)
+        return accuracy
 
     def get_single_prediction(self, image):
         
