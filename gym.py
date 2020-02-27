@@ -21,7 +21,7 @@ class Gym:
         self.gpu = gpu
 
         # Push net to CPU or GPU
-        self.net = net #if self.gpu == False else net.cuda()
+        self.net = net if self.gpu == False else net.cuda()
         
         # Declare data
         self.data = data
