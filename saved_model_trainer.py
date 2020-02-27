@@ -26,7 +26,8 @@ data = MNIST_Data()
 detministic_model = Gym(net, data, gpu)
 
 # Fit Model
-accuracy = detministic_model.train(n_epochs = n_epochs)
+detministic_model.train(n_epochs = n_epochs)
+accuracy = detministic_model.test()
 
 # Save Model
 filename = "trained_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
