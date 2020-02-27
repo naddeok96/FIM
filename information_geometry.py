@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Class
-class InformationGeometry:
+class InfoGeo:
     def __init__(self, net, 
                        images, 
                        labels, 
@@ -19,13 +19,13 @@ class InformationGeometry:
                        EPSILON = 0.05,
                        gpu = False):
 
-        super(InformationGeometry,self).__init__()
+        super(InfoGeo,self).__init__()
 
         # Move inputs to CPU or GPU
         self.gpu = gpu
-        self.net   = net if self.gpu == False net.cuda()
-        self.image = Variable(image, requires_grad = True) if self.gpu == False Variable(image.cuda(), requires_grad = True)
-        self.label = label if self.gpu == False label.cuda()
+        self.net   = net if self.gpu == False else net.cuda()
+        self.image = Variable(image, requires_grad = True) if self.gpu == False else Variable(image.cuda(), requires_grad = True)
+        self.label = label if self.gpu == False else label.cuda()
 
         # Constants for attack
         self.CONVERGE_LIMIT = CONVERGE_LIMIT

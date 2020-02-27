@@ -17,8 +17,11 @@ class Gym:
 
         super(Gym,self).__init__()
 
+        # Declare GPU usage
+        self.gpu = gpu
+
         # Push net to CPU or GPU
-        self.net = net if self.gpu == False net.cuda()
+        self.net = net #if self.gpu == False else net.cuda()
         
         # Declare data
         self.data = data
@@ -65,6 +68,7 @@ class Gym:
         total_tested = 0
         correct = 0
 
+        # Test images in test loader
         for inputs, labels in self.data.test_loader:
             # Push to gpu
             if self.gpu == True:
@@ -76,7 +80,8 @@ class Gym:
 
             total_tested += labels.size(0)
             correct += (predicted == labels).sum().item()
-            
+        print(correct)
+        print(total_tested)
         return (correct/total_tested)
 
     def get_single_prediction(self, image):

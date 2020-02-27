@@ -30,4 +30,4 @@ accuracy = detministic_model.train(n_epochs = n_epochs)
 
 # Save Model
 filename = "trained_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
-torch.save(detministic_model, filename)
+torch.save(detministic_model.state_dict(), filename)
