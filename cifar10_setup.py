@@ -1,4 +1,16 @@
+'''
+This class loads the CIFAR10 data and splits it into training and testing sets
+'''
 
+import torch
+from torch import nn
+import torchvision
+import numpy as np
+import torch.nn.functional as F
+import torchvision.transforms as transforms
+import torchvision.datasets as datasets
+import os
+import matplotlib.pyplot as plt
 
 class CIFAR10_Data:
 
