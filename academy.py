@@ -15,7 +15,7 @@ class Academy:
                  data,
                  gpu = False):
 
-        super(Gym,self).__init__()
+        super(Academy,self).__init__()
 
         # Declare GPU usage
         self.gpu = gpu
