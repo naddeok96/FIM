@@ -9,12 +9,12 @@ from torchsummary import summary
 
 class AdjLeNet(nn.Module):
 
-    def __init__(self, num_classes = 10,
+    def __init__(self, set_name,
+                       num_classes = 10,
                        num_kernels_layer1 = 6, 
                        num_kernels_layer2 = 16, 
                        num_kernels_layer3 = 120,
-                       num_nodes_fc_layer = 84,
-                       set_name):
+                       num_nodes_fc_layer = 84):
 
         super(AdjLeNet,self).__init__()
 
