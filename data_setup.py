@@ -37,7 +37,7 @@ class Data:
                                                     train=False,
                                                     download=True,
                                                     transform=self.transform)
-        elif self.set_name == "MNIST"
+        elif self.set_name == "MNIST":
             # Pull in data
             self.transform = transforms.Compose([transforms.ToTensor(), # Images are of size (1, 28, 28)
                                             transforms.Normalize((0.1307,), (0.3081,))]) # this will allow us to convert the images into tensors and normalize
