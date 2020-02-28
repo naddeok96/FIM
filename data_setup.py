@@ -12,27 +12,49 @@ import torchvision.datasets as datasets
 import os
 import matplotlib.pyplot as plt
 
-class CIFAR10_Data:
+class Data:
 
-    def __init__(self,gpu):
+    def __init__(self,gpu,
+                      set_name):
 
-        super(CIFAR10_Data,self).__init__()
+        super(Data,self).__init__()
 
         self.gpu = gpu
+        self.set_name = set_name
 
         # Pull in data
-        self.transform = transforms.Compose([transforms.ToTensor(), # Images are of size (3,32,32)
-                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) # this will allow us to convert the images into tensors and normalize about 0.5
 
-        self.train_set = torchvision.datasets.CIFAR10(root='./cifardata',
-                                                train=True,
-                                                download=True,
-                                                transform=self.transform)
+        if self.set_name == "CIFAR10":
+            self.transform = transforms.Compose([transforms.ToTensor(), # Images are of size (3,32,32)
+                                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) # this will allow us to convert the images into tensors and normalize about 0.5
 
-        self.test_set = torchvision.datasets.CIFAR10(root='./cifardata',
-                                                train=False,
-                                                download=True,
-                                                transform=self.transform)
+            self.train_set = torchvision.datasets.CIFAR10(root='./cifardata',
+                                                    train=True,
+                                                    download=True,
+                                                    transform=self.transform)
+
+            self.test_set = torchvision.datasets.CIFAR10(root='./cifardata',
+                                                    train=False,
+                                                    download=True,
+                                                    transform=self.transform)
+        elif self.set_name == "MNIST"
+            # Pull in data
+            self.transform = transforms.Compose([transforms.ToTensor(), # Images are of size (1, 28, 28)
+                                            transforms.Normalize((0.1307,), (0.3081,))]) # this will allow us to convert the images into tensors and normalize
+
+            self.train_set = datasets.MNIST(root='../data',
+                                            train=True,
+                                            download=True,
+                                            transform=self.transform)
+
+            self.test_set = torchvision.datasets.MNIST(root='../data',
+                                                    train=False,
+                                                    download=True,
+                                                    transform=self.transform)
+        else:
+            print("Please enter vaild dataset.")
+            exit()
+        
 
         #Test and validation loaders have constant batch sizes, so we can define them 
         #Test and validation loaders have constant batch sizes, so we can define them 

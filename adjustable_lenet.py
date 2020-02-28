@@ -1,7 +1,6 @@
 '''
 This class builds a LeNet with specified kernels in each conv layer
 '''
-
 # Imports
 import torch
 from torch import nn
@@ -15,13 +14,11 @@ class AdjLeNet(nn.Module):
                        num_kernels_layer2 = 16, 
                        num_kernels_layer3 = 120,
                        num_nodes_fc_layer = 84,
-                       CIFAR10 = False,
-                       MNIST = False):
+                       set_name):
 
         super(AdjLeNet,self).__init__()
 
-        self.CIFAR10 = CIFAR10
-        self.MNIST = MNIST
+        self.set_name = set_name
         
         self.num_classes = num_classes
 
@@ -30,11 +27,7 @@ class AdjLeNet(nn.Module):
         self.num_kernels_layer3 = num_kernels_layer3
         self.num_nodes_fc_layer = num_nodes_fc_layer
 
-        if self.CIFAR10 == True and self.MNIST == True:
-            print("Please declare only one dataset")
-            exit()
-
-        elif self.CIFAR10 == True:
+        if self.set_name == "CIFAR10":
             # Input (3,32,32)
             # Layer 1
             self.conv1 = nn.Conv2d(3, # Input channels
@@ -42,7 +35,7 @@ class AdjLeNet(nn.Module):
                                 kernel_size = 5, 
                                 stride = 1, 
                                 padding = 0) # Output = (3,28,28)
-        elif self.MNIST == True:
+        elif self.set_name == "MNIST":
             # Input (1,28,28)
             # Layer 1
             self.conv1 = nn.Conv2d(1, # Input channels
@@ -51,7 +44,7 @@ class AdjLeNet(nn.Module):
                                 stride = 1, 
                                 padding = 2) # Output = (1,28,28)
         else:
-            print("Please declare dataset")
+            print("Please enter a valid dataset")
             exit()
 
         # Layer 2

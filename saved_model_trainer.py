@@ -4,12 +4,12 @@ This script will train a model and save it
 # Imports
 import torch
 from adjustable_lenet import AdjLeNet
-from cifar10_setup import CIFAR10_Data
+from data_setup import Data
 from academy import Academy
 
 # Hyperparameters
 gpu = True
-n_epochs = 100
+n_epochs = 200
 
 if gpu == True:
     import os
@@ -17,14 +17,14 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # Initialize
-net = AdjLeNet(CIFAR10 = True)
+net = AdjLeNet(set_name = "CIFAR10")
 
 # Print model's state_dict
 print("Model's state_dict:")
 for param_tensor in net.state_dict():
     print(param_tensor, "\t", net.state_dict()[param_tensor].size())
 
-data = CIFAR10_Data(gpu)
+data = Data(gpu, set_name = "CIFAR10")
 academy = Academy(net, data, gpu)
 
 # Fit Model
