@@ -14,9 +14,14 @@ class AdjLeNet(nn.Module):
                        num_kernels_layer1 = 6, 
                        num_kernels_layer2 = 16, 
                        num_kernels_layer3 = 120,
-                       num_nodes_fc_layer = 84):
+                       num_nodes_fc_layer = 84,
+                       CIFAR10 = False,
+                       MNIST = False):
 
         super(AdjLeNet,self).__init__()
+
+        self.CIFAR10 = CIFAR10
+        self.MNIST = MNIST
         
         self.num_classes = num_classes
 
@@ -25,13 +30,29 @@ class AdjLeNet(nn.Module):
         self.num_kernels_layer3 = num_kernels_layer3
         self.num_nodes_fc_layer = num_nodes_fc_layer
 
-        # Input (1,28,28)
-        # Layer 1
-        self.conv1 = nn.Conv2d(1, # Input channels
-                               self.num_kernels_layer1, # Output Channel 
-                               kernel_size = 4, 
-                               stride = 1, 
-                               padding = 2) # Output = (1,28,28)
+        if self.CIFAR10 == True and self.MNIST == True:
+            print("Please declare only one dataset")
+            exit()
+
+        elif self.CIFAR10 == True:
+            # Input (3,32,32)
+            # Layer 1
+            self.conv1 = nn.Conv2d(3, # Input channels
+                                self.num_kernels_layer1, # Output Channel 
+                                kernel_size = 5, 
+                                stride = 1, 
+                                padding = 0) # Output = (3,28,28)
+        elif self.MNIST == True:
+            # Input (1,28,28)
+            # Layer 1
+            self.conv1 = nn.Conv2d(1, # Input channels
+                                self.num_kernels_layer1, # Output Channel 
+                                kernel_size = 4, 
+                                stride = 1, 
+                                padding = 2) # Output = (1,28,28)
+        else:
+            print("Please declare dataset")
+            exit()
 
         # Layer 2
         self.pool1 = nn.MaxPool2d(kernel_size = 2, 

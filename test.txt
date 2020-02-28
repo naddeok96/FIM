@@ -1,4 +1,6 @@
---------------------------------------
-Deterministic Accuracy:  0.8131
-Adverserial Accuracy:  0.8
---------------------------------------
+------------------------
+Model Accuracy is: 98.8%
+------------------------
+label:  7
+image predicted:  7
+attack predicted:  8

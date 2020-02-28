@@ -5,10 +5,11 @@ This code will be used as the main code to run all classes
 import torch
 from adjustable_lenet import AdjLeNet
 from mnist_setup import MNIST_Data
-from gym import Gym
+from academy import Academy
 from information_geometry import InfoGeo
 import torchvision.transforms.functional as F
 import operator
+import numpy as np
 
 # Hyperparameters
 gpu = False
@@ -20,22 +21,32 @@ if gpu == True:
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
-# Initialize
+# Initialize data
 data = MNIST_Data(gpu)
 
-detministic_model = AdjLeNet(num_classes = 10,
+# Load pretraind network
+net = AdjLeNet(num_classes = 10,
                              num_kernels_layer1 = 6, 
                              num_kernels_layer2 = 16, 
                              num_kernels_layer3 = 120,
                              num_nodes_fc_layer = 84)
+net.load_state_dict(torch.load('trained_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
+net.eval()
 
-detministic_model.load_state_dict(torch.load('trained_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
-detministic_model.eval()
+# Get a single image
+image, label = data.get_single_image(index = 0)
 
-gym = Gym(detministic_model, data, gpu)
+# Initialize InfoGeo object
+info_geo = InfoGeo(net, image, label, EPSILON = 50)
 
-# Test model
-print(gym.test())
+# Calculate FIM
+info_geo.get_FIM()
+info_geo.get_attack()
+info_geo.get_prediction()
+
+# Display
+info_geo.plot_attack()
+
 
 
 '''

@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 # Class
 class InfoGeo:
     def __init__(self, net, 
-                       images, 
-                       labels, 
+                       image, 
+                       label, 
                        CONVERGE_LIMIT = 0.0001,
                        OCCILLATION_Limit = 0.0001,
                        EPSILON = 0.05,
@@ -21,100 +21,123 @@ class InfoGeo:
 
         super(InfoGeo,self).__init__()
 
+        # Constants for attack
+        self.CONVERGE_LIMIT = CONVERGE_LIMIT
+        self.OCCILLATION_Limit = OCCILLATION_Limit
+        self.EPSILON = EPSILON
+
         # Move inputs to CPU or GPU
         self.gpu = gpu
         self.net   = net if self.gpu == False else net.cuda()
         self.image = Variable(image, requires_grad = True) if self.gpu == False else Variable(image.cuda(), requires_grad = True)
         self.label = label if self.gpu == False else label.cuda()
 
-        # Constants for attack
-        self.CONVERGE_LIMIT = CONVERGE_LIMIT
-        self.OCCILLATION_Limit = OCCILLATION_Limit
-        self.EPSILON = EPSILON
-
         # Evaluation Tools
         self.criterion = torch.nn.CrossEntropyLoss()
         self.soft_max = torch.nn.Softmax(dim = 1)
 
-        # Get the output probabilities, loss gradient wrt to input and losses 
-        self.soft_max_output, self.image_gradients, self.losses = self.get_outputs()
+        # Calculate softmax output
+        self.output = self.net(self.image)
+        self.soft_max_output = self.soft_max(self.output)
 
         # Initialize Attack
-        self.attack_perturbation = torch.rand(self.image.size()).squeeze(0).squeeze(0)
+        self.perturbation = "empty"
+        self.attack = "empty"
 
         # Initialize then calculate FIM
         self.FIM = "empty"
-        
-    def get_softmaxs_grads_and_losses(self):
-        '''
-        This function will calculate the softmax output of the model for the image,
-        the loss wrt to the image for every label ie grad_J_x(yi,x) for every label i,
-        and the loss for each label i
-        '''
-        # Calculate softmax output
-        output = self.net(self.image)
-        soft_max_output = self.soft_max(output)
+        self.FIM_eig_values = "empty"
+        self.FIM_eig_vectors = "empty"
 
+    def unload(self, image):
+        '''
+        This function unloads an image off a dataloader
+        '''
+        return image.squeeze(0).squeeze(0)
+        
+    def get_FIM(self):
+        '''
+        This function will calculate the FIM
+        '''
         # Calculate the loss and gradient of the loss wrt the image for every possible label
-        losses = {}
-        image_gradients = {}
-        for i in range(10):
+        losses = []
+        grads_of_losses_wrt_image = []
+        for i in range(len(self.output.data[0])):
             # Cycle through lables (y)
             label = torch.tensor([i]) if self.gpu == False else torch.tensor([i]).cuda()
 
             # Calculate losses
-            loss = self.criterion(output, label)
+            loss = self.criterion(self.output, label)
             loss.backward(retain_graph = True)
-            losses[i] = loss.item()
-            grads_of_losses_wrt_image[i] = self.image.grad.data.squeeze(0).squeeze(0)
+            losses.append(loss.item())
+            grads_of_losses_wrt_image.append(self.unload(self.image.grad.data))
+        self.loss = losses[self.label.item()]
 
+        # Calculate the FIM
         fisher = 0  
-        for i in range(10):
-            p = soft_max_output.squeeze(0)[i].item()
-            g = grads_of_losses_wrt_image.cpu()
+        for i in range(len(self.output.data[0])):
+            p = self.soft_max_output.squeeze(0)[i].item()
+            g = grads_of_losses_wrt_image[i]
             fisher += p * (torch.t(g) * g)
 
         self.FIM = fisher
+        self.FIM_eig_values, self.FIM_eig_vectors = torch.eig(fisher, eigenvectors = True)
+
+    def get_attack(self):
+        '''
+        Generate an one step speectral attack
+        '''
+        # Set the unit norm of the signs of the highest eigenvector to epsilon
+        #perturbation = (np.sign(self.FIM_eig_vectors[0]) / np.linalg.norm(np.sign(self.FIM_eig_vectors[0]))) * self.EPSILON
+        perturbation = (self.FIM_eig_vectors[0] / np.linalg.norm(self.FIM_eig_vectors[0])) * self.EPSILON
         
-    def get_FIM(self):
-        '''
-        This function calculates the FIM of the model/input
-        '''
-        fisher = 0  
-        for i in range(10):
-            p = self.soft_max_output.squeeze(0)[i].item()
-            g = self.image_gradients[i].cpu()
-            fisher += p * (torch.t(g)*self.attack_perturbation) * g
+        # Check Sign
+        attack = self.image + perturbation
+        adv_output = self.net(attack)
+        adv_loss = self.criterion(adv_output, self.label)
 
-        self.FIM = fisher
+        self.perturbation = perturbation if adv_loss > self.loss else -perturbation
+        self.attack = self.image + self.perturbation
+        
+    def get_prediction(self):
+        # See prediction 
+        output = self.net(self.image)
+        _, self.predicted = torch.max(output.data, 1)
 
+        adv_output = self.net(self.attack)
+        _, self.adv_predicted = torch.max(adv_output.data, 1)
+        
+        
     def plot_attack(self):
         '''
         Plots the image, perturbation and attack
         '''
-        # Declare rows and cols of subplots
-        rows = 1
-        cols = 3
-
         # Decalre figure size, figure and title
         figsize = [8, 4]
         fig= plt.figure(figsize=figsize)
         fig.suptitle('OSSA Attack Summary', fontsize=16)
 
         # Plot orginal image
-        ax1 = fig.add_subplot(rows, cols, 1)
-        ax1.imshow(show_image, cmap='gray')
+        ax1 = fig.add_subplot(131)
+        ax1.imshow(self.unload(self.image.detach().numpy()), cmap='gray', vmin=0, vmax=255)
+        ax1.set_xlabel("Prediction: " + str(self.predicted.item()))
         ax1.set_title("Orginal Image")
-
+        
         # Plot perturbation
-        ax2 = fig.add_subplot(rows, cols, 2)
-        ax2.imshow(attack.attack_perturbation, cmap='gray')
+        ax2 = fig.add_subplot(232)
+        ax2.imshow(self.unload(self.attack.detach().numpy()) - self.unload(self.image.detach().numpy()), cmap='gray', vmin=0, vmax=255)
         ax2.set_title("Attack Perturbation")
 
+        # Plot perturbation unscaled
+        ax3 = fig.add_subplot(235)
+        ax3.imshow(self.unload(self.attack.detach().numpy()) - self.unload(self.image.detach().numpy()), cmap='gray')
+        ax3.set_xlabel("Attack Perturbation Unscaled")
+        
         # Plot attack
-        ax3 = fig.add_subplot(rows, cols, 3)
-        ax3.imshow(show_image + attack.attack_perturbation, cmap='gray')
-        ax3.set_title("Attack")
+        ax4 = fig.add_subplot(133)
+        ax4.imshow(self.unload(self.attack.detach().numpy()), cmap='gray', vmin=0, vmax=255)
+        ax4.set_xlabel("Prediction: " + str(self.adv_predicted.item()))
+        ax4.set_title("Attack")
 
         # Display figure
         plt.show()

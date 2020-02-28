@@ -9,7 +9,7 @@ import numpy as np
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 
-class Gym:
+class Academy:
     def __init__(self,
                  net, 
                  data,
