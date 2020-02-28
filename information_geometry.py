@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 class InfoGeo:
     def __init__(self, net, 
                        image, 
-                       label, 
+                       label,
                        CONVERGE_LIMIT = 0.0001,
                        OCCILLATION_Limit = 0.0001,
                        EPSILON = 0.05,

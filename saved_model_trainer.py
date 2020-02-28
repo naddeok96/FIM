@@ -17,7 +17,11 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # Initialize
-net = AdjLeNet(set_name = "CIFAR10")
+net = AdjLeNet(set_name = "CIFAR10",
+               num_kernels_layer1 = 12, 
+               num_kernels_layer2 = 32, 
+               num_kernels_layer3 = 240,
+               num_nodes_fc_layer = 168)
 
 # Print model's state_dict
 print("Model's state_dict:")
