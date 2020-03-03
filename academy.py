@@ -1,7 +1,7 @@
 '''
-This class will take a model and a dataset and fit the former to the latter
+This class will take a model as a student and a dataset as a curriculum to train/test 
 '''
-
+# Imports
 import torch
 from torch import nn
 import torchvision
@@ -31,7 +31,9 @@ class Academy:
                     learning_rate = 0.001, 
                     momentum = 0.9, 
                     weight_decay = 0.0001):
-
+        '''
+        Train model on train set images
+        '''
         #Get training data
         train_loader = self.data.get_train_loader(batch_size)
         n_batches = len(train_loader)
@@ -64,7 +66,10 @@ class Academy:
                 optimizer.step()                  # Parameter update
                 
     def test(self):
-        # At the end of training run a test
+        '''
+        Test the model on the unseen data in the test set
+        '''
+        # Initialize
         total_tested = 0
         correct = 0
 
@@ -78,18 +83,25 @@ class Academy:
             outputs = self.net(inputs)
             _, predicted = torch.max(outputs.data, 1)
 
+            # Update runnin sum
             total_tested += labels.size(0)
             correct += (predicted == labels).sum().item()
         
+        # Calculate accuracy
         accuracy = (correct/total_tested)
         return accuracy
 
     def get_single_prediction(self, image):
-        
+        '''
+        Test model on a single image
+        '''
         # Push Image to CPU or GPU 
         image = image if self.gpu == False else image.cuda()
 
+        # Calculate logit outputs
         output = self.net(image)
+
+        # Take max logit to be the predicted class
         _, predicted = torch.max(output.data, 1)
         
         return predicted

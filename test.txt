@@ -1,6 +1,5 @@
-------------------------
-Model Accuracy is: 98.8%
-------------------------
-label:  7
-image predicted:  7
-attack predicted:  8
+----------------------------------
+Total Tested:  10000
+Model Accuracy:  0.988
+Attack Accuracy:  0.8883
+----------------------------------

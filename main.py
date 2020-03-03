@@ -23,34 +23,62 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 # Initialize data
-data = Data(gpu, set_name = set_name)
+data = Data(gpu, set_name)
 
-# Load pretraind network
-net = AdjLeNet(set_name = set_name, 
-                num_classes = 10,
-                num_kernels_layer1 = 6, 
-                num_kernels_layer2 = 16, 
-                num_kernels_layer3 = 120,
-                num_nodes_fc_layer = 84)
+# Load pretraind MNIST network
+net = AdjLeNet(set_name = set_name)
 net.load_state_dict(torch.load('mnist_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
 net.eval()
 
-# Get a single image
-image, label = data.get_single_image(index = 0)
+# Initalize Academy
+academy = Academy(net, data, gpu)
+accuracy = academy.test()
 
-# Initialize InfoGeo object
-info_geo = InfoGeo(net, image, label, EPSILON = 20)
+# Generate Attacks
+correct = 0
+adv_correct = 0
+i = 0
+total_tested = len(data.test_set)
+for inputs, labels in data.test_loader:
+    for image, label in zip(inputs, labels):
+        # Break for iterations
+        if i >= total_tested:
+            break
+        i += 1
 
-# Calculate FIM
-info_geo.get_FIM() 
+        # Reshape
+        image = image.unsqueeze(0)
+        label = torch.tensor([label.item()])
 
-# Calculate
-info_geo.get_attack()
-info_geo.get_prediction()
+        # Initialize InfoGeo object
+        info_geo = InfoGeo(net, image, label, EPSILON = 15)
 
+        # Calculate FIM
+        info_geo.get_FIM() 
 
-# Display
-info_geo.plot_attack()
+        # Calculate Attack
+        info_geo.get_attack()
+
+        # Add to running sum
+        correct += (info_geo.predicted == label).item()
+        adv_correct += (info_geo.adv_predicted == label).item()
+
+        # Display if tricked
+        
+        if (info_geo.predicted == label).item() == True and (info_geo.adv_predicted == label).item() == False:
+            data.plot_attack(image,                  # Image
+                                info_geo.predicted,     # Prediction
+                                info_geo.attack,        # Attack
+                                info_geo.adv_predicted) # Adversrial Prediction
+        
+        
+
+print("----------------------------------")
+print("Total Tested: ", total_tested)
+print("Model Accuracy: ", correct/total_tested)
+print("Attack Accuracy: ", adv_correct/total_tested)
+print("----------------------------------")
+
 
 # Save adverserial image set
 if save_set == True:
