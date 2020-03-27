@@ -14,16 +14,12 @@ class InfoGeo:
     def __init__(self, net, 
                        image,
                        label,
-                       CONVERGE_LIMIT = 0.0001,
-                       OCCILLATION_Limit = 0.0001,
                        EPSILON = 0.05,
                        gpu = False):
 
         super(InfoGeo,self).__init__()
 
         # Constants for attack
-        self.CONVERGE_LIMIT = CONVERGE_LIMIT
-        self.OCCILLATION_Limit = OCCILLATION_Limit
         self.EPSILON = EPSILON
 
         # Move inputs to CPU or GPU
@@ -40,7 +36,7 @@ class InfoGeo:
         self.output = self.net(self.image)
         self.soft_max_output = self.soft_max(self.output)
         _, self.predicted = torch.max(self.soft_max_output.data, 1)
-        self.loss = self.criterion(self.output, self.label)
+        self.loss = self.criterion(self.output, self.label).item()
 
         # Initialize Attack
         self.perturbation = "empty"
@@ -49,12 +45,6 @@ class InfoGeo:
         # Initialize then calculate FIM
         self.FIM = "empty"
         self.FIM_eig_vectors = "empty"
-
-    def unload(self, image):
-        '''
-        Change dimensions of image from [1,1,pixel_size,pixel_size] to [pixel_size, pixel_size]
-        '''
-        return image.squeeze(0).squeeze(0)
         
     def get_FIM(self):
         '''
@@ -62,22 +52,26 @@ class InfoGeo:
         '''
         # Calculate FIM
         grads_of_losses_wrt_image = {}
-        fisher = 0  
+        fisher = 0 
         for i in range(len(self.output.data[0])):
             # Cycle through lables (y)
             label = torch.tensor([i]) if self.gpu == False else torch.tensor([i]).cuda()
 
             # Calculate losses
+            self.image.grad = None
             loss = self.criterion(self.output, label)
             loss.backward(retain_graph = True)
-            grads_of_losses_wrt_image[i] = (self.unload(self.image.grad.data)).view(28*28,1)
+            
+            grads_of_losses_wrt_image[i] = self.image.grad.data.view(28*28,1)
 
             # Calculate expectation
             p = self.soft_max_output.squeeze(0)[i].item()
+            tp += p
             fisher += p * (grads_of_losses_wrt_image[i] * torch.t(grads_of_losses_wrt_image[i]))
-
+        
         self.FIM = fisher
-        _, self.FIM_eig_vectors = torch.eig(fisher, eigenvectors = True)
+
+        self.FIM_eig_values, self.FIM_eig_vectors = torch.eig(fisher, eigenvectors = True)
 
     def get_attack(self):
         '''
@@ -90,12 +84,12 @@ class InfoGeo:
         attack = (self.image.view(28*28) + perturbation).view(1,1,28,28)
 
         adv_output = self.net(attack)
-        adv_loss = self.criterion(adv_output, self.label)
+        adv_loss = self.criterion(adv_output, self.label).item()
 
         self.perturbation = perturbation if adv_loss > self.loss else -perturbation
 
         # Compute attack and models prediction of it
-        self.attack = (self.image.view(28*28) + perturbation).view(1,1,28,28)
+        self.attack = (self.image.view(28*28) + self.perturbation).view(1,1,28,28)
 
         adv_output = self.net(self.attack)
         _, self.adv_predicted = torch.max(adv_output.data, 1)       

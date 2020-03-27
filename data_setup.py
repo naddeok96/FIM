@@ -1,5 +1,5 @@
 '''
-This class loads the CIFAR10 data and splits it into training and testing sets
+This class loads the data data and splits it into training and testing sets
 '''
 # Imports
 import torch
