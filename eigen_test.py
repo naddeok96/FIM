@@ -10,6 +10,7 @@ import torchvision.transforms.functional as F
 import operator
 import tensorflow as tf
 import numpy as np
+from scipy import spatial
 
 # Hyperparameters
 gpu = False
@@ -79,16 +80,24 @@ for inputs, labels in data.test_loader:
             p = soft_max_output.squeeze(0)[i].item()
             fisher += p * (image.grad.data.view(28*28,1) * torch.t(image.grad.data.view(28*28,1)))
 
+
+        np.savetxt("FImatrix.CSV",np.asarray(fisher).reshape(1,784*784),delimiter=',')
+        exit()
+
         # Calculate Eigenvalues and vectors
         torch_eig_values, torch_eig_vectors = torch.eig(fisher, eigenvectors = True)
 
         tf_eig_values, tf_eig_vectors = tf.Session().run(tf.self_adjoint_eig(fisher))
 
+        print("TF eigenvalue:  ",np.max(tf_eig_values))
+        print("Torch eigenvalue:  ",torch_eig_values[0][0].item())
+
+        print("\n\n Highest Eigenvector")
         print("Tensorflow       ||       PyTorch")
         for tf, torch in zip(torch.Tensor(tf_eig_vectors[:, np.argmax(tf_eig_values)]).view(28*28,1), torch_eig_vectors[0].view(28*28,1)):
             print(tf.item(),"     ||     " ,torch[0].item())
         
-
-        print("Tensorflow       ||       PyTorch")
-        for tf, torch in zip(np.flip(np.sort(tf_eig_values)),torch_eig_values[:]):
-            print(tf,"     ||     " ,torch[0].item())
+        # print("\n\n Eigenvalues")
+        # print("Tensorflow       ||       PyTorch")
+        # for tf, torch in zip(np.flip(np.sort(tf_eig_values)),torch_eig_values[:]):
+        #     print(tf,"     ||     " ,torch[0].item())
