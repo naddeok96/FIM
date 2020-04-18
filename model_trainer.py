@@ -9,7 +9,8 @@ from academy import Academy
 
 # Hyperparameters
 gpu = True
-save_model = False
+save_model = True
+n_epochs = 1
 
 if gpu == True:
     import os
