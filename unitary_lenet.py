@@ -22,6 +22,8 @@ class UniLeNet(nn.Module):
         super(UniLeNet,self).__init__()
 
         self.set_name = set_name
+
+        self.gpu = gpu
         
         self.num_classes = num_classes
 
