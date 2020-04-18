@@ -1,7 +1,7 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(model_trainer.py:51877): Gdk-CRITICAL **: 23:59:31.249: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+(model_trainer.py:52283): Gdk-CRITICAL **: 00:03:07.100: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
 Model's state_dict:
 conv1.weight 	 torch.Size([6, 1, 5, 5])
 conv1.bias 	 torch.Size([6])
@@ -13,4 +13,4 @@ fc1.weight 	 torch.Size([84, 100])
 fc1.bias 	 torch.Size([84])
 fc2.weight 	 torch.Size([10, 84])
 fc2.bias 	 torch.Size([10])
-0.1488
+0.9534
