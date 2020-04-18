@@ -12,7 +12,7 @@ import numpy as np
 # FGSM attack code
 def fgsm_attack(image, epsilon, data_grad):
     # Collect the element-wise sign of the data gradient
-    sign_data_grad = data_grad
+    sign_data_grad = np.sign(data_grad)
 
     # Calculate Norm of perturbation
     per_norm = torch.norm(epsilon * sign_data_grad)
@@ -28,7 +28,7 @@ gpu = False
 set_name = "MNIST"
 plot = False
 save_set = False
-EPSILON = 0.1
+EPSILON = .1
 
 # Declare which GPU PCI number to use
 if gpu == True:
@@ -54,7 +54,7 @@ adv_correct = 0
 fooled = 0
 j = 0
 norms = []
-total_tested = 10000#len(data.test_set)
+total_tested = len(data.test_set)
 for inputs, labels in data.test_loader:
     for image, label in zip(inputs, labels):
         # Break for iterations
@@ -106,6 +106,7 @@ for inputs, labels in data.test_loader:
 
 # Display
 print("================================================")
+print("Epsilon: ", EPSILON)
 print("Total Tested: ",  total_tested)
 print("Model Accuracy: ", correct/total_tested)
 print("Adverserial Accuracy: ", adv_correct/total_tested)

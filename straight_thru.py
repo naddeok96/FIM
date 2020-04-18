@@ -17,7 +17,7 @@ gpu = False
 set_name = "MNIST"
 plot = True
 save_set = False
-EPSILON = 100
+EPSILON = 8
 
 # Declare which GPU PCI number to use
 if gpu == True:
@@ -82,11 +82,14 @@ for inputs, labels in data.test_loader:
             p = soft_max_output.squeeze(0)[i].item()
             fisher += p * (image.grad.data.view(28*28,1) * torch.t(image.grad.data.view(28*28,1)))
 
-        # Calculate Eigenvalues and vectors
+        
+        # Highest Eigenvalue and vector
         eig_values, eig_vectors = torch.eig(fisher, eigenvectors = True)
+        eig_val_max = eig_values[0][0]
+        eig_vec_max = eig_vectors[:, 0]
         
         # Set the unit norm of the signs of the highest eigenvector to epsilon
-        perturbation = EPSILON * (eig_vectors[0].view(28*28,1) / torch.norm(eig_vectors[0].view(28*28,1)))
+        perturbation = EPSILON * (eig_vec_max.view(28*28,1) / torch.norm(eig_vec_max.view(28*28,1)))
 
         # Calculate sign of perturbation
         attack = (image.view(28*28,1) + perturbation).view(1,1,28,28)
@@ -107,9 +110,9 @@ for inputs, labels in data.test_loader:
         adv_correct += (adv_predicted == label).item()
 
         if (predicted == label).item() == True and (adv_predicted == label).item() == True:
-            not_tricked_eig_value.append(eig_values[0][0])
+            not_tricked_eig_value.append(eig_val_max)
         elif (predicted == label).item() == True and (adv_predicted == label).item() == False:
-            tricked_eig_value.append(eig_values[0][0])
+            tricked_eig_value.append(eig_val_max)
 
         # Display
         if plot == True:
@@ -126,9 +129,11 @@ if len(not_tricked_eig_value) == 0:
 
 # Display
 print("================================================")
+print("Epsilon: ", EPSILON)
 print("Total Tested: ",  total_tested)
 print("Model Accuracy: ", correct/total_tested)
 print("Adverserial Accuracy: ", adv_correct/total_tested)
+print("Fooling Ratio: ", len(tricked_eig_value)/correct)
 print("------------------------------------------------")
 print("Mean Eigenvalues of Not Tricked: ", np.mean(not_tricked_eig_value))
 print("Mean Eigenvalues of Tricked:     ", np.mean(tricked_eig_value))
@@ -142,11 +147,3 @@ print("------------------------------------------------")
 print("Min Eigenvalues of Not Tricked: ", np.min(not_tricked_eig_value))
 print("Min Eigenvalues of Tricked:     ", np.min(tricked_eig_value))
 print("================================================")
-
-        
-'''
-1. check that other attacks work
-2. Calaculte eig by hand then verify that the code works too
-3. Check that reshaping is consistent
-4. cvx in matlab to solve constrained opt
-'''
