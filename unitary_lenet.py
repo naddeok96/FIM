@@ -12,6 +12,7 @@ from torchsummary import summary
 class UniLeNet(nn.Module):
 
     def __init__(self, set_name,
+                       gpu = False,
                        num_classes = 10,
                        num_kernels_layer1 = 6, 
                        num_kernels_layer2 = 16, 
@@ -91,6 +92,9 @@ class UniLeNet(nn.Module):
 
         # Calculate an orthoganal matrix the size of A
         U = torch.nn.init.orthogonal_(torch.empty(A_size,A_size))
+
+        # Push to GPU if True
+        U = U if self.gpu == False else U.cuda()
 
         # Repeat U and U transpose for all batches
         Ut = U.t().view((1, A_size, A_size)).repeat(num_batches, 1, 1)

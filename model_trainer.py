@@ -19,6 +19,7 @@ if gpu == True:
 
 # Initialize
 net = UniLeNet(set_name = "MNIST",
+                gpu = gpu,
                 num_kernels_layer3 = 100)
 
 # Print model's state_dict
