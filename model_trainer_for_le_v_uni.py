@@ -12,7 +12,7 @@ import copy
 # Hyperparameters
 gpu = True
 save_model = True
-n_epochs = 100
+n_epochs = 0
 set_name = "MNIST"
 seed = 1
 
@@ -39,7 +39,7 @@ lenet = AdjLeNet(set_name = set_name,
 pre_trained_net = UniLeNet(set_name = set_name,
                     gpu = gpu,
                     num_kernels_layer3 = 100)
-pre_trained_net.load_state_dict(torch.load('mnist_unilenet_w_acc_95.pt', map_location=torch.device('cpu')))
+pre_trained_net.load_state_dict(torch.load('mnist_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
 pre_trained_net.eval()
 
 # Replace Random Feature Maps with Pretrained
@@ -77,8 +77,8 @@ le_accuracy  = le_academy.test()
 # Save Model
 if save_model:
     # Define File Names
-    uni_filename = "mnist_unilenet_w_acc_" + str(int(round(uni_accuracy * 100, 3))) + ".pt"
-    le_filename  = "mnist_lenet_w_acc_" + str(int(round(le_accuracy * 100, 3))) + ".pt"
+    uni_filename = "mnist_unilenet_w_pretrained_kernels_w_acc_" + str(int(round(uni_accuracy * 100, 3))) + ".pt"
+    le_filename  = "mnist_lenet_w_pretrained_kernels_w_acc_" + str(int(round(le_accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(uni_academy.net.state_dict(), uni_filename)
