@@ -12,7 +12,7 @@ import copy
 # Hyperparameters
 gpu = True
 save_model = True
-n_epochs = 0
+n_epochs = 1000
 set_name = "MNIST"
 seed = 1
 
