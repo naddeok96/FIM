@@ -72,7 +72,7 @@ class Data:
             self.test_loader = torch.utils.data.DataLoader(self.test_set,
                                                            batch_size = self.test_batch_size,
                                                            shuffle = False,
-                                                           num_workers = 8,
+                                                           num_workers = 16,
                                                            pin_memory = True)
 
     # Fucntion to break training set into batches
@@ -88,7 +88,7 @@ class Data:
             train_loader = torch.utils.data.DataLoader(self.train_set,
                                                         batch_size = batch_size,
                                                         shuffle = True,
-                                                        num_workers = 8,
+                                                        num_workers = 16,
                                                         pin_memory=True)
 
         return train_loader
