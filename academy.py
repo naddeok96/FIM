@@ -9,6 +9,7 @@ import numpy as np
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 import math
+import operator
 
 class Academy:
     def __init__(self,
@@ -27,11 +28,20 @@ class Academy:
         # Declare data
         self.data = data
 
+    def freeze(self, frozen_layers):
+        ''' 
+        Removes gradients from the layers to be frozen
+        '''
+        for layer_name ,param in self.net.named_parameters():
+                if layer_name in frozen_layers:
+                    param.requires_grad = False
+
     def train(self, batch_size = 124, 
                     n_epochs = 1, 
                     learning_rate = 0.001, 
                     momentum = 0.9, 
-                    weight_decay = 0.0001):
+                    weight_decay = 0.0001,
+                    frozen_layers = None):
         '''
         Train model on train set images
         '''
@@ -58,11 +68,17 @@ class Academy:
                     inputs, labels = inputs.cuda(), labels.cuda()
 
                 #Set the parameter gradients to zero
-                optimizer.zero_grad()
-                
-                #Forward pass, backward pass, optimize
+                optimizer.zero_grad()   
+
+                #Forward pass
                 outputs = self.net(inputs)        # Forward pass
                 loss = criterion(outputs, labels) # Calculate loss
+
+                # Freeze layers
+                if frozen_layers != None:
+                    self.freeze(frozen_layers) 
+
+                # Backward pass and optimize
                 loss.backward()                   # Find the gradient for each parameter
                 optimizer.step()                  # Parameter update
                 

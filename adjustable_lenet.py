@@ -40,7 +40,7 @@ class AdjLeNet(nn.Module):
             # Layer 1
             self.conv1 = nn.Conv2d(1, # Input channels
                                 self.num_kernels_layer1, # Output Channel 
-                                kernel_size = 4, 
+                                kernel_size = 5, 
                                 stride = 1, 
                                 padding = 2) # Output = (1,28,28)
         else:

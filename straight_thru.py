@@ -77,7 +77,7 @@ for inputs, labels in data.test_loader:
             # Calculate losses
             temp_loss = criterion(output, temp_label)
             temp_loss.backward(retain_graph = True)
-            
+
             # Calculate expectation
             p = soft_max_output.squeeze(0)[i].item()
             fisher += p * (image.grad.data.view(28*28,1) * torch.t(image.grad.data.view(28*28,1)))
