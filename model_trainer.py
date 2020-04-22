@@ -28,7 +28,7 @@ unilenet = UniLeNet(set_name = set_name,
 data = Data(gpu, set_name = "MNIST")
 
 # Enter student network and curriculum data into an academy
-uni_academy  = Academy(lenet, data, gpu)
+uni_academy  = Academy(unilenet, data, gpu)
 
 # Fit Model
 uni_academy.train(n_epochs = n_epochs)
