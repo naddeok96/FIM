@@ -33,7 +33,6 @@ uninet = UniLeNet(set_name = set_name,
 
 torch.manual_seed(seed)
 lenet = AdjLeNet(set_name = set_name,
-                gpu = gpu,
                 num_kernels_layer3 = 100)
 
 # Load pretraind MNIST network
