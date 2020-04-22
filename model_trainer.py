@@ -40,7 +40,7 @@ uni_accuracy  = uni_academy.test()
 # Save Model
 if save_model:
     # Define File Names
-    uni_filename  = "mnist_unilenet_w_acc_" + str(int(round(le_accuracy * 100, 3))) + ".pt"
+    uni_filename  = "mnist_unilenet_w_acc_" + str(int(round(uni_accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(uni_academy.net.state_dict(), uni_filename)
