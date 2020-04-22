@@ -97,6 +97,7 @@ class UniLeNet(nn.Module):
         U = torch.nn.init.orthogonal_(torch.empty(A_size,A_size))
 
         # Repeat U and U transpose for all batches
+        input_tensor = input_tensor if self.gpu == False else input_tensor.cuda()
         Ut = U.t().view((1, A_size, A_size)).repeat(num_batches, 1, 1)
         U = U.view((1, A_size, A_size)).repeat(num_batches, 1, 1)
 
