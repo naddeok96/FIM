@@ -26,7 +26,7 @@ unilenet = UniLeNet(set_name = set_name,
                     num_kernels_layer3 = 100)
 
 # Load data
-data = Data(gpu, set_name = "MNIST")
+data = Data(gpu = gpu, set_name = "MNIST")
 
 # Enter student network and curriculum data into an academy
 uni_academy  = Academy(unilenet, data, gpu)

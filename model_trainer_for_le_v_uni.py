@@ -33,13 +33,14 @@ uninet = UniLeNet(set_name = set_name,
 
 torch.manual_seed(seed)
 lenet = AdjLeNet(set_name = set_name,
+                gpu = gpu,
                 num_kernels_layer3 = 100)
 
 # Load pretraind MNIST network
 pre_trained_net = UniLeNet(set_name = set_name,
                     gpu = gpu,
                     num_kernels_layer3 = 100)
-pre_trained_net.load_state_dict(torch.load('mnist_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
+pre_trained_net.load_state_dict(torch.load('mnist_unilenet_w_acc_95.pt', map_location=torch.device('cpu')))
 pre_trained_net.eval()
 
 # Replace Random Feature Maps with Pretrained
@@ -58,7 +59,7 @@ lenet.conv3.weight.data = pre_trained_net.conv3.weight.data
 lenet.conv3.bias.data   = pre_trained_net.conv3.bias.data
 
 # Load data
-data = Data(gpu, set_name = "MNIST")
+data = Data(gpu = gpu, set_name = "MNIST")
 
 # Enter student network and curriculum data into an academy
 uni_academy = Academy(uninet, data, gpu)
