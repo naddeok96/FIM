@@ -97,6 +97,7 @@ class UniLeNet(nn.Module):
         U = torch.nn.init.orthogonal_(torch.empty(A_size,A_size))
 
         # Push to GPU if True
+        num_batches = num_batches if self.gpu == False else num_batches.cuda()
         A_size = A_size if self.gpu == False else A_size.cuda()
         U = U if self.gpu == False else U.cuda()
 
