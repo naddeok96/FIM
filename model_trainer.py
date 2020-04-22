@@ -22,7 +22,8 @@ if gpu == True:
 
 torch.manual_seed(seed)
 unilenet = UniLeNet(set_name = set_name,
-                   num_kernels_layer3 = 100)
+                    gpu = gpu,
+                    num_kernels_layer3 = 100)
 
 # Load data
 data = Data(gpu, set_name = "MNIST")
