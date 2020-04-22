@@ -90,12 +90,14 @@ class UniLeNet(nn.Module):
         '''
         # Find batch size and feature map size
         num_batches = input_tensor.size()[0]
-        A_size = int(math.sqrt(input_tensor.size()[1]))
+        A_size = int(math.sqrt(input_tensor.size()[1])) 
+
 
         # Calculate an orthoganal matrix the size of A
         U = torch.nn.init.orthogonal_(torch.empty(A_size,A_size))
 
         # Push to GPU if True
+        A_size = A_size if self.gpu == False else A_size.cuda()
         U = U if self.gpu == False else U.cuda()
 
         # Repeat U and U transpose for all batches
