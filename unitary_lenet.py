@@ -96,14 +96,13 @@ class UniLeNet(nn.Module):
         # Calculate an orthoganal matrix the size of A
         U = torch.nn.init.orthogonal_(torch.empty(A_size,A_size))
 
-        # Push to GPU if True
-        num_batches = num_batches if self.gpu == False else num_batches.cuda()
-        A_size = A_size if self.gpu == False else A_size.cuda()
-        U = U if self.gpu == False else U.cuda()
-
         # Repeat U and U transpose for all batches
         Ut = U.t().view((1, A_size, A_size)).repeat(num_batches, 1, 1)
         U = U.view((1, A_size, A_size)).repeat(num_batches, 1, 1)
+
+        # Push to GPU if True
+        Ut = Ut if self.gpu == False else Ut.cuda()
+        U = U if self.gpu == False else U.cuda()
         
         # # Batch muiltply UAU'
         return torch.bmm(torch.bmm(U, # U
