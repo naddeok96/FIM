@@ -45,14 +45,14 @@ pre_trained_net.eval()
 # Replace Random Feature Maps with Pretrained
 uninet.conv1.weight.data = pre_trained_net.conv1.weight.data
 uninet.conv1.bias.data   = pre_trained_net.conv1.bias.data
-uninet.conv2.weight.data = pre_trained_net.conv2.weight
+uninet.conv2.weight.data = pre_trained_net.conv2.weight.data
 uninet.conv2.bias.data   = pre_trained_net.conv2.bias.data
 uninet.conv3.weight.data = pre_trained_net.conv3.weight.data
 uninet.conv3.bias.data   = pre_trained_net.conv3.bias.data
 
 lenet.conv1.weight.data = pre_trained_net.conv1.weight.data
 lenet.conv1.bias.data   = pre_trained_net.conv1.bias.data
-lenet.conv2.weight.data = pre_trained_net.conv2.weight
+lenet.conv2.weight.data = pre_trained_net.conv2.weight.data
 lenet.conv2.bias.data   = pre_trained_net.conv2.bias.data
 lenet.conv3.weight.data = pre_trained_net.conv3.weight.data
 lenet.conv3.bias.data   = pre_trained_net.conv3.bias.data
