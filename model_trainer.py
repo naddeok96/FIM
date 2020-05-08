@@ -11,8 +11,8 @@ from academy import Academy
 
 # Hyperparameters
 gpu = True
-save_model = False
-n_epochs = 1
+save_model = True
+n_epochs = 1000
 set_name = "MNIST"
 seed = 1
 
