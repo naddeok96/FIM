@@ -10,9 +10,9 @@ from data_setup import Data
 from academy import Academy
 
 # Hyperparameters
-gpu = False
+gpu = True
 save_model = False
-n_epochs = 0
+n_epochs = 1
 set_name = "MNIST"
 seed = 1
 
@@ -37,6 +37,7 @@ rand_academy.train(n_epochs = n_epochs)
 
 # Calculate accuracy on test set
 rand_accuracy  = rand_academy.test()
+print(rand_accuracy)
 
 # Save Model
 if save_model:
