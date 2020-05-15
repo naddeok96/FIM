@@ -92,7 +92,6 @@ class RandLeNet(nn.Module):
         num_batches = input_tensor.size()[0]
         A_size = int(math.sqrt(input_tensor.size()[1])) 
 
-
         # Calculate an orthoganal matrix the size of A
         R = torch.rand_like(torch.empty(A_size,A_size))
 
