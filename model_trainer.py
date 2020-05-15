@@ -4,6 +4,7 @@ This script will train a model and save it
 # Imports
 import torch
 from rand_lenet import RandLeNet
+from first_layer_unitary_lenet import FstLayUniLeNet
 from unitary_lenet import UniLeNet
 from adjustable_lenet import AdjLeNet
 from data_setup import Data
@@ -22,7 +23,7 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 torch.manual_seed(seed)
-randlenet = RandLeNet(set_name = set_name,
+net = FstLayUniLeNet(set_name = set_name,
                         gpu = gpu,
                         num_kernels_layer3 = 100)
 
@@ -30,19 +31,19 @@ randlenet = RandLeNet(set_name = set_name,
 data = Data(gpu = gpu, set_name = "MNIST")
 
 # Enter student network and curriculum data into an academy
-rand_academy  = Academy(randlenet, data, gpu)
+academy  = Academy(net, data, gpu)
 
 # Fit Model
-rand_academy.train(n_epochs = n_epochs)
+academy.train(n_epochs = n_epochs)
 
 # Calculate accuracy on test set
-rand_accuracy  = rand_academy.test()
-print(rand_accuracy)
+accuracy  = academy.test()
+print(accuracy)
 
 # Save Model
 if save_model:
     # Define File Names
-    rand_filename  = "mnist_randlenet_w_acc_" + str(int(round(rand_accuracy * 100, 3))) + ".pt"
+    filename  = "mnist_fstlay_unilenet_w_acc_" + str(int(round(rand_accuracy * 100, 3))) + ".pt"
     
     # Save Models
-    torch.save(rand_academy.net.state_dict(), rand_filename)
+    torch.save(academy.net.state_dict(), filename)
