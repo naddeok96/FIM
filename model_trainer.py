@@ -24,7 +24,7 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 torch.manual_seed(seed)
-net = FstLayRandLeNet(set_name = set_name,
+net = FstLayUniLeNet(set_name = set_name,
                         gpu = gpu,
                         num_kernels_layer3 = 100)
 
@@ -44,7 +44,7 @@ print(accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "mnist_fstlay_randlenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "mnist_fstlay_unilenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)

@@ -1,5 +1,5 @@
 '''
-This class builds a LeNet with specified kernels in each layer and Unitary Operator in the last feature map
+This class builds a LeNet with specified kernels in each layer and Unitary Operator on the image
 '''
 # Imports
 from scipy.stats import ortho_group

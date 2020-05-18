@@ -3,7 +3,7 @@ This code will be used as the main code to run all classes
 '''
 # Imports
 import torch
-from adjustable_lenet import AdjLeNet
+from models.classes.adjustable_lenet import AdjLeNet
 from data_setup import Data
 from academy import Academy
 from ossa import OSSA
@@ -28,11 +28,11 @@ data = Data(gpu, set_name)
 
 # Load pretraind MNIST network
 net = AdjLeNet(set_name = set_name, num_kernels_layer3 = 100)
-net.load_state_dict(torch.load('mnist_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
+net.load_state_dict(torch.load('models/pretrained/mnist_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
 net.eval()
 
 # Generate Attacks
-ossa = OSSA(net, data, EPSILON = 0.05, gpu = False)
+ossa = OSSA(net, data, EPSILON = 8, gpu = False)
 ossa.get_attacks()
 
 
