@@ -21,10 +21,10 @@ seed = 1
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 torch.manual_seed(seed)
-net = RandLeNet(set_name = set_name,
+net = FstLayRandLeNet(set_name = set_name,
                         gpu = gpu,
                         num_kernels_layer3 = 100)
 
@@ -44,7 +44,7 @@ print(accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "mnist_randlenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "mnist_fstlay_randlenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
