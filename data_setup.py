@@ -99,11 +99,14 @@ class Data:
         '''
         return image_size.squeeze(0).squeeze(0)
 
-    def get_single_image(self, index = 0,
+    def get_single_image(self, index = "random",
                                show = False):
         '''
         Pulls a single image/label out of test set by index
         '''        
+        if index == "random":
+            index = torch.randint(high = len(self.test_loader.dataset), size = (1,)).item()
+
         # Get image
         image = self.test_set.data[index]
         image = image.type('torch.FloatTensor')
@@ -118,19 +121,20 @@ class Data:
         if show == True:
             fig, ax = plt.subplots()
             fig.suptitle('Label: ' + str(label.item()), fontsize=16)
+            plt.xlabel("Index " + str(index))
             plt.imshow(self.unload(image), cmap='gray', vmin = 0, vmax = 255)
             plt.show()
 
-        return image, label
+        return image, label, index
 
-    def plot_attack(self, image, predicted, attack, adv_predicted):
+    def plot_attack(self, image, predicted, attack, adv_predicted, model_name=""):
         '''
         Plots the image, perturbation and attack
         '''
         # Decalre figure size, figure and title
         figsize = [8, 4]
         fig= plt.figure(figsize=figsize)
-        fig.suptitle('OSSA Attack Summary', fontsize=16)
+        fig.suptitle(model_name + ' OSSA Attack Summary', fontsize=16)
 
         # Reshape image and attack
         image  = self.inverse_transform(self.unload(image.detach().numpy())).view(28,28)

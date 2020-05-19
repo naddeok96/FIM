@@ -14,7 +14,8 @@ class OSSA:
     def __init__(self, net, 
                        data,
                        EPSILON = 8,
-                       gpu = False):
+                       gpu = False,
+                       model_name=""):
 
         super(OSSA,self).__init__()
 
@@ -25,37 +26,33 @@ class OSSA:
         self.gpu = gpu
         self.net   = net if self.gpu == False else net.cuda()
         self.data = data
+        self.model_name = model_name
 
         # Evaluation Tools
         self.criterion = torch.nn.CrossEntropyLoss()
         self.indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
         self.soft_max = torch.nn.Softmax(dim = 1)
 
-    def get_attacks(self):
+    def get_attack_accuracy(self):
         '''
         Test the model on the unseen data in the test set
         '''
         # Test images in test loader
-        attack_data =   {"inputs": "empty",
-                        "labels": "empty",
-                        "attacks": "empty",
-                        "accuracy": "empty",
-                        "attack accuracy": "empty"}
+        attack_accuracy = 0
         count = 0
         for inputs, labels in self.data.test_loader:
-            count =+ 1
+            count += 1
             # Push to gpu
             if self.gpu == True:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
             # Make inputs require gradients
-            inputs.requires_grad_(True)
+            inputs.requires_grad_(True )
 
             #Forward pass
             outputs = self.net(inputs)
             soft_max_output = self.soft_max(outputs)
-            losses = self.indv_criterion(outputs, labels)
-            _, predicted = torch.max(outputs.data, 1)      
+            losses = self.indv_criterion(outputs, labels)  
 
             # Find size parameters
             batch_size  = outputs.size(0)
@@ -85,7 +82,7 @@ class OSSA:
             eig_val_max =  eig_values[:, :, -1]
             eig_vec_max = eig_vectors[:, :, :, -1] # already orthonormal
 
-            # Set the unit norm of the signs of the highest eigenvector to epsilon
+            # Set the unit norm of the highest eigenvector to epsilon
             perturbations = self.EPSILON * eig_vec_max
 
             # Declare attacks as the perturbation added to the image
@@ -106,31 +103,73 @@ class OSSA:
             adv_outputs = self.net(attacks)
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
-            print(count)
-            # for name in attack_data:
-            #     print(name)
-            #     if (name in ["inputs", "labels", "attacks"]) == True and attack_data[name] != "empty":
-            #         print(attack_data[name].size())
-            #     else:
-            #         print(attack_data[name]) 
-
-            # # Save Attack Data
-            # if attack_data["inputs"] == "empty": # If First Batch
-            #     attack_data["inputs"] = inputs
-            #     attack_data["labels"] = labels
-            #     attack_data["attacks"] = attacks
-            #     attack_data["accuracy"] = torch.sum(predicted == labels).item()
-            #     attack_data["attack accuracy"] = torch.sum(adv_predicted == labels).item()
-            # else:
-            #     attack_data["inputs"] = torch.cat((attack_data["inputs"], inputs), 0)
-            #     attack_data["labels"] = torch.cat((attack_data["labels"], labels), 0)
-            #     attack_data["attacks"] = torch.cat((attack_data["attacks"], attacks), 0)
-            #     attack_data["accuracy"] = torch.sum(predicted == labels).item() + attack_data["accuracy"]
-            #     attack_data["attack accuracy"] = torch.sum(adv_predicted == labels).item() + attack_data["attack accuracy"]
-            if count >= 2:
-                exit()
-
+            # Save Attack Accuracy
+            attack_accuracy = torch.sum(adv_predicted == labels).item() + attack_accuracy
             
-            # return attacks, labels, predicted, adv_predicted 
+        # Divide by 
+        attack_accuracy = attack_accuracy / (len(self.data.test_loader.dataset))
+        return attack_accuracy
   
+    def get_attack(self, image, label, plot = False):
+        # Reshape image and make it a variable which requires a gradient
+        image = image.view(1,1,28,28)
+        image = Variable(image, requires_grad = True) if self.gpu == False else Variable(image.cuda(), requires_grad = True)
+
+        # Reshape label
+        label = torch.tensor([label.item()])
+
+        # Calculate Orginal Loss
+        output = self.net(image)
+        soft_max_output = self.soft_max(output)
+        loss = self.criterion(output, label).item()
+        _, predicted = torch.max(soft_max_output.data, 1)
+
+        # Calculate FIM
+        fisher = 0 
+        for i in range(len(output.data[0])):
+            # Cycle through lables (y)
+            temp_label = torch.tensor([i]) if self.gpu == False else torch.tensor([i]).cuda()
+
+            # Reset the gradients
+            self.net.zero_grad()
+            image.grad = None
+
+            # Calculate losses
+            temp_loss = self.criterion(output, temp_label)
+            temp_loss.backward(retain_graph = True)
+
+            # Calculate expectation
+            p = soft_max_output.squeeze(0)[i].item()
+            fisher += p * (image.grad.data.view(28*28,1) * torch.t(image.grad.data.view(28*28,1)))
+
+        # Highest Eigenvalue and vector
+        eig_values, eig_vectors = torch.eig(fisher, eigenvectors = True)
+        eig_val_max = eig_values[0][0]
+        eig_vec_max = eig_vectors[:, 0]
+
+        # Set the unit norm of the signs of the highest eigenvector to epsilon
+        perturbation = self.EPSILON * (eig_vec_max.view(28*28,1) / torch.norm(eig_vec_max.view(28*28,1)))
+
+        # Calculate sign of perturbation
+        attack = (image.view(28*28,1) + perturbation).view(1,1,28,28)
+
+        adv_output = self.net(attack)
+        adv_loss = self.criterion(adv_output, label).item()
+
+        perturbation = perturbation if adv_loss > loss else -perturbation
+
+        # Compute attack and models prediction of it
+        attack = (image.view(28*28,1) + perturbation).view(1,1,28,28)
+
+        adv_output = self.net(attack)
+        _, adv_predicted = torch.max(adv_output.data, 1)
+
+        # Display
+        if plot == True:
+            self.data.plot_attack(image,            # Image
+                                    predicted,      # Prediction
+                                    attack,         # Attack
+                                    adv_predicted,  # Adversrial Prediction
+                                    self.model_name)# Model Name
+        return attack, predicted, adv_predicted
         
