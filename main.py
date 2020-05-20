@@ -22,8 +22,8 @@ set_name = "MNIST"
 save_set = False
 EPSILON = 8
 models = {"mnist_lenet_w_acc_98"                : AdjLeNet(set_name = set_name, num_kernels_layer3 = 100),
-            "mnist_fstlay_randlenet_w_acc_35"   : FstLayRandLeNet(set_name = set_name, gpu = gpu, num_kernels_layer3 = 100),
-            "mnist_fstlay_unilenet_w_acc_30"    : FstLayUniLeNet(set_name = set_name, gpu = gpu, num_kernels_layer3 = 100), 
+            # "mnist_fstlay_randlenet_w_acc_35"   : FstLayRandLeNet(set_name = set_name, gpu = gpu, num_kernels_layer3 = 100),
+            # "mnist_fstlay_unilenet_w_acc_30"    : FstLayUniLeNet(set_name = set_name, gpu = gpu, num_kernels_layer3 = 100), 
             "mnist_randlenet_w_acc_97"          : RandLeNet(set_name = set_name, gpu = gpu, num_kernels_layer3 = 100),
             "mnist_unilenet_w_acc_95"           : UniLeNet(set_name = set_name, gpu = gpu, num_kernels_layer3 = 100)}
 
@@ -36,9 +36,6 @@ if gpu == True:
 # Initialize data
 data = Data(gpu, set_name)
 
-print("=========================================================")
-print("|\t  Model Name\t\t|    Attack Accuracy\t|")
-print("|-------------------------------|-----------------------|")
 for model_name in models:
     # Load pretraind MNIST network
     net = models[model_name]
@@ -47,17 +44,9 @@ for model_name in models:
 
     # Generate Attacks
     ossa = OSSA(net, data, EPSILON = 8, gpu = gpu, model_name=model_name)
-    if model_name == "mnist_lenet_w_acc_98": 
-        print("|" + str(model_name) + "\t\t|\t " + str(float(round(ossa.get_attack_accuracy() * 100, 2))) + "\t\t|")
 
-    elif model_name == "mnist_fstlay_randlenet_w_acc_35": 
-        print("|" + str(model_name) + "|\t " + str(float(round(ossa.get_attack_accuracy() * 100, 2))) + "\t\t|")
+    ossa.get_attack_accuracy()
+    # image, label, _ = data.get_single_image()
+    # ossa.get_attack(image, label, plot = True)
 
-    elif model_name == "mnist_fstlay_unilenet_w_acc_30":
-        print("|" + str(model_name) + " |\t " + str(float(round(ossa.get_attack_accuracy() * 100, 2))) + "\t\t|")
-
-    else:
-        print("|" + str(model_name) + " \t|\t " + str(float(round(ossa.get_attack_accuracy() * 100, 2))) + "\t\t|")
-
-print("=========================================================")
 

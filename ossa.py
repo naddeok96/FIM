@@ -33,12 +33,36 @@ class OSSA:
         self.indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
         self.soft_max = torch.nn.Softmax(dim = 1)
 
+    def add_stats(self, mean1, std1, weight1, mean2, std2, weight2):
+        '''
+        Takes stats of two sets (assumed to be from the same distribution) and combines them
+        Method from https://www.statstodo.com/CombineMeansSDs_Pgm.php
+        '''
+        # Calculate E[x] and E[x^2] of each
+        sig_x1 = weight1 * mean1
+        sig_x2 = weight2 * mean2
+
+        sig_xx1 = ((std1 ** 2) * (weight1 - 1)) + (((sig_x1 ** 2) / weight1))
+        sig_xx2 = ((std2 ** 2) * (weight2 - 1)) + (((sig_x2 ** 2) / weight2))
+
+        # Calculate sums
+        tn  = weight1 + weight2
+        tx  = sig_x1  + sig_x2
+        txx = sig_xx1 + sig_xx2
+
+        # Calculate combined stats
+        mean = tx / tn
+        std = np.sqrt((txx - (tx**2)/tn) / (tn - 1))
+
+        return (mean, std, tn)
+
     def get_attack_accuracy(self):
         '''
         Test the model on the unseen data in the test set
         '''
         # Test images in test loader
         attack_accuracy = 0
+        fooled_max_eig_data = []
         count = 0
         for inputs, labels in self.data.test_loader:
             count += 1
@@ -52,7 +76,8 @@ class OSSA:
             #Forward pass
             outputs = self.net(inputs)
             soft_max_output = self.soft_max(outputs)
-            losses = self.indv_criterion(outputs, labels)  
+            losses = self.indv_criterion(outputs, labels)
+            _, predicted = torch.max(outputs.data, 1) 
 
             # Find size parameters
             batch_size  = outputs.size(0)
@@ -103,12 +128,46 @@ class OSSA:
             adv_outputs = self.net(attacks)
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
+            # Save fooled and unfooled eigenvalues
+            results = torch.cat((eig_val_max.view(-1, 1), 
+                                 adv_predicted.type(torch.FloatTensor).view(-1, 1), 
+                                 predicted.type(torch.FloatTensor).view(-1, 1), 
+                                 labels.type(torch.FloatTensor).view(-1, 1)), 1)
+            correct  = results[results[:, 2] == results[:, 3], :] # Where the classifier predicted correctly
+            fooled   = correct[correct[:, 1] != correct[:, 3], :]   # Where the classifier was orginally correct then fooled
+            unfooled = correct[correct[:, 1] == correct[:, 3], :]
+            
+            fooled_max_eig_data.append((fooled[:,0].mean().item(), fooled[:,0].std().item(), fooled.size(0)))
+            unfooled_max_eig_data.append((unfooled[:,0].mean().item(), unfooled[:,0].std().item(), unfooled.size(0)))
+
             # Save Attack Accuracy
             attack_accuracy = torch.sum(adv_predicted == labels).item() + attack_accuracy
             
         # Divide by 
         attack_accuracy = attack_accuracy / (len(self.data.test_loader.dataset))
-        return attack_accuracy
+
+        # Calculate avg_fooled_max_eig
+        for i, data in enumerate(fooled_max_eig_data):
+            if i == 0:
+                fooled_max_eig_stats = data
+
+            else:
+                fooled_max_eig_stats = self.add_stats(fooled_max_eig_stats[0],
+                                                        fooled_max_eig_stats[1],
+                                                        fooled_max_eig_stats[2],
+                                                        data[0], data[1], data[2])
+        # Calculate avg_fooled_max_eig
+        for i, data in enumerate(unfooled_max_eig_data):
+            if i == 0:
+                unfooled_max_eig_stats = data
+
+            else:
+                unfooled_max_eig_stats = self.add_stats(unfooled_max_eig_stats[0],
+                                                        unfooled_max_eig_stats[1],
+                                                        unfooled_max_eig_stats[2],
+                                                        data[0], data[1], data[2])
+                                                        
+        return attack_accuracy, fooled_max_eig_stats, unfooled_max_eig_stats
   
     def get_attack(self, image, label, plot = False):
         # Reshape image and make it a variable which requires a gradient
