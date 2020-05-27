@@ -93,8 +93,7 @@ class Academy:
 
         #Loop for n_epochs
         for epoch in range(n_epochs):            
-            for i, data in enumerate(train_loader, 0):       
-                print(str(i) + " out of " + str(n_batches))        
+            for i, data in enumerate(train_loader, 0):      
                 # Get inputs and labels from train_loader
                 inputs, labels = data
 
@@ -109,13 +108,14 @@ class Academy:
                 outputs = self.net(inputs)        # Forward pass
 
                 # Generate a unitary matrix 
-                if i == 0:
+                if i == 0 and epoch == 0:
                     U = self.orthogonal_matrix_generator(outputs)
-                elif i == n_batches - 1:
-                    U = U[range(outputs.size(0)), :, :]
                     
                 # Take the unitary cross entropy loss
-                loss = self.unitary_cross_entropy(outputs, labels, U) # Calculate loss
+                if i == n_batches - 1:
+                    loss = self.unitary_cross_entropy(outputs, labels, U[range(outputs.size(0)), :, :]) # Calculate loss
+                else:
+                    loss = self.unitary_cross_entropy(outputs, labels, U)
 
                 # Freeze layers
                 if frozen_layers != None:
