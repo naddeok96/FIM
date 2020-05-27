@@ -35,7 +35,7 @@ if gpu == True:
 
 # Initialize data
 data = Data(gpu, set_name)
-
+print("======================================================================================================")
 for model_name in models:
     # Load pretraind MNIST network
     net = models[model_name]
@@ -45,8 +45,17 @@ for model_name in models:
     # Generate Attacks
     ossa = OSSA(net, data, EPSILON = 8, gpu = gpu, model_name=model_name)
 
-    ossa.get_attack_accuracy()
+    attack_accuracy, fooled_max_eig_stats, unfooled_max_eig_stats = ossa.get_attack_accuracy()
+
+    print(model_name)
+    print("---------------------------------")
+    print("Attack Accuracy: ", attack_accuracy)
+    print("Fooled Max Eig Mean, STD, Number: ", fooled_max_eig_stats)
+    print("Unfooled Max Eig Mean, STD, Number: ", unfooled_max_eig_stats)
+    print("------------------------------------------------------------------------------------------------\n")
     # image, label, _ = data.get_single_image()
     # ossa.get_attack(image, label, plot = True)
+
+print("======================================================================================================")
 
 

@@ -36,6 +36,95 @@ class Academy:
                 if layer_name in frozen_layers:
                     param.requires_grad = False
 
+    def orthogonal_matrix_generator(self, input_tensor):
+        '''
+        input the model outputs [batches, classes]
+        generate orthoganal matrix U the size of classes
+        '''
+        # Find batch size and feature map size
+        num_batches = input_tensor.size(0)
+        num_classes = input_tensor.size(1)
+
+        # Calculate an orthoganal matrix the size of A
+        U = torch.nn.init.orthogonal_(torch.empty(num_classes, num_classes))
+
+        # Push to GPU if True
+        U = U if self.gpu == False else U.cuda()
+
+        # Repeat U and U transpose for all batches
+        Ut = U.t().view((1, num_classes, num_classes)).repeat(num_batches, 1, 1)
+        U = U.view((1, num_classes, num_classes)).repeat(num_batches, 1, 1)
+
+        return U
+    
+    def unitary_cross_entropy(self, input_tensor, target, U):
+        '''
+        Takes the cross entropy loss of the input oftmaxed and left muiltipled by an orthoganal matrix (U)
+        with respect to the target
+        '''
+        # Find batch size and feature map size
+        num_batches = input_tensor.size(0)
+        num_classes = input_tensor.size(1)
+
+        # Left muiltiply batches of softmax output  witht the orthogonal matrix
+        left_mult_product = torch.bmm(U, F.log_softmax(input_tensor, 1).view((num_batches, num_classes , 1))).view((num_batches, num_classes))
+        
+        # Return the cross entropy loss wrt the target
+        return F.nll_loss(left_mult_product, target)
+
+    def unitary_train(self, batch_size = 124, 
+                            n_epochs = 1, 
+                            learning_rate = 0.001, 
+                            momentum = 0.9, 
+                            weight_decay = 0.0001,
+                            frozen_layers = None):
+        '''
+        Train model on train set images with a unitary cross-entropy loss
+        '''
+        #Get training data
+        train_loader = self.data.get_train_loader(batch_size)
+        n_batches = len(train_loader)
+
+        #Create optimizer function
+        optimizer = torch.optim.SGD(self.net.parameters(), 
+                                    lr = learning_rate, 
+                                    momentum = momentum,
+                                    weight_decay = weight_decay)    
+
+        #Loop for n_epochs
+        for epoch in range(n_epochs):            
+            for i, data in enumerate(train_loader, 0):       
+                print(str(i) + " out of " + str(n_batches))        
+                # Get inputs and labels from train_loader
+                inputs, labels = data
+
+                # Push to gpu
+                if self.gpu == True:
+                    inputs, labels = inputs.cuda(), labels.cuda()
+
+                #Set the parameter gradients to zero
+                optimizer.zero_grad()   
+
+                #Forward pass
+                outputs = self.net(inputs)        # Forward pass
+
+                # Generate a unitary matrix 
+                if i == 0:
+                    U = self.orthogonal_matrix_generator(outputs)
+                elif i == n_batches - 1:
+                    U = U[range(outputs.size(0)), :, :]
+                    
+                # Take the unitary cross entropy loss
+                loss = self.unitary_cross_entropy(outputs, labels, U) # Calculate loss
+
+                # Freeze layers
+                if frozen_layers != None:
+                    self.freeze(frozen_layers) 
+
+                # Backward pass and optimize
+                loss.backward()                   # Find the gradient for each parameter
+                optimizer.step()                  # Parameter update
+
     def train(self, batch_size = 124, 
                     n_epochs = 1, 
                     learning_rate = 0.001, 
@@ -49,12 +138,12 @@ class Academy:
         train_loader = self.data.get_train_loader(batch_size)
         n_batches = len(train_loader)
 
-        #Create our loss and optimizer functions
-        criterion = torch.nn.CrossEntropyLoss()
+        #Create optimizer and loss functions
         optimizer = torch.optim.SGD(self.net.parameters(), 
                                     lr = learning_rate, 
                                     momentum = momentum,
                                     weight_decay = weight_decay)
+        criterion = torch.nn.CrossEntropyLoss()
 
         #Loop for n_epochs
         for epoch in range(n_epochs):            
@@ -72,7 +161,7 @@ class Academy:
 
                 #Forward pass
                 outputs = self.net(inputs)        # Forward pass
-                loss = criterion(outputs, labels) # Calculate loss
+                loss = criterion (outputs, labels) # Calculate loss
 
                 # Freeze layers
                 if frozen_layers != None:

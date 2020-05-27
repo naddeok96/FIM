@@ -4,6 +4,7 @@ This class implements the One Step Spectral Attack as formulated in the paper
 '''
 # Imports
 import torch
+import torch.nn.functional as F
 import operator
 from torch.autograd import Variable
 import numpy as np
@@ -28,10 +29,11 @@ class OSSA:
         self.data = data
         self.model_name = model_name
 
-        # Evaluation Tools
+        # Evaluation Tools 
         self.criterion = torch.nn.CrossEntropyLoss()
         self.indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
         self.soft_max = torch.nn.Softmax(dim = 1)
+
 
     def add_stats(self, mean1, std1, weight1, mean2, std2, weight2):
         '''
@@ -63,6 +65,7 @@ class OSSA:
         # Test images in test loader
         attack_accuracy = 0
         fooled_max_eig_data = []
+        unfooled_max_eig_data = []
         count = 0
         for inputs, labels in self.data.test_loader:
             count += 1
@@ -78,6 +81,10 @@ class OSSA:
             soft_max_output = self.soft_max(outputs)
             losses = self.indv_criterion(outputs, labels)
             _, predicted = torch.max(outputs.data, 1) 
+
+            U = self.orthogonal_matrix_generator(outputs)
+            self.unitary_cross_entropy(outputs, labels, U)
+            exit()
 
             # Find size parameters
             batch_size  = outputs.size(0)
