@@ -92,7 +92,7 @@ class Academy:
                                     weight_decay = weight_decay)    
 
         #Loop for n_epochs
-        for epoch in range(n_epochs):            
+        for epoch in range(n_epochs):
             for i, data in enumerate(train_loader, 0):      
                 # Get inputs and labels from train_loader
                 inputs, labels = data
