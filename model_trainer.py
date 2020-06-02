@@ -4,13 +4,13 @@ This script will train a model and save it
 # Imports
 import torch
 from ossa import OSSA
-from models.classes.rand_lenet import RandLeNet
-from models.classes.first_layer_unitary_lenet import FstLayUniLeNet
-from models.classes.first_layer_rand_lenet import FstLayRandLeNet
-from models.classes.unitary_lenet import UniLeNet
-from models.classes.adjustable_lenet import AdjLeNet
 from data_setup import Data
 from academy import Academy
+from models.classes.rand_lenet                  import RandLeNet
+from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
+from models.classes.first_layer_rand_lenet      import FstLayRandLeNet
+from models.classes.unitary_lenet               import UniLeNet
+from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
 gpu = True
@@ -27,17 +27,22 @@ if gpu == True:
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
-net = AdjLeNet(set_name = set_name,
-                num_kernels_layer3 = 100)
+net = FstLayUniLeNet(set_name = set_name,
+                     gpu = gpu,
+                     num_kernels_layer3 = 100)
 
 # Load data
 data = Data(gpu = gpu, set_name = "MNIST")
+
+# Generate Orthogonal Matrix
+image, _, _ = data.get_single_image()
+net.U = net.get_orthogonal_matrix(image.size(-1)**2)
 
 # Enter student network and curriculum data into an academy
 academy  = Academy(net, data, gpu)
 
 # Fit Model
-academy.unitary_train(n_epochs = n_epochs)
+academy.train(n_epochs = n_epochs)
 
 # Calculate accuracy on test set
 accuracy  = academy.test()
@@ -46,7 +51,7 @@ print(accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "mnist_uniloss_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "mnist_fstlay_uni_constant_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
