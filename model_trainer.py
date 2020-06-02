@@ -23,7 +23,7 @@ seed = 1
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
@@ -33,10 +33,6 @@ net = FstLayUniLeNet(set_name = set_name,
 
 # Load data
 data = Data(gpu = gpu, set_name = "MNIST")
-
-# Generate Orthogonal Matrix
-image, _, _ = data.get_single_image()
-net.U = net.get_orthogonal_matrix(image.size(-1)**2)
 
 # Enter student network and curriculum data into an academy
 academy  = Academy(net, data, gpu)
