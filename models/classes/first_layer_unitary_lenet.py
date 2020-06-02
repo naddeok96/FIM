@@ -13,6 +13,7 @@ class FstLayUniLeNet(nn.Module):
 
     def __init__(self, set_name,
                        gpu = False,
+                       U = None,
                        num_classes = 10,
                        num_kernels_layer1 = 6, 
                        num_kernels_layer2 = 16, 
@@ -21,10 +22,13 @@ class FstLayUniLeNet(nn.Module):
 
         super(FstLayUniLeNet,self).__init__()
 
+        # Decalre Hyperparameters
         self.set_name = set_name
 
         self.gpu = gpu
-        
+
+        self.U = U
+
         self.num_classes = num_classes
 
         self.num_kernels_layer1 = num_kernels_layer1
@@ -80,34 +84,42 @@ class FstLayUniLeNet(nn.Module):
 
         self.fc2 = nn.Linear(self.num_nodes_fc_layer, self.num_classes)
 
+    # Generate orthoganal matrix
+    def get_orthogonal_matrix(self, size):
+        '''
+        Generates an orthoganal matrix of input size
+        '''
+        # Calculate an orthoganal matrix the size of A
+        return torch.nn.init.orthogonal_(torch.empty(size, size))
+
     # Orthogonal transformation
     def orthogonal_operation(self, input_tensor):
         '''
-        input tensor A 
-        generate orthoganal matrix U the size of A
+        input tensor A nxn
+        generate orthoganal matrix U the size of (n*n)x(n*n)
 
-        Returns UAU'
+        Returns UA
         '''
         # Find batch size and feature map size
         num_batches = input_tensor.size()[0]
-        A_size = int(input_tensor.size()[2])
+        A_side_size = int(input_tensor.size()[2])
 
-
-        # Calculate an orthoganal matrix the size of A
-        U = torch.nn.init.orthogonal_(torch.empty(A_size,A_size))
+        # Determine if U needs to be determined
+        if self.U == None:
+            U = self.get_orthogonal_matrix(A_side_size**2)
+        else:
+            U = self.U
 
         # Push to GPU if True
         U = U if self.gpu == False else U.cuda()
 
         # Repeat U and U transpose for all batches
         input_tensor = input_tensor if self.gpu == False else input_tensor.cuda()
-        Ut = U.t().view((1, A_size, A_size)).repeat(num_batches, 1, 1)
-        U = U.view((1, A_size, A_size)).repeat(num_batches, 1, 1)
+        Ut = U.t().view((1, A_side_size**2, A_side_size**2)).repeat(num_batches, 1, 1)
+        U = U.view((1, A_side_size**2, A_side_size**2)).repeat(num_batches, 1, 1)
         
-        # # Batch muiltply UAU'
-        return torch.bmm(torch.bmm(U, # U
-                                   input_tensor.view(num_batches, A_size, A_size)), # A resized
-                                   Ut).view(num_batches, 1, A_size, A_size) # Ut then resize output
+        # Batch muiltply UA
+        return torch.bmm(U, input_tensor.view(num_batches, A_side_size**2, 1)).view(num_batches, 1, A_side_size, A_side_size)
 
 
     def forward(self, x):
