@@ -13,11 +13,11 @@ from models.classes.unitary_lenet               import UniLeNet
 from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
-gpu = True
-save_model = True
-n_epochs = 1000
-set_name = "MNIST"
-seed = 1
+gpu         = True
+save_model  = True
+n_epochs    = 2000
+set_name    = "MNIST"
+seed        = 1
 
 # Push to GPU if necessary
 if gpu == True:
@@ -28,8 +28,11 @@ if gpu == True:
 # Declare seed and initalize network
 torch.manual_seed(seed)
 net = FstLayUniLeNet(set_name = set_name,
-                     gpu = gpu,
-                     num_kernels_layer3 = 100)
+                        gpu = gpu,
+                        num_kernels_layer1 = 12, 
+                        num_kernels_layer2 = 32, 
+                        num_kernels_layer3 = 240,
+                        num_nodes_fc_layer = 168)
 
 # Load data
 data = Data(gpu = gpu, set_name = "MNIST")
@@ -47,7 +50,7 @@ print(accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "mnist_fstlay_uni_constant_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "mnist_fstlay_uni_stoc_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
