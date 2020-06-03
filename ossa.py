@@ -56,7 +56,61 @@ class OSSA:
         mean = tx / tn
         std = np.sqrt((txx - (tx**2)/tn) / (tn - 1))
 
-        return (mean, std, tn)
+        return mean, std, tn
+
+    def get_fim(self, images, labels):
+        '''
+        Finds the Fisher Information Matrix of model given images and labels
+        '''
+        # Push to gpu
+        images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
+        labels = labels if self.gpu == False else labels.cuda()
+
+        # Make images require gradients
+        images.requires_grad_(True)
+
+        #Forward pass
+        outputs = self.net(images)
+        soft_max_output = self.soft_max(outputs)
+        losses = self.indv_criterion(outputs, labels)
+        _, predicted = torch.max(outputs.data, 1)
+
+        # Find size parameters
+        batch_size  = outputs.size(0)
+        num_classes = outputs.size(1)
+
+        # Calculate FIMs
+        fisher = 0 
+        for i in range(num_classes):
+            # Clear Gradients
+            self.net.zero_grad()
+            images.grad = None
+
+            # Cycle through lables (y)
+            temp_labels = torch.tensor([i]).repeat(batch_size) 
+            temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
+
+            # Calculate losses
+            temp_loss = self.criterion(outputs, temp_labels)
+            temp_loss.backward(retain_graph = True)
+                                    
+            # Calculate expectation
+            p = soft_max_output[:,i].view(batch_size, 1, 1, 1)
+            fisher += p * torch.bmm(images.grad.data.view(batch_size, 28*28, 1), torch.transpose(images.grad.data.view(batch_size, 28*28, 1), 1, 2)).view(batch_size, 1, 28*28, 28*28)
+       
+        return fisher, batch_size, num_classes, losses, predicted
+
+    def get_eigens(self, fisher):
+        '''
+        Returns the highest eigenvalue and associated eigenvector
+        '''
+        # Highest Eigenvalue and vector
+        eig_values, eig_vectors = torch.symeig(fisher, eigenvectors = True, upper = True)            
+        eig_val_max =  eig_values[:, :, -1]
+        eig_vec_max = eig_vectors[:, :, :, -1] # already orthonormal
+
+        return eig_val_max, eig_vec_max
+
 
     def get_attack_accuracy(self):
         '''
@@ -69,50 +123,14 @@ class OSSA:
         count = 0
         for inputs, labels in self.data.test_loader:
             count += 1
-            # Push to gpu
-            if self.gpu == True:
-                inputs, labels = inputs.cuda(), labels.cuda()
+            print(count)
+            if count >= 2:
+                break
+            # Calculate FIM
+            fisher, batch_size, num_classes, losses, predicted = self.get_fim(inputs, labels)
 
-            # Make inputs require gradients
-            inputs.requires_grad_(True )
-
-            #Forward pass
-            outputs = self.net(inputs)
-            soft_max_output = self.soft_max(outputs)
-            losses = self.indv_criterion(outputs, labels)
-            _, predicted = torch.max(outputs.data, 1) 
-
-            U = self.orthogonal_matrix_generator(outputs)
-            self.unitary_cross_entropy(outputs, labels, U)
-            exit()
-
-            # Find size parameters
-            batch_size  = outputs.size(0)
-            num_classes = outputs.size(1)
-
-            # Calculate FIMs
-            fisher = 0 
-            for i in range(num_classes):
-                # Clear Gradients
-                self.net.zero_grad()
-                inputs.grad = None
-
-                # Cycle through lables (y)
-                temp_labels = torch.tensor([i]).repeat(batch_size) 
-                temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
-
-                # Calculate losses
-                temp_loss = self.criterion(outputs, temp_labels)
-                temp_loss.backward(retain_graph = True)
-                
-                # Calculate expectation
-                p = soft_max_output[:,i].view(batch_size, 1, 1, 1)
-                fisher += p * torch.bmm(inputs.grad.data.view(batch_size, 28*28, 1), torch.transpose(inputs.grad.data.view(batch_size, 28*28, 1), 1, 2)).view(batch_size, 1, 28*28, 28*28)
-            
             # Highest Eigenvalue and vector
-            eig_values, eig_vectors = torch.symeig(fisher, eigenvectors = True, upper = True)            
-            eig_val_max =  eig_values[:, :, -1]
-            eig_vec_max = eig_vectors[:, :, :, -1] # already orthonormal
+            eig_val_max, eig_vec_max = self.get_eigens(fisher)
 
             # Set the unit norm of the highest eigenvector to epsilon
             perturbations = self.EPSILON * eig_vec_max
@@ -127,7 +145,7 @@ class OSSA:
             # If losses has not increased flip direction
             signs = (losses < adv_losses).type(torch.float) 
             signs[signs == 0] = -1
-            perturbations = signs.view(batch_size, 1, 1) * perturbations
+            perturbations = signs.view(-1, 1, 1) * perturbations
           
             # Compute attack and models prediction of it
             attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
@@ -135,17 +153,39 @@ class OSSA:
             adv_outputs = self.net(attacks)
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
-            # Save fooled and unfooled eigenvalues
-            results = torch.cat((eig_val_max.view(-1, 1), 
-                                 adv_predicted.type(torch.FloatTensor).view(-1, 1), 
+            # Determine fooled and unfooled attacks
+            results = torch.cat((adv_predicted.type(torch.FloatTensor).view(-1, 1), 
                                  predicted.type(torch.FloatTensor).view(-1, 1), 
                                  labels.type(torch.FloatTensor).view(-1, 1)), 1)
-            correct  = results[results[:, 2] == results[:, 3], :] # Where the classifier predicted correctly
-            fooled   = correct[correct[:, 1] != correct[:, 3], :]   # Where the classifier was orginally correct then fooled
-            unfooled = correct[correct[:, 1] == correct[:, 3], :]
+            correct  = results[results[:, 1] == results[:, 2], :] # Where the classifier predicted correctly
+            fooled_indices   = [i for i, x in enumerate(correct[:, 0] != correct[:, 2]) if x] # Where the classifier was orginally correct then fooled
+            unfooled_indices = [i for i, x in enumerate(correct[:, 0] == correct[:, 2]) if x] # Where the classifer was orginally correct and still correct
             
-            fooled_max_eig_data.append((fooled[:,0].mean().item(), fooled[:,0].std().item(), fooled.size(0)))
-            unfooled_max_eig_data.append((unfooled[:,0].mean().item(), unfooled[:,0].std().item(), unfooled.size(0)))
+            # Calaulate attacks FIM
+            fooled_fisher,_ ,_ ,_ ,_    = self.get_fim(attacks[fooled_indices], labels[fooled_indices])
+            unfooled_fisher,_ ,_ ,_ ,_  = self.get_fim(attacks[unfooled_indices], labels[unfooled_indices])
+
+            # Highest Eigenvalue and vector of attacks
+            fooled_eig_val_max, fooled_eig_vec_max     = self.get_eigens(fooled_fisher)
+            fooled_eig_vec_max = signs[fooled_indices].view(-1, 1, 1) * fooled_eig_vec_max
+
+            unfooled_eig_val_max, unfooled_eig_vec_max = self.get_eigens(unfooled_fisher)
+            unfooled_eig_vec_max = signs[unfooled_indices].view(-1, 1, 1) * unfooled_eig_vec_max
+
+            # Calculate cosine similarity of images and attacks
+            fooled_cos_sim = abs(torch.cosine_similarity(fooled_eig_vec_max, perturbations[fooled_indices] , dim=2, eps=1e-6))
+            unfooled_cos_sim = abs(torch.cosine_similarity(unfooled_eig_vec_max, perturbations[unfooled_indices] , dim=2, eps=1e-6))
+
+            fooled_max_eig_data.append((fooled_eig_val_max.view(-1).mean().item(), # Mean eigenvalue of image
+                                        fooled_eig_val_max.view(-1).std().item(),  # STD eigenvalue of image
+                                        fooled_cos_sim.view(-1).mean().item(),     # Mean cosine similarity between image and attack eigenvectors
+                                        fooled_cos_sim.view(-1).std().item(),      # STD cosine similarity between image and attack eigenvectors
+                                        len(fooled_indices)))
+            unfooled_max_eig_data.append((unfooled_eig_val_max.view(-1).mean().item(), 
+                                        unfooled_eig_val_max.view(-1).std().item(), 
+                                        unfooled_cos_sim.view(-1).mean().item(),    
+                                        unfooled_cos_sim.view(-1).std().item(),
+                                        len(unfooled_indices)))
 
             # Save Attack Accuracy
             attack_accuracy = torch.sum(adv_predicted == labels).item() + attack_accuracy
@@ -159,20 +199,33 @@ class OSSA:
                 fooled_max_eig_stats = data
 
             else:
-                fooled_max_eig_stats = self.add_stats(fooled_max_eig_stats[0],
-                                                        fooled_max_eig_stats[1],
-                                                        fooled_max_eig_stats[2],
-                                                        data[0], data[1], data[2])
+                val_mean, val_std, num_data = self.add_stats(fooled_max_eig_stats[0],
+                                                            fooled_max_eig_stats[1],
+                                                            fooled_max_eig_stats[4],
+                                                            data[0], data[1], data[4])
+                vec_mean, vec_std, num_data = self.add_stats(fooled_max_eig_stats[2],
+                                                            fooled_max_eig_stats[3],
+                                                            fooled_max_eig_stats[4],
+                                                            data[2], data[3], data[4])
+                fooled_max_eig_stats = (val_mean, val_std,
+                                        vec_mean, vec_std, num_data)
+
         # Calculate avg_fooled_max_eig
         for i, data in enumerate(unfooled_max_eig_data):
             if i == 0:
                 unfooled_max_eig_stats = data
 
             else:
-                unfooled_max_eig_stats = self.add_stats(unfooled_max_eig_stats[0],
-                                                        unfooled_max_eig_stats[1],
-                                                        unfooled_max_eig_stats[2],
-                                                        data[0], data[1], data[2])
+                val_mean, val_std, num_data = self.add_stats(unfooled_max_eig_stats[0],
+                                                                unfooled_max_eig_stats[1],
+                                                                unfooled_max_eig_stats[4],
+                                                                data[0], data[1], data[4])
+                vec_mean, vec_std, num_data = self.add_stats(unfooled_max_eig_stats[2],
+                                                                unfooled_max_eig_stats[3],
+                                                                unfooled_max_eig_stats[4],
+                                                                data[2], data[3], data[4])
+                unfooled_max_eig_stats = (val_mean, val_std,
+                                        vec_mean, vec_std, num_data)
                                                         
         return attack_accuracy, fooled_max_eig_stats, unfooled_max_eig_stats
   
