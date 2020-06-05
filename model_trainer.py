@@ -14,7 +14,7 @@ from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
 gpu         = True
-save_model  = False
+save_model  = True
 n_epochs    = 2000
 set_name    = "MNIST"
 seed        = 1
@@ -27,12 +27,12 @@ if gpu == True:
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
-net = AdjLeNet(set_name = set_name,
-                        #gpu = gpu,
-                        num_kernels_layer1 = 12, 
-                        num_kernels_layer2 = 32, 
-                        num_kernels_layer3 = 240,
-                        num_nodes_fc_layer = 168)
+net = FstLayUniLeNet(set_name = set_name,
+                        gpu = gpu,
+                        num_kernels_layer1 = 8, 
+                        num_kernels_layer2 = 24, 
+                        num_kernels_layer3 = 160,
+                        num_nodes_fc_layer = 126)
 
 # Load data
 data = Data(gpu = gpu, set_name = "MNIST")
