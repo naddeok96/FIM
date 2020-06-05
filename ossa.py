@@ -122,10 +122,10 @@ class OSSA:
         unfooled_max_eig_data = []
         count = 0
         for inputs, labels in self.data.test_loader:
-            count += 1
-            print(count)
-            if count >= 2:
-                break
+            # count += 1
+            # print(count)
+            # if count >= 2:
+            #     break
             # Calculate FIM
             fisher, batch_size, num_classes, losses, predicted = self.get_fim(inputs, labels)
 

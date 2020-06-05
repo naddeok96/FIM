@@ -49,7 +49,7 @@ for model_name in models:
 
     attack_accuracy, fooled_max_eig_stats, unfooled_max_eig_stats = ossa.get_attack_accuracy()
 
-    print(model_name)
+    print("Model: ", model_name)
     print("---------------------------------")
     print("Attack Accuracy: ", attack_accuracy)
     print("---------------------------------")
