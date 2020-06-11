@@ -27,11 +27,9 @@ if gpu == True:
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
-U = net.get_orthogonal_matrix(28**2)
-
 net = FstLayUniLeNet(set_name = set_name,
-                        gpu = gpu, 
-                        U = U)
+                        gpu = gpu)
+net.U = net.get_orthogonal_matrix(28**2)
 
 # Load data
 data = Data(gpu = gpu, set_name = "MNIST")
