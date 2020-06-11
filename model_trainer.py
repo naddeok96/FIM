@@ -42,7 +42,7 @@ academy.train(n_epochs = n_epochs)
 
 # Calculate accuracy on test set
 accuracy  = academy.test()
-print(net.U)
+print(accuracy)
 
 # Save Model
 if save_model:
