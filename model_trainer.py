@@ -51,3 +51,7 @@ if save_model:
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
+
+    # Save U
+    if net.U is not None:
+        torch.save(net.U, "U_" + filename)
