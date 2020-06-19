@@ -100,16 +100,20 @@ class OSSA:
        
         return fisher, batch_size, num_classes, losses, predicted
 
-    def get_eigens(self, fisher):
+    def get_eigens(self, fisher, max_only = False):
         '''
         Returns the highest eigenvalue and associated eigenvector
         '''
-        # Highest Eigenvalue and vector
-        eig_values, eig_vectors = torch.symeig(fisher, eigenvectors = True, upper = True)            
-        eig_val_max =  eig_values[:, :, -1]
-        eig_vec_max = eig_vectors[:, :, :, -1] # already orthonormal
+        # Find eigen system
+        eig_values, eig_vectors = torch.symeig(fisher, eigenvectors = True, upper = True)       
 
-        return eig_val_max, eig_vec_max
+        if max_only == True:     
+            eig_val_max =  eig_values[:, :, -1]
+            eig_vec_max = eig_vectors[:, :, :, -1] # already orthonormal
+            return eig_val_max, eig_vec_max
+
+        else:
+            return eig_values, eig_vectors
 
 
     def get_attack_accuracy(self):
@@ -291,4 +295,5 @@ class OSSA:
                                     adv_predicted,  # Adversrial Prediction
                                     self.model_name)# Model Name
         return attack, predicted, adv_predicted
+        
         

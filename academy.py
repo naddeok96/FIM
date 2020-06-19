@@ -47,6 +47,7 @@ class Academy:
 
         # Calculate an orthoganal matrix the size of A
         U = torch.nn.init.orthogonal_(torch.empty(num_classes, num_classes))
+        torch.save(U, "U_from_uni_train")
 
         # Push to GPU if True
         U = U if self.gpu == False else U.cuda()
@@ -63,7 +64,7 @@ class Academy:
         with respect to the target
         '''
         # Find batch size and feature map size
-        num_batches = input_tensor.size(0)
+        batche_size = input_tensor.size(0)
         num_classes = input_tensor.size(1)
 
         # Left muiltiply batches of softmax output  witht the orthogonal matrix
