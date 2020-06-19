@@ -13,7 +13,7 @@ from models.classes.unitary_lenet               import UniLeNet
 from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
-gpu         = True
+gpu         = False
 save_model  = True
 n_epochs    = 1000
 set_name    = "MNIST"

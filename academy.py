@@ -64,7 +64,7 @@ class Academy:
         with respect to the target
         '''
         # Find batch size and feature map size
-        batche_size = input_tensor.size(0)
+        num_batches = input_tensor.size(0)
         num_classes = input_tensor.size(1)
 
         # Left muiltiply batches of softmax output  witht the orthogonal matrix
