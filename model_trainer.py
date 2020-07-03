@@ -39,7 +39,7 @@ academy  = Academy(net, data, gpu)
 academy.train(n_epochs = n_epochs)
 
 # Calculate accuracy on test set
-accuracy  = academy.unitary_test()
+accuracy  = academy.test()
 print(accuracy)
 
 # Save Model
