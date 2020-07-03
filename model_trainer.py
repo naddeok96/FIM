@@ -23,7 +23,7 @@ seed        = 1
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "4"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
@@ -36,16 +36,16 @@ data = Data(gpu = gpu, set_name = "MNIST")
 academy  = Academy(net, data, gpu)
 
 # Fit Model
-academy.unitary_train(n_epochs = n_epochs)
+academy.train(n_epochs = n_epochs)
 
 # Calculate accuracy on test set
-accuracy  = academy.test()
+accuracy  = academy.unitary_test()
 print(accuracy)
 
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "mnist_softmax_uni_const_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "classic_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)

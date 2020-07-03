@@ -1,5 +1,0 @@
-Unable to init server: Could not connect: Connection refused
-Unable to init server: Could not connect: Connection refused
-
-(model_trainer.py:52047): Gdk-CRITICAL **: 12:30:11.067: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-0.2051

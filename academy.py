@@ -126,6 +126,39 @@ class Academy:
                 loss.backward()                   # Find the gradient for each parameter
                 optimizer.step()                  # Parameter update
 
+    def unitary_test(self, U):
+        '''
+        Test the model on the unseen data in the test set
+        '''
+        # Initialize
+        total_tested = 0
+        correct = 0
+
+        # Test images in test loader
+        for inputs, labels in self.data.test_loader:
+            # Push to gpu
+            if self.gpu == True:
+                inputs, labels = inputs.cuda(), labels.cuda()
+
+            #Forward pass
+            outputs = self.net(inputs)
+
+            # Adjust sizes
+            batch_U = U.view(1, 10, 10).repeat(outputs.size(0), 1, 1)
+            outputs = outputs.view(outputs.size(0), outputs.size(1), 1)
+
+            # Find unitary output
+            uni_output = torch.bmm(batch_U, outputs)
+            _, predicted = torch.max(uni_output.data, 1)
+
+            # Update runnin sum
+            total_tested += labels.size(0)
+            correct += (predicted == labels).sum().item()
+        
+        # Calculate accuracy
+        accuracy = (correct/total_tested)
+        return accuracy
+
     def train(self, batch_size = 124, 
                     n_epochs = 1, 
                     learning_rate = 0.001, 

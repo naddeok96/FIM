@@ -106,7 +106,7 @@ class FstLayUniLeNet(nn.Module):
 
         # Determine if U needs to be determined
         if self.U == None:
-            U = self.get_orthogonal_matrix(A_side_size**2)
+            U = torch.eye(A_side_size**2)
         else:
             U = self.U
 
@@ -115,16 +115,16 @@ class FstLayUniLeNet(nn.Module):
 
         # Repeat U and U transpose for all batches
         input_tensor = input_tensor if self.gpu == False else input_tensor.cuda()
-        Ut = U.t().view((1, A_side_size**2, A_side_size**2)).repeat(batch_size, 1, 1)
+        # Ut = U.t().view((1, A_side_size**2, A_side_size**2)).repeat(batch_size, 1, 1)
         U = U.view((1, A_side_size**2, A_side_size**2)).repeat(batch_size, 1, 1)
         
         # Batch muiltply UA
         return torch.bmm(U, input_tensor.view(batch_size, A_side_size**2, 1)).view(batch_size, 1, A_side_size, A_side_size)
 
-
     def forward(self, x):
         
         x = self.orthogonal_operation(x)
+        
         x = torch.tanh(self.conv1(x))
         x = self.pool1(x)
         x = torch.tanh(self.conv2(x))

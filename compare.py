@@ -32,7 +32,7 @@ data = Data(gpu, set_name)
 
 # Load pretraind MNIST network
 # LeNet
-lenet = AdjLeNet(set_name = set_name)
+lenet = FstLayUniLeNet(set_name = set_name)
 lenet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
 lenet.eval()
 
@@ -43,48 +43,51 @@ uni_const_lenet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet
 uni_const_lenet.eval()
 
 # Load into a dictionary
-networks = {"lenet":             {"object": lenet,
+networks = {"lenet"             :   {"object": lenet,
+                                    "fisher" : [],
                                     "eigenvalues"  : [],
                                     "eigenvectors" : []},
 
-            "uni_const_lenet" :  {"object": uni_const_lenet,
+            "uni_const_lenet"   :  {"object": uni_const_lenet,
+                                    "fisher" : [],
                                     "eigenvalues"  : [],
                                     "eigenvectors" : []}}
 
-
 # Cycle through images
 table = PrettyTable()
-table.field_names = networks.keys()
-num_images = 2
+num_images = 1
 for j in range(num_images):
     # Use just one image
     image, label, _ = data.get_single_image()
     
     # Cycle through networks
-    for net in networks:
+    for net_name in networks:
         # Load network and data into an attacker object
-        attacker = OSSA(networks[net]["object"], data)
+        attacker = OSSA(networks[net_name]["object"], data)
 
         # Generate FIMs
-        fisher, batch_size, num_classes, losses, predicted = attacker.get_fim(image, label)
+        fisher, batch_size, num_classes, losses, predicted = attacker.get_fim_new(image, label, networks[net_name]["object"].U)
 
-        # Determine Eigensystem
+        # # Determine Eigensystem
         eig_values, eig_vectors = attacker.get_eigens(fisher)
-
-        table.add_column(net, torch.flip(eig_values, [2]).detach().numpy())
         
-        # # Save
-        # networks[net]["eigenvalues"].append(torch.flip(eig_values, [2])) 
-        # networks[net]["eigenvectors"].append(eig_vectors) 
-
-    mixed = torch.cat((networks["lenet"]["eigenvalues"][-1], networks["uni_const_lenet"]["eigenvalues"][-1]), 0)
-    mixed = mixed.view(2, 784).detach().numpy()
-
-    table.clear_rows()
-    for i in range(np.shape(mixed)[1]):
-        table.add_row(list(mixed[:, i]))
-
+        # Save
+        networks[net_name]["fisher"].append(fisher)
+        table.add_column(net_name, torch.flip(eig_values, [2]).view(-1).detach().numpy())
+    
+    # Display
     print("Comparing Eigenvalues for image " + str(j + 1) + " of " + str(num_images))
     print(table)
     print("\n\n")
 
+G = networks["lenet"]["fisher"][0].view(784, 784)
+newG = networks["uni_const_lenet"]["fisher"][0].view(784, 784)
+U = networks["uni_const_lenet"]["object"].U
+
+UGU = torch.mm(torch.mm(U, G), U.t())
+
+print("newG == UGU: ", torch.all(newG.eq(UGU)).item())
+print("newG:")
+print(newG)
+print("UGU")
+print(UGU)
