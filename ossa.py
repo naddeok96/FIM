@@ -293,7 +293,7 @@ class OSSA:
                                                         
         return attack_accuracy , fooled_max_eig_stats, unfooled_max_eig_stats
 
-    def get_newG_attack_accuracy(self, U = None):
+    def get_newG_attack_accuracy(self, uni_lenet, U = None):
         '''
         Test the model on the unseen data in the test set
         '''
@@ -303,7 +303,7 @@ class OSSA:
             # Calculate FIM
             fisher, batch_size, num_classes, losses, predicted = self.get_fim(inputs, labels)
 
-            if U is not None:
+            if torch.is_tensor(U) == True:
                 # Calculate UGU
                 batch_U = U.view(1, 784, 784).repeat(batch_size, 1, 1)
                 batch_Ut = U.t().view(1, 784, 784).repeat(batch_size, 1, 1)
@@ -311,10 +311,17 @@ class OSSA:
 
                 # Highest Eigenvalue and vector
                 eig_val_max, eig_vec_max = self.get_eigens(UGU, max_only = True)
+            elif U == "random":
+                # Generate random attacks
+                eig_vec_max = torch.rand_like(torch.empty(batch_size, 1, 784))
+                
+                # Normalize
+                eig_vec_max = eig_vec_max / torch.norm(eig_vec_max, p = 2, dim = 2).view(batch_size, 1, 1)
+
             else:
                 # Highest Eigenvalue and vector
                 eig_val_max, eig_vec_max = self.get_eigens(fisher, max_only = True)
-                
+            
             # Set the unit norm of the highest eigenvector to epsilon
             perturbations = self.EPSILON * eig_vec_max
 
@@ -333,7 +340,7 @@ class OSSA:
             # Compute attack and models prediction of it
             attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            adv_outputs = self.net(attacks)
+            adv_outputs = uni_lenet(attacks)
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
             # Save Attack Accuracy
@@ -468,5 +475,78 @@ class OSSA:
                                     adv_predicted,  # Adversrial Prediction
                                     self.model_name)# Model Name
         return attack, predicted, adv_predicted
+
+    def get_gradients(self, images, labels):
+        '''
+        Finds the gradients of model given images and labels wrt to the images
+        '''
+        # Push to gpu
+        images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
+        labels = labels if self.gpu == False else labels.cuda()
+
+        # Make images require gradients
+        images.requires_grad_(True)
+
+        # Clear Gradients
+        self.net.zero_grad()
+        images.grad = None
+
+        #Forward pass
+        outputs = self.net(images)
+        soft_max_output = self.soft_max(outputs)
+        loss = self.criterion(outputs, labels)
+        losses = self.indv_criterion(outputs, labels)
+        _, predicted = torch.max(outputs.data, 1)
+
+        # Find size parameters
+        batch_size  = outputs.size(0)
+        num_classes = outputs.size(1)
+
+        # Find gradients
+        loss.backward(retain_graph = True)
+        gradients = images.grad.data.view(batch_size, 28*28, 1)
+       
+        return gradients, batch_size, num_classes, losses, predicted
+
+    def get_FGSM_attack_accuracy(self, uni_lenet):
+        '''
+        Test the model on the unseen data in the test set
+        '''
+        # Test images in test loader
+        attack_accuracy = 0
+        for inputs, labels in self.data.test_loader:
+            # Calculate FIM
+            gradients, batch_size, num_classes, losses, predicted = self.get_gradients(inputs, labels)
+            
+            # Set the unit norm of the highest eigenvector to epsilon
+            gradients_norms = torch.norm(gradients, dim = 1).view(-1, 1, 1).detach()
+
+            perturbations = (self.EPSILON * F.normalize(np.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
+            
+            # Declare attacks as the perturbation added to the image
+            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+
+            # Check if loss has increased
+            adv_outputs = self.net(attacks)
+            adv_losses  = self.indv_criterion(adv_outputs, labels)
+
+            # If losses has not increased flip direction
+            signs = (losses < adv_losses).type(torch.float) 
+            signs[signs == 0] = -1
+            perturbations = signs.view(-1, 1, 1) * perturbations
+          
+            # Compute attack and models prediction of it
+            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+
+            adv_outputs = uni_lenet(attacks)
+            _, adv_predicted = torch.max(adv_outputs.data, 1)     
+
+            # Save Attack Accuracy
+            attack_accuracy = torch.sum(adv_predicted == labels).item() + attack_accuracy
+            
+        # Divide by 
+        attack_accuracy = attack_accuracy / (len(self.data.test_loader.dataset))
+
+        return attack_accuracy 
         
         
