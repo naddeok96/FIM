@@ -32,37 +32,41 @@ data = Data(gpu, set_name)
 
 # Load LeNet
 lenet = AdjLeNet(set_name = set_name)
-lenet.load_state_dict(torch.load('models/pretrained/mnist_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
+lenet.load_state_dict(torch.load('models/pretrained/classic_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
 lenet.eval()
 
-# Load U
-U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
-exit()
+# UniConstLeNet
+uni_const_lenet = FstLayUniLeNet(set_name = set_name)
+uni_const_lenet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
+uni_const_lenet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
+uni_const_lenet.eval()
+
 # Enter student network and curriculum data into an academy
 academy  = Academy(uni_const_lenet, data, gpu)
 
 # Create an attacker
-attacker = OSSA(uni_const_lenet, data)
+attacker = OSSA(lenet, data)
 
-# View attack
-num2view = 100
-index = 0
-for _ in range(num2view):
-    image, label, index = data.get_single_image(index = index)
-    _, predicted, adv_predictions = attacker.get_newG_attack(image, label)
-    while ((label != predicted).item()) or (sum(adv_prediction == label for adv_prediction in adv_predictions).item() != 1): # 0 for normal
-        index += 1
-        image, label, index = data.get_single_image(index = index)
-        _, predicted, adv_predictions = attacker.get_newG_attack(image, label)
+# # View attack
+# num2view = 100
+# index = 0
+# for _ in range(num2view):
+#     image, label, index = data.get_single_image(index = index)
+#     _, predicted, adv_predictions = attacker.get_newG_attack(image, label)
+#     while ((label != predicted).item()) or (sum(adv_prediction == label for adv_prediction in adv_predictions).item() != 1): # 0 for normal
+#         index += 1
+#         image, label, index = data.get_single_image(index = index)
+#         _, predicted, adv_predictions = attacker.get_newG_attack(image, label)
 
-    attacker.get_newG_attack(image, label, plot = True)
-    index += 1
+#     attacker.get_newG_attack(image, label, plot = True)
+#     index += 1
 
-# # Get model accuracy
-# table.add_column("Test Accuracy", [academy.test()])
+# Get model accuracy
+table.add_column("Test Accuracy", [academy.test()])
 
-# # Get attack accuracy
-# table.add_column("Attack Accuracy", [attacker.get_newG_attack_accuracy()])
-# table.add_column("UGU Attack Accuracy", [attacker.get_newG_attack_accuracy(uni_const_lenet.U)])
+# Get attack accuracy
+table.add_column("Attack Accuracy", [attacker.get_newG_attack_accuracy(uni_lenet = uni_const_lenet)])
+table.add_column("UGU Attack Accuracy", [attacker.get_newG_attack_accuracy(uni_lenet = uni_const_lenet, U = uni_const_lenet.U)])
+table.add_column("FGSM Attack Accuracy", [attacker.get_FGSM_attack_accuracy(uni_lenet = uni_const_lenet)])
 
-# print(table)
+print(table)
