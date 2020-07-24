@@ -17,13 +17,12 @@ from xlwt import Workbook
 gpu = True
 set_name = "MNIST"
 epsilons = np.round(np.arange(0, 8, 0.2).tolist(), decimals=1)
-print(epsilons)
 
 # Declare which GPU PCI number to use
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
 # Initialize table
 table = PrettyTable()
@@ -66,6 +65,7 @@ table.add_column("FGSM", ossa_accs)
 
 print("Test Accuracy: ", test_acc)
 print(table)
+
 
 
 # Excel Workbook Object is created 
