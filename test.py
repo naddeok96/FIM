@@ -28,7 +28,7 @@ if gpu == True:
 table = PrettyTable()
 
 # Initialize data
-data = Data(gpu, set_name)
+data = Data(gpu = gpu, set_name)
 
 # Load LeNet
 lenet = AdjLeNet(set_name = set_name)
@@ -36,7 +36,7 @@ lenet.load_state_dict(torch.load('models/pretrained/classic_lenet_w_acc_98.pt', 
 lenet.eval()
 
 # # UniConstLeNet
-uni_const_lenet = FstLayUniLeNet(set_name = set_name)
+uni_const_lenet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
 uni_const_lenet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
 uni_const_lenet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
 uni_const_lenet.eval()
