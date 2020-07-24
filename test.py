@@ -28,7 +28,7 @@ if gpu == True:
 table = PrettyTable()
 
 # Initialize data
-data = Data(gpu = gpu, set_name)
+data = Data(gpu, set_name)
 
 # Load LeNet
 lenet = AdjLeNet(set_name = set_name)
