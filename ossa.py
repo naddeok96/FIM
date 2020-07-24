@@ -178,9 +178,11 @@ class OSSA:
 
 
     def get_attack_accuracy(self):
-        '''
-        Test the model on the unseen data in the test set
-        '''
+        """Determines the OSSA attack accuracy of the model
+
+        Returns:
+            [float]: The percentage of correctly classified attacks
+        """
         # Test images in test loader
         attack_accuracy = 0
         fooled_max_eig_data = []
@@ -214,96 +216,33 @@ class OSSA:
             adv_outputs = self.net(attacks)
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
-            # Determine fooled and unfooled attacks
-            results = torch.cat((adv_predicted.type(torch.FloatTensor).view(-1, 1), 
-                                 predicted.type(torch.FloatTensor).view(-1, 1), 
-                                 labels.type(torch.FloatTensor).view(-1, 1)), 1)
-            correct  = results[results[:, 1] == results[:, 2], :] # Where the classifier predicted correctly
-            fooled_indices   = [i for i, x in enumerate(correct[:, 0] != correct[:, 2]) if x] # Where the classifier was orginally correct then fooled
-            unfooled_indices = [i for i, x in enumerate(correct[:, 0] == correct[:, 2]) if x] # Where the classifer was orginally correct and still correct
-            
-            # Calaulate attacks FIM
-            fooled_fisher,_ ,_ ,_ ,_    = self.get_fim(attacks[fooled_indices], labels[fooled_indices])
-            unfooled_fisher,_ ,_ ,_ ,_  = self.get_fim(attacks[unfooled_indices], labels[unfooled_indices])
-
-            # Highest Eigenvalue and vector of attacks
-            fooled_eig_val_max, fooled_eig_vec_max     = self.get_eigens(fooled_fisher)
-            fooled_eig_vec_max = signs[fooled_indices].view(-1, 1, 1) * fooled_eig_vec_max
-
-            unfooled_eig_val_max, unfooled_eig_vec_max = self.get_eigens(unfooled_fisher)
-            unfooled_eig_vec_max = signs[unfooled_indices].view(-1, 1, 1) * unfooled_eig_vec_max
-
-            # Calculate cosine similarity of images and attacks
-            fooled_cos_sim = abs(torch.cosine_similarity(fooled_eig_vec_max, perturbations[fooled_indices] , dim=2, eps=1e-6))
-            unfooled_cos_sim = abs(torch.cosine_similarity(unfooled_eig_vec_max, perturbations[unfooled_indices] , dim=2, eps=1e-6))
-
-            fooled_max_eig_data.append((fooled_eig_val_max.view(-1).mean().item(), # Mean eigenvalue of image
-                                        fooled_eig_val_max.view(-1).std().item(),  # STD eigenvalue of image
-                                        fooled_cos_sim.view(-1).mean().item(),     # Mean cosine similarity between image and attack eigenvectors
-                                        fooled_cos_sim.view(-1).std().item(),      # STD cosine similarity between image and attack eigenvectors
-                                        len(fooled_indices)))
-            unfooled_max_eig_data.append((unfooled_eig_val_max.view(-1).mean().item(), 
-                                        unfooled_eig_val_max.view(-1).std().item(), 
-                                        unfooled_cos_sim.view(-1).mean().item(),    
-                                        unfooled_cos_sim.view(-1).std().item(),
-                                        len(unfooled_indices)))
-
             # Save Attack Accuracy
             attack_accuracy = torch.sum(adv_predicted == labels).item() + attack_accuracy
-            break
             
         # Divide by 
         attack_accuracy = attack_accuracy / (len(self.data.test_loader.dataset))
-
-        # Calculate avg_fooled_max_eig
-        for i, data in enumerate(fooled_max_eig_data):
-            if i == 0:
-                fooled_max_eig_stats = data
-                break
-
-            else:
-                val_mean, val_std, num_data = self.add_stats(fooled_max_eig_stats[0],
-                                                            fooled_max_eig_stats[1],
-                                                            fooled_max_eig_stats[4],
-                                                            data[0], data[1], data[4])
-                vec_mean, vec_std, num_data = self.add_stats(fooled_max_eig_stats[2],
-                                                            fooled_max_eig_stats[3],
-                                                            fooled_max_eig_stats[4],
-                                                            data[2], data[3], data[4])
-                fooled_max_eig_stats = (val_mean, val_std,
-                                        vec_mean, vec_std, num_data)
-
-        # Calculate avg_fooled_max_eig
-        for i, data in enumerate(unfooled_max_eig_data):
-            if i == 0:
-                unfooled_max_eig_stats = data
-                break
-
-            else:
-                val_mean, val_std, num_data = self.add_stats(unfooled_max_eig_stats[0],
-                                                                unfooled_max_eig_stats[1],
-                                                                unfooled_max_eig_stats[4],
-                                                                data[0], data[1], data[4])
-                vec_mean, vec_std, num_data = self.add_stats(unfooled_max_eig_stats[2],
-                                                                unfooled_max_eig_stats[3],
-                                                                unfooled_max_eig_stats[4],
-                                                                data[2], data[3], data[4])
-                unfooled_max_eig_stats = (val_mean, val_std,
-                                        vec_mean, vec_std, num_data)
                                                         
-        return attack_accuracy , fooled_max_eig_stats, unfooled_max_eig_stats
+        return attack_accuracy
 
-    def get_newG_attack_accuracy(self, uni_lenet, U = None):
-        '''
-        Test the model on the unseen data in the test set
-        '''
+    def get_UGU_attack_accuracy(self, uni_net, U = None):
+        """Get attack accuracy for the unitary network attacked with classic networks
+        fischer information matrix that has been left-right multiplied by a unitary 
+        matrix
+
+        Args:
+            uni_net ([type]): [description]
+            U ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """
         # Test images in test loader
         attack_accuracy = 0
         for inputs, labels in self.data.test_loader:
             # Calculate FIM
             fisher, batch_size, num_classes, losses, predicted = self.get_fim(inputs, labels)
 
-            if torch.is_tensor(U) == True:
+            if U is not None:
                 # Calculate UGU
                 batch_U = U.view(1, 784, 784).repeat(batch_size, 1, 1)
                 batch_Ut = U.t().view(1, 784, 784).repeat(batch_size, 1, 1)
@@ -311,12 +250,6 @@ class OSSA:
 
                 # Highest Eigenvalue and vector
                 eig_val_max, eig_vec_max = self.get_eigens(UGU, max_only = True)
-            elif U == "random":
-                # Generate random attacks
-                eig_vec_max = torch.rand_like(torch.empty(batch_size, 1, 784))
-                
-                # Normalize
-                eig_vec_max = eig_vec_max / torch.norm(eig_vec_max, p = 2, dim = 2).view(batch_size, 1, 1)
 
             else:
                 # Highest Eigenvalue and vector
@@ -340,7 +273,7 @@ class OSSA:
             # Compute attack and models prediction of it
             attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            adv_outputs = uni_lenet(attacks)
+            adv_outputs = uni_net(attacks)
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
             # Save Attack Accuracy
@@ -352,6 +285,15 @@ class OSSA:
         return attack_accuracy 
 
     def get_newG_attack(self, image, label, plot = False):
+        """Get attack for the unitary network attacked with classic networks
+        fischer information matrix that has been left-right multiplied by a unitary 
+        matrix
+
+        Args:
+            image (Tensor): Single input image
+            label (Tensor): Label for input image
+            plot (bool, optional): If True then plot attack. Defaults to False.
+        """
         # Reshape image and make it a variable which requires a gradient
         image = image.view(1,1,28,28)
         image = Variable(image, requires_grad = True) if self.gpu == False else Variable(image.cuda(), requires_grad = True)
@@ -414,6 +356,16 @@ class OSSA:
         return attack, predicted, adv_predictions
   
     def get_attack(self, image, label, plot = False):
+        """Get OSSA attack for a single input
+
+        Args:
+            image (Tensor): Single input image
+            label (Tensor): Label for image
+            plot (bool, optional): If True, plot attack. Defaults to False.
+
+        Returns:
+            [tuple]: attack, prediction, adverserial prediction
+        """
         # Reshape image and make it a variable which requires a gradient
         image = image.view(1,1,28,28)
         image = Variable(image, requires_grad = True) if self.gpu == False else Variable(image.cuda(), requires_grad = True)
@@ -508,7 +460,7 @@ class OSSA:
        
         return gradients, batch_size, num_classes, losses, predicted
 
-    def get_FGSM_attack_accuracy(self, uni_lenet):
+    def get_FGSM_attack_accuracy(self, uni_net):
         '''
         Test the model on the unseen data in the test set
         '''
@@ -538,7 +490,7 @@ class OSSA:
             # Compute attack and models prediction of it
             attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            adv_outputs = uni_lenet(attacks)
+            adv_outputs = uni_net(attacks)
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
             # Save Attack Accuracy

@@ -10,14 +10,13 @@ import torchvision.transforms.functional as F
 import operator
 import numpy as np
 from prettytable import PrettyTable
-import xlwt 
-from xlwt import Workbook 
+table = PrettyTable()
+table.field_names = ["Accuracy"]
+
 
 # Hyperparameters
-gpu = True
+gpu = False
 set_name = "MNIST"
-epsilons = np.round(np.arange(0, 8, 0.2).tolist(), decimals=1)
-print(epsilons)
 
 # Declare which GPU PCI number to use
 if gpu == True:
@@ -45,39 +44,29 @@ uni_const_lenet.eval()
 # Enter student network and curriculum data into an academy
 academy  = Academy(uni_const_lenet, data, gpu)
 
+# Create an attacker
+attacker = OSSA(lenet, data)
+
+# # View attack
+# num2view = 100
+# index = 0
+# for _ in range(num2view):
+#     image, label, index = data.get_single_image(index = index)
+#     _, predicted, adv_predictions = attacker.get_newG_attack(image, label)
+#     while ((label != predicted).item()) or (sum(adv_prediction == label for adv_prediction in adv_predictions).item() != 1): # 0 for normal
+#         index += 1
+#         image, label, index = data.get_single_image(index = index)
+#         _, predicted, adv_predictions = attacker.get_newG_attack(image, label)
+
+#     attacker.get_newG_attack(image, label, plot = True)
+#     index += 1
+
 # Get model accuracy
-test_acc = academy.test()
+table.add_column("Test Accuracy", [academy.test()])
 
-ossa_accs, fgsm_accs = [], []
-for EPSILON in epsilons:
-    # Create an attacker
-    attacker = OSSA(net = uni_const_lenet, 
-                    data = data, 
-                    EPSILON = EPSILON,
-                    gpu = gpu)
+# Get attack accuracy
+table.add_column("Attack Accuracy", [attacker.get_UGU_attack_accuracy(uni_net = uni_const_lenet)])
+table.add_column("UGU Attack Accuracy", [attacker.get_UGU_attack_accuracy(uni_net = uni_const_lenet, U = uni_const_lenet.U)])
+table.add_column("FGSM Attack Accuracy", [attacker.get_FGSM_attack_accuracy(uni_net = uni_const_lenet)])
 
-    # Get attack accuracies
-    ossa_accs.append((test_acc - attacker.get_attack_accuracy()) / test_acc)
-    fgsm_accs.append((test_acc - attacker.get_FGSM_attack_accuracy(uni_net = uni_const_lenet)) / test_acc)
-    
-table.add_column("Mean", epsilons)
-table.add_column("OSSA", ossa_accs)
-table.add_column("FGSM", ossa_accs)
-
-print("Test Accuracy: ", test_acc)
 print(table)
-
-
-# Excel Workbook Object is created 
-wb = Workbook() 
-
-# Create sheet
-sheet = wb.add_sheet('Results') 
-sheet.write(0, 0, "Mean")
-sheet.write(0, 1, "OSSA")
-sheet.write(0, 2, "FGSM")
-for i in range(len(epsilons)):
-    sheet.write(i + 1, 0, epsilons[i])
-    sheet.write(i + 1, 1, ossa_accs[i])
-    sheet.write(i + 1, 2, fgsm_accs[i])
-wb.save("epsilon_test" + '.xls')
