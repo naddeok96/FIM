@@ -14,7 +14,7 @@ import xlwt
 from xlwt import Workbook 
 
 # Hyperparameters
-gpu = True
+gpu = False
 set_name = "MNIST"
 epsilons = np.round(np.arange(0, 8, 0.2).tolist(), decimals=1)
 

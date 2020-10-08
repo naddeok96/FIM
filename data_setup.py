@@ -76,7 +76,7 @@ class Data:
                                                            pin_memory = True)
 
     # Fucntion to break training set into batches
-    def get_train_loader(self,batch_size):
+    def get_train_loader(self, batch_size):
         '''
         Load the train loader given batch_size
         '''
@@ -133,7 +133,7 @@ class Data:
         '''
         # Decalre figure size, figure and title
         figsize = [8, 4]
-        fig= plt.figure(figsize=figsize)
+        fig= plt.figure(figsize = figsize)
         fig.suptitle(model_name + ' OSSA Attack Summary', fontsize=16)
 
         # Reshape image and attack
