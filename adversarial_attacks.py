@@ -108,7 +108,8 @@ class Attacker:
         else:
             return eig_values, eig_vectors
 
-    def get_OSSA_attack_accuracy(self, EPSILON = 1):
+    def get_OSSA_attack_accuracy(self, EPSILON = 1,
+                                       transfer_network = None):
         """Determine the accuracy of the network after it is attacked by OSSA
 
         Returns:
@@ -143,7 +144,11 @@ class Attacker:
             batch_size = len(inputs.dataset)
             attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            adv_outputs = self.net(attacks)
+            if transfer_network == None:
+                adv_outputs = self.net(attacks)
+            else:
+                adv_outputs = transfer_network(attacks)
+
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
             # Save Attack Accuracy
@@ -228,9 +233,15 @@ class Attacker:
         return attack, predicted, adv_predicted
 
     def get_gradients(self, images, labels):
-        '''
-        Finds the gradients of model given images and labels wrt to the images
-        '''
+        """Calculate the gradients of an image
+
+        Args:
+            images: Images to be tested
+            labels: Correct lables of images
+
+        Returns:
+            gradients, batch_size, num_classes, losses, predicted
+        """
         # Push to gpu
         images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
         labels = labels if self.gpu == False else labels.cuda()
@@ -259,10 +270,17 @@ class Attacker:
        
         return gradients, batch_size, num_classes, losses, predicted
 
-    def get_FGSM_attack_accuracy(self):
-        '''
-        Test the model on the unseen data in the test set
-        '''
+    def get_FGSM_attack_accuracy(self, EPSILON = 1,
+                                       transfer_network = None):
+        """Generate attacks with FGSM 
+
+        Args:
+            EPSILON (int, optional): Magnitude of Attack. Defaults to 1.
+            transfer_network (Pytoch Model, optional): Network to have attack transfered to. Defaults to None.
+
+        Returns:
+            Float: Attack Accuracy
+        """
         # Test images in test loader
         attack_accuracy = 0
         for inputs, labels in self.data.test_loader:
@@ -272,7 +290,7 @@ class Attacker:
             # Set the unit norm of the highest eigenvector to epsilon
             gradients_norms = torch.norm(gradients, dim = 1).view(-1, 1, 1).detach()
 
-            perturbations = (self.EPSILON * F.normalize(np.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
+            perturbations = (EPSILON * F.normalize(np.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
             
             # Declare attacks as the perturbation added to the image
             attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
@@ -289,7 +307,11 @@ class Attacker:
             # Compute attack and models prediction of it
             attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            adv_outputs = self.net(attacks)
+            if transfer_network == None:
+                adv_outputs = self.net(attacks)
+            else:
+                adv_outputs = transfer_network(attacks)
+
             _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
             # Save Attack Accuracy
