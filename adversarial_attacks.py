@@ -1,6 +1,5 @@
 '''
-This class implements the One Step Spectral Attack as formulated in the paper
-"The Adversarial Attack and Detection under the Fisher Information Metric"
+This class implements adversarial attacks
 '''
 # Imports
 import torch
@@ -108,7 +107,7 @@ class Attacker:
         else:
             return eig_values, eig_vectors
 
-    def get_OSSA_attack_accuracy(self, EPSILON = 1,
+    def get_OSSA_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None):
         """Determine the accuracy of the network after it is attacked by OSSA
 
@@ -116,8 +115,7 @@ class Attacker:
             Attack Accuracy
         """
         # Test images in test loader
-        attack_accuracy = 0
-        count = 0
+        attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
             # Calculate FIM
             fisher, losses, predicted = self.get_FIM(inputs, labels)
@@ -125,39 +123,41 @@ class Attacker:
             # Highest Eigenvalue and vector
             eig_val_max, eig_vec_max = self.get_eigens(fisher, max_only = True)
 
-            # Set the unit norm of the highest eigenvector to epsilon
-            perturbations = EPSILON * eig_vec_max
+            # Cycle over all espiplons
+            for i, epsilon in enumerate(epsilons):
+                # Set the unit norm of the highest eigenvector to epsilon
+                perturbations = epsilon * eig_vec_max
 
-            # Declare attacks as the perturbation added to the image
-            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+                # Declare attacks as the perturbation added to the image
+                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            # Check if loss has increased
-            adv_outputs = self.net(attacks)
-            adv_losses  = self.indv_criterion(adv_outputs, labels)
-
-            # If losses has not increased flip direction
-            signs = (losses < adv_losses).type(torch.float) 
-            signs[signs == 0] = -1
-            perturbations = signs.view(-1, 1, 1) * perturbations
-          
-            # Compute attack and models prediction of it
-            batch_size = len(inputs.dataset)
-            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
-
-            if transfer_network == None:
+                # Check if loss has increased
                 adv_outputs = self.net(attacks)
-            else:
-                adv_outputs = transfer_network(attacks)
+                adv_losses  = self.indv_criterion(adv_outputs, labels)
 
-            _, adv_predicted = torch.max(adv_outputs.data, 1)     
-
-            # Save Attack Accuracy
-            attack_accuracy = torch.sum(adv_predicted == labels).item() + attack_accuracy
+                # If losses has not increased flip direction
+                signs = (losses < adv_losses).type(torch.float) 
+                signs[signs == 0] = -1
+                perturbations = signs.view(-1, 1, 1) * perturbations
             
-        # Divide by 
-        attack_accuracy = attack_accuracy / (len(self.data.test_loader.dataset))
+                # Compute attack and models prediction of it
+                batch_size = len(inputs.dataset)
+                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+
+                if transfer_network == None:
+                    adv_outputs = self.net(attacks)
+                else:
+                    adv_outputs = transfer_network(attacks)
+
+                _, adv_predicted = torch.max(adv_outputs.data, 1)     
+
+                # Save Attack Accuracy
+                attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
+                
+        # Divide by total
+        attack_accuraies = attack_accuraies / (len(self.data.test_loader.dataset))
                                                         
-        return attack_accuracy
+        return attack_accuraies
   
     def get_attack(self, image, label, plot = False):
         """Get OSSA attack for a single input
@@ -270,7 +270,7 @@ class Attacker:
        
         return gradients, batch_size, num_classes, losses, predicted
 
-    def get_FGSM_attack_accuracy(self, EPSILON = 1,
+    def get_FGSM_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None):
         """Generate attacks with FGSM 
 
@@ -282,7 +282,7 @@ class Attacker:
             Float: Attack Accuracy
         """
         # Test images in test loader
-        attack_accuracy = 0
+        attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
             # Calculate FIM
             gradients, batch_size, num_classes, losses, predicted = self.get_gradients(inputs, labels)
@@ -290,36 +290,37 @@ class Attacker:
             # Set the unit norm of the highest eigenvector to epsilon
             gradients_norms = torch.norm(gradients, dim = 1).view(-1, 1, 1).detach()
 
-            perturbations = (EPSILON * F.normalize(np.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
-            
-            # Declare attacks as the perturbation added to the image
-            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+            for i, epsilons in enumerate(epsilons)
+                perturbations = (EPSILON * F.normalize(np.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
+                
+                # Declare attacks as the perturbation added to the image
+                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            # Check if loss has increased
-            adv_outputs = self.net(attacks)
-            adv_losses  = self.indv_criterion(adv_outputs, labels)
-
-            # If losses has not increased flip direction
-            signs = (losses < adv_losses).type(torch.float) 
-            signs[signs == 0] = -1
-            perturbations = signs.view(-1, 1, 1) * perturbations
-          
-            # Compute attack and models prediction of it
-            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
-
-            if transfer_network == None:
+                # Check if loss has increased
                 adv_outputs = self.net(attacks)
-            else:
-                adv_outputs = transfer_network(attacks)
+                adv_losses  = self.indv_criterion(adv_outputs, labels)
 
-            _, adv_predicted = torch.max(adv_outputs.data, 1)     
+                # If losses has not increased flip direction
+                signs = (losses < adv_losses).type(torch.float) 
+                signs[signs == 0] = -1
+                perturbations = signs.view(-1, 1, 1) * perturbations
+            
+                # Compute attack and models prediction of it
+                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            # Save Attack Accuracy
-            attack_accuracy = torch.sum(adv_predicted == labels).item() + attack_accuracy
+                if transfer_network == None:
+                    adv_outputs = self.net(attacks)
+                else:
+                    adv_outputs = transfer_network(attacks)
+
+                _, adv_predicted = torch.max(adv_outputs.data, 1)     
+
+                # Save Attack Accuracy
+                attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
             
         # Divide by 
-        attack_accuracy = attack_accuracy / (len(self.data.test_loader.dataset))
+        attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
 
-        return attack_accuracy 
+        return attack_accuracies
         
         
