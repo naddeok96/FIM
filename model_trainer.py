@@ -3,7 +3,6 @@ This script will train a model and save it
 '''
 # Imports
 import torch
-from ossa import OSSA
 from data_setup import Data
 from academy import Academy
 from models.classes.rand_lenet                  import RandLeNet
@@ -13,11 +12,11 @@ from models.classes.unitary_lenet               import UniLeNet
 from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
-gpu         = True
+gpu         = False
 save_model  = True
 n_epochs    = 1000
 set_name    = "MNIST"
-seed        = 1
+seed        = 100
 
 # Push to GPU if necessary
 if gpu == True:
@@ -45,7 +44,7 @@ print(accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "classic_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "seed100_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
