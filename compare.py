@@ -8,7 +8,7 @@ from models.classes.adjustable_lenet import AdjLeNet
 from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
 from data_setup import Data
 from academy import Academy
-from ossa import OSSA
+from adversarial_attacks import Attacker
 import torchvision.transforms.functional as F
 import operator
 import numpy as np
@@ -19,7 +19,7 @@ gpu = False
 set_name = "MNIST"
 plot = True
 save_set = False
-EPSILON = 8
+epsilons = [0.25, 0.5, 1, 2.5, 5, 8]
 
 # Declare which GPU PCI number to use
 if gpu == True:
@@ -31,27 +31,44 @@ if gpu == True:
 data = Data(gpu, set_name)
 
 # Load pretraind MNIST network
+# Attackers Net
+attacker_lenet = AdjLeNet(set_name = set_name)
+attacker_lenet.load_state_dict(torch.load('models\pretrained\seed100_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
+attacker_lenet.eval()
+
 # LeNet
-lenet = FstLayUniLeNet(set_name = set_name)
-lenet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
+lenet = AdjLeNet(set_name = set_name)
+lenet.load_state_dict(torch.load('models\pretrained\classic_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
 lenet.eval()
 
-# UniConstLeNet
-uni_const_lenet = FstLayUniLeNet(set_name = set_name)
-uni_const_lenet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
-uni_const_lenet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
-uni_const_lenet.eval()
+# UniLeNet
+Unet = FstLayUniLeNet(set_name = set_name)
+Unet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
+Unet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
+Unet.eval()
 
-# Load into a dictionary
-networks = {"lenet"             :   {"object": lenet,
-                                    "fisher" : [],
-                                    "eigenvalues"  : [],
-                                    "eigenvectors" : []},
+# Initialize attacker
+attacker = Attacker(attacker_lenet, data)
 
-            "uni_const_lenet"   :  {"object": uni_const_lenet,
-                                    "fisher" : [],
-                                    "eigenvalues"  : [],
-                                    "eigenvectors" : []}}
+# Find attack accuracies
+ossa_accs_on_Unet = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
+                                                      transfer_network = Unet)
+ossa_accs_on_Regnet = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
+                                                        transfer_network = lenet)
+fgsm_accs_on_Unet = attacker.get_FGSM_attack_accuracy(epsilons = epsilons, 
+                                                      transfer_network = Unet)
+fgsm_accs_on_Regnet = attacker.get_FGSM_attack_accuracy(epsilons = epsilons, 
+                                                        transfer_network = lenet)
+
+print(ossa_accs_on_Unet)
+print(ossa_accs_on_Regnet)
+print(fgsm_accs_on_Unet)
+print(fgsm_accs_on_Regnet)
+
+
+
+
+
 
 # Cycle through images
 table = PrettyTable()
