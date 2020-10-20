@@ -84,7 +84,7 @@ class Attacker:
 
             fisher += p * torch.bmm(grad, torch.transpose(grad, 1, 2)).view(batch_size, 1, 28*28, 28*28)
        
-        return fisher, num_classes, losses, predicted
+        return fisher, losses, predicted
 
     def get_eigensystem(self, tensor, max_only = False):
         """Given a tensor find the eigensystem
@@ -121,7 +121,7 @@ class Attacker:
             fisher, losses, predicted = self.get_FIM(inputs, labels)
 
             # Highest Eigenvalue and vector
-            eig_val_max, eig_vec_max = self.get_eigens(fisher, max_only = True)
+            eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
 
             # Cycle over all espiplons
             for i, epsilon in enumerate(epsilons):
@@ -129,6 +129,7 @@ class Attacker:
                 perturbations = epsilon * eig_vec_max
 
                 # Declare attacks as the perturbation added to the image
+                batch_size = np.shape(inputs)[0]
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
                 # Check if loss has increased
@@ -141,7 +142,6 @@ class Attacker:
                 perturbations = signs.view(-1, 1, 1) * perturbations
             
                 # Compute attack and models prediction of it
-                batch_size = len(inputs.dataset)
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
                 if transfer_network == None:
@@ -155,21 +155,28 @@ class Attacker:
                 attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
                 
         # Divide by total
-        attack_accuraies = attack_accuraies / (len(self.data.test_loader.dataset))
+        attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
                                                         
-        return attack_accuraies
+        return attack_accuracies
   
-    def get_attack(self, image, label, plot = False):
+    def get_single_OSSA_attack(self,    epsilon = 1,
+                                        image_index = 0,
+                                        plot = False,
+                                        eigens_only = False):
         """Get OSSA attack for a single input
 
         Args:
-            image (Tensor): Single input image
-            label (Tensor): Label for image
+            epsilon(float, optional): Magnitude of attack. Defaults to 1.
+            image_index (int, optional): Image index in data loader. Defualts to first image
             plot (bool, optional): If True, plot attack. Defaults to False.
+            eigens_only(bool, optional): If True, only return eigensystem. Defaults to False
 
         Returns:
             [tuple]: attack, prediction, adverserial prediction
         """
+        # Load image
+        image, label, index = self.data.get_single_image(index = image_index)
+
         # Reshape image and make it a variable which requires a gradient
         image = image.view(1,1,28,28)
         image = Variable(image, requires_grad = True) if self.gpu == False else Variable(image.cuda(), requires_grad = True)
@@ -177,37 +184,18 @@ class Attacker:
         # Reshape label
         label = torch.tensor([label.item()])
 
-        # Calculate Orginal Loss
-        output = self.net(image)
-        soft_max_output = self.soft_max(output)
-        loss = self.criterion(output, label).item()
-        _, predicted = torch.max(soft_max_output.data, 1)
+        # Get Fisher Information Matrix
+        fim, loss, predicted = self.get_FIM(image, label)
 
-        # Calculate FIM
-        fisher = 0 
-        for i in range(len(output.data[0])):
-            # Cycle through lables (y)
-            temp_label = torch.tensor([i]) if self.gpu == False else torch.tensor([i]).cuda()
+        # Get Eigensystem
+        eig_val_max, eig_vec_max = self.get_eigensystem(fim, 
+                                                        max_only = True)
 
-            # Reset the gradients
-            self.net.zero_grad()
-            image.grad = None
-
-            # Calculate losses
-            temp_loss = self.criterion(output, temp_label)
-            temp_loss.backward(retain_graph = True)
-
-            # Calculate expectation
-            p = soft_max_output.squeeze(0)[i].item()
-            fisher += p * (image.grad.data.view(28*28,1) * torch.t(image.grad.data.view(28*28,1)))
-
-        # Highest Eigenvalue and vector
-        eig_values, eig_vectors = torch.eig(fisher, eigenvectors = True)
-        eig_val_max = eig_values[0][0]
-        eig_vec_max = eig_vectors[:, 0]
+        if eigens_only == True:
+            return eig_val_max, eig_vec_max
 
         # Set the unit norm of the signs of the highest eigenvector to epsilon
-        perturbation = self.EPSILON * (eig_vec_max.view(28*28,1) / torch.norm(eig_vec_max.view(28*28,1)))
+        perturbation = epsilon * (eig_vec_max.view(28*28,1) / torch.norm(eig_vec_max.view(28*28,1)))
 
         # Calculate sign of perturbation
         attack = (image.view(28*28,1) + perturbation).view(1,1,28,28)
@@ -215,7 +203,7 @@ class Attacker:
         adv_output = self.net(attack)
         adv_loss = self.criterion(adv_output, label).item()
 
-        perturbation = perturbation if adv_loss > loss else -perturbation
+        perturbation = perturbation if adv_loss > loss else -1*perturbation
 
         # Compute attack and models prediction of it
         attack = (image.view(28*28,1) + perturbation).view(1,1,28,28)
@@ -228,8 +216,8 @@ class Attacker:
             self.data.plot_attack(image,            # Image
                                     predicted,      # Prediction
                                     attack,         # Attack
-                                    adv_predicted,  # Adversrial Prediction
-                                    self.model_name)# Model Name
+                                    adv_predicted)   # Adversrial Prediction
+
         return attack, predicted, adv_predicted
 
     def get_gradients(self, images, labels):
@@ -290,8 +278,8 @@ class Attacker:
             # Set the unit norm of the highest eigenvector to epsilon
             gradients_norms = torch.norm(gradients, dim = 1).view(-1, 1, 1).detach()
 
-            for i, epsilons in enumerate(epsilons)
-                perturbations = (EPSILON * F.normalize(np.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
+            for i, epsilon in enumerate(epsilons):
+                perturbations = (epsilon * F.normalize(np.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
                 
                 # Declare attacks as the perturbation added to the image
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
