@@ -14,7 +14,9 @@ class AdjLeNet(nn.Module):
                        num_kernels_layer1 = 6, 
                        num_kernels_layer2 = 16, 
                        num_kernels_layer3 = 120,
-                       num_nodes_fc_layer = 84):
+                       num_nodes_fc_layer = 84,
+                       pretrained_weights_filename = None,
+                       pretrained_unitary_matrix_filename = None):
 
         super(AdjLeNet,self).__init__()
 
@@ -74,7 +76,14 @@ class AdjLeNet(nn.Module):
         self.fc1 = nn.Linear(self.num_kernels_layer3, self.num_nodes_fc_layer)
 
         self.fc2 = nn.Linear(self.num_nodes_fc_layer, self.num_classes)
-        
+
+        # Load pretrained parameters
+        if pretrained_unitary_matrix_filename is not None:
+            self.U = torch.load(pretrained_unitary_matrix_filename, map_location=torch.device('cpu'))
+        if pretrained_weights_filename is not None:
+            self.load_state_dict(torch.load(pretrained_weights_filename, map_location=torch.device('cpu')))
+        if (pretrained_unitary_matrix_filename or pretrained_weights_filename) is not None:
+            self.eval()
 
     def forward(self, x):
         
