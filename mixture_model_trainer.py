@@ -1,14 +1,15 @@
 # Imports
 from models.classes.first_layer_unitary_lenet import FstLayUniLeNet
+from prettytable import PrettyTable
 from data_setup import Data
 from academy import Academy
 import numpy as np
 import torch
 
 # Hyperparameters
-gpu         = False
+gpu         = True
 save_model  = True
-n_epochs    = 2000
+n_epochs    = 1
 set_name    = "MNIST"
 seed        = 100
 reg_train_ratio = 0.5
@@ -33,7 +34,12 @@ data = Data(gpu = gpu, set_name = "MNIST")
 academy  = Academy(net, data, gpu)
 
 # Swich between U and Reg
+count = 0
 for _ in range(n_epochs):
+    count += 1
+    print(count)
+
+    # Determine Unitary or not
     if reg_train_ratio < np.random.uniform():
         academy.net.U = None
     else:
