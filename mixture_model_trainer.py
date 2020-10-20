@@ -9,7 +9,7 @@ import torch
 # Hyperparameters
 gpu         = True
 save_model  = True
-n_epochs    = 1
+n_epochs    = 2000
 set_name    = "MNIST"
 seed        = 100
 reg_train_ratio = 0.5
@@ -38,7 +38,8 @@ academy  = Academy(net, data, gpu)
 count = 0
 for _ in range(n_epochs):
     count += 1
-    print(count)
+    if count % 5 == 0:
+        print("Epoch: ", count)
 
     # Determine Unitary or not
     if reg_train_ratio < np.random.uniform():
