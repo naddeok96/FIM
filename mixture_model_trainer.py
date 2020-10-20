@@ -22,6 +22,7 @@ if gpu == True:
 
 # Declare seed and initalize network
 net = FstLayUniLeNet(set_name = set_name,
+                    gpu = gpu,
                     seed = seed,
                     U = None)
 U = net.get_orthogonal_matrix(784)
