@@ -42,7 +42,7 @@ class Academy:
                 if layer_name in frozen_layers:
                     param.requires_grad = False
 
-    def train(self, batch_size = 124, 
+    def train(self, batch_size = 256, 
                     n_epochs = 1, 
                     learning_rate = 0.001, 
                     momentum = 0.9, 
