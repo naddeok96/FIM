@@ -40,13 +40,14 @@ table.field_names =(["Epoch", "Unitary Test Accuracy", "Regular Test Accuracy", 
 for _ in range(n_epochs):
     count += 1
     if count % 1 == 0:
+        # Calculate accuracy on test set
         academy.net.U = U
-        U_test = academy.test()
+        U_test = round(academy.test(), 4) * 100
 
         academy.net.U = None
-        reg_test = academy.test()
+        reg_test = round(academy.test(), 4) * 100
 
-        accuracy = (U_test + reg_test)/2
+        accuracy = round((U_test + reg_test)/2, 4) * 100
 
         table.add_row([count, U_test, reg_test, accuracy])
         print(table)
@@ -62,12 +63,12 @@ for _ in range(n_epochs):
 
 # Calculate accuracy on test set
 academy.net.U = U
-U_test = academy.test()
+U_test = round(academy.test(), 4) * 100
 
 academy.net.U = None
-reg_test = academy.test()
+reg_test = round(academy.test(), 4) * 100
 
-accuracy = (U_test + reg_test)/2
+accuracy = round((U_test + reg_test)/2, 4) * 100
 
 table.add_row(["Final", U_test, reg_test, accuracy])
 print(table)
