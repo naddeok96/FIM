@@ -39,7 +39,7 @@ table = PrettyTable(hrules = ALL)
 table.field_names =(["Epoch", "Unitary Test Accuracy", "Regular Test Accuracy", "Test Accuracy"])
 for _ in range(n_epochs):
     count += 1
-    if count % 1 == 0:
+    if count % 100 == 0:
         # Calculate accuracy on test set
         academy.net.U = U
         U_test = round(academy.test() * 100, 2)
