@@ -45,6 +45,7 @@ class FstLayUniLeNet(nn.Module):
             # Input (3,32,32)
             # Layer 1
             self.conv1 = nn.Conv2d(3, # Input channels
+            
                                 self.num_kernels_layer1, # Output Channel 
                                 kernel_size = 5, 
                                 stride = 1, 
