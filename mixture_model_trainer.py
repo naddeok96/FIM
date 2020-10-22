@@ -64,7 +64,7 @@ for _ in range(n_epochs):
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "mixed_U_dense_net_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "mixed_U_dense_net_w_acc_" + str(int(round(accuracy, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
