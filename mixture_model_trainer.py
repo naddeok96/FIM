@@ -42,12 +42,12 @@ for _ in range(n_epochs):
     if count % 1 == 0:
         # Calculate accuracy on test set
         academy.net.U = U
-        U_test = round(academy.test(), 4) * 100
+        U_test = round(academy.test() * 100, 2)
 
         academy.net.U = None
-        reg_test = round(academy.test(), 4) * 100
+        reg_test = round(academy.test() * 100, 2)
 
-        accuracy = round((U_test + reg_test)/2, 4)
+        accuracy = round((U_test + reg_test)/2, 2)
 
         table.add_row([count, U_test, reg_test, accuracy])
         print(table)
@@ -63,12 +63,12 @@ for _ in range(n_epochs):
 
 # Calculate accuracy on test set
 academy.net.U = U
-U_test = round(academy.test(), 4) * 100
+U_test = round(academy.test() * 100, 2)
 
 academy.net.U = None
-reg_test = round(academy.test(), 4) * 100
+reg_test = round(academy.test() * 100, 2)
 
-accuracy = round((U_test + reg_test)/2, 4)
+accuracy = round((U_test + reg_test)/2, 2)
 
 table.add_row(["Final", U_test, reg_test, accuracy])
 print(table)
