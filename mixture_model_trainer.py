@@ -47,7 +47,7 @@ for _ in range(n_epochs):
         academy.net.U = None
         reg_test = round(academy.test(), 4) * 100
 
-        accuracy = round((U_test + reg_test)/2, 4) * 100
+        accuracy = round((U_test + reg_test)/2, 4)
 
         table.add_row([count, U_test, reg_test, accuracy])
         print(table)
@@ -68,7 +68,7 @@ U_test = round(academy.test(), 4) * 100
 academy.net.U = None
 reg_test = round(academy.test(), 4) * 100
 
-accuracy = round((U_test + reg_test)/2, 4) * 100
+accuracy = round((U_test + reg_test)/2, 4)
 
 table.add_row(["Final", U_test, reg_test, accuracy])
 print(table)
