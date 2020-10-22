@@ -49,6 +49,7 @@ for _ in range(n_epochs):
         accuracy = (U_test + reg_test)/2
 
         table.add_row([count, U_test, reg_test, accuracy])
+        print(table)
 
     # Determine Unitary or not
     if reg_train_ratio < np.random.uniform():
@@ -69,6 +70,7 @@ reg_test = academy.test()
 accuracy = (U_test + reg_test)/2
 
 table.add_row(["Final", U_test, reg_test, accuracy])
+print(table)
 
 # Save Model
 if save_model:
