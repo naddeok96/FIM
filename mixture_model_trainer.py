@@ -8,8 +8,8 @@ import torch
 
 # Hyperparameters
 gpu         = True
-save_model  = False
-n_epochs    = 5
+save_model  = True
+n_epochs    = 1000
 set_name    = "MNIST"
 seed        = 100
 reg_train_ratio = 0.5
