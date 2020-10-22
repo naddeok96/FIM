@@ -61,18 +61,6 @@ for _ in range(n_epochs):
     # Fit Model
     academy.train(n_epochs = 1)
 
-# Calculate accuracy on test set
-academy.net.U = U
-U_test = round(academy.test() * 100, 2)
-
-academy.net.U = None
-reg_test = round(academy.test() * 100, 2)
-
-accuracy = round((U_test + reg_test)/2, 2)
-
-table.add_row(["Final", U_test, reg_test, accuracy])
-print(table)
-
 # Save Model
 if save_model:
     # Define File Names
