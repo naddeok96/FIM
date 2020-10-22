@@ -17,8 +17,8 @@ eig_vec_head_size = 3
 data = Data(gpu, set_name)
 
 # LeNet
-lenet = AdjLeNet(set_name = set_name,
-                 pretrained_weights_filename = 'models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt')
+lenet = FstLayUniLeNet(set_name = set_name,
+                 pretrained_weights_filename = 'models/pretrained/mixed_U_net_w_acc_97.pt')
 
 # UNet
 Unet = FstLayUniLeNet(set_name = set_name,
@@ -56,6 +56,6 @@ for image_index in range(num_images):
             table.add_row(["-", "-", lenet_eig_vec_head[j], "-", Unet_eig_vec_head[j]])
         else:
             table.add_row(["-", "-", ":" , "-", ":"])
-            table.add_row([("\\"*int(np.floor(len(table.field_names[i])/2))) + ("/"*int(np.floor(len(table.field_names[i])/2))) for i in range(len(table.field_names))])
+            table.add_row([("/"*int(np.floor(len(table.field_names[i])/2))) + ("/"*int(np.floor(len(table.field_names[i])/2))) for i in range(len(table.field_names))])
 
 print(table)

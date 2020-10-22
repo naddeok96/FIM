@@ -1,5 +1,5 @@
 # Imports
-from models.classes.first_layer_unitary_lenet import FstLayUniLeNet
+from models.classes.first_layer_unitary_dense_net import FstLayUniDenseNet
 from prettytable import PrettyTable
 from data_setup import Data
 from academy import Academy
@@ -8,8 +8,8 @@ import torch
 
 # Hyperparameters
 gpu         = True
-save_model  = True
-n_epochs    = 2000
+save_model  = False
+n_epochs    = 1
 set_name    = "MNIST"
 seed        = 100
 reg_train_ratio = 0.5
@@ -21,12 +21,11 @@ if gpu == True:
     os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # Declare seed and initalize network
-net = FstLayUniLeNet(set_name = set_name,
-                    gpu = gpu,
-                    seed = seed,
-                    U = None)
+net = FstLayUniDenseNet(set_name = set_name,
+                        gpu = gpu,
+                        seed = seed,
+                        U = None)
 U = net.get_orthogonal_matrix(784)
-
 
 # Load data
 data = Data(gpu = gpu, set_name = "MNIST")
@@ -64,7 +63,7 @@ print("Average Network Accuracy: ", accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "mixed_U_net_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "mixed_U_dense_net_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
