@@ -1,6 +1,6 @@
 # Imports
 from models.classes.first_layer_unitary_dense_net import FstLayUniDenseNet
-from prettytable import PrettyTable
+from prettytable import PrettyTable, ALL
 from data_setup import Data
 from academy import Academy
 import numpy as np
@@ -9,7 +9,7 @@ import torch
 # Hyperparameters
 gpu         = True
 save_model  = False
-n_epochs    = 1
+n_epochs    = 5
 set_name    = "MNIST"
 seed        = 100
 reg_train_ratio = 0.5
@@ -35,10 +35,18 @@ academy  = Academy(net, data, gpu)
 
 # Swich between U and Reg
 count = 0
+table = PrettyTable(hrules = ALL)
+table.field_names =(["Epoch", "Unitary Test Accuracy", "Regular Test Accuracy", "Test Accuracy"])
 for _ in range(n_epochs):
     count += 1
-    if count % 5 == 0:
-        print("Epoch: ", count)
+    if count % 1 == 0:
+        academy.net.U = U
+        U_test = academy.test()
+
+        academy.net.U = None
+        reg_test = academy.test()
+
+        table.add_row([count, U_test, reg_test, (U_test, reg_test)/2])
 
     # Determine Unitary or not
     if reg_train_ratio < np.random.uniform():
@@ -50,15 +58,15 @@ for _ in range(n_epochs):
     academy.train(n_epochs = 1)
 
 # Calculate accuracy on test set
-academy.net.U = None
-reg_accuracy  = academy.test()
-print("Regular Network Accuracy: ", reg_accuracy)
-
 academy.net.U = U
-U_accuracy  = academy.test()
-print("Unitary Network Accuracy: ", U_accuracy)
-accuracy = (reg_accuracy + U_accuracy)/2
-print("Average Network Accuracy: ", accuracy)
+U_test = academy.test()
+
+academy.net.U = None
+reg_test = academy.test()
+
+accuracy = (U_test, reg_test)/2
+
+table.add_row([count, U_test, reg_test, accuracy])
 
 # Save Model
 if save_model:
