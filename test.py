@@ -10,7 +10,6 @@ import torchvision.transforms.functional as F
 import operator
 import numpy as np
 from prettytable import PrettyTable
-from get_variable_name import get_variable_name
 
 # Hyperparameters
 gpu = True
