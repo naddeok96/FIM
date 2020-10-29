@@ -51,7 +51,7 @@ attacker = Attacker(net = lenet,
                     gpu = gpu)
 
 # Declare epsilons
-epsilons = [x/5 for x in range(41)]
+epsilons = [x/5 for x in range(81)]
 table.add_column("Epsilons", epsilons)
 
 # Get attack accuracies
