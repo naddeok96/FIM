@@ -10,8 +10,6 @@ import torchvision.transforms.functional as F
 import operator
 import numpy as np
 from prettytable import PrettyTable
-import xlwt 
-from xlwt import Workbook 
 
 # Hyperparameters
 gpu = True
@@ -39,7 +37,7 @@ lenet.eval()
 U = torch.nn.init.orthogonal_(torch.empty(784, 784))
 
 # Push to GPU if True
-U = U if self.gpu == False else U.cuda()
+U = U if gpu == False else U.cuda()
 
 # Enter student network and curriculum data into an academy
 academy  = Academy(lenet, data, gpu)
