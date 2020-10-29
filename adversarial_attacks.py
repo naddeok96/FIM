@@ -297,7 +297,7 @@ class Attacker:
             gradients_norms = torch.norm(gradients, dim = 1).view(-1, 1, 1).detach()
 
             for i, epsilon in enumerate(epsilons):
-                perturbations = (epsilon * F.normalize(np.sign(Tensor.cpu(gradients)), p = 2, dim = 1)).view(batch_size, 1, 28*28)
+                perturbations = (epsilon * F.normalize(np.sign(torch.Tensor.cpu(gradients)), p = 2, dim = 1)).view(batch_size, 1, 28*28)
                 
                 # Declare attacks as the perturbation added to the image
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
