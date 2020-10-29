@@ -10,10 +10,42 @@ import torchvision.transforms.functional as F
 import operator
 import numpy as np
 from prettytable import PrettyTable
+from get_variable_name import get_variable_name
 
 # Hyperparameters
 gpu = True
+save_to_excel = True
 set_name = "MNIST"
+
+a = [1,2,4]
+b = [35,6,8]
+c = [1,2,4]
+d = [35,6,8]
+
+# Excel Workbook Object is created 
+if save_to_excel:
+    import xlwt 
+    from xlwt import Workbook  
+
+    # Open Workbook
+    wb = Workbook() 
+    
+    # Create sheet
+    sheet = wb.add_sheet('Results') 
+
+    # Write out each peak and data
+    results = [a,b,c,d] # [epsilons, ossa_fool_ratio, U_eta_fool_ratio, fgsm_fool_ratio]
+    names = ["a", "b", "c", "d"]
+    for i, result in enumerate(results):
+        sheet.write(0, i, names[i])
+
+        for j, value in enumerate(result):
+            sheet.write(j + 1, i, value)
+
+    wb.save('results.xls') 
+
+exit()
+
 
 # Declare which GPU PCI number to use
 if gpu == True:
@@ -73,3 +105,25 @@ table.add_column("FGSM Attack Accuracy", fgsm_fool_ratio)
 
 # Display
 print(table)
+
+
+# Excel Workbook Object is created 
+if save_to_excel:
+    import xlwt 
+    from xlwt import Workbook  
+
+    # Open Workbook
+    wb = Workbook() 
+    
+    # Create sheet
+    sheet = wb.add_sheet('Results') 
+
+    # Write out each peak and data
+    results = [epsilons, ossa_fool_ratio, U_eta_fool_ratio, fgsm_fool_ratio]
+    for i, result in enumerate(results):
+        sheet.write(0, i, get_variable_name(result))
+
+        for j, value in enumerate(result):
+            sheet.write(j + 1, i, value)
+
+    wb.save(file_name + '.xls') 
