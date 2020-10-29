@@ -165,8 +165,6 @@ class Attacker:
 
                 # Save Attack Accuracy
                 attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
-                break
-            break
                 
         # Divide by total
         attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
@@ -323,8 +321,6 @@ class Attacker:
 
                 # Save Attack Accuracy
                 attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
-                break
-            break
             
         # Divide by 
         attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
