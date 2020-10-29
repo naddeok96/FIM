@@ -118,6 +118,11 @@ class Attacker:
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
+
+            # Push to gpu
+            if self.gpu == True:
+                inputs, labels = inputs.cuda(), labels.cuda()
+
             # Calculate FIM
             fisher, losses, predicted = self.get_FIM(inputs, labels)
 
@@ -279,6 +284,10 @@ class Attacker:
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
+            # Push to gpu
+            if self.gpu == True:
+                inputs, labels = inputs.cuda(), labels.cuda()
+
             # Calculate FIM
             gradients, batch_size, num_classes, losses, predicted = self.get_gradients(inputs, labels)
             
