@@ -12,14 +12,14 @@ import numpy as np
 from prettytable import PrettyTable
 
 # Hyperparameters
-gpu = False
+gpu = True
 set_name = "MNIST"
 
 # Declare which GPU PCI number to use
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # Initialize table
 table = PrettyTable()
