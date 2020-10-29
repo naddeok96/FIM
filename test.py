@@ -5,7 +5,7 @@ from models.classes.adjustable_lenet import AdjLeNet
 from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
 from data_setup import Data
 from academy import Academy
-from ossa import OSSA
+from adversarial_attacks import Attacker
 import torchvision.transforms.functional as F
 import operator
 import numpy as np
@@ -14,7 +14,7 @@ import xlwt
 from xlwt import Workbook 
 
 # Hyperparameters
-gpu = False
+gpu = True
 set_name = "MNIST"
 epsilons = np.round(np.arange(0, 8, 0.2).tolist(), decimals=1)
 
@@ -22,7 +22,7 @@ epsilons = np.round(np.arange(0, 8, 0.2).tolist(), decimals=1)
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # Initialize table
 table = PrettyTable()
@@ -35,49 +35,44 @@ lenet = AdjLeNet(set_name = set_name)
 lenet.load_state_dict(torch.load('models/pretrained/classic_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
 lenet.eval()
 
-# # UniConstLeNet
-uni_const_lenet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-uni_const_lenet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
-uni_const_lenet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
-uni_const_lenet.eval()
+# Generate U
+U = torch.nn.init.orthogonal_(torch.empty(784, 784))
+
+# Push to GPU if True
+U = U if self.gpu == False else U.cuda()
 
 # Enter student network and curriculum data into an academy
-academy  = Academy(uni_const_lenet, data, gpu)
+academy  = Academy(lenet, data, gpu)
 
 # Get model accuracy
 test_acc = academy.test()
 
-ossa_accs, fgsm_accs = [], []
-for EPSILON in epsilons:
-    # Create an attacker
-    attacker = OSSA(net = uni_const_lenet, 
-                    data = data, 
-                    EPSILON = EPSILON,
+# Create Attacker
+attacker = Attacker(net = lenet, 
+                    data = data,
                     gpu = gpu)
 
-    # Get attack accuracies
-    ossa_accs.append((test_acc - attacker.get_attack_accuracy()) / test_acc)
-    fgsm_accs.append((test_acc - attacker.get_FGSM_attack_accuracy(uni_net = uni_const_lenet)) / test_acc)
-    
-table.add_column("Mean", epsilons)
-table.add_column("OSSA", ossa_accs)
-table.add_column("FGSM", ossa_accs)
+# Declare epsilons
+epsilons = [1] # [x/10 for x in range(31)]
+table.add_column("Epsilons", epsilons)
 
-print("Test Accuracy: ", test_acc)
+# Get attack accuracies
+print("Working on OSSA Attacks...")
+ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
+                                               U = None)
+ossa_fool_ratio = attacker.get_fool_ratio(test_acc, ossa_accs)
+table.add_column("OSSA Attack Accuracy", ossa_fool_ratio)
+
+print("Working on U(eta) Attacks...")
+U_eta_accs = attacker.get_OSSA_attack_accuracy(epsilons = epsilons, 
+                                               U = U)
+U_eta_fool_ratio = attacker.get_fool_ratio(test_acc, U_eta_accs)
+table.add_column("OSSA (Ueta) Attack Accuracy", U_eta_fool_ratio)
+
+print("Working on FGSM Attacks...")
+fgsm_accs = attacker.get_FGSM_attack_accuracy(epsilons = epsilons)
+fgsm_fool_ratio = attacker.get_fool_ratio(test_acc, fgsm_accs)
+table.add_column("FGSM Attack Accuracy", fgsm_fool_ratio)
+
+# Display
 print(table)
-
-
-
-# Excel Workbook Object is created 
-wb = Workbook() 
-
-# Create sheet
-sheet = wb.add_sheet('Results') 
-sheet.write(0, 0, "Mean")
-sheet.write(0, 1, "OSSA")
-sheet.write(0, 2, "FGSM")
-for i in range(len(epsilons)):
-    sheet.write(i + 1, 0, epsilons[i])
-    sheet.write(i + 1, 1, ossa_accs[i])
-    sheet.write(i + 1, 2, fgsm_accs[i])
-wb.save("epsilon_test" + '.xls')

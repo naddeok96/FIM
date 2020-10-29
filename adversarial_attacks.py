@@ -108,7 +108,8 @@ class Attacker:
             return eig_values, eig_vectors
 
     def get_OSSA_attack_accuracy(self, epsilons = [1],
-                                       transfer_network = None):
+                                       transfer_network = None,
+                                       U = None):
         """Determine the accuracy of the network after it is attacked by OSSA
 
         Returns:
@@ -122,6 +123,12 @@ class Attacker:
 
             # Highest Eigenvalue and vector
             eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
+
+            # Create U(eta) attack
+            if U is not None:
+                batch_size = eig_vec_max.size(0)
+                batch_U = U.view((1, 784, 784)).repeat(batch_size, 1, 1)
+                eig_vec_max = torch.bmm(batch_U, eig_vec_max.view(batch_size , 784, 1)).view(batch_size , 1, 784)
 
             # Cycle over all espiplons
             for i, epsilon in enumerate(epsilons):
@@ -310,5 +317,11 @@ class Attacker:
         attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
 
         return attack_accuracies
+
+
+    def get_fool_ratio(self, test_acc, attack_accs):
+        return [(test_acc - attack_acc) / test_acc for attack_acc in attack_accs]
+        
+    
         
         
