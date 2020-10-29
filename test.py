@@ -16,10 +16,10 @@ gpu = True
 save_to_excel = True
 set_name = "MNIST"
 
-a = [1,2,4]
-b = [35,6,8]
-c = [1,2,4]
-d = [35,6,8]
+a = [1,2,4,4]
+b = [35,6,8,66]
+c = [1,2,4,76]
+d = [35,6,8,3]
 
 # Excel Workbook Object is created 
 if save_to_excel:
