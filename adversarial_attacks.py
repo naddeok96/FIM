@@ -329,7 +329,7 @@ class Attacker:
 
 
     def get_fool_ratio(self, test_acc, attack_accs):
-        return [(test_acc - attack_acc) / test_acc for attack_acc in attack_accs]
+        return [round(100*((test_acc - attack_acc)), 2) / test_acc for attack_acc in attack_accs]
         
     
         

@@ -12,9 +12,8 @@ import numpy as np
 from prettytable import PrettyTable
 
 # Hyperparameters
-gpu = True
+gpu = False
 set_name = "MNIST"
-epsilons = np.round(np.arange(0, 8, 0.2).tolist(), decimals=1)
 
 # Declare which GPU PCI number to use
 if gpu == True:
@@ -51,7 +50,7 @@ attacker = Attacker(net = lenet,
                     gpu = gpu)
 
 # Declare epsilons
-epsilons = [x/10 for x in range(31)]
+epsilons = [x/5 for x in range(41)]
 table.add_column("Epsilons", epsilons)
 
 # Get attack accuracies
