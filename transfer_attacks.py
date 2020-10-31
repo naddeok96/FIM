@@ -31,7 +31,7 @@ lenet.load_state_dict(torch.load('models/pretrained/classic_lenet_w_acc_98.pt', 
 lenet.eval()
 
 # Unet
-Unet = FstLayUniLeNet(set_name = set_name)
+Unet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
 Unet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu')))
 Unet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
 Unet.eval()
