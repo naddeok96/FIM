@@ -1,5 +1,6 @@
 # Imports
 import os
+import torch
 from data_setup import Data
 from prettytable import PrettyTable
 from adversarial_attacks import Attacker
