@@ -1,5 +1,6 @@
 # Imports
 import os
+from prettytable import PrettyTable
 from adversarial_attacks import Attacker
 from models.classes.adjustable_lenet import AdjLeNet
 from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
