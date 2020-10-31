@@ -47,13 +47,13 @@ attacker = Attacker(attacker_lenet, data, gpu)
 # Get attack accuracies for Lenet
 print("Working on LeNet OSSA Attacks...")
 lenet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
-                                                     transfer_network = lenet_ossa_accs)                                              
+                                                     transfer_network = lenet)                                              
 lenet_ossa_fool_ratio = attacker.get_fool_ratio(test_acc, lenet_ossa_accs)
 table.add_column("LeNet OSSA Fool Ratio", lenet_ossa_fool_ratio)
 
 print("Working on LeNet FGSM Attacks...")
 lenet_fgsm_accs = attacker.get_FGSM_attack_accuracy(epsilons = epsilons,
-                                                    transfer_network = lenet_ossa_accs)
+                                                    transfer_network = lenet)
 lenet_fgsm_fool_ratio = attacker.get_fool_ratio(test_acc, lenet_fgsm_accs)
 table.add_column("LeNet FGSM Attack Accuracy", lenet_fgsm_fool_ratio)
 
