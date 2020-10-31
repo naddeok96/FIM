@@ -115,6 +115,10 @@ class Attacker:
         Returns:
             Attack Accuracy
         """
+        # Push transfer_network to GPU
+        if self.gpu:
+            transfer_network = transfer_network.cuda()
+
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
@@ -281,6 +285,10 @@ class Attacker:
         Returns:
             Float: Attack Accuracy
         """
+        # Push transfer_network to GPU
+        if self.gpu:
+            transfer_network = transfer_network.cuda()
+            
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
