@@ -116,7 +116,7 @@ class Attacker:
             Attack Accuracy
         """
         # Push transfer_network to GPU
-        if self.gpu:
+        if self.gpu and transfer_network is not None:
             transfer_network = transfer_network.cuda()
 
         # Test images in test loader
