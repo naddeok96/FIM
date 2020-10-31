@@ -42,11 +42,7 @@ attacker_lenet.load_state_dict(torch.load('models/pretrained/seed100_lenet_w_acc
 attacker_lenet.eval()
 
 # Create an attacker
-attacker = OSSA(attacker_lenet, data, gpu)
-
-# get_OSSA_attack_accuracy(self, epsilons = [1],
-#                                        transfer_network = None,
-#                                        U = None):
+attacker = Attacker(attacker_lenet, data, gpu)
 
 # Get attack accuracies for Lenet
 print("Working on LeNet OSSA Attacks...")
