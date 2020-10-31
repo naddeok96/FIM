@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 class Data:
     def __init__(self,gpu,
                       set_name,
-                      test_batch_size = 100):
+                      test_batch_size = 256):
 
         super(Data,self).__init__()
 
