@@ -8,7 +8,7 @@ from models.classes.adjustable_lenet import AdjLeNet
 from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
 
 # Hyperparameters
-gpu = False
+gpu = True
 set_name = "MNIST"
 epsilons = [x/5 for x in range(21)]
 
