@@ -50,13 +50,13 @@ attacker = Attacker(attacker_lenet,
 print("Working on LeNet OSSA Attacks...")
 lenet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
                                                      transfer_network = lenet)                                              
-lenet_ossa_fool_ratio = attacker.get_fool_ratio(test_acc, lenet_ossa_accs)
+lenet_ossa_fool_ratio = attacker.get_fool_ratio(98, lenet_ossa_accs)
 table.add_column("LeNet OSSA Fool Ratio", lenet_ossa_fool_ratio)
 
 print("Working on LeNet FGSM Attacks...")
 lenet_fgsm_accs = attacker.get_FGSM_attack_accuracy(epsilons = epsilons,
                                                     transfer_network = lenet)
-lenet_fgsm_fool_ratio = attacker.get_fool_ratio(test_acc, lenet_fgsm_accs)
+lenet_fgsm_fool_ratio = attacker.get_fool_ratio(98, lenet_fgsm_accs)
 table.add_column("LeNet FGSM Attack Accuracy", lenet_fgsm_fool_ratio)
 
 
@@ -64,13 +64,13 @@ table.add_column("LeNet FGSM Attack Accuracy", lenet_fgsm_fool_ratio)
 print("Working on UNet OSSA Attacks...")
 Unet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
                                                      transfer_network = Unet)                                              
-Unet_ossa_fool_ratio = attacker.get_fool_ratio(test_acc, Unet_ossa_accs)
+Unet_ossa_fool_ratio = attacker.get_fool_ratio(95, Unet_ossa_accs)
 table.add_column("UNet OSSA Fool Ratio", Unet_ossa_fool_ratio)
 
 print("Working on UNet FGSM Attacks...")
 Unet_fgsm_accs = attacker.get_FGSM_attack_accuracy(epsilons = epsilons,
                                                     transfer_network = Unet)
-Unet_fgsm_fool_ratio = attacker.get_fool_ratio(test_acc, Unet_fgsm_accs)
+Unet_fgsm_fool_ratio = attacker.get_fool_ratio(95, Unet_fgsm_accs)
 table.add_column("UNet FGSM Attack Accuracy", Unet_fgsm_fool_ratio)
 
 
