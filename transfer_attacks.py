@@ -1,5 +1,6 @@
 # Imports
 import os
+from data_setup import Data
 from prettytable import PrettyTable
 from adversarial_attacks import Attacker
 from models.classes.adjustable_lenet import AdjLeNet
