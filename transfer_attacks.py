@@ -11,10 +11,10 @@ from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
 save_to_excel = True
 gpu = True
 set_name = "MNIST"
-epsilons = [x/5 for x in range(21)]
+epsilons = [x/5 for x in range(61)]
 
 # Declare which GPU PCI number to use
-if gpu == True:
+if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
@@ -70,7 +70,6 @@ lenet_fgsm_accs = attacker.get_FGSM_attack_accuracy(epsilons = epsilons,
                                                     transfer_network = lenet)
 lenet_fgsm_fool_ratio = attacker.get_fool_ratio(0.98, lenet_fgsm_accs)
 table.add_column("LeNet FGSM Attack Accuracy", lenet_fgsm_fool_ratio)
-
 
 # Get transfer attack accuracies for Unet
 print("Working on UNet OSSA Attacks...")
