@@ -17,7 +17,7 @@ epsilons = [x/5 for x in range(61)]
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 # Initialize table
 table = PrettyTable()
