@@ -35,6 +35,29 @@ class Attacker:
         self.indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
         self.soft_max = torch.nn.Softmax(dim = 1)
 
+
+    def normalize(self, input_tensor, p, dim):
+        """Normalizes a batch of vectors along diminesion with L-p norms
+
+        Args:
+            input_tensor (Tensor): batch of vectors
+            p (int, np.inf or float('inf)): type of norm to use
+            dim (int): dimension of vectors
+
+        Returns:
+            Tensor: normalized batch of vectors
+        """
+        # Orginal Size
+        dim1_size = input_tensor.size(1)
+        dim2_size = input_tensor.size(2)
+
+        # Find norm of vectors
+        norms = torch.linalg.norm(input_tensor, ord=p, dim=dim).view(-1, 1, 1)
+
+        # Divide all elements in vector by norm
+        return torch.bmm(1 / norms, input_tensor.view(-1, 1, max(dim1_size, dim2_size))).view(-1, dim1_size, dim2_size)
+
+
     def get_FIM(self, images, labels):
         """Calculate the Fisher Information Matrix for all images
 
@@ -142,7 +165,7 @@ class Attacker:
             # Cycle over all espiplons
             for i, epsilon in enumerate(epsilons):
                 # Set the unit norm of the highest eigenvector to epsilon
-                perturbations = epsilon * eig_vec_max
+                perturbations = epsilon * self.normalize(eig_vec_max, p = float('inf'), dim = 2)
 
                 # Declare attacks as the perturbation added to the image
                 batch_size = np.shape(inputs)[0]
@@ -263,14 +286,14 @@ class Attacker:
         loss = self.criterion(outputs, labels)
         losses = self.indv_criterion(outputs, labels)
         _, predicted = torch.max(outputs.data, 1)
-
+        
         # Find size parameters
         batch_size  = outputs.size(0)
         num_classes = outputs.size(1)
 
         # Find gradients
-        loss.backward(retain_graph = True)
-        gradients = images.grad.data.view(batch_size, 28*28, 1)
+        loss.cpu().backward(retain_graph = True)
+        gradients = images.grad.data.view(batch_size, 28*28, 1)      
        
         return gradients, batch_size, num_classes, losses, predicted
 
@@ -286,24 +309,21 @@ class Attacker:
             Float: Attack Accuracy
         """
         # Push transfer_network to GPU
-        if self.gpu and transfer_network is not None:
+        if self.gpu and (transfer_network is not None):
             transfer_network = transfer_network.cuda()
             
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
             # Push to gpu
-            if self.gpu == True:
+            if self.gpu:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
             # Calculate FIM
             gradients, batch_size, num_classes, losses, predicted = self.get_gradients(inputs, labels)
-            
-            # Set the unit norm of the highest eigenvector to epsilon
-            gradients_norms = torch.norm(gradients, dim = 1).view(-1, 1, 1).detach()
 
             for i, epsilon in enumerate(epsilons):
-                perturbations = (epsilon * F.normalize(torch.sign(gradients), p = 2, dim = 1)).view(batch_size, 1, 28*28)
+                perturbations = (epsilon * self.normalize(torch.sign(gradients), p = np.inf, dim = 1)).view(batch_size, 1, 28*28)
                 
                 # Declare attacks as the perturbation added to the image
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
