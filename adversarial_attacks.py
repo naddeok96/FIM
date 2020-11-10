@@ -138,6 +138,7 @@ class Attacker:
         Returns:
             Attack Accuracy
         """
+        print(self.gpu)
         # Push transfer_network to GPU
         if self.gpu and transfer_network is not None:
             transfer_network = transfer_network.cuda()
@@ -147,7 +148,7 @@ class Attacker:
         for inputs, labels in self.data.test_loader:
 
             # Push to gpu
-            if self.gpu == True:
+            if self.gpu:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
             # Calculate FIM
