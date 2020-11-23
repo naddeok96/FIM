@@ -37,13 +37,14 @@ Unet.load_state_dict(torch.load('models/pretrained/mnist_fstlay_uni_const_lenet_
 Unet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
 Unet.eval()
 
-# Load Attacker LeNet
-attacker_lenet = AdjLeNet(set_name = set_name)
-attacker_lenet.load_state_dict(torch.load('models/pretrained/seed100_lenet_w_acc_98.pt', map_location=torch.device('cpu')))
-attacker_lenet.eval()
+# Load Attacker Net
+attacker_Unet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
+attacker_Unet.load_state_dict(torch.load('models/pretrained/seed100_Unet_w_acc_95.pt', map_location=torch.device('cpu')))
+attacker_Unet.U = torch.load('models/pretrained/U_seed100_Unet_w_acc_95.pt', map_location=torch.device('cpu'))
+attacker_Unet.eval()
 
 # Create an attacker
-attacker = Attacker(attacker_lenet, 
+attacker = Attacker(attacker_Unet, 
                     data, 
                     gpu)
 
@@ -114,4 +115,4 @@ if save_to_excel:
         for j, value in enumerate(result):
             sheet.write(j + 1, i, value)
 
-    wb.save('transfer_attack_results.xls') 
+    wb.save('Unet_transfer_attack_results.xls') 
