@@ -13,8 +13,8 @@ import os
 import matplotlib.pyplot as plt
 
 class Data:
-    def __init__(self,gpu,
-                      set_name,
+    def __init__(self,set_name = "MNIST",
+                      gpu = False,
                       test_batch_size = 256):
 
         super(Data,self).__init__()
@@ -109,8 +109,6 @@ class Data:
 
         # Get image
         image = self.test_set.data[index]
-        image = image.type('torch.FloatTensor')
-        image = self.transform(np.asarray(image))[None]
         image = image.type('torch.FloatTensor')
 
         # Get Label
