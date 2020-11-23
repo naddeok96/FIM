@@ -132,13 +132,15 @@ class Attacker:
 
     def get_OSSA_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None,
-                                       U = None):
+                                       U = None,
+                                       return_attacks_only = False,
+                                       attack_images = None,
+                                       attack_labels  = None):
         """Determine the accuracy of the network after it is attacked by OSSA
 
         Returns:
             Attack Accuracy
         """
-        print(self.gpu)
         # Push transfer_network to GPU
         if self.gpu and transfer_network is not None:
             transfer_network = transfer_network.cuda()
@@ -146,6 +148,10 @@ class Attacker:
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
+
+            if attack_images is not None:
+                inputs = attack_images
+                labels = attack_labels
 
             # Push to gpu
             if self.gpu:
@@ -184,6 +190,9 @@ class Attacker:
                 # Compute attack and models prediction of it
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
+                if return_attacks_only:
+                    return attacks
+
                 if transfer_network == None:
                     adv_outputs = self.net(attacks)
                 else:
@@ -198,67 +207,6 @@ class Attacker:
         attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
                                                         
         return attack_accuracies
-  
-    def get_single_OSSA_attack(self,    epsilon = 1,
-                                        image_index = 0,
-                                        plot = False,
-                                        eigens_only = False):
-        """Get OSSA attack for a single input
-
-        Args:
-            epsilon(float, optional): Magnitude of attack. Defaults to 1.
-            image_index (int, optional): Image index in data loader. Defualts to first image
-            plot (bool, optional): If True, plot attack. Defaults to False.
-            eigens_only(bool, optional): If True, only return eigensystem. Defaults to False
-
-        Returns:
-            [tuple]: attack, prediction, adverserial prediction
-        """
-        # Load image
-        image, label, index = self.data.get_single_image(index = image_index)
-
-        # Reshape image and make it a variable which requires a gradient
-        image = image.view(1,1,28,28)
-        image = Variable(image, requires_grad = True) if self.gpu == False else Variable(image.cuda(), requires_grad = True)
-
-        # Reshape label
-        label = torch.tensor([label.item()])
-
-        # Get Fisher Information Matrix
-        fim, loss, predicted = self.get_FIM(image, label)
-
-        # Get Eigensystem
-        eig_val_max, eig_vec_max = self.get_eigensystem(fim, 
-                                                        max_only = True)
-
-        if eigens_only == True:
-            return eig_val_max, eig_vec_max
-
-        # Set the unit norm of the signs of the highest eigenvector to epsilon
-        perturbation = epsilon * (eig_vec_max.view(28*28,1) / torch.norm(eig_vec_max.view(28*28,1)))
-
-        # Calculate sign of perturbation
-        attack = (image.view(28*28,1) + perturbation).view(1,1,28,28)
-
-        adv_output = self.net(attack)
-        adv_loss = self.criterion(adv_output, label).item()
-
-        perturbation = perturbation if adv_loss > loss else -1*perturbation
-
-        # Compute attack and models prediction of it
-        attack = (image.view(28*28,1) + perturbation).view(1,1,28,28)
-
-        adv_output = self.net(attack)
-        _, adv_predicted = torch.max(adv_output.data, 1)
-
-        # Display
-        if plot == True:
-            self.data.plot_attack(image,            # Image
-                                    predicted,      # Prediction
-                                    attack,         # Attack
-                                    adv_predicted)   # Adversrial Prediction
-
-        return attack, predicted, adv_predicted
 
     def get_gradients(self, images, labels):
         """Calculate the gradients of an image
@@ -299,7 +247,10 @@ class Attacker:
         return gradients, batch_size, num_classes, losses, predicted
 
     def get_FGSM_attack_accuracy(self, epsilons = [1],
-                                       transfer_network = None):
+                                       transfer_network = None,
+                                       return_attacks_only = False,
+                                       attack_images = None,
+                                       attack_labels  = None):
         """Generate attacks with FGSM 
 
         Args:
@@ -316,6 +267,11 @@ class Attacker:
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in self.data.test_loader:
+
+            if attack_images is not None:
+                inputs = attack_images
+                labels = attack_labels
+
             # Push to gpu
             if self.gpu:
                 inputs, labels = inputs.cuda(), labels.cuda()
@@ -325,7 +281,7 @@ class Attacker:
 
             for i, epsilon in enumerate(epsilons):
                 perturbations = (epsilon * self.normalize(torch.sign(gradients), p = np.inf, dim = 1)).view(batch_size, 1, 28*28)
-                
+
                 # Declare attacks as the perturbation added to the image
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
@@ -340,6 +296,9 @@ class Attacker:
             
                 # Compute attack and models prediction of it
                 attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+
+                if return_attacks_only:
+                    return attacks
 
                 if transfer_network == None:
                     adv_outputs = self.net(attacks)
@@ -358,8 +317,78 @@ class Attacker:
 
 
     def get_fool_ratio(self, test_acc, attack_accs):
+        """Calculate the fooling ratio of attacks
+
+        Args:
+            test_acc (float): orginal network accuracy
+            attack_accs (list of floats): list of accuracies after an attack
+
+        Returns:
+            list of floats: list of fooling ratios
+        """
         return [round(100*((test_acc - attack_acc) / test_acc), 2) for attack_acc in attack_accs]
         
     
+    def check_attack_perception(self, epsilons = [1]):
+
+        # Initalize images and labels for one of each number
+        images = torch.zeros((10, 1, 28, 28))
+        labels = torch.zeros((10)).type(torch.LongTensor)
         
+        # Find one of each number
+        found = False
+        number = 0
+        index = 0
+
+        while found is not True:
+            for test_inputs, test_labels in self.data.test_loader:
+                
+                image, label, = test_inputs[0], test_labels[0]
+
+                if label.item() == number:
+                    images[number, 0, :, :] = image
+                    labels[number] = label
+
+                    number += 1
+                    if number > 9:
+                        found = True
+                index += 1
+
+
+        figsize = 7
+        fig, axes2d = plt.subplots(nrows=len(epsilons),
+                                    ncols=10,
+                                    sharex=True, sharey=True)
+
+        plt.suptitle("MNIST", fontsize=20)
+        fig.text(0.02, 0.5, 'L-inf Norm of Attack', va='center', ha='center', rotation='vertical', fontsize=20)
+
+        for i, row in enumerate(axes2d):
+            attacks = self. get_OSSA_attack_accuracy(attack_images = images,
+                                                            attack_labels = labels,
+                                                            epsilons = [epsilons[i]],
+                                                            return_attacks_only = True)
+            # attacks = self. get_FGSM_attack_accuracy(attack_images = images,
+            #                                                 attack_labels = labels,
+            #                                                 epsilons = [epsilons[i]],
+            #                                                 return_attacks_only = True)
+
+            for j, cell in enumerate(row):
+                cell.imshow(attacks[j,:,:,:].detach().numpy()[0], cmap='gray')
+                cell.set_xticks([])
+                cell.set_yticks([])
+
+                if i == 0:
+                    cell.set_title(j)
+                if j == 0:
+                    cell.set_ylabel(epsilons[i])
+
+        # horz_padding = -0.5
+        # vert_padding = -1
+        # plt.tight_layout(h_pad=horz_padding, w_pad=vert_padding)
+        fig.subplots_adjust(hspace = 0, wspace=0)
+            
+        
+        plt.show()
+        exit()
         
