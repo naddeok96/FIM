@@ -39,8 +39,8 @@ Unet.eval()
 
 # Load Attacker Net
 attacker_Unet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-attacker_Unet.load_state_dict(torch.load('models/pretrained/seed100_Unet_w_acc_95.pt', map_location=torch.device('cpu')))
-attacker_Unet.U = torch.load('models/pretrained/U_seed100_Unet_w_acc_95.pt', map_location=torch.device('cpu'))
+attacker_Unet.load_state_dict(torch.load('models/pretrained/Big_Unet_w_acc_95.pt', map_location=torch.device('cpu')))
+attacker_Unet.U = torch.load('models/pretrained/U_Big_Unet_w_acc_95.pt', map_location=torch.device('cpu'))
 attacker_Unet.eval()
 
 # Create an attacker
