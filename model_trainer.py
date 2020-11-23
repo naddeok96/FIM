@@ -27,8 +27,8 @@ if gpu == True:
 # Declare seed and initalize network
 torch.manual_seed(seed)
 # Unet
-Unet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-Unet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
+net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
+net.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
 
 # Load data
 data = Data(gpu = gpu, set_name = "MNIST")
