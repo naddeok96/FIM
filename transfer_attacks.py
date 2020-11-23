@@ -17,7 +17,7 @@ epsilons = [x/5 for x in range(61)]
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # Initialize table
 table = PrettyTable()
@@ -38,7 +38,10 @@ Unet.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.p
 Unet.eval()
 
 # Load Attacker Net
-attacker_Unet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
+attacker_Unet = FstLayUniLeNet(set_name = set_name, gpu = gpu, 
+                                num_kernels_layer1 = 10, 
+                                num_kernels_layer2 = 20, 
+                                num_kernels_layer3 = 150)
 attacker_Unet.load_state_dict(torch.load('models/pretrained/Big_Unet_w_acc_95.pt', map_location=torch.device('cpu')))
 attacker_Unet.U = torch.load('models/pretrained/U_Big_Unet_w_acc_95.pt', map_location=torch.device('cpu'))
 attacker_Unet.eval()
@@ -115,4 +118,4 @@ if save_to_excel:
         for j, value in enumerate(result):
             sheet.write(j + 1, i, value)
 
-    wb.save('Unet_transfer_attack_results.xls') 
+    wb.save('Big_Unet_transfer_attack_results.xls') 
