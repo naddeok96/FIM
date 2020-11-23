@@ -24,7 +24,7 @@ table = PrettyTable()
 table.add_column("Epsilons", epsilons)
 
 # Initialize data
-data = Data(gpu, set_name)
+data = Data(gpu = gpu, set_name = set_name)
 
 # Load LeNet
 lenet = AdjLeNet(set_name = set_name)
