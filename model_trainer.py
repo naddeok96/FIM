@@ -27,7 +27,10 @@ if gpu == True:
 # Declare seed and initalize network
 torch.manual_seed(seed)
 # Unet
-net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
+net = FstLayUniLeNet(set_name = set_name, gpu = gpu, 
+                    num_kernels_layer1 = 10, 
+                    num_kernels_layer2 = 20, 
+                    num_kernels_layer3 = 150)
 net.U = torch.load('models/pretrained/U_mnist_fstlay_uni_const_lenet_w_acc_95.pt', map_location=torch.device('cpu'))
 
 # Load data
@@ -46,7 +49,7 @@ print(accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "seed100_Unet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "Big_Unet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(academy.net.state_dict(), filename)
