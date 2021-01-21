@@ -13,7 +13,7 @@ from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
 gpu         = True
-save_model  = True
+save_model  = False
 n_epochs    = 1000
 set_name    = "MNIST"
 seed        = 100

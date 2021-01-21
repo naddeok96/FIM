@@ -35,7 +35,7 @@ class Data:
                                                     download=True,
                                                     transform=self.transform)
 
-            self.test_set = torchvision.datasets.CIFAR10(root='./cifardata',
+            self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch',
                                                     train=False,
                                                     download=True,
                                                     transform=self.transform)
@@ -48,7 +48,7 @@ class Data:
             self.inverse_transform = transforms.Compose([transforms.ToTensor(), 
                                                          transforms.Normalize((-self.mean * self.std,), (1/self.std,))])
 
-            self.train_set = datasets.MNIST(root='../data',
+            self.train_set = datasets.MNIST(root='../../../data/pytorch',
                                             train = True,
                                             download = True,
                                             transform = self.transform) 

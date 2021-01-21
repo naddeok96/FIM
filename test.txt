@@ -1,0 +1,18 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(model_trainer_for_N_U.py:781130): Gdk-CRITICAL **: 17:01:39.980: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+Traceback (most recent call last):
+  File "model_trainer_for_N_U.py", line 51, in <module>
+    academy  = Academy(net, data, gpu)
+  File "/home/naddeok5/FIM/academy.py", line 30, in __init__
+    self.net = net if self.gpu == False else net.cuda()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 463, in cuda
+    return self._apply(lambda t: t.cuda(device))
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 359, in _apply
+    module._apply(fn)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 381, in _apply
+    param_applied = fn(param)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 463, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+RuntimeError: CUDA error: out of memory
