@@ -14,7 +14,7 @@ from models.classes.adjustable_lenet            import AdjLeNet
 # Hyperparameters
 gpu         = True
 save_model  = False
-n_epochs    = 1000
+n_epochs    = 10
 set_name    = "MNIST"
 seed        = 100
 
@@ -22,7 +22,7 @@ seed        = 100
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
@@ -40,7 +40,8 @@ data = Data(gpu = gpu, set_name = "MNIST")
 academy  = Academy(net, data, gpu)
 
 # Fit Model
-academy.train(n_epochs = n_epochs)
+academy.train(n_epochs = n_epochs,
+              batch_size = 1)
 
 # Calculate accuracy on test set
 accuracy  = academy.test()

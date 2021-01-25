@@ -32,8 +32,9 @@ def get_N_orthogonal_matricies(N, k = 1, input_size = 784):
     with open("models/pretrained/" + str(N) + "_Rs" + '.pkl', 'wb') as output:
         pickle.dump(Rs, output, pickle.HIGHEST_PROTOCOL)
 
-    with open("models/pretrained/" + str(N) + "_Us" + '.pkl', 'wb') as output:
-        pickle.dump(Us, output, pickle.HIGHEST_PROTOCOL)
+    for i in range(len(Rs)): 
+        with open("models/pretrained/" + str(i)+ "_of_" + str(N) + "_Us" + '.pkl', 'wb') as output:
+            pickle.dump(Us[i], output, pickle.HIGHEST_PROTOCOL)
 
 # Main
 get_N_orthogonal_matricies( N = 10,

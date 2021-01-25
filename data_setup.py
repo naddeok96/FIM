@@ -30,14 +30,14 @@ class Data:
             self.transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
                                             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) #  Normalize about 0.5
 
-            self.train_set = torchvision.datasets.CIFAR10(root='./cifardata',
+            self.train_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch',
                                                     train=True,
-                                                    download=True,
+                                                    download=False,
                                                     transform=self.transform)
 
             self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch',
                                                     train=False,
-                                                    download=True,
+                                                    download=False,
                                                     transform=self.transform)
         elif self.set_name == "MNIST":
             # Images are of size (1, 28, 28)
@@ -50,12 +50,12 @@ class Data:
 
             self.train_set = datasets.MNIST(root='../../../data/pytorch',
                                             train = True,
-                                            download = True,
+                                            download = False,
                                             transform = self.transform) 
 
-            self.test_set = torchvision.datasets.MNIST(root='../data',
+            self.test_set = torchvision.datasets.MNIST(root='../../../data/pytorch',
                                                     train=False,
-                                                    download=True,
+                                                    download=False,
                                                     transform=self.transform)
         else:
             print("Please enter vaild dataset.")

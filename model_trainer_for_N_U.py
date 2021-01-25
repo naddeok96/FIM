@@ -41,15 +41,15 @@ for i in range(len(Rs)):
     # Reset Unet
     net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
 
-    with open("models/pretrained/" + str(N) + "_Us" + '.pkl', 'rb') as input:
-        net.U = pickle.load(input)[i]
-
+    with open("models/pretrained/" + str(i)+ "_of_" + str(N) + "_Us" + '.pkl', 'rb') as input:
+        net.U = pickle.load(input)
+    print(i)
     # Enter student network and curriculum data into an academy
     academy  = Academy(net, data, gpu)
 
     # Fit Model
     academy.train(n_epochs = n_epochs,
-                  batch_size = 64)
+                  batch_size = 16)
 
     # Calculate accuracy on test set
     accuracies.append(academy.test())
