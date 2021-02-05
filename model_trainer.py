@@ -3,6 +3,7 @@ This script will train a model and save it
 '''
 # Imports
 import torch
+import pickle
 from data_setup import Data
 from academy import Academy
 from models.classes.rand_lenet                  import RandLeNet
@@ -13,7 +14,7 @@ from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
 gpu         = True
-save_model  = False
+save_model  = True
 n_epochs    = 1000
 set_name    = "MNIST"
 seed        = 100
@@ -28,7 +29,7 @@ if gpu == True:
 torch.manual_seed(seed)
 # Unet
 net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-with open("models\pretrained\high_R_U.pkl", 'rb') as input:
+with open("models/pretrained/high_R_U.pkl", 'rb') as input:
     net.U = pickle.load(input).type(torch.FloatTensor)
 
 # Load data
