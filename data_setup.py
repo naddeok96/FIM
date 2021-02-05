@@ -30,12 +30,12 @@ class Data:
             self.transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
                                             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) #  Normalize about 0.5
 
-            self.train_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch',
+            self.train_set = torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch'
                                                     train=True,
                                                     download=False,
                                                     transform=self.transform)
 
-            self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch',
+            self.test_set = torchvision.datasets.CIFAR10(root='../data',
                                                     train=False,
                                                     download=False,
                                                     transform=self.transform)
@@ -48,12 +48,12 @@ class Data:
             self.inverse_transform = transforms.Compose([transforms.ToTensor(), 
                                                          transforms.Normalize((-self.mean * self.std,), (1/self.std,))])
 
-            self.train_set = datasets.MNIST(root='../../../data/pytorch',
+            self.train_set = datasets.MNIST(root='../data',
                                             train = True,
                                             download = False,
                                             transform = self.transform) 
 
-            self.test_set = torchvision.datasets.MNIST(root='../../../data/pytorch',
+            self.test_set = torchvision.datasets.MNIST(root='../data',
                                                     train=False,
                                                     download=False,
                                                     transform=self.transform)
