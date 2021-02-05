@@ -41,8 +41,8 @@ Unet.eval()
 
 # Weak Uninet
 weak_Unet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-Unet.load_state_dict(torch.load('models/pretrained/High_R_Unet_w_acc_98.pt', map_location=torch.device('cpu')))
-with open("models/pretrained/" + str(1)+ "_of_" + str(10) + "_Us" + '.pkl', 'rb') as input:
+weak_Unet.load_state_dict(torch.load('models/pretrained/High_R_Unet_w_acc_98.pt', map_location=torch.device('cpu')))
+with open("models/pretrained/high_R_U.pkl", 'rb') as input:
     weak_Unet.U = pickle.load(input).type(torch.FloatTensor)
 weak_Unet.eval()
 
