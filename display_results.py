@@ -56,7 +56,6 @@ data = {"Epsilons" : [],
 
 
 data["OSSA"]["Weak Unet"] = bad_results.col_values(4, start_rowx = 1)
-
 # Cycle through the data
 for i in range(results.row_len(0)):
     # Epsilons
@@ -95,7 +94,7 @@ for model in data["OSSA"]:
     if model == "Weak Unet":
         plt.plot(data["Epsilons"], data["OSSA"][model], label= "CosSim(I, WeakU): " + "{:.2e}".format(data["Rotations"][0]))
 
-    if 0 < len(idx):
+    elif 0 < len(idx):
         if idx == "10": 
             plt.plot(data["Epsilons"], data["OSSA"][model], label= "CosSim(I, U" + idx + "): " + "{:.2e}".format(data["Rotations"][int(idx)]))
         else:
