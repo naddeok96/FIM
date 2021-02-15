@@ -112,15 +112,6 @@ class Academy:
             if self.gpu == True:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
-            import matplotlib
-            matplotlib.use('Agg')
-            import matplotlib.pyplot as plt
-            img = torchvision.utils.make_grid((inputs[0]))
-            img = self.data.inverse_transform(img)
-            plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
-            plt.savefig("img2.png")
-            # print(labels)
-            exit()
             #Forward pass
             outputs = self.net(inputs)
             _, predicted = torch.max(outputs.data, 1)

@@ -16,7 +16,7 @@ from models.classes.adjustable_lenet            import AdjLeNet
 gpu         = True
 save_model  = False
 n_epochs    = 1000
-set_name    = "MNIST"
+set_name    = "ImageNet"
 seed        = 200
 
 # Push to GPU if necessary
@@ -31,13 +31,17 @@ torch.manual_seed(seed)
 # net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
 # with open("models/pretrained/high_R_U.pkl", 'rb') as input:
 #     net.U = pickle.load(input).type(torch.FloatTensor)
-model = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
-exit()
+net = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
+net.eval()
+print("Network Loaded")
+
 # Load data
-data = Data(gpu = gpu, set_name = set_name)
+data = Data(gpu = gpu, set_name = set_name, test_batch_size = 128)
+print("Data Loaded")
 
 # Enter student network and curriculum data into an academy
 academy  = Academy(net, data, gpu)
+print("Academy Set Up")
 
 # Fit Model
 # academy.train(n_epochs = n_epochs,
@@ -45,6 +49,7 @@ academy  = Academy(net, data, gpu)
 
 # Calculate accuracy on test set
 accuracy  = academy.test()
+print("Testing Done")
 print(accuracy)
 
 # Save Model

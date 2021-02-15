@@ -68,15 +68,20 @@ class Data:
 
             self.inverse_transform = UnNormalize(mean=[0.485, 0.456, 0.406],
                                                 std=[0.229, 0.224, 0.225])
-            self.train_set = torchvision.datasets.ImageNet(root='../../../data/ImageNet', # '../data' 
-                                                    train=True,
-                                                    download=False,
+            self.train_set = torchvision.datasets.ImageFolder(root='../../../data/ImageNet/train', # '../data' 
                                                     transform=self.transform)
 
-            self.test_set = torchvision.datasets.ImageNet(root='../../../data/ImageNet',
-                                                    train=False,
-                                                    download=False,
+            self.test_set = torchvision.datasets.ImageFolder(root='../../../data/ImageNet/val',
                                                     transform=self.transform)
+
+            # import matplotlib
+            # matplotlib.use('Agg')
+            # import matplotlib.pyplot as plt
+            # img = torchvision.utils.make_grid((inputs[0]))
+            # img = self.data.inverse_transform(img)
+            # plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
+            # plt.savefig("img2.png")
+            # exit()
 
         else:
             print("Please enter vaild dataset.")
