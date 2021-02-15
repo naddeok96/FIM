@@ -16,7 +16,7 @@ from models.classes.adjustable_lenet            import AdjLeNet
 gpu         = True
 save_model  = False
 n_epochs    = 1000
-set_name    = "CIFAR10"
+set_name    = "MNIST"
 seed        = 200
 
 # Push to GPU if necessary

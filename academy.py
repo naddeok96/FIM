@@ -112,14 +112,13 @@ class Academy:
             if self.gpu == True:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
-            import tkinter
             import matplotlib
-            matplotlib.use('tkagg')
+            matplotlib.use('Agg')
             import matplotlib.pyplot as plt
             img = torchvision.utils.make_grid((inputs[0]))
-            img = img/2+0.5
+            img = self.data.inverse_transform(img)
             plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
-            plt.show()
+            plt.savefig("img2.png")
             # print(labels)
             exit()
             #Forward pass
