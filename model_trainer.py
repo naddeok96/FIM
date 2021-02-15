@@ -29,12 +29,10 @@ if gpu == True:
 torch.manual_seed(seed)
 # Unet
 # net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-# net.set_orthogonal_matrix()
 # with open("models/pretrained/high_R_U.pkl", 'rb') as input:
 #     net.U = pickle.load(input).type(torch.FloatTensor)
-net = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
-net.eval()
-
+model = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
+exit()
 # Load data
 data = Data(gpu = gpu, set_name = set_name)
 
