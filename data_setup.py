@@ -57,6 +57,24 @@ class Data:
                                                     train=False,
                                                     download=False,
                                                     transform=self.transform)
+
+        elif self.set_name == "ImageNet":
+            self.transform = transforms.Compose([ transforms.Resize(256),
+                                                transforms.CenterCrop(224),
+                                                transforms.ToTensor(),
+                                                transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                                                     std=[0.229, 0.224, 0.225])])
+
+            self.train_set = torchvision.datasets.ImageNet(root='../../../data/ImageNet', # '../data' 
+                                                    train=True,
+                                                    download=False,
+                                                    transform=self.transform)
+
+            self.test_set = torchvision.datasets.ImageNet(root='../../../data/ImageNet',
+                                                    train=False,
+                                                    download=False,
+                                                    transform=self.transform)
+
         else:
             print("Please enter vaild dataset.")
             exit()

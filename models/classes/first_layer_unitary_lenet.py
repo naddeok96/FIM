@@ -42,6 +42,7 @@ class FstLayUniLeNet(nn.Module):
         self.num_nodes_fc_layer = num_nodes_fc_layer
 
         if self.set_name == "CIFAR10":
+            self.image_size = 32
             # Input (3,32,32)
             # Layer 1
             self.conv1 = nn.Conv2d(3, # Input channels
@@ -50,7 +51,9 @@ class FstLayUniLeNet(nn.Module):
                                 kernel_size = 5, 
                                 stride = 1, 
                                 padding = 0) # Output = (3,28,28)
+
         elif self.set_name == "MNIST":
+            self.image_size = 28
             # Input (1,28,28)
             # Layer 1
             self.conv1 = nn.Conv2d(1, # Input channels
@@ -106,6 +109,10 @@ class FstLayUniLeNet(nn.Module):
         # Calculate an orthoganal matrix the size of A
         return torch.nn.init.orthogonal_(torch.empty(size, size))
 
+    # Set a new U
+    def set_orthogonal_matrix(self):
+        self.U = self.get_orthogonal_matrix(self.image_size**2)
+
     # Orthogonal transformation
     def orthogonal_operation(self, input_tensor):
         '''
@@ -115,8 +122,9 @@ class FstLayUniLeNet(nn.Module):
         Returns UA
         '''
         # Find batch size and feature map size
-        batch_size = input_tensor.size()[0]
-        A_side_size = int(input_tensor.size()[2])
+        batch_size = input_tensor.size(0)
+        channel_num = int(input_tensor.size(1))
+        A_side_size = int(input_tensor.size(2))
 
         # Determine if U is available
         if self.U == None:
@@ -130,16 +138,16 @@ class FstLayUniLeNet(nn.Module):
         # Repeat U and U transpose for all batches
         input_tensor = input_tensor if self.gpu == False else input_tensor.cuda()
         # Ut = U.t().view((1, A_side_size**2, A_side_size**2)).repeat(batch_size, 1, 1)
-        U = copy(U.view((1, A_side_size**2, A_side_size**2)).repeat(batch_size, 1, 1))
+        U = copy(U.view((1, A_side_size**2, A_side_size**2)).repeat(channel_num * batch_size, 1, 1))
         
         # Batch muiltply UA
-        return torch.bmm(U, input_tensor.view(batch_size, A_side_size**2, 1)).view(batch_size, 1, A_side_size, A_side_size)
+        return torch.bmm(U, input_tensor.view(channel_num *batch_size, A_side_size**2, 1)).view(batch_size, channel_num, A_side_size, A_side_size)
 
     def forward(self, x):
         
         # Unitary transformation
         x = self.orthogonal_operation(x)
-        
+
         # Feedforward
         x = torch.tanh(self.conv1(x))
         x = self.pool1(x)
