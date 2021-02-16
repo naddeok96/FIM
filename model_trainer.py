@@ -14,16 +14,16 @@ from models.classes.adjustable_lenet            import AdjLeNet
 
 # Hyperparameters
 gpu         = True
-save_model  = True
+save_model  = False
 n_epochs    = 1000
-set_name    = "MNIST"
-seed        = 100
+set_name    = "CIFAR10"
+seed        = 200
 
 # Push to GPU if necessary
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
@@ -34,13 +34,14 @@ torch.manual_seed(seed)
 model = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
 exit()
 # Load data
-data = Data(gpu = gpu, set_name = "MNIST")
+data = Data(gpu = gpu, set_name = set_name)
 
 # Enter student network and curriculum data into an academy
 academy  = Academy(net, data, gpu)
 
 # Fit Model
-academy.train(n_epochs = n_epochs)
+# academy.train(n_epochs = n_epochs,
+#               batch_size = 256)
 
 # Calculate accuracy on test set
 accuracy  = academy.test()
@@ -49,11 +50,11 @@ print(accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "High_R_Unet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "CIFAR10_200seed_lenet_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
-    torch.save(academy.net.state_dict(), filename)
+    torch.save(academy.net.state_dict(), "models/pretrained/" + filename)
 
     # Save U
-    # if net.U is not None:
-    #     torch.save(net.U, "U_" + filename)
+    if net.U is not None:
+        torch.save(net.U, "models/pretrained/U_" + filename)

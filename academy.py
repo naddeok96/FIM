@@ -8,6 +8,7 @@ import torchvision.transforms as transforms
 import math
 import operator
 
+
 class Academy:
     def __init__(self,
                  net, 
@@ -111,6 +112,16 @@ class Academy:
             if self.gpu == True:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
+            import tkinter
+            import matplotlib
+            matplotlib.use('tkagg')
+            import matplotlib.pyplot as plt
+            img = torchvision.utils.make_grid((inputs[0]))
+            img = img/2+0.5
+            plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
+            plt.show()
+            # print(labels)
+            exit()
             #Forward pass
             outputs = self.net(inputs)
             _, predicted = torch.max(outputs.data, 1)
