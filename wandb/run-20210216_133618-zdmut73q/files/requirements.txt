@@ -101,7 +101,7 @@ ssh-import-id==5.7
 subprocess32==3.5.4
 tensorboard==1.15.0
 tensorflow-estimator==1.15.1
-tensorflow-gpu==1.15.2
+tensorflow-gpu==2.4.0
 tensorflow-serving-api==1.15.0
 termcolor==1.1.0
 text-unidecode==1.3
