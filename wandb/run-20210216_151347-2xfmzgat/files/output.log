@@ -1,0 +1,32 @@
+tensor([157, 247, 834, 264, 629, 620,   9, 594, 176, 326, 977, 480, 273,  38,
+        992,  52, 941, 791, 837, 125, 555, 156,  45, 439,  55, 896,  22, 572,
+        699, 237, 278, 891,   6, 649, 563, 332, 433, 682, 753, 661, 875, 622,
+        118, 962, 309, 222, 530, 559, 443,  62, 238, 142, 952, 155, 932, 840,
+        505, 515,  85, 664, 357, 262, 135, 393, 882,  92, 840, 342, 675,  91,
+        154,  27, 552, 272, 388, 587, 332, 671, 316, 541, 344,  85, 975,  29,
+        917, 947,  54, 979, 172, 255, 662, 451, 227,  54, 302, 954, 878, 206,
+        378, 463, 964, 566, 229, 445,  60, 157, 671, 202, 517,  12,  20, 637,
+        741, 265, 900,  53, 484, 307, 976, 456, 313, 454, 749, 335, 224, 394,
+        832, 721], device='cuda:0')
+tensor([157, 247, 834, 264, 629, 620,   9, 594, 176, 326, 977, 480, 273,  38,
+        992,  52, 941, 791, 837, 125, 555, 156,  45, 439,  59, 896,  22, 572,
+        903, 237, 278, 891,   6, 649, 683, 332, 433, 682, 753, 661, 875, 622,
+        118, 935, 309, 222, 530, 559, 443,  62, 238, 142, 952, 155, 932, 840,
+        899, 515,  85, 673, 357, 262, 135, 393, 882,  92, 840, 342, 675,  91,
+        154,  27, 552, 272, 388, 587, 332, 518, 316, 468, 344,  85, 975,  29,
+        917, 947,  54, 979, 253, 255, 662, 451, 227,  60, 302, 954, 878, 206,
+        378, 463, 964, 566, 229, 445,  61, 157, 671, 202, 517,  12,  20, 637,
+        741, 265, 900,  53, 484, 307, 976, 456, 313, 454, 749, 335, 232, 394,
+        832, 879], device='cuda:0')
+Traceback (most recent call last):
+  File "vgg_model_trainer.py", line 41, in <module>
+    academy.train()
+  File "/home/naddeok5/FIM/wandb_academy.py", line 106, in train
+    print(criterion(outputs.view(1, -1), labels.view(1, -1)))
+  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py", line 446, in forward
+    return F.mse_loss(input, target, reduction=self.reduction)
+  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/nn/functional.py", line 2660, in mse_loss
+    return torch._C._nn.mse_loss(expanded_input, expanded_target, _Reduction.get_enum(reduction))
+RuntimeError: "mse_cuda" not implemented for 'Long'

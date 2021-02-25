@@ -15,7 +15,7 @@ from models.classes.adjustable_lenet            import AdjLeNet
 # Hyperparameters
 gpu         = True
 save_model  = False
-n_epochs    = 1000
+n_epochs    = 1
 set_name    = "ImageNet"
 seed        = 200
 

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "vgg_model_trainer.py", line 41, in <module>
+    academy.train()
+  File "/home/naddeok5/FIM/wandb_academy.py", line 104, in train
+    loss = criterion (outputs, labels)        # Calculate loss
+  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py", line 446, in forward
+    return F.mse_loss(input, target, reduction=self.reduction)
+  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/nn/functional.py", line 2660, in mse_loss
+    return torch._C._nn.mse_loss(expanded_input, expanded_target, _Reduction.get_enum(reduction))
+RuntimeError: "mse_cuda" not implemented for 'Long'

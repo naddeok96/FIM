@@ -1,0 +1,16 @@
+wandb_version: 1
+
+batch_size:
+  value: 128
+criterion:
+  value: mse
+epochs:
+  value: 1
+learning_rate:
+  value: 0.01
+momentum:
+  value: 0.9
+optimizer:
+  value: sgd
+weight_decay:
+  value: 0.005

@@ -13,8 +13,7 @@ from copy import copy
 
 class FstLayUniVGG16(nn.Module):
 
-    def __init__(self, set_name,
-                       gpu = False,
+    def __init__(self, gpu = False,
                        U = None,
                        seed = 1):
 
@@ -22,8 +21,6 @@ class FstLayUniVGG16(nn.Module):
         torch.manual_seed(seed)
 
         # Decalre Hyperparameters
-        self.set_name = set_name
-
         self.gpu = gpu
 
         self.U = U
@@ -52,15 +49,14 @@ class FstLayUniVGG16(nn.Module):
         Returns UA
         '''
         # Find batch size and feature map size
+        print(input_tensor.size())
+        exit()
         batch_size = input_tensor.size(0)
         channel_num = int(input_tensor.size(1))
         A_side_size = int(input_tensor.size(2))
 
         # Determine if U is available
-        if self.U == None:
-            U = copy(torch.eye(A_side_size**2))
-        else:
-            U = copy(self.U)
+        U = copy(self.U)
 
         # Push to GPU if True
         U = copy(U if self.gpu == False else U.cuda())
@@ -76,7 +72,8 @@ class FstLayUniVGG16(nn.Module):
     def forward(self, x):
         
         # Unitary transformation
-        x = self.orthogonal_operation(x)
+        if self.U is not None:
+            x = self.orthogonal_operation(x)
 
         # Feedforward
         x = self.vgg(x)

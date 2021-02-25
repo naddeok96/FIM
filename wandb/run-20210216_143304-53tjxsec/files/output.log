@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "vgg_model_trainer.py", line 41, in <module>
+    academy.train()
+  File "/home/naddeok5/FIM/wandb_academy.py", line 104, in train
+    print(outputs.size())
+AttributeError: 'torch.return_types.max' object has no attribute 'size'

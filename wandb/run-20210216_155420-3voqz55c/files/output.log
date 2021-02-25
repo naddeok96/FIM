@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "vgg_model_trainer.py", line 41, in <module>
+    academy.train()
+  File "/home/naddeok5/FIM/wandb_academy.py", line 118, in train
+    print((predictions == orginal_labels).mean())
+RuntimeError: Can only calculate the mean of floating types. Got Bool instead.

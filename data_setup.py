@@ -101,6 +101,8 @@ class Data:
                                                            num_workers = 8,
                                                            pin_memory = True)
 
+        
+
     # Fucntion to break training set into batches
     def get_train_loader(self, batch_size):
         '''
@@ -116,7 +118,6 @@ class Data:
                                                         shuffle = True,
                                                         num_workers = 8,
                                                         pin_memory=True)
-
         return train_loader
 
     def unload(self, image_size):

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "vgg_model_trainer.py", line 41, in <module>
+    academy.train()
+  File "/home/naddeok5/FIM/wandb_academy.py", line 103, in train
+    img = torchvision.utils.make_grid((inputs[0]))
+  File "/usr/lib/python3/dist-packages/torchvision/utils.py", line 69, in make_grid
+    if tensor.size(0) == 1:
+IndexError: dimension specified as 0 but tensor has no dimensions

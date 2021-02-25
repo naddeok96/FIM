@@ -1,0 +1,30 @@
+2021-02-16 15:40:25,289 INFO    MainThread:53958 [internal.py:wandb_internal():91] W&B internal server running at pid: 53958, started at: 2021-02-16 15:40:25.288842
+2021-02-16 15:40:25,292 DEBUG   HandlerThread:53958 [handler.py:handle_request():94] handle_request: check_version
+2021-02-16 15:40:25,292 INFO    WriterThread:53958 [datastore.py:open_for_write():77] open: /home/naddeok5/FIM/wandb/run-20210216_154024-2mwzfpjb/run-2mwzfpjb.wandb
+2021-02-16 15:40:25,296 DEBUG   SenderThread:53958 [sender.py:send():117] send: header
+2021-02-16 15:40:25,296 DEBUG   SenderThread:53958 [sender.py:send():117] send: request
+2021-02-16 15:40:25,296 DEBUG   SenderThread:53958 [sender.py:send_request():126] send_request: check_version
+2021-02-16 15:40:25,379 DEBUG   SenderThread:53958 [sender.py:send():117] send: run
+2021-02-16 15:40:25,528 INFO    SenderThread:53958 [sender.py:_start_run_threads():596] run started: 2mwzfpjb with start time 1613508024
+2021-02-16 15:40:25,528 DEBUG   SenderThread:53958 [sender.py:send():117] send: summary
+2021-02-16 15:40:25,529 INFO    SenderThread:53958 [sender.py:_save_file():682] saving file wandb-summary.json with policy end
+2021-02-16 15:40:25,530 DEBUG   HandlerThread:53958 [handler.py:handle_request():94] handle_request: run_start
+2021-02-16 15:40:25,701 WARNING MainThread:53958 [internal.py:wandb_internal():146] Internal process interrupt: 1
+2021-02-16 15:40:26,895 DEBUG   HandlerThread:53958 [meta.py:__init__():34] meta init
+2021-02-16 15:40:26,895 DEBUG   HandlerThread:53958 [meta.py:__init__():48] meta init done
+2021-02-16 15:40:26,895 DEBUG   HandlerThread:53958 [meta.py:probe():190] probe
+2021-02-16 15:40:26,908 DEBUG   HandlerThread:53958 [meta.py:_setup_git():180] setup git
+2021-02-16 15:40:26,952 DEBUG   HandlerThread:53958 [meta.py:_setup_git():187] setup git done
+2021-02-16 15:40:26,952 DEBUG   HandlerThread:53958 [meta.py:_save_pip():52] save pip
+2021-02-16 15:40:26,952 DEBUG   HandlerThread:53958 [meta.py:_save_pip():66] save pip done
+2021-02-16 15:40:26,953 DEBUG   HandlerThread:53958 [meta.py:probe():231] probe done
+2021-02-16 15:40:26,957 DEBUG   SenderThread:53958 [sender.py:send():117] send: files
+2021-02-16 15:40:26,958 INFO    SenderThread:53958 [sender.py:_save_file():682] saving file wandb-metadata.json with policy now
+2021-02-16 15:40:31,216 DEBUG   SenderThread:53958 [sender.py:send():117] send: stats
+2021-02-16 15:40:36,475 DEBUG   SenderThread:53958 [sender.py:send():117] send: stats
+2021-02-16 15:40:37,105 WARNING MainThread:53958 [internal.py:wandb_internal():146] Internal process interrupt: 2
+2021-02-16 15:40:37,105 ERROR   MainThread:53958 [internal.py:wandb_internal():149] Internal process interrupted.
+2021-02-16 15:40:37,476 INFO    HandlerThread:53958 [handler.py:finish():333] shutting down handler
+2021-02-16 15:40:37,478 INFO    SenderThread:53958 [sender.py:finish():766] shutting down sender
+2021-02-16 15:40:37,484 INFO    WriterThread:53958 [datastore.py:close():258] close: /home/naddeok5/FIM/wandb/run-20210216_154024-2mwzfpjb/run-2mwzfpjb.wandb
+2021-02-16 15:40:38,606 INFO    MainThread:53958 [internal.py:handle_exit():78] Internal process exited

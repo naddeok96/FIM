@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "vgg_model_trainer.py", line 41, in <module>
+    academy.train()
+  File "/home/naddeok5/FIM/wandb_academy.py", line 107, in train
+    print((labels == torch.arange(1000).reshape(1, 1000)).float())
+  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/tensor.py", line 27, in wrapped
+    return f(*args, **kwargs)
+RuntimeError: The size of tensor a (128) must match the size of tensor b (1000) at non-singleton dimension 1

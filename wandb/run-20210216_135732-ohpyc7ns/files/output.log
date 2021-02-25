@@ -1,0 +1,10 @@
+torch.Size([128])
+torch.Size([128, 3, 224, 224])
+Traceback (most recent call last):
+  File "vgg_model_trainer.py", line 41, in <module>
+    academy.train()
+  File "/home/naddeok5/FIM/wandb_academy.py", line 105, in train
+    img = torchvision.utils.make_grid(inputs)
+  File "/usr/lib/python3/dist-packages/torchvision/utils.py", line 76, in make_grid
+    height, width = int(tensor.size(2) + padding), int(tensor.size(3) + padding)
+IndexError: Dimension out of range (expected to be in range of [-1, 0], but got 2)
