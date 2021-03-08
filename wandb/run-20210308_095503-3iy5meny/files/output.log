@@ -1,0 +1,566 @@
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | criterion | CrossEntropyLoss | 0     
+1 | accuracy  | Accuracy         | 0     
+2 | conv1     | Conv2d           | 156   
+3 | pool1     | MaxPool2d        | 0     
+4 | conv2     | Conv2d           | 2.4 K 
+5 | pool2     | MaxPool2d        | 0     
+6 | conv3     | Conv2d           | 48.1 K
+7 | fc1       | Linear           | 10.2 K
+8 | fc2       | Linear           | 850   
+-----------------------------------------------
+61.7 K    Trainable params
+0         Non-trainable params
+61.7 K    Total params
+0.247     Total estimated model params size (MB)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Your val_dataloader has `shuffle=True`, it is best practice to turn this off for validation and test dataloaders.
+  warnings.warn(*args, **kwargs)
+Validation sanity check: 0it [00:00, ?it/s]/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Validation sanity check:   0%|          | 0/2 [00:00<?, ?it/s]
+Validation sanity check:  50%|█████     | 1/2 [00:00<00:00,  1.76it/s]
+                                                                      /home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, train dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Training: 0it [00:00, ?it/s]Training:   0%|          | 0/485 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/485 [00:00<?, ?it/s] 
+Epoch 0:   0%|          | 1/485 [00:00<00:33, 14.39it/s, loss=2.3, v_num=meny, val_loss=2.310]
+Epoch 0:   0%|          | 2/485 [00:00<00:24, 19.45it/s, loss=2.3, v_num=meny, val_loss=2.310]Epoch 0:   0%|          | 2/485 [00:00<00:25, 19.28it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   1%|          | 3/485 [00:00<00:22, 21.64it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   1%|          | 4/485 [00:00<00:21, 22.84it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   1%|          | 5/485 [00:00<00:19, 24.26it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]Epoch 0:   1%|          | 5/485 [00:00<00:19, 24.22it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   1%|          | 6/485 [00:00<00:19, 24.86it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   1%|▏         | 7/485 [00:00<00:18, 25.70it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.310] 
+Epoch 0:   2%|▏         | 8/485 [00:00<00:18, 26.41it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   2%|▏         | 9/485 [00:00<00:17, 26.99it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]Epoch 0:   2%|▏         | 9/485 [00:00<00:17, 26.96it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   2%|▏         | 10/485 [00:00<00:17, 27.10it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   2%|▏         | 11/485 [00:00<00:17, 27.54it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   2%|▏         | 12/485 [00:00<00:16, 27.96it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   3%|▎         | 13/485 [00:00<00:16, 28.46it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]Epoch 0:   3%|▎         | 13/485 [00:00<00:16, 28.44it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   3%|▎         | 14/485 [00:00<00:16, 28.83it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   3%|▎         | 15/485 [00:00<00:16, 29.19it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   3%|▎         | 16/485 [00:00<00:16, 29.30it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   4%|▎         | 17/485 [00:00<00:15, 29.62it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]Epoch 0:   4%|▎         | 17/485 [00:00<00:15, 29.60it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   4%|▎         | 18/485 [00:00<00:15, 29.89it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   4%|▍         | 19/485 [00:00<00:15, 30.11it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   4%|▍         | 20/485 [00:00<00:15, 30.32it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   4%|▍         | 21/485 [00:00<00:15, 30.53it/s, loss=2.31, v_num=meny, val_loss=2.310, train_loss=2.300]Epoch 0:   4%|▍         | 21/485 [00:00<00:15, 30.52it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300] 
+Epoch 0:   5%|▍         | 22/485 [00:00<00:15, 30.63it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   5%|▍         | 23/485 [00:00<00:14, 30.83it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   5%|▍         | 24/485 [00:00<00:14, 30.89it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.310]
+Epoch 0:   5%|▌         | 25/485 [00:00<00:14, 31.03it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.310]Epoch 0:   5%|▌         | 25/485 [00:00<00:14, 31.02it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   5%|▌         | 26/485 [00:00<00:14, 31.12it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   6%|▌         | 27/485 [00:00<00:14, 30.90it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   6%|▌         | 28/485 [00:00<00:14, 30.79it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   6%|▌         | 29/485 [00:00<00:14, 30.93it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]Epoch 0:   6%|▌         | 29/485 [00:00<00:14, 30.92it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   6%|▌         | 30/485 [00:00<00:14, 31.04it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   6%|▋         | 31/485 [00:00<00:14, 31.16it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   7%|▋         | 32/485 [00:01<00:14, 31.28it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   7%|▋         | 33/485 [00:01<00:14, 31.38it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]Epoch 0:   7%|▋         | 33/485 [00:01<00:14, 31.37it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   7%|▋         | 34/485 [00:01<00:14, 31.47it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   7%|▋         | 35/485 [00:01<00:14, 31.37it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   7%|▋         | 36/485 [00:01<00:14, 31.00it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   8%|▊         | 37/485 [00:01<00:14, 31.02it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]Epoch 0:   8%|▊         | 37/485 [00:01<00:14, 31.00it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.300]
+Epoch 0:   8%|▊         | 38/485 [00:01<00:14, 31.04it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   8%|▊         | 39/485 [00:01<00:14, 30.85it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   8%|▊         | 40/485 [00:01<00:14, 30.69it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   8%|▊         | 41/485 [00:01<00:14, 30.65it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]Epoch 0:   8%|▊         | 41/485 [00:01<00:14, 30.65it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   9%|▊         | 42/485 [00:01<00:14, 30.74it/s, loss=2.3, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   9%|▉         | 43/485 [00:01<00:14, 30.70it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   9%|▉         | 44/485 [00:01<00:14, 30.59it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:   9%|▉         | 45/485 [00:01<00:14, 30.54it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]Epoch 0:   9%|▉         | 45/485 [00:01<00:14, 30.53it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:   9%|▉         | 46/485 [00:01<00:14, 30.63it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:  10%|▉         | 47/485 [00:01<00:14, 30.70it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:  10%|▉         | 48/485 [00:01<00:14, 30.57it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  10%|█         | 49/485 [00:01<00:14, 30.55it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]Epoch 0:  10%|█         | 49/485 [00:01<00:14, 30.54it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  10%|█         | 50/485 [00:01<00:14, 30.56it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.290]
+Epoch 0:  11%|█         | 51/485 [00:01<00:14, 30.59it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  11%|█         | 52/485 [00:01<00:14, 30.59it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  11%|█         | 53/485 [00:01<00:14, 30.62it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]Epoch 0:  11%|█         | 53/485 [00:01<00:14, 30.62it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  11%|█         | 54/485 [00:01<00:14, 30.65it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  11%|█▏        | 55/485 [00:01<00:14, 30.67it/s, loss=2.29, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  12%|█▏        | 56/485 [00:01<00:13, 30.70it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  12%|█▏        | 57/485 [00:01<00:13, 30.73it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]Epoch 0:  12%|█▏        | 57/485 [00:01<00:13, 30.72it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  12%|█▏        | 58/485 [00:01<00:13, 30.75it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  12%|█▏        | 59/485 [00:01<00:13, 30.80it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  12%|█▏        | 60/485 [00:01<00:13, 30.87it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  13%|█▎        | 61/485 [00:01<00:13, 30.94it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]Epoch 0:  13%|█▎        | 61/485 [00:01<00:13, 30.93it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  13%|█▎        | 62/485 [00:02<00:13, 30.99it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  13%|█▎        | 63/485 [00:02<00:13, 31.03it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  13%|█▎        | 64/485 [00:02<00:13, 31.09it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  13%|█▎        | 65/485 [00:02<00:13, 31.16it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]Epoch 0:  13%|█▎        | 65/485 [00:02<00:13, 31.15it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  14%|█▎        | 66/485 [00:02<00:13, 31.19it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  14%|█▍        | 67/485 [00:02<00:13, 31.25it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  14%|█▍        | 68/485 [00:02<00:13, 31.20it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  14%|█▍        | 69/485 [00:02<00:13, 31.15it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.270]Epoch 0:  14%|█▍        | 69/485 [00:02<00:13, 31.14it/s, loss=2.28, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  14%|█▍        | 70/485 [00:02<00:13, 31.08it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  15%|█▍        | 71/485 [00:02<00:13, 30.97it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  15%|█▍        | 72/485 [00:02<00:13, 30.98it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  15%|█▌        | 73/485 [00:02<00:13, 30.99it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.270]Epoch 0:  15%|█▌        | 73/485 [00:02<00:13, 30.99it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  15%|█▌        | 74/485 [00:02<00:13, 31.00it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.280]
+Epoch 0:  15%|█▌        | 75/485 [00:02<00:13, 30.86it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  16%|█▌        | 76/485 [00:02<00:13, 30.79it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  16%|█▌        | 77/485 [00:02<00:13, 30.81it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]Epoch 0:  16%|█▌        | 77/485 [00:02<00:13, 30.80it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  16%|█▌        | 78/485 [00:02<00:13, 30.81it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  16%|█▋        | 79/485 [00:02<00:13, 30.74it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  16%|█▋        | 80/485 [00:02<00:13, 30.76it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  17%|█▋        | 81/485 [00:02<00:13, 30.81it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]Epoch 0:  17%|█▋        | 81/485 [00:02<00:13, 30.80it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  17%|█▋        | 82/485 [00:02<00:13, 30.86it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  17%|█▋        | 83/485 [00:02<00:13, 30.91it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  17%|█▋        | 84/485 [00:02<00:12, 30.96it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  18%|█▊        | 85/485 [00:02<00:12, 31.02it/s, loss=2.27, v_num=meny, val_loss=2.310, train_loss=2.250]Epoch 0:  18%|█▊        | 85/485 [00:02<00:12, 31.01it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  18%|█▊        | 86/485 [00:02<00:12, 31.07it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  18%|█▊        | 87/485 [00:02<00:12, 31.07it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.270]
+Epoch 0:  18%|█▊        | 88/485 [00:02<00:12, 31.13it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  18%|█▊        | 89/485 [00:02<00:12, 31.18it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.260]Epoch 0:  18%|█▊        | 89/485 [00:02<00:12, 31.18it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  19%|█▊        | 90/485 [00:02<00:12, 31.23it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  19%|█▉        | 91/485 [00:02<00:12, 31.27it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  19%|█▉        | 92/485 [00:02<00:12, 31.31it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  19%|█▉        | 93/485 [00:02<00:12, 31.34it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.260]Epoch 0:  19%|█▉        | 93/485 [00:02<00:12, 31.34it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.260]
+Epoch 0:  19%|█▉        | 94/485 [00:02<00:12, 31.38it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  20%|█▉        | 95/485 [00:03<00:12, 31.43it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  20%|█▉        | 96/485 [00:03<00:12, 31.48it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  20%|██        | 97/485 [00:03<00:12, 31.52it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]Epoch 0:  20%|██        | 97/485 [00:03<00:12, 31.52it/s, loss=2.26, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  20%|██        | 98/485 [00:03<00:12, 31.55it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  20%|██        | 99/485 [00:03<00:12, 31.59it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  21%|██        | 100/485 [00:03<00:12, 31.64it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  21%|██        | 101/485 [00:03<00:12, 31.68it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.250]Epoch 0:  21%|██        | 101/485 [00:03<00:12, 31.67it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  21%|██        | 102/485 [00:03<00:12, 31.69it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  21%|██        | 103/485 [00:03<00:12, 31.70it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  21%|██▏       | 104/485 [00:03<00:12, 31.70it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  22%|██▏       | 105/485 [00:03<00:11, 31.71it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]Epoch 0:  22%|██▏       | 105/485 [00:03<00:11, 31.71it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  22%|██▏       | 106/485 [00:03<00:11, 31.72it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  22%|██▏       | 107/485 [00:03<00:11, 31.73it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  22%|██▏       | 108/485 [00:03<00:11, 31.74it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.250]
+Epoch 0:  22%|██▏       | 109/485 [00:03<00:11, 31.75it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.250]Epoch 0:  22%|██▏       | 109/485 [00:03<00:11, 31.75it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  23%|██▎       | 110/485 [00:03<00:11, 31.76it/s, loss=2.25, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  23%|██▎       | 111/485 [00:03<00:11, 31.77it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  23%|██▎       | 112/485 [00:03<00:11, 31.78it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  23%|██▎       | 113/485 [00:03<00:11, 31.79it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.240]Epoch 0:  23%|██▎       | 113/485 [00:03<00:11, 31.78it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.240]
+Epoch 0:  24%|██▎       | 114/485 [00:03<00:11, 31.79it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  24%|██▎       | 115/485 [00:03<00:11, 31.80it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  24%|██▍       | 116/485 [00:03<00:11, 31.82it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  24%|██▍       | 117/485 [00:03<00:11, 31.82it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]Epoch 0:  24%|██▍       | 117/485 [00:03<00:11, 31.82it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  24%|██▍       | 118/485 [00:03<00:11, 31.76it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  25%|██▍       | 119/485 [00:03<00:11, 31.75it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  25%|██▍       | 120/485 [00:03<00:11, 31.77it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  25%|██▍       | 121/485 [00:03<00:11, 31.79it/s, loss=2.24, v_num=meny, val_loss=2.310, train_loss=2.230]Epoch 0:  25%|██▍       | 121/485 [00:03<00:11, 31.79it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  25%|██▌       | 122/485 [00:03<00:11, 31.82it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  25%|██▌       | 123/485 [00:03<00:11, 31.83it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.210]
+Epoch 0:  26%|██▌       | 124/485 [00:03<00:11, 31.85it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  26%|██▌       | 125/485 [00:03<00:11, 31.87it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.230]Epoch 0:  26%|██▌       | 125/485 [00:03<00:11, 31.87it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  26%|██▌       | 126/485 [00:03<00:11, 31.90it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  26%|██▌       | 127/485 [00:03<00:11, 31.92it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  26%|██▋       | 128/485 [00:04<00:11, 31.94it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  27%|██▋       | 129/485 [00:04<00:11, 31.97it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.220]Epoch 0:  27%|██▋       | 129/485 [00:04<00:11, 31.97it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  27%|██▋       | 130/485 [00:04<00:11, 31.98it/s, loss=2.23, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  27%|██▋       | 131/485 [00:04<00:11, 32.01it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.210]
+Epoch 0:  27%|██▋       | 132/485 [00:04<00:11, 32.01it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  27%|██▋       | 133/485 [00:04<00:11, 31.99it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.220]Epoch 0:  27%|██▋       | 133/485 [00:04<00:11, 31.99it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  28%|██▊       | 134/485 [00:04<00:11, 31.89it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.210]
+Epoch 0:  28%|██▊       | 135/485 [00:04<00:11, 31.81it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  28%|██▊       | 136/485 [00:04<00:10, 31.80it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.210]
+Epoch 0:  28%|██▊       | 137/485 [00:04<00:10, 31.79it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.210]Epoch 0:  28%|██▊       | 137/485 [00:04<00:10, 31.78it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  28%|██▊       | 138/485 [00:04<00:10, 31.71it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.210]
+Epoch 0:  29%|██▊       | 139/485 [00:04<00:10, 31.64it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  29%|██▉       | 140/485 [00:04<00:10, 31.64it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.220]
+Epoch 0:  29%|██▉       | 141/485 [00:04<00:10, 31.58it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.220]Epoch 0:  29%|██▉       | 141/485 [00:04<00:10, 31.58it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.210]
+Epoch 0:  29%|██▉       | 142/485 [00:04<00:10, 31.51it/s, loss=2.22, v_num=meny, val_loss=2.310, train_loss=2.230]
+Epoch 0:  29%|██▉       | 143/485 [00:04<00:10, 31.46it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  30%|██▉       | 144/485 [00:04<00:10, 31.46it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  30%|██▉       | 145/485 [00:04<00:10, 31.41it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]Epoch 0:  30%|██▉       | 145/485 [00:04<00:10, 31.41it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  30%|███       | 146/485 [00:04<00:10, 31.37it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.190]
+Epoch 0:  30%|███       | 147/485 [00:04<00:10, 31.35it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  31%|███       | 148/485 [00:04<00:10, 31.38it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  31%|███       | 149/485 [00:04<00:10, 31.35it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]Epoch 0:  31%|███       | 149/485 [00:04<00:10, 31.35it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  31%|███       | 150/485 [00:04<00:10, 31.32it/s, loss=2.21, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  31%|███       | 151/485 [00:04<00:10, 31.29it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.190] 
+Epoch 0:  31%|███▏      | 152/485 [00:04<00:10, 31.32it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.190]
+Epoch 0:  32%|███▏      | 153/485 [00:04<00:10, 31.34it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.190]Epoch 0:  32%|███▏      | 153/485 [00:04<00:10, 31.34it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.190]
+Epoch 0:  32%|███▏      | 154/485 [00:04<00:10, 31.37it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  32%|███▏      | 155/485 [00:04<00:10, 31.40it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  32%|███▏      | 156/485 [00:04<00:10, 31.42it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.190]
+Epoch 0:  32%|███▏      | 157/485 [00:04<00:10, 31.41it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.190]Epoch 0:  32%|███▏      | 157/485 [00:04<00:10, 31.41it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.180]
+Epoch 0:  33%|███▎      | 158/485 [00:05<00:10, 31.42it/s, loss=2.2, v_num=meny, val_loss=2.310, train_loss=2.180]
+Epoch 0:  33%|███▎      | 159/485 [00:05<00:10, 31.41it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.190]
+Epoch 0:  33%|███▎      | 160/485 [00:05<00:10, 31.41it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  33%|███▎      | 161/485 [00:05<00:10, 31.40it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.170]Epoch 0:  33%|███▎      | 161/485 [00:05<00:10, 31.40it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  33%|███▎      | 162/485 [00:05<00:10, 31.40it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.190]
+Epoch 0:  34%|███▎      | 163/485 [00:05<00:10, 31.41it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.180]
+Epoch 0:  34%|███▍      | 164/485 [00:05<00:10, 31.40it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.180]
+Epoch 0:  34%|███▍      | 165/485 [00:05<00:10, 31.42it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.180]Epoch 0:  34%|███▍      | 165/485 [00:05<00:10, 31.42it/s, loss=2.19, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  34%|███▍      | 166/485 [00:05<00:10, 31.44it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  34%|███▍      | 167/485 [00:05<00:10, 31.46it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.160]
+Epoch 0:  35%|███▍      | 168/485 [00:05<00:10, 31.49it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.200]
+Epoch 0:  35%|███▍      | 169/485 [00:05<00:10, 31.51it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.200]Epoch 0:  35%|███▍      | 169/485 [00:05<00:10, 31.51it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.180]
+Epoch 0:  35%|███▌      | 170/485 [00:05<00:09, 31.54it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  35%|███▌      | 171/485 [00:05<00:09, 31.56it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.160]
+Epoch 0:  35%|███▌      | 172/485 [00:05<00:09, 31.59it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.140]
+Epoch 0:  36%|███▌      | 173/485 [00:05<00:09, 31.61it/s, loss=2.18, v_num=meny, val_loss=2.310, train_loss=2.140]Epoch 0:  36%|███▌      | 173/485 [00:05<00:09, 31.61it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.160]
+Epoch 0:  36%|███▌      | 174/485 [00:05<00:09, 31.59it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.160]
+Epoch 0:  36%|███▌      | 175/485 [00:05<00:09, 31.59it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  36%|███▋      | 176/485 [00:05<00:09, 31.59it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.150]
+Epoch 0:  36%|███▋      | 177/485 [00:05<00:09, 31.60it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.150]Epoch 0:  36%|███▋      | 177/485 [00:05<00:09, 31.59it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.140]
+Epoch 0:  37%|███▋      | 178/485 [00:05<00:09, 31.60it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.140]
+Epoch 0:  37%|███▋      | 179/485 [00:05<00:09, 31.61it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.160]
+Epoch 0:  37%|███▋      | 180/485 [00:05<00:09, 31.62it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.180]
+Epoch 0:  37%|███▋      | 181/485 [00:05<00:09, 31.62it/s, loss=2.17, v_num=meny, val_loss=2.310, train_loss=2.180]Epoch 0:  37%|███▋      | 181/485 [00:05<00:09, 31.62it/s, loss=2.16, v_num=meny, val_loss=2.310, train_loss=2.160]
+Epoch 0:  38%|███▊      | 182/485 [00:05<00:09, 31.63it/s, loss=2.16, v_num=meny, val_loss=2.310, train_loss=2.140]
+Epoch 0:  38%|███▊      | 183/485 [00:05<00:09, 31.64it/s, loss=2.16, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  38%|███▊      | 184/485 [00:05<00:09, 31.61it/s, loss=2.16, v_num=meny, val_loss=2.310, train_loss=2.170]
+Epoch 0:  38%|███▊      | 185/485 [00:05<00:09, 31.58it/s, loss=2.16, v_num=meny, val_loss=2.310, train_loss=2.170]Epoch 0:  38%|███▊      | 185/485 [00:05<00:09, 31.58it/s, loss=2.16, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  38%|███▊      | 186/485 [00:05<00:09, 31.55it/s, loss=2.16, v_num=meny, val_loss=2.310, train_loss=2.150]
+Epoch 0:  39%|███▊      | 187/485 [00:05<00:09, 31.57it/s, loss=2.15, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  39%|███▉      | 188/485 [00:05<00:09, 31.59it/s, loss=2.15, v_num=meny, val_loss=2.310, train_loss=2.140]
+Epoch 0:  39%|███▉      | 189/485 [00:05<00:09, 31.56it/s, loss=2.15, v_num=meny, val_loss=2.310, train_loss=2.140]Epoch 0:  39%|███▉      | 189/485 [00:05<00:09, 31.55it/s, loss=2.15, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  39%|███▉      | 190/485 [00:06<00:09, 31.53it/s, loss=2.15, v_num=meny, val_loss=2.310, train_loss=2.150]
+Epoch 0:  39%|███▉      | 191/485 [00:06<00:09, 31.54it/s, loss=2.15, v_num=meny, val_loss=2.310, train_loss=2.100]
+Epoch 0:  40%|███▉      | 192/485 [00:06<00:09, 31.52it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.120]
+Epoch 0:  40%|███▉      | 193/485 [00:06<00:09, 31.53it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.120]Epoch 0:  40%|███▉      | 193/485 [00:06<00:09, 31.53it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  40%|████      | 194/485 [00:06<00:09, 31.54it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  40%|████      | 195/485 [00:06<00:09, 31.55it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.110]
+Epoch 0:  40%|████      | 196/485 [00:06<00:09, 31.55it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.110]
+Epoch 0:  41%|████      | 197/485 [00:06<00:09, 31.57it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.110]Epoch 0:  41%|████      | 197/485 [00:06<00:09, 31.56it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  41%|████      | 198/485 [00:06<00:09, 31.57it/s, loss=2.14, v_num=meny, val_loss=2.310, train_loss=2.130]
+Epoch 0:  41%|████      | 199/485 [00:06<00:09, 31.57it/s, loss=2.13, v_num=meny, val_loss=2.310, train_loss=2.140]
+Epoch 0:  41%|████      | 200/485 [00:06<00:09, 31.58it/s, loss=2.13, v_num=meny, val_loss=2.310, train_loss=2.120]
+Epoch 0:  41%|████▏     | 201/485 [00:06<00:08, 31.59it/s, loss=2.13, v_num=meny, val_loss=2.310, train_loss=2.120]Epoch 0:  41%|████▏     | 201/485 [00:06<00:08, 31.58it/s, loss=2.13, v_num=meny, val_loss=2.310, train_loss=2.140]
+Epoch 0:  42%|████▏     | 202/485 [00:06<00:08, 31.59it/s, loss=2.13, v_num=meny, val_loss=2.310, train_loss=2.110]
+Epoch 0:  42%|████▏     | 203/485 [00:06<00:08, 31.60it/s, loss=2.13, v_num=meny, val_loss=2.310, train_loss=2.110]
+Epoch 0:  42%|████▏     | 204/485 [00:06<00:08, 31.60it/s, loss=2.12, v_num=meny, val_loss=2.310, train_loss=2.090]
+Epoch 0:  42%|████▏     | 205/485 [00:06<00:08, 31.61it/s, loss=2.12, v_num=meny, val_loss=2.310, train_loss=2.090]Epoch 0:  42%|████▏     | 205/485 [00:06<00:08, 31.60it/s, loss=2.12, v_num=meny, val_loss=2.310, train_loss=2.100]
+Epoch 0:  42%|████▏     | 206/485 [00:06<00:08, 31.61it/s, loss=2.12, v_num=meny, val_loss=2.310, train_loss=2.090]
+Epoch 0:  43%|████▎     | 207/485 [00:06<00:08, 31.62it/s, loss=2.12, v_num=meny, val_loss=2.310, train_loss=2.070]
+Epoch 0:  43%|████▎     | 208/485 [00:06<00:08, 31.60it/s, loss=2.11, v_num=meny, val_loss=2.310, train_loss=2.120]
+Epoch 0:  43%|████▎     | 209/485 [00:06<00:08, 31.61it/s, loss=2.11, v_num=meny, val_loss=2.310, train_loss=2.120]Epoch 0:  43%|████▎     | 209/485 [00:06<00:08, 31.61it/s, loss=2.11, v_num=meny, val_loss=2.310, train_loss=2.100]
+Epoch 0:  43%|████▎     | 210/485 [00:06<00:08, 31.61it/s, loss=2.11, v_num=meny, val_loss=2.310, train_loss=2.100]
+Epoch 0:  44%|████▎     | 211/485 [00:06<00:08, 31.62it/s, loss=2.11, v_num=meny, val_loss=2.310, train_loss=2.120]
+Epoch 0:  44%|████▎     | 212/485 [00:06<00:08, 31.63it/s, loss=2.11, v_num=meny, val_loss=2.310, train_loss=2.080]
+Epoch 0:  44%|████▍     | 213/485 [00:06<00:08, 31.63it/s, loss=2.11, v_num=meny, val_loss=2.310, train_loss=2.080]Epoch 0:  44%|████▍     | 213/485 [00:06<00:08, 31.63it/s, loss=2.1, v_num=meny, val_loss=2.310, train_loss=2.050] 
+Epoch 0:  44%|████▍     | 214/485 [00:06<00:08, 31.63it/s, loss=2.1, v_num=meny, val_loss=2.310, train_loss=2.080]
+Epoch 0:  44%|████▍     | 215/485 [00:06<00:08, 31.64it/s, loss=2.1, v_num=meny, val_loss=2.310, train_loss=2.090]
+Epoch 0:  45%|████▍     | 216/485 [00:06<00:08, 31.64it/s, loss=2.1, v_num=meny, val_loss=2.310, train_loss=2.110]
+Epoch 0:  45%|████▍     | 217/485 [00:06<00:08, 31.64it/s, loss=2.1, v_num=meny, val_loss=2.310, train_loss=2.110]Epoch 0:  45%|████▍     | 217/485 [00:06<00:08, 31.64it/s, loss=2.1, v_num=meny, val_loss=2.310, train_loss=2.050]
+Epoch 0:  45%|████▍     | 218/485 [00:06<00:08, 31.64it/s, loss=2.1, v_num=meny, val_loss=2.310, train_loss=2.090]
+Epoch 0:  45%|████▌     | 219/485 [00:06<00:08, 31.64it/s, loss=2.09, v_num=meny, val_loss=2.310, train_loss=2.100]
+Epoch 0:  45%|████▌     | 220/485 [00:06<00:08, 31.65it/s, loss=2.09, v_num=meny, val_loss=2.310, train_loss=2.040]
+Epoch 0:  46%|████▌     | 221/485 [00:06<00:08, 31.65it/s, loss=2.09, v_num=meny, val_loss=2.310, train_loss=2.040]Epoch 0:  46%|████▌     | 221/485 [00:06<00:08, 31.65it/s, loss=2.09, v_num=meny, val_loss=2.310, train_loss=2.060]
+Epoch 0:  46%|████▌     | 222/485 [00:07<00:08, 31.65it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.060]
+Epoch 0:  46%|████▌     | 223/485 [00:07<00:08, 31.65it/s, loss=2.09, v_num=meny, val_loss=2.310, train_loss=2.080]
+Epoch 0:  46%|████▌     | 224/485 [00:07<00:08, 31.65it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.120]
+Epoch 0:  46%|████▋     | 225/485 [00:07<00:08, 31.63it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.120]Epoch 0:  46%|████▋     | 225/485 [00:07<00:08, 31.62it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.030]
+Epoch 0:  47%|████▋     | 226/485 [00:07<00:08, 31.61it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.080]
+Epoch 0:  47%|████▋     | 227/485 [00:07<00:08, 31.59it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.090]
+Epoch 0:  47%|████▋     | 228/485 [00:07<00:08, 31.59it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.020]
+Epoch 0:  47%|████▋     | 229/485 [00:07<00:08, 31.60it/s, loss=2.08, v_num=meny, val_loss=2.310, train_loss=2.020]Epoch 0:  47%|████▋     | 229/485 [00:07<00:08, 31.59it/s, loss=2.07, v_num=meny, val_loss=2.310, train_loss=2.060]
+Epoch 0:  47%|████▋     | 230/485 [00:07<00:08, 31.60it/s, loss=2.07, v_num=meny, val_loss=2.310, train_loss=2.040]
+Epoch 0:  48%|████▊     | 231/485 [00:07<00:08, 31.60it/s, loss=2.07, v_num=meny, val_loss=2.310, train_loss=2.060]
+Epoch 0:  48%|████▊     | 232/485 [00:07<00:08, 31.60it/s, loss=2.06, v_num=meny, val_loss=2.310, train_loss=2.020]
+Epoch 0:  48%|████▊     | 233/485 [00:07<00:07, 31.61it/s, loss=2.06, v_num=meny, val_loss=2.310, train_loss=2.020]Epoch 0:  48%|████▊     | 233/485 [00:07<00:07, 31.61it/s, loss=2.06, v_num=meny, val_loss=2.310, train_loss=2.020]
+Epoch 0:  48%|████▊     | 234/485 [00:07<00:07, 31.61it/s, loss=2.06, v_num=meny, val_loss=2.310, train_loss=2.030]
+Epoch 0:  48%|████▊     | 235/485 [00:07<00:07, 31.62it/s, loss=2.06, v_num=meny, val_loss=2.310, train_loss=2.050]
+Epoch 0:  49%|████▊     | 236/485 [00:07<00:07, 31.62it/s, loss=2.06, v_num=meny, val_loss=2.310, train_loss=2.060]
+Epoch 0:  49%|████▉     | 237/485 [00:07<00:07, 31.63it/s, loss=2.06, v_num=meny, val_loss=2.310, train_loss=2.060]Epoch 0:  49%|████▉     | 237/485 [00:07<00:07, 31.63it/s, loss=2.05, v_num=meny, val_loss=2.310, train_loss=2.030]
+Epoch 0:  49%|████▉     | 238/485 [00:07<00:07, 31.63it/s, loss=2.05, v_num=meny, val_loss=2.310, train_loss=2.020]
+Epoch 0:  49%|████▉     | 239/485 [00:07<00:07, 31.64it/s, loss=2.05, v_num=meny, val_loss=2.310, train_loss=2.050]
+Epoch 0:  49%|████▉     | 240/485 [00:07<00:07, 31.64it/s, loss=2.05, v_num=meny, val_loss=2.310, train_loss=2.080]
+Epoch 0:  50%|████▉     | 241/485 [00:07<00:07, 31.65it/s, loss=2.05, v_num=meny, val_loss=2.310, train_loss=2.080]Epoch 0:  50%|████▉     | 241/485 [00:07<00:07, 31.65it/s, loss=2.05, v_num=meny, val_loss=2.310, train_loss=2.060]
+Epoch 0:  50%|████▉     | 242/485 [00:07<00:07, 31.65it/s, loss=2.05, v_num=meny, val_loss=2.310, train_loss=2.020]
+Epoch 0:  50%|█████     | 243/485 [00:07<00:07, 31.66it/s, loss=2.04, v_num=meny, val_loss=2.310, train_loss=1.990]
+Epoch 0:  50%|█████     | 244/485 [00:07<00:07, 31.67it/s, loss=2.04, v_num=meny, val_loss=2.310, train_loss=2.000]
+Epoch 0:  51%|█████     | 245/485 [00:07<00:07, 31.67it/s, loss=2.04, v_num=meny, val_loss=2.310, train_loss=2.000]Epoch 0:  51%|█████     | 245/485 [00:07<00:07, 31.66it/s, loss=2.04, v_num=meny, val_loss=2.310, train_loss=1.990]
+Epoch 0:  51%|█████     | 246/485 [00:07<00:07, 31.66it/s, loss=2.03, v_num=meny, val_loss=2.310, train_loss=2.050]
+Epoch 0:  51%|█████     | 247/485 [00:07<00:07, 31.66it/s, loss=2.03, v_num=meny, val_loss=2.310, train_loss=2.040]
+Epoch 0:  51%|█████     | 248/485 [00:07<00:07, 31.60it/s, loss=2.03, v_num=meny, val_loss=2.310, train_loss=2.010]
+Epoch 0:  51%|█████▏    | 249/485 [00:07<00:07, 31.57it/s, loss=2.03, v_num=meny, val_loss=2.310, train_loss=2.010]Epoch 0:  51%|█████▏    | 249/485 [00:07<00:07, 31.57it/s, loss=2.02, v_num=meny, val_loss=2.310, train_loss=1.930]
+Epoch 0:  52%|█████▏    | 250/485 [00:07<00:07, 31.57it/s, loss=2.02, v_num=meny, val_loss=2.310, train_loss=1.980]
+Epoch 0:  52%|█████▏    | 251/485 [00:07<00:07, 31.58it/s, loss=2.02, v_num=meny, val_loss=2.310, train_loss=1.960]
+Epoch 0:  52%|█████▏    | 252/485 [00:07<00:07, 31.58it/s, loss=2.02, v_num=meny, val_loss=2.310, train_loss=1.960]
+Epoch 0:  52%|█████▏    | 253/485 [00:08<00:07, 31.59it/s, loss=2.02, v_num=meny, val_loss=2.310, train_loss=1.960]Epoch 0:  52%|█████▏    | 253/485 [00:08<00:07, 31.59it/s, loss=2.01, v_num=meny, val_loss=2.310, train_loss=2.010]
+Epoch 0:  52%|█████▏    | 254/485 [00:08<00:07, 31.57it/s, loss=2.01, v_num=meny, val_loss=2.310, train_loss=1.990]
+Epoch 0:  53%|█████▎    | 255/485 [00:08<00:07, 31.58it/s, loss=2, v_num=meny, val_loss=2.310, train_loss=1.970]   
+Epoch 0:  53%|█████▎    | 256/485 [00:08<00:07, 31.59it/s, loss=2, v_num=meny, val_loss=2.310, train_loss=1.930]
+Epoch 0:  53%|█████▎    | 257/485 [00:08<00:07, 31.60it/s, loss=2, v_num=meny, val_loss=2.310, train_loss=1.930]Epoch 0:  53%|█████▎    | 257/485 [00:08<00:07, 31.59it/s, loss=2, v_num=meny, val_loss=2.310, train_loss=1.990]
+Epoch 0:  53%|█████▎    | 258/485 [00:08<00:07, 31.59it/s, loss=2, v_num=meny, val_loss=2.310, train_loss=1.990]
+Epoch 0:  53%|█████▎    | 259/485 [00:08<00:07, 31.60it/s, loss=1.99, v_num=meny, val_loss=2.310, train_loss=1.980]
+Epoch 0:  54%|█████▎    | 260/485 [00:08<00:07, 31.60it/s, loss=1.99, v_num=meny, val_loss=2.310, train_loss=1.980]
+Epoch 0:  54%|█████▍    | 261/485 [00:08<00:07, 31.60it/s, loss=1.99, v_num=meny, val_loss=2.310, train_loss=1.980]Epoch 0:  54%|█████▍    | 261/485 [00:08<00:07, 31.60it/s, loss=1.98, v_num=meny, val_loss=2.310, train_loss=1.960]
+Epoch 0:  54%|█████▍    | 262/485 [00:08<00:07, 31.61it/s, loss=1.98, v_num=meny, val_loss=2.310, train_loss=1.910]
+Epoch 0:  54%|█████▍    | 263/485 [00:08<00:07, 31.62it/s, loss=1.98, v_num=meny, val_loss=2.310, train_loss=1.970]
+Epoch 0:  54%|█████▍    | 264/485 [00:08<00:06, 31.63it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=1.980]
+Epoch 0:  55%|█████▍    | 265/485 [00:08<00:06, 31.64it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=1.980]Epoch 0:  55%|█████▍    | 265/485 [00:08<00:06, 31.64it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=1.900]
+Epoch 0:  55%|█████▍    | 266/485 [00:08<00:06, 31.63it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.970]
+Epoch 0:  55%|█████▌    | 267/485 [00:08<00:06, 31.64it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.930]
+Epoch 0:  55%|█████▌    | 268/485 [00:08<00:06, 31.65it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=2.000]
+Epoch 0:  55%|█████▌    | 269/485 [00:08<00:06, 31.66it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=2.000]Epoch 0:  55%|█████▌    | 269/485 [00:08<00:06, 31.65it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=2.030]
+Epoch 0:  56%|█████▌    | 270/485 [00:08<00:06, 31.65it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=2.000]
+Epoch 0:  56%|█████▌    | 271/485 [00:08<00:06, 31.66it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=2.000]
+Epoch 0:  56%|█████▌    | 272/485 [00:08<00:06, 31.67it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=1.970]
+Epoch 0:  56%|█████▋    | 273/485 [00:08<00:06, 31.68it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=1.970]Epoch 0:  56%|█████▋    | 273/485 [00:08<00:06, 31.68it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=1.970]
+Epoch 0:  56%|█████▋    | 274/485 [00:08<00:06, 31.69it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.940]
+Epoch 0:  57%|█████▋    | 275/485 [00:08<00:06, 31.69it/s, loss=1.97, v_num=meny, val_loss=2.310, train_loss=1.900]
+Epoch 0:  57%|█████▋    | 276/485 [00:08<00:06, 31.70it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.940]
+Epoch 0:  57%|█████▋    | 277/485 [00:08<00:06, 31.71it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.940]Epoch 0:  57%|█████▋    | 277/485 [00:08<00:06, 31.71it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.960]
+Epoch 0:  57%|█████▋    | 278/485 [00:08<00:06, 31.72it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.950]
+Epoch 0:  58%|█████▊    | 279/485 [00:08<00:06, 31.72it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.950]
+Epoch 0:  58%|█████▊    | 280/485 [00:08<00:06, 31.73it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.960]
+Epoch 0:  58%|█████▊    | 281/485 [00:08<00:06, 31.73it/s, loss=1.96, v_num=meny, val_loss=2.310, train_loss=1.960]Epoch 0:  58%|█████▊    | 281/485 [00:08<00:06, 31.73it/s, loss=1.95, v_num=meny, val_loss=2.310, train_loss=1.890]
+Epoch 0:  58%|█████▊    | 282/485 [00:08<00:06, 31.74it/s, loss=1.95, v_num=meny, val_loss=2.310, train_loss=1.870]
+Epoch 0:  58%|█████▊    | 283/485 [00:08<00:06, 31.75it/s, loss=1.95, v_num=meny, val_loss=2.310, train_loss=1.920]
+Epoch 0:  59%|█████▊    | 284/485 [00:08<00:06, 31.76it/s, loss=1.95, v_num=meny, val_loss=2.310, train_loss=1.930]
+Epoch 0:  59%|█████▉    | 285/485 [00:08<00:06, 31.77it/s, loss=1.95, v_num=meny, val_loss=2.310, train_loss=1.930]Epoch 0:  59%|█████▉    | 285/485 [00:08<00:06, 31.77it/s, loss=1.94, v_num=meny, val_loss=2.310, train_loss=1.940]
+Epoch 0:  59%|█████▉    | 286/485 [00:09<00:06, 31.78it/s, loss=1.94, v_num=meny, val_loss=2.310, train_loss=1.850]
+Epoch 0:  59%|█████▉    | 287/485 [00:09<00:06, 31.79it/s, loss=1.94, v_num=meny, val_loss=2.310, train_loss=1.870]
+Epoch 0:  59%|█████▉    | 288/485 [00:09<00:06, 31.80it/s, loss=1.93, v_num=meny, val_loss=2.310, train_loss=1.910]
+Epoch 0:  60%|█████▉    | 289/485 [00:09<00:06, 31.80it/s, loss=1.93, v_num=meny, val_loss=2.310, train_loss=1.910]Epoch 0:  60%|█████▉    | 289/485 [00:09<00:06, 31.80it/s, loss=1.92, v_num=meny, val_loss=2.310, train_loss=1.880]
+Epoch 0:  60%|█████▉    | 290/485 [00:09<00:06, 31.80it/s, loss=1.92, v_num=meny, val_loss=2.310, train_loss=1.870]
+Epoch 0:  60%|██████    | 291/485 [00:09<00:06, 31.81it/s, loss=1.92, v_num=meny, val_loss=2.310, train_loss=1.900]
+Epoch 0:  60%|██████    | 292/485 [00:09<00:06, 31.82it/s, loss=1.91, v_num=meny, val_loss=2.310, train_loss=1.990]
+Epoch 0:  60%|██████    | 293/485 [00:09<00:06, 31.83it/s, loss=1.91, v_num=meny, val_loss=2.310, train_loss=1.990]Epoch 0:  60%|██████    | 293/485 [00:09<00:06, 31.82it/s, loss=1.91, v_num=meny, val_loss=2.310, train_loss=1.860]
+Epoch 0:  61%|██████    | 294/485 [00:09<00:06, 31.83it/s, loss=1.91, v_num=meny, val_loss=2.310, train_loss=1.940]
+Epoch 0:  61%|██████    | 295/485 [00:09<00:05, 31.83it/s, loss=1.91, v_num=meny, val_loss=2.310, train_loss=1.900]
+Epoch 0:  61%|██████    | 296/485 [00:09<00:05, 31.83it/s, loss=1.91, v_num=meny, val_loss=2.310, train_loss=1.850]
+Epoch 0:  61%|██████    | 297/485 [00:09<00:05, 31.84it/s, loss=1.91, v_num=meny, val_loss=2.310, train_loss=1.850]Epoch 0:  61%|██████    | 297/485 [00:09<00:05, 31.84it/s, loss=1.9, v_num=meny, val_loss=2.310, train_loss=1.910] 
+Epoch 0:  61%|██████▏   | 298/485 [00:09<00:05, 31.85it/s, loss=1.9, v_num=meny, val_loss=2.310, train_loss=1.840]
+Epoch 0:  62%|██████▏   | 299/485 [00:09<00:05, 31.86it/s, loss=1.89, v_num=meny, val_loss=2.310, train_loss=1.860]
+Epoch 0:  62%|██████▏   | 300/485 [00:09<00:05, 31.86it/s, loss=1.89, v_num=meny, val_loss=2.310, train_loss=1.830]
+Epoch 0:  62%|██████▏   | 301/485 [00:09<00:05, 31.86it/s, loss=1.89, v_num=meny, val_loss=2.310, train_loss=1.830]Epoch 0:  62%|██████▏   | 301/485 [00:09<00:05, 31.85it/s, loss=1.89, v_num=meny, val_loss=2.310, train_loss=1.850]
+Epoch 0:  62%|██████▏   | 302/485 [00:09<00:05, 31.85it/s, loss=1.88, v_num=meny, val_loss=2.310, train_loss=1.870]
+Epoch 0:  62%|██████▏   | 303/485 [00:09<00:05, 31.86it/s, loss=1.88, v_num=meny, val_loss=2.310, train_loss=1.830]
+Epoch 0:  63%|██████▎   | 304/485 [00:09<00:05, 31.86it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.790]
+Epoch 0:  63%|██████▎   | 305/485 [00:09<00:05, 31.86it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.790]Epoch 0:  63%|██████▎   | 305/485 [00:09<00:05, 31.86it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.890]
+Epoch 0:  63%|██████▎   | 306/485 [00:09<00:05, 31.86it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.840]
+Epoch 0:  63%|██████▎   | 307/485 [00:09<00:05, 31.86it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.810]
+Epoch 0:  64%|██████▎   | 308/485 [00:09<00:05, 31.86it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.840]
+Epoch 0:  64%|██████▎   | 309/485 [00:09<00:05, 31.87it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.840]Epoch 0:  64%|██████▎   | 309/485 [00:09<00:05, 31.86it/s, loss=1.87, v_num=meny, val_loss=2.310, train_loss=1.890]
+Epoch 0:  64%|██████▍   | 310/485 [00:09<00:05, 31.87it/s, loss=1.86, v_num=meny, val_loss=2.310, train_loss=1.820]
+Epoch 0:  64%|██████▍   | 311/485 [00:09<00:05, 31.87it/s, loss=1.86, v_num=meny, val_loss=2.310, train_loss=1.830]
+Epoch 0:  64%|██████▍   | 312/485 [00:09<00:05, 31.86it/s, loss=1.85, v_num=meny, val_loss=2.310, train_loss=1.860]
+Epoch 0:  65%|██████▍   | 313/485 [00:09<00:05, 31.86it/s, loss=1.85, v_num=meny, val_loss=2.310, train_loss=1.860]Epoch 0:  65%|██████▍   | 313/485 [00:09<00:05, 31.86it/s, loss=1.84, v_num=meny, val_loss=2.310, train_loss=1.790]
+Epoch 0:  65%|██████▍   | 314/485 [00:09<00:05, 31.86it/s, loss=1.84, v_num=meny, val_loss=2.310, train_loss=1.800]
+Epoch 0:  65%|██████▍   | 315/485 [00:09<00:05, 31.86it/s, loss=1.84, v_num=meny, val_loss=2.310, train_loss=1.810]
+Epoch 0:  65%|██████▌   | 316/485 [00:09<00:05, 31.86it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.790]
+Epoch 0:  65%|██████▌   | 317/485 [00:09<00:05, 31.86it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.790]Epoch 0:  65%|██████▌   | 317/485 [00:09<00:05, 31.86it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.850]
+Epoch 0:  66%|██████▌   | 318/485 [00:09<00:05, 31.87it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.820]
+Epoch 0:  66%|██████▌   | 319/485 [00:10<00:05, 31.87it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.840]
+Epoch 0:  66%|██████▌   | 320/485 [00:10<00:05, 31.88it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.860]
+Epoch 0:  66%|██████▌   | 321/485 [00:10<00:05, 31.88it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.860]Epoch 0:  66%|██████▌   | 321/485 [00:10<00:05, 31.88it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.820]
+Epoch 0:  66%|██████▋   | 322/485 [00:10<00:05, 31.88it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.780]
+Epoch 0:  67%|██████▋   | 323/485 [00:10<00:05, 31.88it/s, loss=1.83, v_num=meny, val_loss=2.310, train_loss=1.790]
+Epoch 0:  67%|██████▋   | 324/485 [00:10<00:05, 31.89it/s, loss=1.82, v_num=meny, val_loss=2.310, train_loss=1.840]
+Epoch 0:  67%|██████▋   | 325/485 [00:10<00:05, 31.90it/s, loss=1.82, v_num=meny, val_loss=2.310, train_loss=1.840]Epoch 0:  67%|██████▋   | 325/485 [00:10<00:05, 31.90it/s, loss=1.81, v_num=meny, val_loss=2.310, train_loss=1.700]
+Epoch 0:  67%|██████▋   | 326/485 [00:10<00:04, 31.91it/s, loss=1.81, v_num=meny, val_loss=2.310, train_loss=1.720]
+Epoch 0:  67%|██████▋   | 327/485 [00:10<00:04, 31.92it/s, loss=1.81, v_num=meny, val_loss=2.310, train_loss=1.790]
+Epoch 0:  68%|██████▊   | 328/485 [00:10<00:04, 31.93it/s, loss=1.81, v_num=meny, val_loss=2.310, train_loss=1.820]
+Epoch 0:  68%|██████▊   | 329/485 [00:10<00:04, 31.94it/s, loss=1.81, v_num=meny, val_loss=2.310, train_loss=1.820]Epoch 0:  68%|██████▊   | 329/485 [00:10<00:04, 31.94it/s, loss=1.81, v_num=meny, val_loss=2.310, train_loss=1.890]
+Epoch 0:  68%|██████▊   | 330/485 [00:10<00:04, 31.95it/s, loss=1.81, v_num=meny, val_loss=2.310, train_loss=1.770]
+Epoch 0:  68%|██████▊   | 331/485 [00:10<00:04, 31.95it/s, loss=1.8, v_num=meny, val_loss=2.310, train_loss=1.770] 
+Epoch 0:  68%|██████▊   | 332/485 [00:10<00:04, 31.95it/s, loss=1.8, v_num=meny, val_loss=2.310, train_loss=1.750]
+Epoch 0:  69%|██████▊   | 333/485 [00:10<00:04, 31.96it/s, loss=1.8, v_num=meny, val_loss=2.310, train_loss=1.750]Epoch 0:  69%|██████▊   | 333/485 [00:10<00:04, 31.96it/s, loss=1.8, v_num=meny, val_loss=2.310, train_loss=1.800]
+Epoch 0:  69%|██████▉   | 334/485 [00:10<00:04, 31.96it/s, loss=1.8, v_num=meny, val_loss=2.310, train_loss=1.810]
+Epoch 0:  69%|██████▉   | 335/485 [00:10<00:04, 31.95it/s, loss=1.8, v_num=meny, val_loss=2.310, train_loss=1.780]
+Epoch 0:  69%|██████▉   | 336/485 [00:10<00:04, 31.96it/s, loss=1.79, v_num=meny, val_loss=2.310, train_loss=1.740]
+Epoch 0:  69%|██████▉   | 337/485 [00:10<00:04, 31.96it/s, loss=1.79, v_num=meny, val_loss=2.310, train_loss=1.740]Epoch 0:  69%|██████▉   | 337/485 [00:10<00:04, 31.96it/s, loss=1.79, v_num=meny, val_loss=2.310, train_loss=1.690]
+Epoch 0:  70%|██████▉   | 338/485 [00:10<00:04, 31.97it/s, loss=1.78, v_num=meny, val_loss=2.310, train_loss=1.750]
+Epoch 0:  70%|██████▉   | 339/485 [00:10<00:04, 31.97it/s, loss=1.77, v_num=meny, val_loss=2.310, train_loss=1.710]
+Epoch 0:  70%|███████   | 340/485 [00:10<00:04, 31.98it/s, loss=1.77, v_num=meny, val_loss=2.310, train_loss=1.730]
+Epoch 0:  70%|███████   | 341/485 [00:10<00:04, 31.98it/s, loss=1.77, v_num=meny, val_loss=2.310, train_loss=1.730]Epoch 0:  70%|███████   | 341/485 [00:10<00:04, 31.98it/s, loss=1.77, v_num=meny, val_loss=2.310, train_loss=1.730]
+Epoch 0:  71%|███████   | 342/485 [00:10<00:04, 31.99it/s, loss=1.76, v_num=meny, val_loss=2.310, train_loss=1.710]
+Epoch 0:  71%|███████   | 343/485 [00:10<00:04, 32.00it/s, loss=1.75, v_num=meny, val_loss=2.310, train_loss=1.650]
+Epoch 0:  71%|███████   | 344/485 [00:10<00:04, 32.00it/s, loss=1.75, v_num=meny, val_loss=2.310, train_loss=1.660]
+Epoch 0:  71%|███████   | 345/485 [00:10<00:04, 32.00it/s, loss=1.75, v_num=meny, val_loss=2.310, train_loss=1.660]Epoch 0:  71%|███████   | 345/485 [00:10<00:04, 31.99it/s, loss=1.75, v_num=meny, val_loss=2.310, train_loss=1.730]
+Epoch 0:  71%|███████▏  | 346/485 [00:10<00:04, 31.99it/s, loss=1.75, v_num=meny, val_loss=2.310, train_loss=1.760]
+Epoch 0:  72%|███████▏  | 347/485 [00:10<00:04, 32.00it/s, loss=1.74, v_num=meny, val_loss=2.310, train_loss=1.700]
+Epoch 0:  72%|███████▏  | 348/485 [00:10<00:04, 32.00it/s, loss=1.73, v_num=meny, val_loss=2.310, train_loss=1.640]
+Epoch 0:  72%|███████▏  | 349/485 [00:10<00:04, 32.00it/s, loss=1.73, v_num=meny, val_loss=2.310, train_loss=1.640]Epoch 0:  72%|███████▏  | 349/485 [00:10<00:04, 32.00it/s, loss=1.72, v_num=meny, val_loss=2.310, train_loss=1.660]
+Epoch 0:  72%|███████▏  | 350/485 [00:10<00:04, 32.00it/s, loss=1.72, v_num=meny, val_loss=2.310, train_loss=1.710]
+Epoch 0:  72%|███████▏  | 351/485 [00:10<00:04, 32.00it/s, loss=1.72, v_num=meny, val_loss=2.310, train_loss=1.720]
+Epoch 0:  73%|███████▎  | 352/485 [00:11<00:04, 32.00it/s, loss=1.72, v_num=meny, val_loss=2.310, train_loss=1.800]
+Epoch 0:  73%|███████▎  | 353/485 [00:11<00:04, 31.99it/s, loss=1.72, v_num=meny, val_loss=2.310, train_loss=1.800]Epoch 0:  73%|███████▎  | 353/485 [00:11<00:04, 31.99it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.750]
+Epoch 0:  73%|███████▎  | 354/485 [00:11<00:04, 31.98it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.660]
+Epoch 0:  73%|███████▎  | 355/485 [00:11<00:04, 31.98it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.760]
+Epoch 0:  73%|███████▎  | 356/485 [00:11<00:04, 31.98it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.680]
+Epoch 0:  74%|███████▎  | 357/485 [00:11<00:04, 31.98it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.680]Epoch 0:  74%|███████▎  | 357/485 [00:11<00:04, 31.98it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.750]
+Epoch 0:  74%|███████▍  | 358/485 [00:11<00:03, 31.98it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.670]
+Epoch 0:  74%|███████▍  | 359/485 [00:11<00:03, 31.99it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.710] 
+Epoch 0:  74%|███████▍  | 360/485 [00:11<00:03, 31.99it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.640]
+Epoch 0:  74%|███████▍  | 361/485 [00:11<00:03, 32.00it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.640]Epoch 0:  74%|███████▍  | 361/485 [00:11<00:03, 31.99it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.670]
+Epoch 0:  75%|███████▍  | 362/485 [00:11<00:03, 32.00it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.760]
+Epoch 0:  75%|███████▍  | 363/485 [00:11<00:03, 32.01it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.690]
+Epoch 0:  75%|███████▌  | 364/485 [00:11<00:03, 32.02it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.750]
+Epoch 0:  75%|███████▌  | 365/485 [00:11<00:03, 32.03it/s, loss=1.71, v_num=meny, val_loss=2.310, train_loss=1.750]Epoch 0:  75%|███████▌  | 365/485 [00:11<00:03, 32.03it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.690] 
+Epoch 0:  75%|███████▌  | 366/485 [00:11<00:03, 32.04it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.690]
+Epoch 0:  76%|███████▌  | 367/485 [00:11<00:03, 32.04it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.610]
+Epoch 0:  76%|███████▌  | 368/485 [00:11<00:03, 32.05it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.650]
+Epoch 0:  76%|███████▌  | 369/485 [00:11<00:03, 32.06it/s, loss=1.7, v_num=meny, val_loss=2.310, train_loss=1.650]Epoch 0:  76%|███████▌  | 369/485 [00:11<00:03, 32.06it/s, loss=1.69, v_num=meny, val_loss=2.310, train_loss=1.610]
+Epoch 0:  76%|███████▋  | 370/485 [00:11<00:03, 32.07it/s, loss=1.69, v_num=meny, val_loss=2.310, train_loss=1.650]
+Epoch 0:  76%|███████▋  | 371/485 [00:11<00:03, 32.08it/s, loss=1.68, v_num=meny, val_loss=2.310, train_loss=1.680]
+Epoch 0:  77%|███████▋  | 372/485 [00:11<00:03, 31.90it/s, loss=1.68, v_num=meny, val_loss=2.310, train_loss=1.620]
+Epoch 0:  77%|███████▋  | 373/485 [00:11<00:03, 31.91it/s, loss=1.68, v_num=meny, val_loss=2.310, train_loss=1.620]Epoch 0:  77%|███████▋  | 373/485 [00:11<00:03, 31.91it/s, loss=1.68, v_num=meny, val_loss=2.310, train_loss=1.690]
+Epoch 0:  77%|███████▋  | 374/485 [00:11<00:03, 31.91it/s, loss=1.67, v_num=meny, val_loss=2.310, train_loss=1.600]
+Epoch 0:  77%|███████▋  | 375/485 [00:11<00:03, 31.92it/s, loss=1.67, v_num=meny, val_loss=2.310, train_loss=1.670]
+Epoch 0:  78%|███████▊  | 376/485 [00:11<00:03, 31.93it/s, loss=1.67, v_num=meny, val_loss=2.310, train_loss=1.660]
+Epoch 0:  78%|███████▊  | 377/485 [00:11<00:03, 31.94it/s, loss=1.67, v_num=meny, val_loss=2.310, train_loss=1.660]Epoch 0:  78%|███████▊  | 377/485 [00:11<00:03, 31.94it/s, loss=1.67, v_num=meny, val_loss=2.310, train_loss=1.670]
+Epoch 0:  78%|███████▊  | 378/485 [00:11<00:03, 31.90it/s, loss=1.66, v_num=meny, val_loss=2.310, train_loss=1.680]
+Epoch 0:  78%|███████▊  | 379/485 [00:11<00:03, 31.89it/s, loss=1.66, v_num=meny, val_loss=2.310, train_loss=1.590]
+Epoch 0:  78%|███████▊  | 380/485 [00:11<00:03, 31.90it/s, loss=1.66, v_num=meny, val_loss=2.310, train_loss=1.620]
+Epoch 0:  79%|███████▊  | 381/485 [00:11<00:03, 31.91it/s, loss=1.66, v_num=meny, val_loss=2.310, train_loss=1.620]Epoch 0:  79%|███████▊  | 381/485 [00:11<00:03, 31.91it/s, loss=1.65, v_num=meny, val_loss=2.310, train_loss=1.530]
+Epoch 0:  79%|███████▉  | 382/485 [00:11<00:03, 31.92it/s, loss=1.64, v_num=meny, val_loss=2.310, train_loss=1.620]
+Epoch 0:  79%|███████▉  | 383/485 [00:11<00:03, 31.93it/s, loss=1.64, v_num=meny, val_loss=2.310, train_loss=1.610]
+Epoch 0:  79%|███████▉  | 384/485 [00:12<00:03, 31.90it/s, loss=1.63, v_num=meny, val_loss=2.310, train_loss=1.570]
+Epoch 0:  79%|███████▉  | 385/485 [00:12<00:03, 31.88it/s, loss=1.63, v_num=meny, val_loss=2.310, train_loss=1.570]Epoch 0:  79%|███████▉  | 385/485 [00:12<00:03, 31.88it/s, loss=1.63, v_num=meny, val_loss=2.310, train_loss=1.610]
+Epoch 0:  80%|███████▉  | 386/485 [00:12<00:03, 31.88it/s, loss=1.63, v_num=meny, val_loss=2.310, train_loss=1.640]
+Epoch 0:  80%|███████▉  | 387/485 [00:12<00:03, 31.88it/s, loss=1.63, v_num=meny, val_loss=2.310, train_loss=1.660]
+Epoch 0:  80%|████████  | 388/485 [00:12<00:03, 31.89it/s, loss=1.63, v_num=meny, val_loss=2.310, train_loss=1.580]
+Epoch 0:  80%|████████  | 389/485 [00:12<00:03, 31.90it/s, loss=1.63, v_num=meny, val_loss=2.310, train_loss=1.580]Epoch 0:  80%|████████  | 389/485 [00:12<00:03, 31.90it/s, loss=1.62, v_num=meny, val_loss=2.310, train_loss=1.590]
+Epoch 0:  80%|████████  | 390/485 [00:12<00:02, 31.91it/s, loss=1.62, v_num=meny, val_loss=2.310, train_loss=1.540]
+Epoch 0:  81%|████████  | 391/485 [00:12<00:02, 31.92it/s, loss=1.62, v_num=meny, val_loss=2.310, train_loss=1.580]
+Epoch 0:  81%|████████  | 392/485 [00:12<00:02, 31.93it/s, loss=1.61, v_num=meny, val_loss=2.310, train_loss=1.600]
+Epoch 0:  81%|████████  | 393/485 [00:12<00:02, 31.93it/s, loss=1.61, v_num=meny, val_loss=2.310, train_loss=1.600]Epoch 0:  81%|████████  | 393/485 [00:12<00:02, 31.93it/s, loss=1.61, v_num=meny, val_loss=2.310, train_loss=1.590]
+Epoch 0:  81%|████████  | 394/485 [00:12<00:02, 31.93it/s, loss=1.61, v_num=meny, val_loss=2.310, train_loss=1.600]
+Epoch 0:  81%|████████▏ | 395/485 [00:12<00:02, 31.94it/s, loss=1.61, v_num=meny, val_loss=2.310, train_loss=1.600]
+Epoch 0:  82%|████████▏ | 396/485 [00:12<00:02, 31.94it/s, loss=1.6, v_num=meny, val_loss=2.310, train_loss=1.620] 
+Epoch 0:  82%|████████▏ | 397/485 [00:12<00:02, 31.95it/s, loss=1.6, v_num=meny, val_loss=2.310, train_loss=1.620]Epoch 0:  82%|████████▏ | 397/485 [00:12<00:02, 31.95it/s, loss=1.6, v_num=meny, val_loss=2.310, train_loss=1.590]
+Epoch 0:  82%|████████▏ | 398/485 [00:12<00:02, 31.96it/s, loss=1.59, v_num=meny, val_loss=2.310, train_loss=1.610]
+Epoch 0:  82%|████████▏ | 399/485 [00:12<00:02, 31.96it/s, loss=1.59, v_num=meny, val_loss=2.310, train_loss=1.480]
+Epoch 0:  82%|████████▏ | 400/485 [00:12<00:02, 31.97it/s, loss=1.59, v_num=meny, val_loss=2.310, train_loss=1.520]
+Epoch 0:  83%|████████▎ | 401/485 [00:12<00:02, 31.97it/s, loss=1.59, v_num=meny, val_loss=2.310, train_loss=1.520]Epoch 0:  83%|████████▎ | 401/485 [00:12<00:02, 31.96it/s, loss=1.58, v_num=meny, val_loss=2.310, train_loss=1.590]
+Epoch 0:  83%|████████▎ | 402/485 [00:12<00:02, 31.97it/s, loss=1.58, v_num=meny, val_loss=2.310, train_loss=1.490]
+Epoch 0:  83%|████████▎ | 403/485 [00:12<00:02, 31.96it/s, loss=1.58, v_num=meny, val_loss=2.310, train_loss=1.550]
+Epoch 0:  83%|████████▎ | 404/485 [00:12<00:02, 31.96it/s, loss=1.58, v_num=meny, val_loss=2.310, train_loss=1.520]
+Epoch 0:  84%|████████▎ | 405/485 [00:12<00:02, 31.96it/s, loss=1.58, v_num=meny, val_loss=2.310, train_loss=1.520]Epoch 0:  84%|████████▎ | 405/485 [00:12<00:02, 31.96it/s, loss=1.57, v_num=meny, val_loss=2.310, train_loss=1.620]
+Epoch 0:  84%|████████▎ | 406/485 [00:12<00:02, 31.96it/s, loss=1.57, v_num=meny, val_loss=2.310, train_loss=1.520]
+Epoch 0:  84%|████████▍ | 407/485 [00:12<00:02, 31.95it/s, loss=1.56, v_num=meny, val_loss=2.310, train_loss=1.540]
+Epoch 0:  84%|████████▍ | 408/485 [00:12<00:02, 31.95it/s, loss=1.56, v_num=meny, val_loss=2.310, train_loss=1.470]
+Epoch 0:  84%|████████▍ | 409/485 [00:12<00:02, 31.95it/s, loss=1.56, v_num=meny, val_loss=2.310, train_loss=1.470]Epoch 0:  84%|████████▍ | 409/485 [00:12<00:02, 31.95it/s, loss=1.56, v_num=meny, val_loss=2.310, train_loss=1.590]
+Epoch 0:  85%|████████▍ | 410/485 [00:12<00:02, 31.95it/s, loss=1.56, v_num=meny, val_loss=2.310, train_loss=1.560]
+Epoch 0:  85%|████████▍ | 411/485 [00:12<00:02, 31.94it/s, loss=1.55, v_num=meny, val_loss=2.310, train_loss=1.460]
+Epoch 0:  85%|████████▍ | 412/485 [00:12<00:02, 31.94it/s, loss=1.55, v_num=meny, val_loss=2.310, train_loss=1.550]
+Epoch 0:  85%|████████▌ | 413/485 [00:12<00:02, 31.95it/s, loss=1.55, v_num=meny, val_loss=2.310, train_loss=1.550]Epoch 0:  85%|████████▌ | 413/485 [00:12<00:02, 31.94it/s, loss=1.54, v_num=meny, val_loss=2.310, train_loss=1.440]
+Epoch 0:  85%|████████▌ | 414/485 [00:12<00:02, 31.95it/s, loss=1.54, v_num=meny, val_loss=2.310, train_loss=1.510]
+Epoch 0:  86%|████████▌ | 415/485 [00:12<00:02, 31.95it/s, loss=1.53, v_num=meny, val_loss=2.310, train_loss=1.560]
+Epoch 0:  86%|████████▌ | 416/485 [00:13<00:02, 31.95it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.440]
+Epoch 0:  86%|████████▌ | 417/485 [00:13<00:02, 31.96it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.440]Epoch 0:  86%|████████▌ | 417/485 [00:13<00:02, 31.96it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.470]
+Epoch 0:  86%|████████▌ | 418/485 [00:13<00:02, 31.97it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.480]
+Epoch 0:  86%|████████▋ | 419/485 [00:13<00:02, 31.98it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.530]
+Epoch 0:  87%|████████▋ | 420/485 [00:13<00:02, 31.99it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.490]
+Epoch 0:  87%|████████▋ | 421/485 [00:13<00:02, 31.99it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.490]Epoch 0:  87%|████████▋ | 421/485 [00:13<00:02, 31.99it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.590]
+Epoch 0:  87%|████████▋ | 422/485 [00:13<00:01, 31.99it/s, loss=1.52, v_num=meny, val_loss=2.310, train_loss=1.520]
+Epoch 0:  87%|████████▋ | 423/485 [00:13<00:01, 32.00it/s, loss=1.51, v_num=meny, val_loss=2.310, train_loss=1.480]
+Epoch 0:  87%|████████▋ | 424/485 [00:13<00:01, 32.00it/s, loss=1.51, v_num=meny, val_loss=2.310, train_loss=1.460]
+Epoch 0:  88%|████████▊ | 425/485 [00:13<00:01, 32.01it/s, loss=1.51, v_num=meny, val_loss=2.310, train_loss=1.460]Epoch 0:  88%|████████▊ | 425/485 [00:13<00:01, 32.01it/s, loss=1.51, v_num=meny, val_loss=2.310, train_loss=1.530]
+Epoch 0:  88%|████████▊ | 426/485 [00:13<00:01, 32.01it/s, loss=1.5, v_num=meny, val_loss=2.310, train_loss=1.500] 
+Epoch 0:  88%|████████▊ | 427/485 [00:13<00:01, 32.01it/s, loss=1.5, v_num=meny, val_loss=2.310, train_loss=1.420]
+Epoch 0:  88%|████████▊ | 428/485 [00:13<00:01, 32.02it/s, loss=1.49, v_num=meny, val_loss=2.310, train_loss=1.400]
+Epoch 0:  88%|████████▊ | 429/485 [00:13<00:01, 32.03it/s, loss=1.49, v_num=meny, val_loss=2.310, train_loss=1.400]Epoch 0:  88%|████████▊ | 429/485 [00:13<00:01, 32.03it/s, loss=1.49, v_num=meny, val_loss=2.310, train_loss=1.460]
+Epoch 0:  89%|████████▊ | 430/485 [00:13<00:01, 32.03it/s, loss=1.49, v_num=meny, val_loss=2.310, train_loss=1.490]
+Epoch 0:  89%|████████▉ | 431/485 [00:13<00:01, 32.03it/s, loss=1.48, v_num=meny, val_loss=2.310, train_loss=1.430]
+Epoch 0:  89%|████████▉ | 432/485 [00:13<00:01, 32.04it/s, loss=1.48, v_num=meny, val_loss=2.310, train_loss=1.380]
+Epoch 0:  89%|████████▉ | 433/485 [00:13<00:01, 32.05it/s, loss=1.48, v_num=meny, val_loss=2.310, train_loss=1.380]Epoch 0:  89%|████████▉ | 433/485 [00:13<00:01, 32.05it/s, loss=1.48, v_num=meny, val_loss=2.310, train_loss=1.450]
+Epoch 0:  89%|████████▉ | 434/485 [00:13<00:01, 32.05it/s, loss=1.47, v_num=meny, val_loss=2.310, train_loss=1.460]
+Epoch 0:  90%|████████▉ | 435/485 [00:13<00:01, 32.06it/s, loss=1.47, v_num=meny, val_loss=2.310, train_loss=1.430]
+Epoch 0:  90%|████████▉ | 436/485 [00:13<00:01, 32.07it/s, loss=1.47, v_num=meny, val_loss=2.310, train_loss=1.480]
+Epoch 0:  90%|█████████ | 437/485 [00:13<00:01, 32.07it/s, loss=1.47, v_num=meny, val_loss=2.310, train_loss=1.480]Epoch 0:  90%|█████████ | 437/485 [00:13<00:01, 32.07it/s, loss=1.47, v_num=meny, val_loss=2.310, train_loss=1.520]
+Epoch 0:  90%|█████████ | 438/485 [00:13<00:01, 32.08it/s, loss=1.46, v_num=meny, val_loss=2.310, train_loss=1.310]
+Epoch 0:  91%|█████████ | 439/485 [00:13<00:01, 32.08it/s, loss=1.46, v_num=meny, val_loss=2.310, train_loss=1.350]
+Epoch 0:  91%|█████████ | 440/485 [00:13<00:01, 32.09it/s, loss=1.45, v_num=meny, val_loss=2.310, train_loss=1.450]
+Epoch 0:  91%|█████████ | 441/485 [00:13<00:01, 32.10it/s, loss=1.45, v_num=meny, val_loss=2.310, train_loss=1.450]Epoch 0:  91%|█████████ | 441/485 [00:13<00:01, 32.10it/s, loss=1.44, v_num=meny, val_loss=2.310, train_loss=1.470]
+Epoch 0:  91%|█████████ | 442/485 [00:13<00:01, 32.10it/s, loss=1.44, v_num=meny, val_loss=2.310, train_loss=1.360]
+Epoch 0:  91%|█████████▏| 443/485 [00:13<00:01, 32.11it/s, loss=1.44, v_num=meny, val_loss=2.310, train_loss=1.500]
+Epoch 0:  92%|█████████▏| 444/485 [00:13<00:01, 32.15it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]Epoch 0:  92%|█████████▏| 445/485 [00:13<00:01, 32.09it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+Validating: 0it [00:00, ?it/s][A
+Validating:   0%|          | 0/41 [00:00<?, ?it/s][A
+
+
+
+
+Validating:  10%|▉         | 4/41 [00:00<00:00, 37.66it/s][AEpoch 0:  93%|█████████▎| 449/485 [00:13<00:01, 32.13it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  20%|█▉        | 8/41 [00:00<00:00, 37.83it/s][AEpoch 0:  93%|█████████▎| 453/485 [00:14<00:00, 32.18it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  29%|██▉       | 12/41 [00:00<00:00, 37.73it/s][AEpoch 0:  94%|█████████▍| 457/485 [00:14<00:00, 32.22it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  39%|███▉      | 16/41 [00:00<00:00, 37.76it/s][AEpoch 0:  95%|█████████▌| 461/485 [00:14<00:00, 32.26it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  49%|████▉     | 20/41 [00:00<00:00, 38.40it/s][AEpoch 0:  96%|█████████▌| 465/485 [00:14<00:00, 32.31it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  59%|█████▊    | 24/41 [00:00<00:00, 37.67it/s][AEpoch 0:  97%|█████████▋| 469/485 [00:14<00:00, 32.34it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  68%|██████▊   | 28/41 [00:00<00:00, 35.94it/s][AEpoch 0:  98%|█████████▊| 473/485 [00:14<00:00, 32.34it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  78%|███████▊  | 32/41 [00:00<00:00, 35.72it/s][AEpoch 0:  98%|█████████▊| 477/485 [00:14<00:00, 32.37it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  88%|████████▊ | 36/41 [00:00<00:00, 35.24it/s][AEpoch 0:  99%|█████████▉| 481/485 [00:14<00:00, 32.38it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+
+
+
+
+Validating:  98%|█████████▊| 40/41 [00:01<00:00, 35.04it/s][AEpoch 0: 100%|██████████| 485/485 [00:14<00:00, 32.40it/s, loss=1.43, v_num=meny, val_loss=2.310, train_loss=1.430]
+Epoch 0: 100%|██████████| 485/485 [00:14<00:00, 32.37it/s, loss=1.43, v_num=meny, val_loss=1.410, train_loss=1.340]
+                                                           [AEpoch 0, global step 443: train_loss reached 1.34339 (best 1.34339), saving model to "/models/pretrained/Lit_LeNet_MNIST_epoch=00-val_loss=1.41.ckpt" as top 1
+Epoch 0, step 442: train_loss was not in top 1
+Epoch 0: 100%|██████████| 485/485 [00:14<00:00, 32.36it/s, loss=1.43, v_num=meny, val_loss=1.410, train_loss=1.340]
+Traceback (most recent call last):
+  File "mnist_lighting_trainer.py", line 32, in <module>
+    trainer.fit(model)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 513, in fit
+    self.dispatch()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 553, in dispatch
+    self.accelerator.start_training(self)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/accelerators/accelerator.py", line 74, in start_training
+    self.training_type_plugin.start_training(trainer)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/plugins/training_type/training_type_plugin.py", line 111, in start_training
+    self._results = trainer.run_train()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 644, in run_train
+    self.train_loop.run_training_epoch()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/training_loop.py", line 564, in run_training_epoch
+    self.trainer.run_evaluation(on_epoch=True)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 758, in run_evaluation
+    self.evaluation_loop.on_evaluation_end()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/evaluation_loop.py", line 100, in on_evaluation_end
+    self.trainer.call_hook('on_validation_end', *args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 1101, in call_hook
+    trainer_hook(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/callback_hook.py", line 183, in on_validation_end
+    callback.on_validation_end(self, self.lightning_module)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py", line 212, in on_validation_end
+    self.save_checkpoint(trainer, pl_module)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py", line 259, in save_checkpoint
+    self._save_top_k_checkpoints(trainer, pl_module, monitor_candidates)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py", line 566, in _save_top_k_checkpoints
+    self._update_best_and_save(current, epoch, step, trainer, pl_module, metrics)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py", line 608, in _update_best_and_save
+    self._save_model(filepath, trainer, pl_module)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py", line 331, in _save_model
+    self._fs.makedirs(os.path.dirname(filepath), exist_ok=True)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/fsspec/implementations/local.py", line 41, in makedirs
+    os.makedirs(path, exist_ok=exist_ok)
+  File "/usr/lib/python3.8/os.py", line 213, in makedirs
+    makedirs(head, exist_ok=exist_ok)
+  File "/usr/lib/python3.8/os.py", line 223, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/models'

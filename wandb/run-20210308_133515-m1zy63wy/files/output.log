@@ -1,0 +1,32 @@
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Checkpoint directory /home/naddeok5/FIM/models/pretrained/ exists and is not empty.
+  warnings.warn(*args, **kwargs)
+GPU available: True, used: True
+TPU available: None, using: 0 TPU cores
+wandb: Agent Starting Run: so41s215 with config:
+wandb: 	batch_size: 512
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.9
+wandb: 	n_epochs: 10
+wandb: 	num_classes: 10
+wandb: 	num_kernels_layer1: 6
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 120
+wandb: 	num_nodes_fc_layer: 84
+wandb: 	weight_decay: 0.0001
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
+Create sweep with ID: xg8ac0ct
+Sweep URL: https://wandb.ai/naddeok/LeNet%20MNIST%20Lightning/sweeps/xg8ac0ct
+1
+initializing ddp: GLOBAL_RANK: 0, MEMBER: 1/2
+2021-03-08 13:35:22.681394: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-08 13:35:22.683512: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.21
+wandb: Syncing run brisk-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20MNIST%20Lightning
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20MNIST%20Lightning/sweeps/xg8ac0ct
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20MNIST%20Lightning/runs/so41s215
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210308_133521-so41s215
+wandb: Run `wandb offline` to turn off syncing.
+initializing ddp: GLOBAL_RANK: 1, MEMBER: 2/2
+wandb: Ctrl + C detected. Stopping sweep.
+wandb: Ctrl + C detected. Stopping sweep.

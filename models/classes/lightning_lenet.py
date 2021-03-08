@@ -3,14 +3,16 @@ import torch
 from torch import nn
 import pytorch_lightning as pl
 import torchvision
+import torch.nn.functional as F
+from copy import copy
+import torchvision.transforms as transforms
 from pytorch_lightning.loggers import WandbLogger
 
 class LitLeNet(pl.LightningModule):
 
     def __init__(self, set_name,
                        U = None,
-                       train_batch_size = 124,
-                       test_batch_size = 124,
+                       batch_size = 124,
                        num_classes = 10,
                        num_kernels_layer1 = 6, 
                        num_kernels_layer2 = 16, 
@@ -25,8 +27,8 @@ class LitLeNet(pl.LightningModule):
 
         self.set_name = set_name
 
-        self.train_batch_size = train_batch_size
-        self.test_batch_size = test_batch_size
+        self.U = U
+        self.batch_size = batch_size
         self.num_classes = num_classes
 
         self.num_kernels_layer1 = num_kernels_layer1
@@ -164,46 +166,83 @@ class LitLeNet(pl.LightningModule):
     def train_dataloader(self):
         #Load the dataset
         train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                    batch_size = self.train_batch_size,
-                                                    shuffle = True)                           
+                                                    batch_size = self.batch_size,
+                                                    shuffle = True,
+                                                    pin_memory=True,
+                                                    num_workers=8)                           
         return train_loader
 
     def val_dataloader(self):
         #Load the dataset
         val_loader = torch.utils.data.DataLoader(self.val_set,
-                                                    batch_size = self.train_batch_size,
-                                                    shuffle = True)      
+                                                    batch_size = self.batch_size,
+                                                    shuffle = False,
+                                                    pin_memory=True,
+                                                    num_workers=8)      
         return val_loader
 
     def test_dataloader(self):
         #Load test data
         test_loader = torch.utils.data.DataLoader(self.test_set,
-                                                           batch_size = self.test_batch_size,
-                                                           shuffle = False)
+                                                    batch_size = self.batch_size,
+                                                    shuffle = False,
+                                                    pin_memory=True,
+                                                    num_workers=8)
         return test_loader
 
     def configure_optimizers(self):
-        opt = torch.optim.SGD(self.parameters(), 
+        return torch.optim.SGD(self.parameters(), 
                                 lr = self.learning_rate, 
                                 momentum = self.momentum,
                                 weight_decay = self.weight_decay)
-        return opt
 
     def training_step(self, batch, batch_idx):
         # Load batch data
         inputs, labels = batch
 
         # Forward pass
-        outputs = self(inputs)
+        outputs = self.forward(inputs)
+        preds = torch.argmax(outputs, dim=1)
 
         # Calculate loss
         loss = self.criterion(outputs, labels)
 
         # Using TrainResult to enable logging
-        self.log('train_acc', self.accuracy(outputs, labels))
-        result = pl.TrainResult(minimize=loss)
-        result.log('train_loss', loss, prog_bar=True)
-        return result
+        self.log('train_acc', self.accuracy(preds, labels), sync_dist=True)
+        self.log('train_loss', loss, sync_dist=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        # Load batch data
+        inputs, labels = batch
+
+        # Forward pass
+        outputs = self.forward(inputs)
+        preds = torch.argmax(outputs, dim=1)
+
+        # Calculate loss
+        loss = self.criterion(outputs, labels)
+
+        # Using TrainResult to enable logging
+        self.log('val_acc', self.accuracy(preds, labels), sync_dist=True)
+        self.log('val_loss', loss, sync_dist=True)
+        return loss
+
+    def test_step(self, batch, batch_idx):
+        # Load batch data
+        inputs, labels = batch
+
+        # Forward pass
+        outputs = self.forward(inputs)
+        preds = torch.argmax(outputs, dim=1)
+
+        # Calculate loss
+        loss = self.criterion(outputs, labels)
+
+        # Using TrainResult to enable logging
+        accuracy = self.accuracy(preds, labels)
+        self.log('test_acc', accuracy, prog_bar=True, sync_dist=True)
+        self.log('test_loss', loss, sync_dist=True)
 
     # Orthogonal transformation
     def orthogonal_operation(self, input_tensor):
@@ -225,11 +264,10 @@ class LitLeNet(pl.LightningModule):
             U = copy(self.U)
 
         # Push to GPU if True
-        U = copy(U if self.gpu == False else U.cuda())
+        U = copy(U.cuda())
 
         # Repeat U and U transpose for all batches
-        input_tensor = input_tensor if self.gpu == False else input_tensor.cuda()
-        # Ut = U.t().view((1, A_side_size**2, A_side_size**2)).repeat(batch_size, 1, 1)
+        input_tensor = input_tensor.cuda()
         U = copy(U.view((1, A_side_size**2, A_side_size**2)).repeat(channel_num * batch_size, 1, 1))
         
         # Batch muiltply UA
@@ -238,7 +276,7 @@ class LitLeNet(pl.LightningModule):
     def forward(self, x):
         
         # Unitary transformation
-        x = self.orthogonal_operation(x)
+        # x = self.orthogonal_operation(x)
 
         # Feedforward
         x = torch.tanh(self.conv1(x))

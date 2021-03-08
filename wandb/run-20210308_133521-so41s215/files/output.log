@@ -1,0 +1,2 @@
+initializing ddp: GLOBAL_RANK: 1, MEMBER: 2/2
+wandb: Ctrl + C detected. Stopping sweep.

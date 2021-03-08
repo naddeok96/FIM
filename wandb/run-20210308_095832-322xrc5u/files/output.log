@@ -1,0 +1,611 @@
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | criterion | CrossEntropyLoss | 0     
+1 | accuracy  | Accuracy         | 0     
+2 | conv1     | Conv2d           | 156   
+3 | pool1     | MaxPool2d        | 0     
+4 | conv2     | Conv2d           | 2.4 K 
+5 | pool2     | MaxPool2d        | 0     
+6 | conv3     | Conv2d           | 48.1 K
+7 | fc1       | Linear           | 10.2 K
+8 | fc2       | Linear           | 850   
+-----------------------------------------------
+61.7 K    Trainable params
+0         Non-trainable params
+61.7 K    Total params
+0.247     Total estimated model params size (MB)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Your val_dataloader has `shuffle=True`, it is best practice to turn this off for validation and test dataloaders.
+  warnings.warn(*args, **kwargs)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Validation sanity check: 0it [00:00, ?it/s]Validation sanity check:   0%|          | 0/2 [00:00<?, ?it/s]
+Validation sanity check:  50%|█████     | 1/2 [00:00<00:00,  1.70it/s]
+                                                                      /home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, train dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Training: 0it [00:00, ?it/s]Training:   0%|          | 0/485 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/485 [00:00<?, ?it/s] 
+Epoch 0:   0%|          | 1/485 [00:00<00:31, 15.20it/s, loss=2.31, v_num=rc5u]
+Epoch 0:   0%|          | 2/485 [00:00<00:23, 20.42it/s, loss=2.31, v_num=rc5u]
+Epoch 0:   1%|          | 3/485 [00:00<00:21, 22.01it/s, loss=2.31, v_num=rc5u]Epoch 0:   1%|          | 3/485 [00:00<00:21, 21.95it/s, loss=2.3, v_num=rc5u] 
+Epoch 0:   1%|          | 4/485 [00:00<00:20, 23.84it/s, loss=2.31, v_num=rc5u]
+Epoch 0:   1%|          | 5/485 [00:00<00:19, 25.14it/s, loss=2.31, v_num=rc5u]
+Epoch 0:   1%|          | 6/485 [00:00<00:18, 26.09it/s, loss=2.3, v_num=rc5u] 
+Epoch 0:   1%|▏         | 7/485 [00:00<00:17, 26.87it/s, loss=2.3, v_num=rc5u]Epoch 0:   1%|▏         | 7/485 [00:00<00:17, 26.84it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   2%|▏         | 8/485 [00:00<00:17, 27.44it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   2%|▏         | 9/485 [00:00<00:17, 27.92it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   2%|▏         | 10/485 [00:00<00:16, 28.32it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   2%|▏         | 11/485 [00:00<00:16, 28.67it/s, loss=2.3, v_num=rc5u]Epoch 0:   2%|▏         | 11/485 [00:00<00:16, 28.65it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   2%|▏         | 12/485 [00:00<00:16, 28.88it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   3%|▎         | 13/485 [00:00<00:16, 29.14it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   3%|▎         | 14/485 [00:00<00:16, 29.35it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   3%|▎         | 15/485 [00:00<00:15, 29.51it/s, loss=2.3, v_num=rc5u]Epoch 0:   3%|▎         | 15/485 [00:00<00:15, 29.49it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   3%|▎         | 16/485 [00:00<00:15, 29.82it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   4%|▎         | 17/485 [00:00<00:15, 30.08it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   4%|▎         | 18/485 [00:00<00:15, 30.32it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   4%|▍         | 19/485 [00:00<00:15, 30.58it/s, loss=2.3, v_num=rc5u]Epoch 0:   4%|▍         | 19/485 [00:00<00:15, 30.56it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   4%|▍         | 20/485 [00:00<00:15, 30.78it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   4%|▍         | 21/485 [00:00<00:15, 30.71it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   5%|▍         | 22/485 [00:00<00:15, 30.79it/s, loss=2.3, v_num=rc5u]
+Epoch 0:   5%|▍         | 23/485 [00:00<00:14, 30.86it/s, loss=2.3, v_num=rc5u]Epoch 0:   5%|▍         | 23/485 [00:00<00:14, 30.85it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   5%|▍         | 24/485 [00:00<00:14, 30.92it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   5%|▌         | 25/485 [00:00<00:14, 30.97it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   5%|▌         | 26/485 [00:00<00:14, 31.04it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   6%|▌         | 27/485 [00:00<00:14, 31.10it/s, loss=2.29, v_num=rc5u]Epoch 0:   6%|▌         | 27/485 [00:00<00:14, 31.08it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   6%|▌         | 28/485 [00:00<00:14, 31.14it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   6%|▌         | 29/485 [00:00<00:14, 31.22it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   6%|▌         | 30/485 [00:00<00:14, 31.36it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   6%|▋         | 31/485 [00:00<00:14, 31.47it/s, loss=2.29, v_num=rc5u]Epoch 0:   6%|▋         | 31/485 [00:00<00:14, 31.46it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   7%|▋         | 32/485 [00:01<00:14, 31.58it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   7%|▋         | 33/485 [00:01<00:14, 31.69it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   7%|▋         | 34/485 [00:01<00:14, 31.81it/s, loss=2.29, v_num=rc5u]
+Epoch 0:   7%|▋         | 35/485 [00:01<00:14, 31.91it/s, loss=2.29, v_num=rc5u]Epoch 0:   7%|▋         | 35/485 [00:01<00:14, 31.90it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   7%|▋         | 36/485 [00:01<00:14, 31.99it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   8%|▊         | 37/485 [00:01<00:14, 31.85it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   8%|▊         | 38/485 [00:01<00:14, 31.78it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   8%|▊         | 39/485 [00:01<00:13, 31.89it/s, loss=2.28, v_num=rc5u]Epoch 0:   8%|▊         | 39/485 [00:01<00:13, 31.88it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   8%|▊         | 40/485 [00:01<00:14, 31.77it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   8%|▊         | 41/485 [00:01<00:14, 31.60it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   9%|▊         | 42/485 [00:01<00:14, 31.49it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   9%|▉         | 43/485 [00:01<00:13, 31.57it/s, loss=2.28, v_num=rc5u]Epoch 0:   9%|▉         | 43/485 [00:01<00:14, 31.56it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   9%|▉         | 44/485 [00:01<00:13, 31.60it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   9%|▉         | 45/485 [00:01<00:13, 31.45it/s, loss=2.28, v_num=rc5u]
+Epoch 0:   9%|▉         | 46/485 [00:01<00:14, 31.34it/s, loss=2.28, v_num=rc5u]
+Epoch 0:  10%|▉         | 47/485 [00:01<00:13, 31.36it/s, loss=2.28, v_num=rc5u]Epoch 0:  10%|▉         | 47/485 [00:01<00:13, 31.35it/s, loss=2.28, v_num=rc5u]
+Epoch 0:  10%|▉         | 48/485 [00:01<00:13, 31.42it/s, loss=2.28, v_num=rc5u]
+Epoch 0:  10%|█         | 49/485 [00:01<00:13, 31.25it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  10%|█         | 50/485 [00:01<00:13, 31.16it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  11%|█         | 51/485 [00:01<00:13, 31.12it/s, loss=2.27, v_num=rc5u]Epoch 0:  11%|█         | 51/485 [00:01<00:13, 31.12it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  11%|█         | 52/485 [00:01<00:13, 31.19it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  11%|█         | 53/485 [00:01<00:13, 31.25it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  11%|█         | 54/485 [00:01<00:13, 31.21it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  11%|█▏        | 55/485 [00:01<00:13, 31.22it/s, loss=2.27, v_num=rc5u]Epoch 0:  11%|█▏        | 55/485 [00:01<00:13, 31.21it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  12%|█▏        | 56/485 [00:01<00:13, 31.18it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  12%|█▏        | 57/485 [00:01<00:13, 31.21it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  12%|█▏        | 58/485 [00:01<00:13, 31.23it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  12%|█▏        | 59/485 [00:01<00:13, 31.21it/s, loss=2.27, v_num=rc5u]Epoch 0:  12%|█▏        | 59/485 [00:01<00:13, 31.21it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  12%|█▏        | 60/485 [00:01<00:13, 31.17it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  13%|█▎        | 61/485 [00:01<00:13, 31.20it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  13%|█▎        | 62/485 [00:01<00:13, 31.23it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  13%|█▎        | 63/485 [00:02<00:13, 31.25it/s, loss=2.27, v_num=rc5u]Epoch 0:  13%|█▎        | 63/485 [00:02<00:13, 31.25it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  13%|█▎        | 64/485 [00:02<00:13, 31.27it/s, loss=2.27, v_num=rc5u]
+Epoch 0:  13%|█▎        | 65/485 [00:02<00:13, 31.24it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  14%|█▎        | 66/485 [00:02<00:13, 31.26it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  14%|█▍        | 67/485 [00:02<00:13, 31.30it/s, loss=2.26, v_num=rc5u]Epoch 0:  14%|█▍        | 67/485 [00:02<00:13, 31.29it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  14%|█▍        | 68/485 [00:02<00:13, 31.22it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  14%|█▍        | 69/485 [00:02<00:13, 31.25it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  14%|█▍        | 70/485 [00:02<00:13, 31.27it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  15%|█▍        | 71/485 [00:02<00:13, 31.30it/s, loss=2.26, v_num=rc5u]Epoch 0:  15%|█▍        | 71/485 [00:02<00:13, 31.29it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  15%|█▍        | 72/485 [00:02<00:13, 31.32it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  15%|█▌        | 73/485 [00:02<00:13, 31.34it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  15%|█▌        | 74/485 [00:02<00:13, 31.36it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  15%|█▌        | 75/485 [00:02<00:13, 31.35it/s, loss=2.26, v_num=rc5u]Epoch 0:  15%|█▌        | 75/485 [00:02<00:13, 31.35it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  16%|█▌        | 76/485 [00:02<00:13, 31.34it/s, loss=2.26, v_num=rc5u]
+Epoch 0:  16%|█▌        | 77/485 [00:02<00:13, 31.35it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  16%|█▌        | 78/485 [00:02<00:12, 31.37it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  16%|█▋        | 79/485 [00:02<00:12, 31.39it/s, loss=2.25, v_num=rc5u]Epoch 0:  16%|█▋        | 79/485 [00:02<00:12, 31.39it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  16%|█▋        | 80/485 [00:02<00:12, 31.38it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  17%|█▋        | 81/485 [00:02<00:12, 31.40it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  17%|█▋        | 82/485 [00:02<00:12, 31.41it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  17%|█▋        | 83/485 [00:02<00:12, 31.43it/s, loss=2.25, v_num=rc5u]Epoch 0:  17%|█▋        | 83/485 [00:02<00:12, 31.42it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  17%|█▋        | 84/485 [00:02<00:12, 31.44it/s, loss=2.25, v_num=rc5u]
+Epoch 0:  18%|█▊        | 85/485 [00:02<00:12, 31.45it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  18%|█▊        | 86/485 [00:02<00:12, 31.47it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  18%|█▊        | 87/485 [00:02<00:12, 31.48it/s, loss=2.24, v_num=rc5u]Epoch 0:  18%|█▊        | 87/485 [00:02<00:12, 31.47it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  18%|█▊        | 88/485 [00:02<00:12, 31.48it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  18%|█▊        | 89/485 [00:02<00:12, 31.49it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  19%|█▊        | 90/485 [00:02<00:12, 31.50it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  19%|█▉        | 91/485 [00:02<00:12, 31.50it/s, loss=2.24, v_num=rc5u]Epoch 0:  19%|█▉        | 91/485 [00:02<00:12, 31.50it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  19%|█▉        | 92/485 [00:02<00:12, 31.51it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  19%|█▉        | 93/485 [00:02<00:12, 31.52it/s, loss=2.24, v_num=rc5u]
+Epoch 0:  19%|█▉        | 94/485 [00:02<00:12, 31.53it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  20%|█▉        | 95/485 [00:03<00:12, 31.54it/s, loss=2.23, v_num=rc5u]Epoch 0:  20%|█▉        | 95/485 [00:03<00:12, 31.54it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  20%|█▉        | 96/485 [00:03<00:12, 31.54it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  20%|██        | 97/485 [00:03<00:12, 31.56it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  20%|██        | 98/485 [00:03<00:12, 31.56it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  20%|██        | 99/485 [00:03<00:12, 31.54it/s, loss=2.23, v_num=rc5u]Epoch 0:  20%|██        | 99/485 [00:03<00:12, 31.54it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  21%|██        | 100/485 [00:03<00:12, 31.54it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  21%|██        | 101/485 [00:03<00:12, 31.54it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  21%|██        | 102/485 [00:03<00:12, 31.57it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  21%|██        | 103/485 [00:03<00:12, 31.60it/s, loss=2.23, v_num=rc5u]Epoch 0:  21%|██        | 103/485 [00:03<00:12, 31.60it/s, loss=2.23, v_num=rc5u]
+Epoch 0:  21%|██▏       | 104/485 [00:03<00:12, 31.59it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  22%|██▏       | 105/485 [00:03<00:12, 31.60it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  22%|██▏       | 106/485 [00:03<00:11, 31.60it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  22%|██▏       | 107/485 [00:03<00:11, 31.61it/s, loss=2.22, v_num=rc5u]Epoch 0:  22%|██▏       | 107/485 [00:03<00:11, 31.60it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  22%|██▏       | 108/485 [00:03<00:11, 31.61it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  22%|██▏       | 109/485 [00:03<00:11, 31.61it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  23%|██▎       | 110/485 [00:03<00:11, 31.62it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  23%|██▎       | 111/485 [00:03<00:11, 31.62it/s, loss=2.22, v_num=rc5u]Epoch 0:  23%|██▎       | 111/485 [00:03<00:11, 31.62it/s, loss=2.22, v_num=rc5u]
+Epoch 0:  23%|██▎       | 112/485 [00:03<00:11, 31.62it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  23%|██▎       | 113/485 [00:03<00:11, 31.63it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  24%|██▎       | 114/485 [00:03<00:11, 31.63it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  24%|██▎       | 115/485 [00:03<00:11, 31.64it/s, loss=2.21, v_num=rc5u]Epoch 0:  24%|██▎       | 115/485 [00:03<00:11, 31.64it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  24%|██▍       | 116/485 [00:03<00:11, 31.63it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  24%|██▍       | 117/485 [00:03<00:11, 31.64it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  24%|██▍       | 118/485 [00:03<00:11, 31.64it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  25%|██▍       | 119/485 [00:03<00:11, 31.64it/s, loss=2.21, v_num=rc5u]Epoch 0:  25%|██▍       | 119/485 [00:03<00:11, 31.64it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  25%|██▍       | 120/485 [00:03<00:11, 31.65it/s, loss=2.21, v_num=rc5u]
+Epoch 0:  25%|██▍       | 121/485 [00:03<00:11, 31.65it/s, loss=2.2, v_num=rc5u] 
+Epoch 0:  25%|██▌       | 122/485 [00:03<00:11, 31.66it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  25%|██▌       | 123/485 [00:03<00:11, 31.67it/s, loss=2.2, v_num=rc5u]Epoch 0:  25%|██▌       | 123/485 [00:03<00:11, 31.66it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  26%|██▌       | 124/485 [00:03<00:11, 31.67it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  26%|██▌       | 125/485 [00:03<00:11, 31.67it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  26%|██▌       | 126/485 [00:03<00:11, 31.67it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  26%|██▌       | 127/485 [00:04<00:11, 31.67it/s, loss=2.2, v_num=rc5u]Epoch 0:  26%|██▌       | 127/485 [00:04<00:11, 31.67it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  26%|██▋       | 128/485 [00:04<00:11, 31.67it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  27%|██▋       | 129/485 [00:04<00:11, 31.68it/s, loss=2.2, v_num=rc5u]
+Epoch 0:  27%|██▋       | 130/485 [00:04<00:11, 31.68it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  27%|██▋       | 131/485 [00:04<00:11, 31.69it/s, loss=2.19, v_num=rc5u]Epoch 0:  27%|██▋       | 131/485 [00:04<00:11, 31.68it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  27%|██▋       | 132/485 [00:04<00:11, 31.69it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  27%|██▋       | 133/485 [00:04<00:11, 31.70it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  28%|██▊       | 134/485 [00:04<00:11, 31.71it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  28%|██▊       | 135/485 [00:04<00:11, 31.71it/s, loss=2.19, v_num=rc5u]Epoch 0:  28%|██▊       | 135/485 [00:04<00:11, 31.71it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  28%|██▊       | 136/485 [00:04<00:11, 31.72it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  28%|██▊       | 137/485 [00:04<00:10, 31.73it/s, loss=2.19, v_num=rc5u]
+Epoch 0:  28%|██▊       | 138/485 [00:04<00:10, 31.73it/s, loss=2.18, v_num=rc5u]
+Epoch 0:  29%|██▊       | 139/485 [00:04<00:10, 31.74it/s, loss=2.18, v_num=rc5u]Epoch 0:  29%|██▊       | 139/485 [00:04<00:10, 31.74it/s, loss=2.18, v_num=rc5u]
+Epoch 0:  29%|██▉       | 140/485 [00:04<00:10, 31.75it/s, loss=2.18, v_num=rc5u]
+Epoch 0:  29%|██▉       | 141/485 [00:04<00:10, 31.78it/s, loss=2.18, v_num=rc5u]
+Epoch 0:  29%|██▉       | 142/485 [00:04<00:10, 31.80it/s, loss=2.18, v_num=rc5u]
+Epoch 0:  29%|██▉       | 143/485 [00:04<00:10, 31.82it/s, loss=2.18, v_num=rc5u]Epoch 0:  29%|██▉       | 143/485 [00:04<00:10, 31.82it/s, loss=2.18, v_num=rc5u]
+Epoch 0:  30%|██▉       | 144/485 [00:04<00:10, 31.84it/s, loss=2.17, v_num=rc5u]
+Epoch 0:  30%|██▉       | 145/485 [00:04<00:10, 31.85it/s, loss=2.17, v_num=rc5u]
+Epoch 0:  30%|███       | 146/485 [00:04<00:10, 31.87it/s, loss=2.17, v_num=rc5u]
+Epoch 0:  30%|███       | 147/485 [00:04<00:10, 31.89it/s, loss=2.17, v_num=rc5u]Epoch 0:  30%|███       | 147/485 [00:04<00:10, 31.89it/s, loss=2.17, v_num=rc5u]
+Epoch 0:  31%|███       | 148/485 [00:04<00:10, 31.91it/s, loss=2.17, v_num=rc5u]
+Epoch 0:  31%|███       | 149/485 [00:04<00:10, 31.92it/s, loss=2.16, v_num=rc5u]
+Epoch 0:  31%|███       | 150/485 [00:04<00:10, 31.94it/s, loss=2.16, v_num=rc5u]
+Epoch 0:  31%|███       | 151/485 [00:04<00:10, 31.95it/s, loss=2.16, v_num=rc5u]Epoch 0:  31%|███       | 151/485 [00:04<00:10, 31.95it/s, loss=2.16, v_num=rc5u]
+Epoch 0:  31%|███▏      | 152/485 [00:04<00:10, 31.94it/s, loss=2.16, v_num=rc5u]
+Epoch 0:  32%|███▏      | 153/485 [00:04<00:10, 31.93it/s, loss=2.16, v_num=rc5u]
+Epoch 0:  32%|███▏      | 154/485 [00:04<00:10, 31.93it/s, loss=2.15, v_num=rc5u]
+Epoch 0:  32%|███▏      | 155/485 [00:04<00:10, 31.94it/s, loss=2.15, v_num=rc5u]Epoch 0:  32%|███▏      | 155/485 [00:04<00:10, 31.93it/s, loss=2.15, v_num=rc5u]
+Epoch 0:  32%|███▏      | 156/485 [00:04<00:10, 31.93it/s, loss=2.15, v_num=rc5u]
+Epoch 0:  32%|███▏      | 157/485 [00:04<00:10, 31.92it/s, loss=2.15, v_num=rc5u]
+Epoch 0:  33%|███▎      | 158/485 [00:04<00:10, 31.91it/s, loss=2.15, v_num=rc5u]
+Epoch 0:  33%|███▎      | 159/485 [00:04<00:10, 31.91it/s, loss=2.15, v_num=rc5u]Epoch 0:  33%|███▎      | 159/485 [00:04<00:10, 31.91it/s, loss=2.15, v_num=rc5u]
+Epoch 0:  33%|███▎      | 160/485 [00:05<00:10, 31.92it/s, loss=2.14, v_num=rc5u]
+Epoch 0:  33%|███▎      | 161/485 [00:05<00:10, 31.94it/s, loss=2.14, v_num=rc5u]
+Epoch 0:  33%|███▎      | 162/485 [00:05<00:10, 31.96it/s, loss=2.14, v_num=rc5u]
+Epoch 0:  34%|███▎      | 163/485 [00:05<00:10, 31.98it/s, loss=2.14, v_num=rc5u]Epoch 0:  34%|███▎      | 163/485 [00:05<00:10, 31.97it/s, loss=2.14, v_num=rc5u]
+Epoch 0:  34%|███▍      | 164/485 [00:05<00:10, 31.99it/s, loss=2.14, v_num=rc5u]
+Epoch 0:  34%|███▍      | 165/485 [00:05<00:09, 32.01it/s, loss=2.14, v_num=rc5u]
+Epoch 0:  34%|███▍      | 166/485 [00:05<00:09, 32.02it/s, loss=2.13, v_num=rc5u]
+Epoch 0:  34%|███▍      | 167/485 [00:05<00:09, 32.05it/s, loss=2.13, v_num=rc5u]Epoch 0:  34%|███▍      | 167/485 [00:05<00:09, 32.04it/s, loss=2.13, v_num=rc5u]
+Epoch 0:  35%|███▍      | 168/485 [00:05<00:09, 32.06it/s, loss=2.13, v_num=rc5u]
+Epoch 0:  35%|███▍      | 169/485 [00:05<00:09, 32.07it/s, loss=2.13, v_num=rc5u]
+Epoch 0:  35%|███▌      | 170/485 [00:05<00:09, 32.09it/s, loss=2.12, v_num=rc5u]
+Epoch 0:  35%|███▌      | 171/485 [00:05<00:09, 32.10it/s, loss=2.12, v_num=rc5u]Epoch 0:  35%|███▌      | 171/485 [00:05<00:09, 32.10it/s, loss=2.12, v_num=rc5u]
+Epoch 0:  35%|███▌      | 172/485 [00:05<00:09, 32.10it/s, loss=2.12, v_num=rc5u]
+Epoch 0:  36%|███▌      | 173/485 [00:05<00:09, 32.11it/s, loss=2.12, v_num=rc5u]
+Epoch 0:  36%|███▌      | 174/485 [00:05<00:09, 32.11it/s, loss=2.12, v_num=rc5u]
+Epoch 0:  36%|███▌      | 175/485 [00:05<00:09, 32.10it/s, loss=2.12, v_num=rc5u]Epoch 0:  36%|███▌      | 175/485 [00:05<00:09, 32.10it/s, loss=2.11, v_num=rc5u]
+Epoch 0:  36%|███▋      | 176/485 [00:05<00:09, 32.10it/s, loss=2.11, v_num=rc5u]
+Epoch 0:  36%|███▋      | 177/485 [00:05<00:09, 32.11it/s, loss=2.11, v_num=rc5u]
+Epoch 0:  37%|███▋      | 178/485 [00:05<00:09, 32.11it/s, loss=2.11, v_num=rc5u]
+Epoch 0:  37%|███▋      | 179/485 [00:05<00:09, 32.12it/s, loss=2.11, v_num=rc5u]Epoch 0:  37%|███▋      | 179/485 [00:05<00:09, 32.12it/s, loss=2.1, v_num=rc5u] 
+Epoch 0:  37%|███▋      | 180/485 [00:05<00:09, 32.12it/s, loss=2.1, v_num=rc5u]
+Epoch 0:  37%|███▋      | 181/485 [00:05<00:09, 32.13it/s, loss=2.1, v_num=rc5u]
+Epoch 0:  38%|███▊      | 182/485 [00:05<00:09, 32.13it/s, loss=2.1, v_num=rc5u]
+Epoch 0:  38%|███▊      | 183/485 [00:05<00:09, 32.14it/s, loss=2.1, v_num=rc5u]Epoch 0:  38%|███▊      | 183/485 [00:05<00:09, 32.13it/s, loss=2.1, v_num=rc5u]
+Epoch 0:  38%|███▊      | 184/485 [00:05<00:09, 32.13it/s, loss=2.09, v_num=rc5u]
+Epoch 0:  38%|███▊      | 185/485 [00:05<00:09, 32.14it/s, loss=2.09, v_num=rc5u]
+Epoch 0:  38%|███▊      | 186/485 [00:05<00:09, 32.16it/s, loss=2.09, v_num=rc5u]
+Epoch 0:  39%|███▊      | 187/485 [00:05<00:09, 32.18it/s, loss=2.09, v_num=rc5u]Epoch 0:  39%|███▊      | 187/485 [00:05<00:09, 32.17it/s, loss=2.09, v_num=rc5u]
+Epoch 0:  39%|███▉      | 188/485 [00:05<00:09, 32.19it/s, loss=2.08, v_num=rc5u]
+Epoch 0:  39%|███▉      | 189/485 [00:05<00:09, 32.21it/s, loss=2.08, v_num=rc5u]
+Epoch 0:  39%|███▉      | 190/485 [00:05<00:09, 32.22it/s, loss=2.08, v_num=rc5u]
+Epoch 0:  39%|███▉      | 191/485 [00:05<00:09, 32.23it/s, loss=2.08, v_num=rc5u]Epoch 0:  39%|███▉      | 191/485 [00:05<00:09, 32.22it/s, loss=2.07, v_num=rc5u]
+Epoch 0:  40%|███▉      | 192/485 [00:05<00:09, 32.19it/s, loss=2.07, v_num=rc5u]
+Epoch 0:  40%|███▉      | 193/485 [00:05<00:09, 32.19it/s, loss=2.07, v_num=rc5u]
+Epoch 0:  40%|████      | 194/485 [00:06<00:09, 32.19it/s, loss=2.07, v_num=rc5u]
+Epoch 0:  40%|████      | 195/485 [00:06<00:09, 32.19it/s, loss=2.07, v_num=rc5u]Epoch 0:  40%|████      | 195/485 [00:06<00:09, 32.19it/s, loss=2.07, v_num=rc5u]
+Epoch 0:  40%|████      | 196/485 [00:06<00:08, 32.19it/s, loss=2.06, v_num=rc5u]
+Epoch 0:  41%|████      | 197/485 [00:06<00:08, 32.19it/s, loss=2.06, v_num=rc5u]
+Epoch 0:  41%|████      | 198/485 [00:06<00:08, 32.19it/s, loss=2.06, v_num=rc5u]
+Epoch 0:  41%|████      | 199/485 [00:06<00:08, 32.19it/s, loss=2.06, v_num=rc5u]Epoch 0:  41%|████      | 199/485 [00:06<00:08, 32.18it/s, loss=2.05, v_num=rc5u]
+Epoch 0:  41%|████      | 200/485 [00:06<00:08, 32.18it/s, loss=2.05, v_num=rc5u]
+Epoch 0:  41%|████▏     | 201/485 [00:06<00:08, 32.18it/s, loss=2.05, v_num=rc5u]
+Epoch 0:  42%|████▏     | 202/485 [00:06<00:08, 32.18it/s, loss=2.05, v_num=rc5u]
+Epoch 0:  42%|████▏     | 203/485 [00:06<00:08, 32.18it/s, loss=2.05, v_num=rc5u]Epoch 0:  42%|████▏     | 203/485 [00:06<00:08, 32.18it/s, loss=2.04, v_num=rc5u]
+Epoch 0:  42%|████▏     | 204/485 [00:06<00:08, 32.17it/s, loss=2.04, v_num=rc5u]
+Epoch 0:  42%|████▏     | 205/485 [00:06<00:08, 32.18it/s, loss=2.04, v_num=rc5u]
+Epoch 0:  42%|████▏     | 206/485 [00:06<00:08, 32.18it/s, loss=2.03, v_num=rc5u]
+Epoch 0:  43%|████▎     | 207/485 [00:06<00:08, 32.18it/s, loss=2.03, v_num=rc5u]Epoch 0:  43%|████▎     | 207/485 [00:06<00:08, 32.18it/s, loss=2.03, v_num=rc5u]
+Epoch 0:  43%|████▎     | 208/485 [00:06<00:08, 32.18it/s, loss=2.03, v_num=rc5u]
+Epoch 0:  43%|████▎     | 209/485 [00:06<00:08, 32.18it/s, loss=2.03, v_num=rc5u]
+Epoch 0:  43%|████▎     | 210/485 [00:06<00:08, 32.17it/s, loss=2.02, v_num=rc5u]
+Epoch 0:  44%|████▎     | 211/485 [00:06<00:08, 32.18it/s, loss=2.02, v_num=rc5u]Epoch 0:  44%|████▎     | 211/485 [00:06<00:08, 32.18it/s, loss=2.02, v_num=rc5u]
+Epoch 0:  44%|████▎     | 212/485 [00:06<00:08, 32.17it/s, loss=2.02, v_num=rc5u]
+Epoch 0:  44%|████▍     | 213/485 [00:06<00:08, 32.18it/s, loss=2.01, v_num=rc5u]
+Epoch 0:  44%|████▍     | 214/485 [00:06<00:08, 32.19it/s, loss=2.01, v_num=rc5u]
+Epoch 0:  44%|████▍     | 215/485 [00:06<00:08, 32.20it/s, loss=2.01, v_num=rc5u]Epoch 0:  44%|████▍     | 215/485 [00:06<00:08, 32.20it/s, loss=2.01, v_num=rc5u]
+Epoch 0:  45%|████▍     | 216/485 [00:06<00:08, 32.21it/s, loss=2, v_num=rc5u]   
+Epoch 0:  45%|████▍     | 217/485 [00:06<00:08, 32.23it/s, loss=2, v_num=rc5u]
+Epoch 0:  45%|████▍     | 218/485 [00:06<00:08, 32.24it/s, loss=2, v_num=rc5u]
+Epoch 0:  45%|████▌     | 219/485 [00:06<00:08, 32.25it/s, loss=2, v_num=rc5u]Epoch 0:  45%|████▌     | 219/485 [00:06<00:08, 32.25it/s, loss=2, v_num=rc5u]
+Epoch 0:  45%|████▌     | 220/485 [00:06<00:08, 32.26it/s, loss=1.99, v_num=rc5u]
+Epoch 0:  46%|████▌     | 221/485 [00:06<00:08, 32.28it/s, loss=1.99, v_num=rc5u]
+Epoch 0:  46%|████▌     | 222/485 [00:06<00:08, 32.27it/s, loss=1.99, v_num=rc5u]
+Epoch 0:  46%|████▌     | 223/485 [00:06<00:08, 32.27it/s, loss=1.99, v_num=rc5u]Epoch 0:  46%|████▌     | 223/485 [00:06<00:08, 32.27it/s, loss=1.99, v_num=rc5u]
+Epoch 0:  46%|████▌     | 224/485 [00:06<00:08, 32.28it/s, loss=1.98, v_num=rc5u]
+Epoch 0:  46%|████▋     | 225/485 [00:06<00:08, 32.27it/s, loss=1.98, v_num=rc5u]
+Epoch 0:  47%|████▋     | 226/485 [00:07<00:08, 32.25it/s, loss=1.97, v_num=rc5u]
+Epoch 0:  47%|████▋     | 227/485 [00:07<00:07, 32.25it/s, loss=1.97, v_num=rc5u]Epoch 0:  47%|████▋     | 227/485 [00:07<00:08, 32.25it/s, loss=1.97, v_num=rc5u]
+Epoch 0:  47%|████▋     | 228/485 [00:07<00:07, 32.25it/s, loss=1.97, v_num=rc5u]
+Epoch 0:  47%|████▋     | 229/485 [00:07<00:07, 32.25it/s, loss=1.96, v_num=rc5u]
+Epoch 0:  47%|████▋     | 230/485 [00:07<00:07, 32.25it/s, loss=1.96, v_num=rc5u]
+Epoch 0:  48%|████▊     | 231/485 [00:07<00:07, 32.26it/s, loss=1.96, v_num=rc5u]Epoch 0:  48%|████▊     | 231/485 [00:07<00:07, 32.26it/s, loss=1.95, v_num=rc5u]
+Epoch 0:  48%|████▊     | 232/485 [00:07<00:07, 32.27it/s, loss=1.95, v_num=rc5u]
+Epoch 0:  48%|████▊     | 233/485 [00:07<00:07, 32.28it/s, loss=1.95, v_num=rc5u]
+Epoch 0:  48%|████▊     | 234/485 [00:07<00:07, 32.29it/s, loss=1.94, v_num=rc5u]
+Epoch 0:  48%|████▊     | 235/485 [00:07<00:07, 32.28it/s, loss=1.94, v_num=rc5u]Epoch 0:  48%|████▊     | 235/485 [00:07<00:07, 32.28it/s, loss=1.94, v_num=rc5u]
+Epoch 0:  49%|████▊     | 236/485 [00:07<00:07, 32.27it/s, loss=1.94, v_num=rc5u]
+Epoch 0:  49%|████▉     | 237/485 [00:07<00:07, 32.27it/s, loss=1.93, v_num=rc5u]
+Epoch 0:  49%|████▉     | 238/485 [00:07<00:07, 32.27it/s, loss=1.93, v_num=rc5u]
+Epoch 0:  49%|████▉     | 239/485 [00:07<00:07, 32.28it/s, loss=1.93, v_num=rc5u]Epoch 0:  49%|████▉     | 239/485 [00:07<00:07, 32.28it/s, loss=1.92, v_num=rc5u]
+Epoch 0:  49%|████▉     | 240/485 [00:07<00:07, 32.28it/s, loss=1.92, v_num=rc5u]
+Epoch 0:  50%|████▉     | 241/485 [00:07<00:07, 32.27it/s, loss=1.91, v_num=rc5u]
+Epoch 0:  50%|████▉     | 242/485 [00:07<00:07, 32.27it/s, loss=1.91, v_num=rc5u]
+Epoch 0:  50%|█████     | 243/485 [00:07<00:07, 32.26it/s, loss=1.91, v_num=rc5u]Epoch 0:  50%|█████     | 243/485 [00:07<00:07, 32.26it/s, loss=1.9, v_num=rc5u] 
+Epoch 0:  50%|█████     | 244/485 [00:07<00:07, 32.24it/s, loss=1.9, v_num=rc5u]
+Epoch 0:  51%|█████     | 245/485 [00:07<00:07, 32.24it/s, loss=1.9, v_num=rc5u]
+Epoch 0:  51%|█████     | 246/485 [00:07<00:07, 32.25it/s, loss=1.89, v_num=rc5u]
+Epoch 0:  51%|█████     | 247/485 [00:07<00:07, 32.25it/s, loss=1.89, v_num=rc5u]Epoch 0:  51%|█████     | 247/485 [00:07<00:07, 32.24it/s, loss=1.89, v_num=rc5u]
+Epoch 0:  51%|█████     | 248/485 [00:07<00:07, 32.24it/s, loss=1.89, v_num=rc5u]
+Epoch 0:  51%|█████▏    | 249/485 [00:07<00:07, 32.24it/s, loss=1.88, v_num=rc5u]
+Epoch 0:  52%|█████▏    | 250/485 [00:07<00:07, 32.25it/s, loss=1.88, v_num=rc5u]
+Epoch 0:  52%|█████▏    | 251/485 [00:07<00:07, 32.25it/s, loss=1.88, v_num=rc5u]Epoch 0:  52%|█████▏    | 251/485 [00:07<00:07, 32.25it/s, loss=1.88, v_num=rc5u]
+Epoch 0:  52%|█████▏    | 252/485 [00:07<00:07, 32.26it/s, loss=1.88, v_num=rc5u]
+Epoch 0:  52%|█████▏    | 253/485 [00:07<00:07, 32.27it/s, loss=1.87, v_num=rc5u]
+Epoch 0:  52%|█████▏    | 254/485 [00:07<00:07, 32.28it/s, loss=1.86, v_num=rc5u]
+Epoch 0:  53%|█████▎    | 255/485 [00:07<00:07, 32.28it/s, loss=1.86, v_num=rc5u]Epoch 0:  53%|█████▎    | 255/485 [00:07<00:07, 32.28it/s, loss=1.86, v_num=rc5u]
+Epoch 0:  53%|█████▎    | 256/485 [00:07<00:07, 32.29it/s, loss=1.85, v_num=rc5u]
+Epoch 0:  53%|█████▎    | 257/485 [00:07<00:07, 32.30it/s, loss=1.85, v_num=rc5u]
+Epoch 0:  53%|█████▎    | 258/485 [00:07<00:07, 32.31it/s, loss=1.85, v_num=rc5u]
+Epoch 0:  53%|█████▎    | 259/485 [00:08<00:06, 32.32it/s, loss=1.85, v_num=rc5u]Epoch 0:  53%|█████▎    | 259/485 [00:08<00:06, 32.32it/s, loss=1.84, v_num=rc5u]
+Epoch 0:  54%|█████▎    | 260/485 [00:08<00:06, 32.33it/s, loss=1.83, v_num=rc5u]
+Epoch 0:  54%|█████▍    | 261/485 [00:08<00:06, 32.34it/s, loss=1.83, v_num=rc5u]
+Epoch 0:  54%|█████▍    | 262/485 [00:08<00:06, 32.35it/s, loss=1.82, v_num=rc5u]
+Epoch 0:  54%|█████▍    | 263/485 [00:08<00:06, 32.35it/s, loss=1.82, v_num=rc5u]Epoch 0:  54%|█████▍    | 263/485 [00:08<00:06, 32.35it/s, loss=1.82, v_num=rc5u]
+Epoch 0:  54%|█████▍    | 264/485 [00:08<00:06, 32.36it/s, loss=1.82, v_num=rc5u]
+Epoch 0:  55%|█████▍    | 265/485 [00:08<00:06, 32.37it/s, loss=1.81, v_num=rc5u]
+Epoch 0:  55%|█████▍    | 266/485 [00:08<00:06, 32.36it/s, loss=1.81, v_num=rc5u]
+Epoch 0:  55%|█████▌    | 267/485 [00:08<00:06, 32.36it/s, loss=1.81, v_num=rc5u]Epoch 0:  55%|█████▌    | 267/485 [00:08<00:06, 32.36it/s, loss=1.8, v_num=rc5u] 
+Epoch 0:  55%|█████▌    | 268/485 [00:08<00:06, 32.37it/s, loss=1.8, v_num=rc5u]
+Epoch 0:  55%|█████▌    | 269/485 [00:08<00:06, 32.38it/s, loss=1.8, v_num=rc5u]
+Epoch 0:  56%|█████▌    | 270/485 [00:08<00:06, 32.39it/s, loss=1.79, v_num=rc5u]
+Epoch 0:  56%|█████▌    | 271/485 [00:08<00:06, 32.41it/s, loss=1.79, v_num=rc5u]Epoch 0:  56%|█████▌    | 271/485 [00:08<00:06, 32.40it/s, loss=1.78, v_num=rc5u]
+Epoch 0:  56%|█████▌    | 272/485 [00:08<00:06, 32.41it/s, loss=1.78, v_num=rc5u]
+Epoch 0:  56%|█████▋    | 273/485 [00:08<00:06, 32.41it/s, loss=1.78, v_num=rc5u]
+Epoch 0:  56%|█████▋    | 274/485 [00:08<00:06, 32.43it/s, loss=1.78, v_num=rc5u]
+Epoch 0:  57%|█████▋    | 275/485 [00:08<00:06, 32.44it/s, loss=1.78, v_num=rc5u]Epoch 0:  57%|█████▋    | 275/485 [00:08<00:06, 32.44it/s, loss=1.77, v_num=rc5u]
+Epoch 0:  57%|█████▋    | 276/485 [00:08<00:06, 32.45it/s, loss=1.77, v_num=rc5u]
+Epoch 0:  57%|█████▋    | 277/485 [00:08<00:06, 32.46it/s, loss=1.77, v_num=rc5u]
+Epoch 0:  57%|█████▋    | 278/485 [00:08<00:06, 32.47it/s, loss=1.76, v_num=rc5u]
+Epoch 0:  58%|█████▊    | 279/485 [00:08<00:06, 32.48it/s, loss=1.76, v_num=rc5u]Epoch 0:  58%|█████▊    | 279/485 [00:08<00:06, 32.48it/s, loss=1.76, v_num=rc5u]
+Epoch 0:  58%|█████▊    | 280/485 [00:08<00:06, 32.49it/s, loss=1.76, v_num=rc5u]
+Epoch 0:  58%|█████▊    | 281/485 [00:08<00:06, 32.50it/s, loss=1.75, v_num=rc5u]
+Epoch 0:  58%|█████▊    | 282/485 [00:08<00:06, 32.50it/s, loss=1.75, v_num=rc5u]
+Epoch 0:  58%|█████▊    | 283/485 [00:08<00:06, 32.51it/s, loss=1.75, v_num=rc5u]Epoch 0:  58%|█████▊    | 283/485 [00:08<00:06, 32.51it/s, loss=1.74, v_num=rc5u]
+Epoch 0:  59%|█████▊    | 284/485 [00:08<00:06, 32.51it/s, loss=1.74, v_num=rc5u]
+Epoch 0:  59%|█████▉    | 285/485 [00:08<00:06, 32.52it/s, loss=1.73, v_num=rc5u]
+Epoch 0:  59%|█████▉    | 286/485 [00:08<00:06, 32.53it/s, loss=1.72, v_num=rc5u]
+Epoch 0:  59%|█████▉    | 287/485 [00:08<00:06, 32.54it/s, loss=1.72, v_num=rc5u]Epoch 0:  59%|█████▉    | 287/485 [00:08<00:06, 32.54it/s, loss=1.73, v_num=rc5u]
+Epoch 0:  59%|█████▉    | 288/485 [00:08<00:06, 32.54it/s, loss=1.72, v_num=rc5u]
+Epoch 0:  60%|█████▉    | 289/485 [00:08<00:06, 32.55it/s, loss=1.72, v_num=rc5u]
+Epoch 0:  60%|█████▉    | 290/485 [00:08<00:05, 32.56it/s, loss=1.71, v_num=rc5u]
+Epoch 0:  60%|██████    | 291/485 [00:08<00:05, 32.57it/s, loss=1.71, v_num=rc5u]Epoch 0:  60%|██████    | 291/485 [00:08<00:05, 32.57it/s, loss=1.71, v_num=rc5u]
+Epoch 0:  60%|██████    | 292/485 [00:08<00:05, 32.58it/s, loss=1.71, v_num=rc5u]
+Epoch 0:  60%|██████    | 293/485 [00:08<00:05, 32.59it/s, loss=1.7, v_num=rc5u] 
+Epoch 0:  61%|██████    | 294/485 [00:09<00:05, 32.60it/s, loss=1.7, v_num=rc5u]
+Epoch 0:  61%|██████    | 295/485 [00:09<00:05, 32.61it/s, loss=1.7, v_num=rc5u]Epoch 0:  61%|██████    | 295/485 [00:09<00:05, 32.61it/s, loss=1.69, v_num=rc5u]
+Epoch 0:  61%|██████    | 296/485 [00:09<00:05, 32.62it/s, loss=1.68, v_num=rc5u]
+Epoch 0:  61%|██████    | 297/485 [00:09<00:05, 32.63it/s, loss=1.68, v_num=rc5u]
+Epoch 0:  61%|██████▏   | 298/485 [00:09<00:05, 32.64it/s, loss=1.67, v_num=rc5u]
+Epoch 0:  62%|██████▏   | 299/485 [00:09<00:05, 32.66it/s, loss=1.67, v_num=rc5u]Epoch 0:  62%|██████▏   | 299/485 [00:09<00:05, 32.65it/s, loss=1.66, v_num=rc5u]
+Epoch 0:  62%|██████▏   | 300/485 [00:09<00:05, 32.66it/s, loss=1.66, v_num=rc5u]
+Epoch 0:  62%|██████▏   | 301/485 [00:09<00:05, 32.67it/s, loss=1.66, v_num=rc5u]
+Epoch 0:  62%|██████▏   | 302/485 [00:09<00:05, 32.68it/s, loss=1.66, v_num=rc5u]
+Epoch 0:  62%|██████▏   | 303/485 [00:09<00:05, 32.67it/s, loss=1.66, v_num=rc5u]Epoch 0:  62%|██████▏   | 303/485 [00:09<00:05, 32.67it/s, loss=1.66, v_num=rc5u]
+Epoch 0:  63%|██████▎   | 304/485 [00:09<00:05, 32.67it/s, loss=1.65, v_num=rc5u]
+Epoch 0:  63%|██████▎   | 305/485 [00:09<00:05, 32.66it/s, loss=1.64, v_num=rc5u]
+Epoch 0:  63%|██████▎   | 306/485 [00:09<00:05, 32.66it/s, loss=1.64, v_num=rc5u]
+Epoch 0:  63%|██████▎   | 307/485 [00:09<00:05, 32.67it/s, loss=1.64, v_num=rc5u]Epoch 0:  63%|██████▎   | 307/485 [00:09<00:05, 32.66it/s, loss=1.63, v_num=rc5u]
+Epoch 0:  64%|██████▎   | 308/485 [00:09<00:05, 32.66it/s, loss=1.62, v_num=rc5u]
+Epoch 0:  64%|██████▎   | 309/485 [00:09<00:05, 32.67it/s, loss=1.62, v_num=rc5u]
+Epoch 0:  64%|██████▍   | 310/485 [00:09<00:05, 32.67it/s, loss=1.62, v_num=rc5u]
+Epoch 0:  64%|██████▍   | 311/485 [00:09<00:05, 32.67it/s, loss=1.62, v_num=rc5u]Epoch 0:  64%|██████▍   | 311/485 [00:09<00:05, 32.67it/s, loss=1.61, v_num=rc5u]
+Epoch 0:  64%|██████▍   | 312/485 [00:09<00:05, 32.66it/s, loss=1.6, v_num=rc5u] 
+Epoch 0:  65%|██████▍   | 313/485 [00:09<00:05, 32.66it/s, loss=1.6, v_num=rc5u]
+Epoch 0:  65%|██████▍   | 314/485 [00:09<00:05, 32.63it/s, loss=1.6, v_num=rc5u]
+Epoch 0:  65%|██████▍   | 315/485 [00:09<00:05, 32.61it/s, loss=1.6, v_num=rc5u]Epoch 0:  65%|██████▍   | 315/485 [00:09<00:05, 32.61it/s, loss=1.59, v_num=rc5u]
+Epoch 0:  65%|██████▌   | 316/485 [00:09<00:05, 32.62it/s, loss=1.59, v_num=rc5u]
+Epoch 0:  65%|██████▌   | 317/485 [00:09<00:05, 32.63it/s, loss=1.58, v_num=rc5u]
+Epoch 0:  66%|██████▌   | 318/485 [00:09<00:05, 32.64it/s, loss=1.58, v_num=rc5u]
+Epoch 0:  66%|██████▌   | 319/485 [00:09<00:05, 32.65it/s, loss=1.58, v_num=rc5u]Epoch 0:  66%|██████▌   | 319/485 [00:09<00:05, 32.65it/s, loss=1.57, v_num=rc5u]
+Epoch 0:  66%|██████▌   | 320/485 [00:09<00:05, 32.65it/s, loss=1.57, v_num=rc5u]
+Epoch 0:  66%|██████▌   | 321/485 [00:09<00:05, 32.66it/s, loss=1.56, v_num=rc5u]
+Epoch 0:  66%|██████▋   | 322/485 [00:09<00:04, 32.67it/s, loss=1.55, v_num=rc5u]
+Epoch 0:  67%|██████▋   | 323/485 [00:09<00:04, 32.68it/s, loss=1.55, v_num=rc5u]Epoch 0:  67%|██████▋   | 323/485 [00:09<00:04, 32.68it/s, loss=1.55, v_num=rc5u]
+Epoch 0:  67%|██████▋   | 324/485 [00:09<00:04, 32.68it/s, loss=1.54, v_num=rc5u]
+Epoch 0:  67%|██████▋   | 325/485 [00:09<00:04, 32.68it/s, loss=1.54, v_num=rc5u]
+Epoch 0:  67%|██████▋   | 326/485 [00:09<00:04, 32.68it/s, loss=1.54, v_num=rc5u]
+Epoch 0:  67%|██████▋   | 327/485 [00:10<00:04, 32.66it/s, loss=1.54, v_num=rc5u]Epoch 0:  67%|██████▋   | 327/485 [00:10<00:04, 32.66it/s, loss=1.53, v_num=rc5u]
+Epoch 0:  68%|██████▊   | 328/485 [00:10<00:04, 32.64it/s, loss=1.53, v_num=rc5u]
+Epoch 0:  68%|██████▊   | 329/485 [00:10<00:04, 32.62it/s, loss=1.52, v_num=rc5u]
+Epoch 0:  68%|██████▊   | 330/485 [00:10<00:04, 32.62it/s, loss=1.52, v_num=rc5u]
+Epoch 0:  68%|██████▊   | 331/485 [00:10<00:04, 32.62it/s, loss=1.52, v_num=rc5u]Epoch 0:  68%|██████▊   | 331/485 [00:10<00:04, 32.62it/s, loss=1.52, v_num=rc5u]
+Epoch 0:  68%|██████▊   | 332/485 [00:10<00:04, 32.61it/s, loss=1.51, v_num=rc5u]
+Epoch 0:  69%|██████▊   | 333/485 [00:10<00:04, 32.61it/s, loss=1.51, v_num=rc5u]
+Epoch 0:  69%|██████▉   | 334/485 [00:10<00:04, 32.61it/s, loss=1.51, v_num=rc5u]
+Epoch 0:  69%|██████▉   | 335/485 [00:10<00:04, 32.61it/s, loss=1.51, v_num=rc5u]Epoch 0:  69%|██████▉   | 335/485 [00:10<00:04, 32.61it/s, loss=1.51, v_num=rc5u]
+Epoch 0:  69%|██████▉   | 336/485 [00:10<00:04, 32.61it/s, loss=1.51, v_num=rc5u]
+Epoch 0:  69%|██████▉   | 337/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u] 
+Epoch 0:  70%|██████▉   | 338/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u]
+Epoch 0:  70%|██████▉   | 339/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u]Epoch 0:  70%|██████▉   | 339/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u]
+Epoch 0:  70%|███████   | 340/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u]
+Epoch 0:  70%|███████   | 341/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u]
+Epoch 0:  71%|███████   | 342/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u]
+Epoch 0:  71%|███████   | 343/485 [00:10<00:04, 32.61it/s, loss=1.5, v_num=rc5u]Epoch 0:  71%|███████   | 343/485 [00:10<00:04, 32.61it/s, loss=1.49, v_num=rc5u]
+Epoch 0:  71%|███████   | 344/485 [00:10<00:04, 32.60it/s, loss=1.48, v_num=rc5u]
+Epoch 0:  71%|███████   | 345/485 [00:10<00:04, 32.61it/s, loss=1.48, v_num=rc5u]
+Epoch 0:  71%|███████▏  | 346/485 [00:10<00:04, 32.61it/s, loss=1.48, v_num=rc5u]
+Epoch 0:  72%|███████▏  | 347/485 [00:10<00:04, 32.61it/s, loss=1.48, v_num=rc5u]Epoch 0:  72%|███████▏  | 347/485 [00:10<00:04, 32.61it/s, loss=1.47, v_num=rc5u]
+Epoch 0:  72%|███████▏  | 348/485 [00:10<00:04, 32.61it/s, loss=1.46, v_num=rc5u]
+Epoch 0:  72%|███████▏  | 349/485 [00:10<00:04, 32.61it/s, loss=1.46, v_num=rc5u]
+Epoch 0:  72%|███████▏  | 350/485 [00:10<00:04, 32.62it/s, loss=1.46, v_num=rc5u]
+Epoch 0:  72%|███████▏  | 351/485 [00:10<00:04, 32.62it/s, loss=1.46, v_num=rc5u]Epoch 0:  72%|███████▏  | 351/485 [00:10<00:04, 32.62it/s, loss=1.45, v_num=rc5u]
+Epoch 0:  73%|███████▎  | 352/485 [00:10<00:04, 32.57it/s, loss=1.46, v_num=rc5u]
+Epoch 0:  73%|███████▎  | 353/485 [00:10<00:04, 32.52it/s, loss=1.45, v_num=rc5u]
+Epoch 0:  73%|███████▎  | 354/485 [00:10<00:04, 32.51it/s, loss=1.45, v_num=rc5u]
+Epoch 0:  73%|███████▎  | 355/485 [00:10<00:03, 32.52it/s, loss=1.45, v_num=rc5u]Epoch 0:  73%|███████▎  | 355/485 [00:10<00:03, 32.51it/s, loss=1.45, v_num=rc5u]
+Epoch 0:  73%|███████▎  | 356/485 [00:10<00:03, 32.51it/s, loss=1.44, v_num=rc5u]
+Epoch 0:  74%|███████▎  | 357/485 [00:10<00:03, 32.51it/s, loss=1.43, v_num=rc5u]
+Epoch 0:  74%|███████▍  | 358/485 [00:11<00:03, 32.51it/s, loss=1.43, v_num=rc5u]
+Epoch 0:  74%|███████▍  | 359/485 [00:11<00:03, 32.51it/s, loss=1.43, v_num=rc5u]Epoch 0:  74%|███████▍  | 359/485 [00:11<00:03, 32.51it/s, loss=1.42, v_num=rc5u]
+Epoch 0:  74%|███████▍  | 360/485 [00:11<00:03, 32.51it/s, loss=1.41, v_num=rc5u]
+Epoch 0:  74%|███████▍  | 361/485 [00:11<00:03, 32.50it/s, loss=1.4, v_num=rc5u] 
+Epoch 0:  75%|███████▍  | 362/485 [00:11<00:03, 32.51it/s, loss=1.4, v_num=rc5u]
+Epoch 0:  75%|███████▍  | 363/485 [00:11<00:03, 32.51it/s, loss=1.4, v_num=rc5u]Epoch 0:  75%|███████▍  | 363/485 [00:11<00:03, 32.51it/s, loss=1.41, v_num=rc5u]
+Epoch 0:  75%|███████▌  | 364/485 [00:11<00:03, 32.51it/s, loss=1.41, v_num=rc5u]
+Epoch 0:  75%|███████▌  | 365/485 [00:11<00:03, 32.51it/s, loss=1.41, v_num=rc5u]
+Epoch 0:  75%|███████▌  | 366/485 [00:11<00:03, 32.49it/s, loss=1.41, v_num=rc5u]
+Epoch 0:  76%|███████▌  | 367/485 [00:11<00:03, 32.49it/s, loss=1.41, v_num=rc5u]Epoch 0:  76%|███████▌  | 367/485 [00:11<00:03, 32.49it/s, loss=1.41, v_num=rc5u]
+Epoch 0:  76%|███████▌  | 368/485 [00:11<00:03, 32.50it/s, loss=1.4, v_num=rc5u] 
+Epoch 0:  76%|███████▌  | 369/485 [00:11<00:03, 32.50it/s, loss=1.4, v_num=rc5u]
+Epoch 0:  76%|███████▋  | 370/485 [00:11<00:03, 32.33it/s, loss=1.39, v_num=rc5u]
+Epoch 0:  76%|███████▋  | 371/485 [00:11<00:03, 32.34it/s, loss=1.39, v_num=rc5u]Epoch 0:  76%|███████▋  | 371/485 [00:11<00:03, 32.34it/s, loss=1.39, v_num=rc5u]
+Epoch 0:  77%|███████▋  | 372/485 [00:11<00:03, 32.34it/s, loss=1.38, v_num=rc5u]
+Epoch 0:  77%|███████▋  | 373/485 [00:11<00:03, 32.35it/s, loss=1.37, v_num=rc5u]
+Epoch 0:  77%|███████▋  | 374/485 [00:11<00:03, 32.35it/s, loss=1.36, v_num=rc5u]
+Epoch 0:  77%|███████▋  | 375/485 [00:11<00:03, 32.36it/s, loss=1.36, v_num=rc5u]Epoch 0:  77%|███████▋  | 375/485 [00:11<00:03, 32.36it/s, loss=1.36, v_num=rc5u]
+Epoch 0:  78%|███████▊  | 376/485 [00:11<00:03, 32.37it/s, loss=1.35, v_num=rc5u]
+Epoch 0:  78%|███████▊  | 377/485 [00:11<00:03, 32.37it/s, loss=1.35, v_num=rc5u]
+Epoch 0:  78%|███████▊  | 378/485 [00:11<00:03, 32.38it/s, loss=1.35, v_num=rc5u]
+Epoch 0:  78%|███████▊  | 379/485 [00:11<00:03, 32.39it/s, loss=1.35, v_num=rc5u]Epoch 0:  78%|███████▊  | 379/485 [00:11<00:03, 32.39it/s, loss=1.35, v_num=rc5u]
+Epoch 0:  78%|███████▊  | 380/485 [00:11<00:03, 32.39it/s, loss=1.36, v_num=rc5u]
+Epoch 0:  79%|███████▊  | 381/485 [00:11<00:03, 32.38it/s, loss=1.35, v_num=rc5u]
+Epoch 0:  79%|███████▉  | 382/485 [00:11<00:03, 32.38it/s, loss=1.35, v_num=rc5u]
+Epoch 0:  79%|███████▉  | 383/485 [00:11<00:03, 32.38it/s, loss=1.35, v_num=rc5u]Epoch 0:  79%|███████▉  | 383/485 [00:11<00:03, 32.38it/s, loss=1.34, v_num=rc5u]
+Epoch 0:  79%|███████▉  | 384/485 [00:11<00:03, 32.37it/s, loss=1.33, v_num=rc5u]
+Epoch 0:  79%|███████▉  | 385/485 [00:11<00:03, 32.37it/s, loss=1.32, v_num=rc5u]
+Epoch 0:  80%|███████▉  | 386/485 [00:11<00:03, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  80%|███████▉  | 387/485 [00:11<00:03, 32.37it/s, loss=1.31, v_num=rc5u]Epoch 0:  80%|███████▉  | 387/485 [00:11<00:03, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  80%|████████  | 388/485 [00:11<00:02, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  80%|████████  | 389/485 [00:12<00:02, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  80%|████████  | 390/485 [00:12<00:02, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  81%|████████  | 391/485 [00:12<00:02, 32.37it/s, loss=1.31, v_num=rc5u]Epoch 0:  81%|████████  | 391/485 [00:12<00:02, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  81%|████████  | 392/485 [00:12<00:02, 32.37it/s, loss=1.32, v_num=rc5u]
+Epoch 0:  81%|████████  | 393/485 [00:12<00:02, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  81%|████████  | 394/485 [00:12<00:02, 32.37it/s, loss=1.31, v_num=rc5u]
+Epoch 0:  81%|████████▏ | 395/485 [00:12<00:02, 32.37it/s, loss=1.31, v_num=rc5u]Epoch 0:  81%|████████▏ | 395/485 [00:12<00:02, 32.37it/s, loss=1.3, v_num=rc5u] 
+Epoch 0:  82%|████████▏ | 396/485 [00:12<00:02, 32.37it/s, loss=1.3, v_num=rc5u]
+Epoch 0:  82%|████████▏ | 397/485 [00:12<00:02, 32.36it/s, loss=1.29, v_num=rc5u]
+Epoch 0:  82%|████████▏ | 398/485 [00:12<00:02, 32.34it/s, loss=1.29, v_num=rc5u]
+Epoch 0:  82%|████████▏ | 399/485 [00:12<00:02, 32.34it/s, loss=1.29, v_num=rc5u]Epoch 0:  82%|████████▏ | 399/485 [00:12<00:02, 32.34it/s, loss=1.28, v_num=rc5u]
+Epoch 0:  82%|████████▏ | 400/485 [00:12<00:02, 32.34it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  83%|████████▎ | 401/485 [00:12<00:02, 32.35it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  83%|████████▎ | 402/485 [00:12<00:02, 32.35it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  83%|████████▎ | 403/485 [00:12<00:02, 32.33it/s, loss=1.27, v_num=rc5u]Epoch 0:  83%|████████▎ | 403/485 [00:12<00:02, 32.33it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  83%|████████▎ | 404/485 [00:12<00:02, 32.33it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  84%|████████▎ | 405/485 [00:12<00:02, 32.34it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  84%|████████▎ | 406/485 [00:12<00:02, 32.35it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  84%|████████▍ | 407/485 [00:12<00:02, 32.35it/s, loss=1.27, v_num=rc5u]Epoch 0:  84%|████████▍ | 407/485 [00:12<00:02, 32.35it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  84%|████████▍ | 408/485 [00:12<00:02, 32.36it/s, loss=1.27, v_num=rc5u]
+Epoch 0:  84%|████████▍ | 409/485 [00:12<00:02, 32.37it/s, loss=1.26, v_num=rc5u]
+Epoch 0:  85%|████████▍ | 410/485 [00:12<00:02, 32.38it/s, loss=1.25, v_num=rc5u]
+Epoch 0:  85%|████████▍ | 411/485 [00:12<00:02, 32.39it/s, loss=1.25, v_num=rc5u]Epoch 0:  85%|████████▍ | 411/485 [00:12<00:02, 32.39it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  85%|████████▍ | 412/485 [00:12<00:02, 32.38it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  85%|████████▌ | 413/485 [00:12<00:02, 32.39it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  85%|████████▌ | 414/485 [00:12<00:02, 32.40it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  86%|████████▌ | 415/485 [00:12<00:02, 32.40it/s, loss=1.24, v_num=rc5u]Epoch 0:  86%|████████▌ | 415/485 [00:12<00:02, 32.40it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  86%|████████▌ | 416/485 [00:12<00:02, 32.41it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  86%|████████▌ | 417/485 [00:12<00:02, 32.41it/s, loss=1.25, v_num=rc5u]
+Epoch 0:  86%|████████▌ | 418/485 [00:12<00:02, 32.42it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  86%|████████▋ | 419/485 [00:12<00:02, 32.43it/s, loss=1.24, v_num=rc5u]Epoch 0:  86%|████████▋ | 419/485 [00:12<00:02, 32.43it/s, loss=1.24, v_num=rc5u]
+Epoch 0:  87%|████████▋ | 420/485 [00:12<00:02, 32.43it/s, loss=1.23, v_num=rc5u]
+Epoch 0:  87%|████████▋ | 421/485 [00:12<00:01, 32.43it/s, loss=1.23, v_num=rc5u]
+Epoch 0:  87%|████████▋ | 422/485 [00:13<00:01, 32.43it/s, loss=1.23, v_num=rc5u]
+Epoch 0:  87%|████████▋ | 423/485 [00:13<00:01, 32.43it/s, loss=1.23, v_num=rc5u]Epoch 0:  87%|████████▋ | 423/485 [00:13<00:01, 32.43it/s, loss=1.22, v_num=rc5u]
+Epoch 0:  87%|████████▋ | 424/485 [00:13<00:01, 32.43it/s, loss=1.22, v_num=rc5u]
+Epoch 0:  88%|████████▊ | 425/485 [00:13<00:01, 32.44it/s, loss=1.21, v_num=rc5u]
+Epoch 0:  88%|████████▊ | 426/485 [00:13<00:01, 32.44it/s, loss=1.2, v_num=rc5u] 
+Epoch 0:  88%|████████▊ | 427/485 [00:13<00:01, 32.44it/s, loss=1.2, v_num=rc5u]Epoch 0:  88%|████████▊ | 427/485 [00:13<00:01, 32.44it/s, loss=1.2, v_num=rc5u]
+Epoch 0:  88%|████████▊ | 428/485 [00:13<00:01, 32.44it/s, loss=1.2, v_num=rc5u]
+Epoch 0:  88%|████████▊ | 429/485 [00:13<00:01, 32.44it/s, loss=1.2, v_num=rc5u]
+Epoch 0:  89%|████████▊ | 430/485 [00:13<00:01, 32.44it/s, loss=1.19, v_num=rc5u]
+Epoch 0:  89%|████████▉ | 431/485 [00:13<00:01, 32.44it/s, loss=1.19, v_num=rc5u]Epoch 0:  89%|████████▉ | 431/485 [00:13<00:01, 32.44it/s, loss=1.19, v_num=rc5u]
+Epoch 0:  89%|████████▉ | 432/485 [00:13<00:01, 32.44it/s, loss=1.18, v_num=rc5u]
+Epoch 0:  89%|████████▉ | 433/485 [00:13<00:01, 32.44it/s, loss=1.18, v_num=rc5u]
+Epoch 0:  89%|████████▉ | 434/485 [00:13<00:01, 32.44it/s, loss=1.17, v_num=rc5u]
+Epoch 0:  90%|████████▉ | 435/485 [00:13<00:01, 32.44it/s, loss=1.17, v_num=rc5u]Epoch 0:  90%|████████▉ | 435/485 [00:13<00:01, 32.44it/s, loss=1.18, v_num=rc5u]
+Epoch 0:  90%|████████▉ | 436/485 [00:13<00:01, 32.43it/s, loss=1.17, v_num=rc5u]
+Epoch 0:  90%|█████████ | 437/485 [00:13<00:01, 32.43it/s, loss=1.16, v_num=rc5u]
+Epoch 0:  90%|█████████ | 438/485 [00:13<00:01, 32.43it/s, loss=1.17, v_num=rc5u]
+Epoch 0:  91%|█████████ | 439/485 [00:13<00:01, 32.43it/s, loss=1.17, v_num=rc5u]Epoch 0:  91%|█████████ | 439/485 [00:13<00:01, 32.43it/s, loss=1.16, v_num=rc5u]
+Epoch 0:  91%|█████████ | 440/485 [00:13<00:01, 32.41it/s, loss=1.16, v_num=rc5u]
+Epoch 0:  91%|█████████ | 441/485 [00:13<00:01, 32.41it/s, loss=1.15, v_num=rc5u]
+Epoch 0:  91%|█████████ | 442/485 [00:13<00:01, 32.42it/s, loss=1.14, v_num=rc5u]
+Epoch 0:  91%|█████████▏| 443/485 [00:13<00:01, 32.44it/s, loss=1.14, v_num=rc5u]Epoch 0:  91%|█████████▏| 443/485 [00:13<00:01, 32.44it/s, loss=1.14, v_num=rc5u]
+Epoch 0:  92%|█████████▏| 444/485 [00:13<00:01, 32.49it/s, loss=1.13, v_num=rc5u]
+Validating: 0it [00:00, ?it/s][A
+Validating:   0%|          | 0/41 [00:00<?, ?it/s][A
+
+
+Epoch 0:  92%|█████████▏| 448/485 [00:13<00:01, 32.52it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  12%|█▏        | 5/41 [00:00<00:00, 40.91it/s][A
+
+
+Epoch 0:  93%|█████████▎| 453/485 [00:13<00:00, 32.59it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  24%|██▍       | 10/41 [00:00<00:00, 40.93it/s][A
+
+
+Epoch 0:  94%|█████████▍| 458/485 [00:14<00:00, 32.66it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  37%|███▋      | 15/41 [00:00<00:00, 40.89it/s][A
+
+
+Epoch 0:  95%|█████████▌| 463/485 [00:14<00:00, 32.73it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  49%|████▉     | 20/41 [00:00<00:00, 40.72it/s][A
+
+
+Epoch 0:  96%|█████████▋| 468/485 [00:14<00:00, 32.80it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  61%|██████    | 25/41 [00:00<00:00, 40.90it/s][A
+
+
+Epoch 0:  98%|█████████▊| 473/485 [00:14<00:00, 32.87it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  73%|███████▎  | 30/41 [00:00<00:00, 40.96it/s][A
+
+
+Epoch 0:  99%|█████████▊| 478/485 [00:14<00:00, 32.94it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  85%|████████▌ | 35/41 [00:00<00:00, 40.92it/s][A
+
+
+Epoch 0: 100%|█████████▉| 483/485 [00:14<00:00, 33.01it/s, loss=1.13, v_num=rc5u]
+
+
+Validating:  98%|█████████▊| 40/41 [00:00<00:00, 41.06it/s][A
+Epoch 0: 100%|██████████| 485/485 [00:14<00:00, 33.01it/s, loss=1.13, v_num=rc5u]
+                                                           [AEpoch 0, global step 443: train_loss reached 1.00064 (best 1.00064), saving model to "/home/naddeok5/FIM/models/pretrained/Lit_LeNet_MNIST_epoch=00-val_loss=1.12.ckpt" as top 1
+Epoch 0: 100%|██████████| 485/485 [00:14<00:00, 32.99it/s, loss=1.13, v_num=rc5u]
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, test dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Testing: 0it [00:00, ?it/s]
+
+
+
+
+Testing:   6%|▌         | 5/81 [00:00<00:01, 40.85it/s]
+
+
+
+
+Testing:  12%|█▏        | 10/81 [00:00<00:01, 41.59it/s]
+
+
+
+
+Testing:  19%|█▊        | 15/81 [00:00<00:01, 41.82it/s]
+
+
+
+
+Testing:  25%|██▍       | 20/81 [00:00<00:01, 42.10it/s]
+
+
+
+
+Testing:  31%|███       | 25/81 [00:00<00:01, 42.06it/s]
+
+
+
+
+Testing:  37%|███▋      | 30/81 [00:00<00:01, 41.93it/s]
+
+
+
+
+Testing:  43%|████▎     | 35/81 [00:00<00:01, 42.14it/s]
+
+
+
+
+Testing:  49%|████▉     | 40/81 [00:00<00:00, 42.07it/s]
+
+
+
+
+Testing:  56%|█████▌    | 45/81 [00:01<00:00, 42.18it/s]
+
+
+
+
+Testing:  62%|██████▏   | 50/81 [00:01<00:00, 42.37it/s]
+
+
+
+
+Testing:  68%|██████▊   | 55/81 [00:01<00:00, 42.34it/s]
+
+
+
+
+Testing:  74%|███████▍  | 60/81 [00:01<00:00, 42.18it/s]
+
+
+
+
+Testing:  80%|████████  | 65/81 [00:01<00:00, 42.27it/s]
+
+
+
+
+Testing:  86%|████████▋ | 70/81 [00:01<00:00, 42.28it/s]
+
+
+
+
+Testing:  93%|█████████▎| 75/81 [00:01<00:00, 42.29it/s]
+
+
+
+
+Testing:  99%|█████████▉| 80/81 [00:01<00:00, 42.22it/s]
+Testing: 100%|██████████| 81/81 [00:01<00:00, 42.21it/s]
+--------------------------------------------------------------------------------
+DATALOADER:0 TEST RESULTS
+{'test_acc': 0.7562999725341797, 'test_loss': 1.107654333114624}
+--------------------------------------------------------------------------------

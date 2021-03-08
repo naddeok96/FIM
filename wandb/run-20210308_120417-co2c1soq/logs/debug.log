@@ -1,0 +1,15 @@
+2021-03-08 12:04:17,233 INFO    Thread-6  :1073865 [wandb_setup.py:_flush():69] setting env: {'project': 'LeNet MNIST Lightning', 'entity': 'naddeok', 'root_dir': '/home/naddeok5/FIM', 'sweep_id': 'rswfohfi', 'run_id': 'co2c1soq', 'sweep_param_path': '/home/naddeok5/FIM/wandb/sweep-rswfohfi/config-co2c1soq.yaml'}
+2021-03-08 12:04:17,233 INFO    Thread-6  :1073865 [wandb_setup.py:_flush():69] setting login settings: {}
+2021-03-08 12:04:17,234 INFO    Thread-6  :1073865 [wandb_init.py:_log_setup():334] Logging user logs to /home/naddeok5/FIM/wandb/run-20210308_120417-co2c1soq/logs/debug.log
+2021-03-08 12:04:17,234 INFO    Thread-6  :1073865 [wandb_init.py:_log_setup():335] Logging internal logs to /home/naddeok5/FIM/wandb/run-20210308_120417-co2c1soq/logs/debug-internal.log
+2021-03-08 12:04:17,234 INFO    Thread-6  :1073865 [wandb_init.py:init():367] calling init triggers
+2021-03-08 12:04:17,234 INFO    Thread-6  :1073865 [wandb_init.py:init():372] wandb.init called with sweep_config: {'batch_size': 512, 'learning_rate': 0.001, 'momentum': 0.9, 'n_epochs': 10, 'num_classes': 10, 'num_kernels_layer1': 6, 'num_kernels_layer2': 16, 'num_kernels_layer3': 120, 'num_nodes_fc_layer': 84, 'weight_decay': 0.0001}
+config: {}
+2021-03-08 12:04:17,234 INFO    Thread-6  :1073865 [wandb_init.py:init():416] starting backend
+2021-03-08 12:04:17,234 INFO    Thread-6  :1073865 [backend.py:_multiprocessing_setup():69] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2021-03-08 12:04:17,237 INFO    Thread-6  :1073865 [backend.py:ensure_launched():123] starting backend process...
+2021-03-08 12:04:17,247 INFO    Thread-6  :1073865 [backend.py:ensure_launched():127] started backend process with pid: 1074269
+2021-03-08 12:04:17,260 INFO    Thread-6  :1073865 [wandb_init.py:init():421] backend started and connected
+2021-03-08 12:04:17,261 INFO    Thread-6  :1073865 [wandb_run.py:_config_callback():733] config_cb None None {'batch_size': 512, 'learning_rate': 0.001, 'momentum': 0.9, 'n_epochs': 10, 'num_classes': 10, 'num_kernels_layer1': 6, 'num_kernels_layer2': 16, 'num_kernels_layer3': 120, 'num_nodes_fc_layer': 84, 'weight_decay': 0.0001}
+2021-03-08 12:04:17,262 INFO    Thread-6  :1073865 [wandb_init.py:init():461] updated telemetry
+2021-03-08 12:04:17,262 INFO    Thread-6  :1073865 [wandb_init.py:init():480] communicating current version

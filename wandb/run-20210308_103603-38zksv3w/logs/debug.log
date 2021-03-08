@@ -1,0 +1,46 @@
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [wandb_setup.py:_flush():69] setting env: {}
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [wandb_setup.py:_flush():69] setting login settings: {}
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [wandb_init.py:_log_setup():334] Logging user logs to /home/naddeok5/FIM/wandb/run-20210308_103603-38zksv3w/logs/debug.log
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [wandb_init.py:_log_setup():335] Logging internal logs to /home/naddeok5/FIM/wandb/run-20210308_103603-38zksv3w/logs/debug-internal.log
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [wandb_init.py:init():367] calling init triggers
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [wandb_init.py:init():372] wandb.init called with sweep_config: {}
+config: {}
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [wandb_init.py:init():416] starting backend
+2021-03-08 10:36:03,931 INFO    MainThread:1035127 [backend.py:_multiprocessing_setup():69] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2021-03-08 10:36:03,936 INFO    MainThread:1035127 [backend.py:ensure_launched():123] starting backend process...
+2021-03-08 10:36:03,943 ERROR   MainThread:1035127 [wandb_init.py:init():769] error
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 743, in init
+    run = wi.init()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 419, in init
+    backend.ensure_launched()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/backend/backend.py", line 125, in ensure_launched
+    self.wandb_process.start()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.8/multiprocessing/context.py", line 284, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 42, in _launch
+    prep_data = spawn.get_preparation_data(process_obj._name)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 154, in get_preparation_data
+    _check_not_importing_main()
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 134, in _check_not_importing_main
+    raise RuntimeError('''
+RuntimeError: 
+        An attempt has been made to start a new process before the
+        current process has finished its bootstrapping phase.
+
+        This probably means that you are not using fork to start your
+        child processes and you have forgotten to use the proper idiom
+        in the main module:
+
+            if __name__ == '__main__':
+                freeze_support()
+                ...
+
+        The "freeze_support()" line can be omitted if the program
+        is not going to be frozen to produce an executable.

@@ -1,0 +1,7 @@
+initializing ddp: GLOBAL_RANK: 1, MEMBER: 2/2
+wandb: Ctrl + C detected. Stopping sweep.
+Exception ignored in: <module 'threading' from '/usr/lib/python3.8/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+KeyboardInterrupt: 

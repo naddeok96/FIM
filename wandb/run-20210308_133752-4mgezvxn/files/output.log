@@ -1,0 +1,20 @@
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Checkpoint directory /home/naddeok5/FIM/models/pretrained/ exists and is not empty.
+  warnings.warn(*args, **kwargs)
+GPU available: True, used: True
+TPU available: None, using: 0 TPU cores
+wandb: Agent Starting Run: r6urqw2o with config:
+wandb: 	batch_size: 512
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.9
+wandb: 	n_epochs: 50
+wandb: 	num_classes: 10
+wandb: 	num_kernels_layer1: 6
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 120
+wandb: 	num_nodes_fc_layer: 84
+wandb: 	weight_decay: 0.0001
+Run r6urqw2o errored: AttributeError("'function' object has no attribute 'batch_size'")
+wandb: ERROR Run r6urqw2o errored: AttributeError("'function' object has no attribute 'batch_size'")
+initializing ddp: GLOBAL_RANK: 0, MEMBER: 1/2
+Create sweep with ID: r4axupr8
+Sweep URL: https://wandb.ai/naddeok/LeNet%20MNIST%20Lightning/sweeps/r4axupr8

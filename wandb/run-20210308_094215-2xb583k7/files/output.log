@@ -1,0 +1,64 @@
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | criterion | CrossEntropyLoss | 0     
+1 | accuracy  | Accuracy         | 0     
+2 | conv1     | Conv2d           | 156   
+3 | pool1     | MaxPool2d        | 0     
+4 | conv2     | Conv2d           | 2.4 K 
+5 | pool2     | MaxPool2d        | 0     
+6 | conv3     | Conv2d           | 48.1 K
+7 | fc1       | Linear           | 10.2 K
+8 | fc2       | Linear           | 850   
+-----------------------------------------------
+61.7 K    Trainable params
+0         Non-trainable params
+61.7 K    Total params
+0.247     Total estimated model params size (MB)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Your val_dataloader has `shuffle=True`, it is best practice to turn this off for validation and test dataloaders.
+  warnings.warn(*args, **kwargs)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Validation sanity check: 0it [00:00, ?it/s]Validation sanity check:   0%|          | 0/2 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "mnist_lighting_trainer.py", line 32, in <module>
+    trainer.fit(model)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 513, in fit
+    self.dispatch()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 553, in dispatch
+    self.accelerator.start_training(self)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/accelerators/accelerator.py", line 74, in start_training
+    self.training_type_plugin.start_training(trainer)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/plugins/training_type/training_type_plugin.py", line 111, in start_training
+    self._results = trainer.run_train()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 614, in run_train
+    self.run_sanity_check(self.lightning_module)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 863, in run_sanity_check
+    _, eval_results = self.run_evaluation(max_batches=self.num_sanity_val_batches)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 732, in run_evaluation
+    output = self.evaluation_loop.evaluation_step(batch, batch_idx, dataloader_idx)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/evaluation_loop.py", line 164, in evaluation_step
+    output = self.trainer.accelerator.validation_step(args)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/accelerators/accelerator.py", line 178, in validation_step
+    return self.training_type_plugin.validation_step(*args)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/plugins/training_type/training_type_plugin.py", line 128, in validation_step
+    return self.lightning_module.validation_step(*args, **kwargs)
+  File "/home/naddeok5/FIM/models/classes/lightning_lenet.py", line 224, in validation_step
+    self.log('val_acc', self.accuracy(F.log_softmax(outputs, dim=1), labels))
+  File "/usr/lib/python3/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/metrics/metric.py", line 152, in forward
+    self.update(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/metrics/metric.py", line 199, in wrapped_func
+    return update(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/metrics/classification/accuracy.py", line 138, in update
+    correct, total = _accuracy_update(
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/metrics/functional/accuracy.py", line 25, in _accuracy_update
+    preds, target, mode = _input_format_classification(preds, target, threshold=threshold, top_k=top_k)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/metrics/classification/helpers.py", line 433, in _input_format_classification
+    case = _check_classification_inputs(
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/metrics/classification/helpers.py", line 296, in _check_classification_inputs
+    _basic_input_validation(preds, target, threshold, is_multiclass)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/metrics/classification/helpers.py", line 74, in _basic_input_validation
+    raise ValueError("The `preds` should be probabilities, but values were detected outside of [0,1] range.")
+ValueError: The `preds` should be probabilities, but values were detected outside of [0,1] range.

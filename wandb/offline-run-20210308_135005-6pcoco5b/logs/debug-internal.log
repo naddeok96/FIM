@@ -1,0 +1,18 @@
+2021-03-08 13:50:06,653 INFO    MainThread:1165042 [internal.py:wandb_internal():88] W&B internal server running at pid: 1165042, started at: 2021-03-08 13:50:06.652984
+2021-03-08 13:50:06,656 DEBUG   HandlerThread:1165042 [handler.py:handle_request():101] handle_request: run_start
+2021-03-08 13:50:06,656 INFO    WriterThread:1165042 [datastore.py:open_for_write():77] open: /home/naddeok5/FIM/wandb/offline-run-20210308_135005-6pcoco5b/run-6pcoco5b.wandb
+2021-03-08 13:50:08,018 DEBUG   HandlerThread:1165042 [meta.py:__init__():34] meta init
+2021-03-08 13:50:08,018 DEBUG   HandlerThread:1165042 [meta.py:__init__():48] meta init done
+2021-03-08 13:50:08,019 DEBUG   HandlerThread:1165042 [meta.py:probe():190] probe
+2021-03-08 13:50:08,026 DEBUG   HandlerThread:1165042 [meta.py:_setup_git():180] setup git
+2021-03-08 13:50:08,055 DEBUG   HandlerThread:1165042 [meta.py:_setup_git():187] setup git done
+2021-03-08 13:50:08,055 DEBUG   HandlerThread:1165042 [meta.py:_save_pip():52] save pip
+2021-03-08 13:50:08,056 DEBUG   HandlerThread:1165042 [meta.py:_save_pip():66] save pip done
+2021-03-08 13:50:08,056 DEBUG   HandlerThread:1165042 [meta.py:probe():231] probe done
+2021-03-08 13:51:36,463 WARNING MainThread:1165042 [internal.py:wandb_internal():146] Internal process interrupt: 1
+2021-03-08 13:51:37,678 WARNING MainThread:1165042 [internal.py:wandb_internal():146] Internal process interrupt: 2
+2021-03-08 13:51:37,678 ERROR   MainThread:1165042 [internal.py:wandb_internal():149] Internal process interrupted.
+2021-03-08 13:51:37,679 INFO    HandlerThread:1165042 [handler.py:finish():535] shutting down handler
+2021-03-08 13:51:37,680 INFO    WriterThread:1165042 [datastore.py:close():258] close: /home/naddeok5/FIM/wandb/offline-run-20210308_135005-6pcoco5b/run-6pcoco5b.wandb
+2021-03-08 13:51:37,770 INFO    SenderThread:1165042 [sender.py:finish():833] shutting down sender
+2021-03-08 13:51:37,771 INFO    MainThread:1165042 [internal.py:handle_exit():78] Internal process exited

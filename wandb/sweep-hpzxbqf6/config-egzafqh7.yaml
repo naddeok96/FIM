@@ -1,0 +1,22 @@
+wandb_version: 1
+
+batch_size:
+  value: 512
+learning_rate:
+  value: 0.001
+momentum:
+  value: 0.9
+n_epochs:
+  value: 100
+num_classes:
+  value: 10
+num_kernels_layer1:
+  value: 6
+num_kernels_layer2:
+  value: 16
+num_kernels_layer3:
+  value: 120
+num_nodes_fc_layer:
+  value: 84
+weight_decay:
+  value: 0.0001

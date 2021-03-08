@@ -1,0 +1,28 @@
+2021-03-08 11:57:57,165 INFO    Thread-2  :1070934 [wandb_setup.py:_flush():69] setting env: {'project': 'LeNet MNIST Lightning', 'entity': 'naddeok', 'root_dir': '/home/naddeok5/FIM', 'sweep_id': '17rnt7ly', 'run_id': '2sytkb5q', 'sweep_param_path': '/home/naddeok5/FIM/wandb/sweep-17rnt7ly/config-2sytkb5q.yaml'}
+2021-03-08 11:57:57,165 INFO    Thread-2  :1070934 [wandb_setup.py:_flush():69] setting login settings: {}
+2021-03-08 11:57:57,165 INFO    Thread-2  :1070934 [wandb_init.py:_log_setup():334] Logging user logs to /home/naddeok5/FIM/wandb/run-20210308_115757-2sytkb5q/logs/debug.log
+2021-03-08 11:57:57,165 INFO    Thread-2  :1070934 [wandb_init.py:_log_setup():335] Logging internal logs to /home/naddeok5/FIM/wandb/run-20210308_115757-2sytkb5q/logs/debug-internal.log
+2021-03-08 11:57:57,165 INFO    Thread-2  :1070934 [wandb_init.py:init():367] calling init triggers
+2021-03-08 11:57:57,165 INFO    Thread-2  :1070934 [wandb_init.py:init():372] wandb.init called with sweep_config: {'batch_size': 512, 'learning_rate': 0.001, 'momentum': 0.9, 'n_epochs': 10, 'num_classes': 10, 'num_kernels_layer1': 6, 'num_kernels_layer2': 16, 'num_kernels_layer3': 120, 'num_nodes_fc_layer': 84, 'weight_decay': 0.0001}
+config: {}
+2021-03-08 11:57:57,166 INFO    Thread-2  :1070934 [wandb_init.py:init():416] starting backend
+2021-03-08 11:57:57,166 INFO    Thread-2  :1070934 [backend.py:_multiprocessing_setup():69] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2021-03-08 11:57:57,182 INFO    Thread-2  :1070934 [backend.py:ensure_launched():123] starting backend process...
+2021-03-08 11:57:57,193 INFO    Thread-2  :1070934 [backend.py:ensure_launched():127] started backend process with pid: 1071017
+2021-03-08 11:57:57,194 INFO    Thread-2  :1070934 [wandb_init.py:init():421] backend started and connected
+2021-03-08 11:57:57,195 INFO    Thread-2  :1070934 [wandb_run.py:_config_callback():733] config_cb None None {'batch_size': 512, 'learning_rate': 0.001, 'momentum': 0.9, 'n_epochs': 10, 'num_classes': 10, 'num_kernels_layer1': 6, 'num_kernels_layer2': 16, 'num_kernels_layer3': 120, 'num_nodes_fc_layer': 84, 'weight_decay': 0.0001}
+2021-03-08 11:57:57,196 INFO    Thread-2  :1070934 [wandb_init.py:init():461] updated telemetry
+2021-03-08 11:57:57,197 INFO    Thread-2  :1070934 [wandb_init.py:init():480] communicating current version
+2021-03-08 11:57:58,333 INFO    Thread-2  :1070934 [wandb_init.py:init():485] got version response 
+2021-03-08 11:57:58,333 INFO    Thread-2  :1070934 [wandb_init.py:init():493] communicating run to backend with 30 second timeout
+2021-03-08 11:57:58,455 INFO    Thread-2  :1070934 [wandb_init.py:init():518] starting run threads in backend
+2021-03-08 11:57:59,831 INFO    Thread-2  :1070934 [wandb_run.py:_console_start():1476] atexit reg
+2021-03-08 11:57:59,832 INFO    Thread-2  :1070934 [wandb_run.py:_redirect():1339] redirect: SettingsConsole.REDIRECT
+2021-03-08 11:57:59,833 INFO    Thread-2  :1070934 [wandb_run.py:_redirect():1344] Redirecting console.
+2021-03-08 11:57:59,833 INFO    Thread-2  :1070934 [redirect.py:install():213] install start
+2021-03-08 11:57:59,833 INFO    Thread-2  :1070934 [redirect.py:install():228] install stop
+2021-03-08 11:57:59,834 INFO    Thread-2  :1070934 [redirect.py:install():213] install start
+2021-03-08 11:57:59,834 INFO    Thread-2  :1070934 [redirect.py:install():228] install stop
+2021-03-08 11:57:59,834 INFO    Thread-2  :1070934 [wandb_run.py:_redirect():1390] Redirects installed.
+2021-03-08 11:57:59,834 INFO    Thread-2  :1070934 [wandb_init.py:init():542] run started, returning control to user process
+2021-03-08 11:58:22,929 INFO    Thread-2  :1070934 [wandb_run.py:finish():1135] finishing run naddeok/LeNet MNIST Lightning/2sytkb5q

@@ -1,0 +1,51 @@
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | criterion | CrossEntropyLoss | 0     
+1 | accuracy  | Accuracy         | 0     
+2 | conv1     | Conv2d           | 156   
+3 | pool1     | MaxPool2d        | 0     
+4 | conv2     | Conv2d           | 2.4 K 
+5 | pool2     | MaxPool2d        | 0     
+6 | conv3     | Conv2d           | 48.1 K
+7 | fc1       | Linear           | 10.2 K
+8 | fc2       | Linear           | 850   
+-----------------------------------------------
+61.7 K    Trainable params
+0         Non-trainable params
+61.7 K    Total params
+0.247     Total estimated model params size (MB)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Your val_dataloader has `shuffle=True`, it is best practice to turn this off for validation and test dataloaders.
+  warnings.warn(*args, **kwargs)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Validation sanity check: 0it [00:00, ?it/s]Validation sanity check:   0%|          | 0/2 [00:00<?, ?it/s]
+torch.return_types.max(
+values=tensor([0.1223, 0.1638, 0.2236, 0.1426, 0.1599, 0.1651, 0.1505, 0.1772, 0.1542,
+        0.1808, 0.1366, 0.1677, 0.1874, 0.2063, 0.1308, 0.2013, 0.1343, 0.2364,
+        0.1617, 0.1605, 0.1538, 0.1675, 0.1791, 0.1904, 0.0986, 0.1682, 0.2242,
+        0.1994, 0.1978, 0.1581, 0.2047, 0.1785, 0.1430, 0.2012, 0.2037, 0.2194,
+        0.1450, 0.1005, 0.1780, 0.1772, 0.2142, 0.2008, 0.1656, 0.1586, 0.1966,
+        0.1125, 0.2195, 0.1996, 0.1904, 0.2235, 0.2006, 0.2114, 0.1605, 0.1728,
+        0.1263, 0.1586, 0.1976, 0.1835, 0.1881, 0.1768, 0.1362, 0.1762, 0.1697,
+        0.1018, 0.1334, 0.1888, 0.1774, 0.1340, 0.1805, 0.1780, 0.1801, 0.1592,
+        0.1761, 0.1854, 0.1944, 0.1739, 0.1467, 0.1649, 0.1276, 0.2089, 0.1971,
+        0.1680, 0.1901, 0.1697, 0.1292, 0.1602, 0.1497, 0.1679, 0.1650, 0.1982,
+        0.1809, 0.1855, 0.1872, 0.1517, 0.1543, 0.1690, 0.1258, 0.1519, 0.2102,
+        0.1890, 0.1831, 0.1725, 0.1295, 0.1636, 0.1699, 0.1361, 0.1519, 0.1800,
+        0.2004, 0.1386, 0.1587, 0.1782, 0.1932, 0.1966, 0.1878, 0.1928, 0.1702,
+        0.2290, 0.1107, 0.1994, 0.1993, 0.1545, 0.1620, 0.1792],
+       device='cuda:0'),
+indices=tensor([8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+        8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+        8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+        8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 8, 8, 8, 8, 8, 8, 8,
+        8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+        8, 8, 8, 8], device='cuda:0'))
+labels
+tensor([1, 2, 4, 3, 7, 1, 5, 0, 5, 8, 7, 5, 8, 8, 1, 5, 6, 4, 1, 8, 3, 3, 9, 6,
+        1, 0, 2, 9, 0, 0, 0, 4, 7, 7, 6, 4, 7, 6, 7, 2, 0, 2, 3, 4, 8, 8, 3, 7,
+        4, 2, 0, 4, 0, 6, 6, 1, 3, 7, 4, 7, 6, 0, 0, 8, 2, 2, 7, 9, 0, 5, 0, 9,
+        8, 4, 5, 3, 5, 0, 1, 4, 8, 5, 8, 8, 3, 8, 8, 6, 0, 8, 0, 8, 0, 3, 1, 2,
+        6, 3, 0, 9, 7, 2, 1, 9, 4, 8, 6, 9, 2, 7, 1, 4, 9, 8, 0, 3, 7, 9, 5, 2,
+        6, 6, 9, 0], device='cuda:0')

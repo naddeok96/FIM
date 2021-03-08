@@ -1,0 +1,64 @@
+2021-03-08 11:58:28,083 INFO    MainThread:1072693 [internal.py:wandb_internal():88] W&B internal server running at pid: 1072693, started at: 2021-03-08 11:58:28.083701
+2021-03-08 11:58:28,086 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: check_version
+2021-03-08 11:58:28,086 INFO    WriterThread:1072693 [datastore.py:open_for_write():77] open: /home/naddeok5/FIM/wandb/run-20210308_115827-786kghzj/run-786kghzj.wandb
+2021-03-08 11:58:28,088 DEBUG   SenderThread:1072693 [sender.py:send():122] send: header
+2021-03-08 11:58:28,088 DEBUG   SenderThread:1072693 [sender.py:send():122] send: request
+2021-03-08 11:58:28,089 DEBUG   SenderThread:1072693 [sender.py:send_request():131] send_request: check_version
+2021-03-08 11:58:28,164 DEBUG   SenderThread:1072693 [sender.py:send():122] send: run
+2021-03-08 11:58:28,300 INFO    SenderThread:1072693 [sender.py:_start_run_threads():596] run started: 786kghzj with start time 1615222707
+2021-03-08 11:58:28,300 DEBUG   SenderThread:1072693 [sender.py:send():122] send: summary
+2021-03-08 11:58:28,301 INFO    SenderThread:1072693 [sender.py:_save_file():730] saving file wandb-summary.json with policy end
+2021-03-08 11:58:28,301 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: run_start
+2021-03-08 11:58:29,515 DEBUG   HandlerThread:1072693 [meta.py:__init__():34] meta init
+2021-03-08 11:58:29,515 DEBUG   HandlerThread:1072693 [meta.py:__init__():48] meta init done
+2021-03-08 11:58:29,515 DEBUG   HandlerThread:1072693 [meta.py:probe():190] probe
+2021-03-08 11:58:29,522 DEBUG   HandlerThread:1072693 [meta.py:_setup_git():180] setup git
+2021-03-08 11:58:29,552 DEBUG   HandlerThread:1072693 [meta.py:_setup_git():187] setup git done
+2021-03-08 11:58:29,552 DEBUG   HandlerThread:1072693 [meta.py:_save_pip():52] save pip
+2021-03-08 11:58:29,553 DEBUG   HandlerThread:1072693 [meta.py:_save_pip():66] save pip done
+2021-03-08 11:58:29,553 DEBUG   HandlerThread:1072693 [meta.py:probe():231] probe done
+2021-03-08 11:58:29,558 DEBUG   SenderThread:1072693 [sender.py:send():122] send: files
+2021-03-08 11:58:29,559 INFO    SenderThread:1072693 [sender.py:_save_file():730] saving file wandb-metadata.json with policy now
+2021-03-08 11:58:29,569 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: status
+2021-03-08 11:58:29,577 DEBUG   SenderThread:1072693 [sender.py:send():122] send: request
+2021-03-08 11:58:29,577 DEBUG   SenderThread:1072693 [sender.py:send_request():131] send_request: status
+2021-03-08 11:58:29,673 DEBUG   SenderThread:1072693 [sender.py:send():122] send: config
+2021-03-08 11:58:33,696 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:58:38,821 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:58:43,961 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:58:44,676 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: status
+2021-03-08 11:58:44,677 DEBUG   SenderThread:1072693 [sender.py:send():122] send: request
+2021-03-08 11:58:44,677 DEBUG   SenderThread:1072693 [sender.py:send_request():131] send_request: status
+2021-03-08 11:58:49,102 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:58:54,192 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:58:59,245 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:58:59,769 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: status
+2021-03-08 11:58:59,770 DEBUG   SenderThread:1072693 [sender.py:send():122] send: request
+2021-03-08 11:58:59,770 DEBUG   SenderThread:1072693 [sender.py:send_request():131] send_request: status
+2021-03-08 11:59:04,333 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:09,498 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:14,600 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:14,860 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: status
+2021-03-08 11:59:14,860 DEBUG   SenderThread:1072693 [sender.py:send():122] send: request
+2021-03-08 11:59:14,860 DEBUG   SenderThread:1072693 [sender.py:send_request():131] send_request: status
+2021-03-08 11:59:19,684 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:24,813 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:29,929 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:29,954 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: status
+2021-03-08 11:59:29,954 DEBUG   SenderThread:1072693 [sender.py:send():122] send: request
+2021-03-08 11:59:29,955 DEBUG   SenderThread:1072693 [sender.py:send_request():131] send_request: status
+2021-03-08 11:59:35,037 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:40,085 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:45,059 DEBUG   HandlerThread:1072693 [handler.py:handle_request():101] handle_request: status
+2021-03-08 11:59:45,059 DEBUG   SenderThread:1072693 [sender.py:send():122] send: request
+2021-03-08 11:59:45,060 DEBUG   SenderThread:1072693 [sender.py:send_request():131] send_request: status
+2021-03-08 11:59:45,218 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:50,331 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 11:59:55,416 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 12:00:00,689 DEBUG   SenderThread:1072693 [sender.py:send():122] send: stats
+2021-03-08 12:00:05,190 WARNING MainThread:1072693 [internal.py:is_dead():343] Internal process exiting, parent pid 1070643 disappeared
+2021-03-08 12:00:05,191 ERROR   MainThread:1072693 [internal.py:wandb_internal():142] Internal process shutdown.
+2021-03-08 12:00:05,692 INFO    SenderThread:1072693 [sender.py:finish():833] shutting down sender
+2021-03-08 12:00:05,692 INFO    WriterThread:1072693 [datastore.py:close():258] close: /home/naddeok5/FIM/wandb/run-20210308_115827-786kghzj/run-786kghzj.wandb
+2021-03-08 12:00:05,695 INFO    HandlerThread:1072693 [handler.py:finish():535] shutting down handler
+2021-03-08 12:00:07,491 INFO    MainThread:1072693 [internal.py:handle_exit():78] Internal process exited

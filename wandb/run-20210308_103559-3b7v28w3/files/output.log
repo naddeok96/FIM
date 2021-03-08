@@ -1,0 +1,146 @@
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Checkpoint directory /home/naddeok5/FIM/models/pretrained/ exists and is not empty.
+  warnings.warn(*args, **kwargs)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: You requested multiple GPUs but did not specify a backend, e.g. `Trainer(accelerator="dp"|"ddp"|"ddp2")`. Setting `accelerator="ddp_spawn"` for you.
+  warnings.warn(*args, **kwargs)
+GPU available: True, used: True
+TPU available: None, using: 0 TPU cores
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 743, in init
+    run = wi.init()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 419, in init
+    backend.ensure_launched()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/backend/backend.py", line 125, in ensure_launched
+    self.wandb_process.start()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.8/multiprocessing/context.py", line 284, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 42, in _launch
+    prep_data = spawn.get_preparation_data(process_obj._name)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 154, in get_preparation_data
+    _check_not_importing_main()
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 134, in _check_not_importing_main
+    raise RuntimeError('''
+RuntimeError: 
+        An attempt has been made to start a new process before the
+        current process has finished its bootstrapping phase.
+
+        This probably means that you are not using fork to start your
+        child processes and you have forgotten to use the proper idiom
+        in the main module:
+
+            if __name__ == '__main__':
+                freeze_support()
+                ...
+
+        The "freeze_support()" line can be omitted if the program
+        is not going to be frozen to produce an executable.
+wandb: ERROR Abnormal program exit
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 743, in init
+    run = wi.init()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 419, in init
+    backend.ensure_launched()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/backend/backend.py", line 125, in ensure_launched
+    self.wandb_process.start()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.8/multiprocessing/context.py", line 284, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 42, in _launch
+    prep_data = spawn.get_preparation_data(process_obj._name)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 154, in get_preparation_data
+    _check_not_importing_main()
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 134, in _check_not_importing_main
+    raise RuntimeError('''
+RuntimeError: 
+        An attempt has been made to start a new process before the
+        current process has finished its bootstrapping phase.
+
+        This probably means that you are not using fork to start your
+        child processes and you have forgotten to use the proper idiom
+        in the main module:
+
+            if __name__ == '__main__':
+                freeze_support()
+                ...
+
+        The "freeze_support()" line can be omitted if the program
+        is not going to be frozen to produce an executable.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/usr/lib/python3.8/runpy.py", line 265, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/usr/lib/python3.8/runpy.py", line 97, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/usr/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/naddeok5/FIM/mnist_lighting_trainer.py", line 43, in <module>
+    trainer.fit(model)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 474, in fit
+    self.setup_trainer(model)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 421, in setup_trainer
+    self.logger.log_hyperparams(model.hparams_initial)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py", line 40, in wrapped_fn
+    return fn(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/loggers/wandb.py", line 178, in log_hyperparams
+    self.experiment.config.update(params, allow_val_change=True)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/loggers/base.py", line 41, in experiment
+    return get_experiment() or DummyExperiment()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py", line 40, in wrapped_fn
+    return fn(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/loggers/base.py", line 39, in get_experiment
+    return fn(self)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/loggers/wandb.py", line 152, in experiment
+    self._experiment = wandb.init(
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_init.py", line 780, in init
+    six.raise_from(Exception("problem"), error_seen)
+  File "<string>", line 3, in raise_from
+Exception: problem
+Problem at: /home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/loggers/wandb.py 152 experiment
+Traceback (most recent call last):
+  File "mnist_lighting_trainer.py", line 43, in <module>
+    trainer.fit(model)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 513, in fit
+    self.dispatch()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/trainer/trainer.py", line 553, in dispatch
+    self.accelerator.start_training(self)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/accelerators/accelerator.py", line 74, in start_training
+    self.training_type_plugin.start_training(trainer)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/plugins/training_type/ddp_spawn.py", line 106, in start_training
+    mp.spawn(self.new_process, **self.mp_spawn_kwargs)
+  File "/usr/lib/python3/dist-packages/torch/multiprocessing/spawn.py", line 199, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method='spawn')
+  File "/usr/lib/python3/dist-packages/torch/multiprocessing/spawn.py", line 148, in start_processes
+    process.start()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "/usr/lib/python3.8/multiprocessing/context.py", line 284, in _Popen
+    return Popen(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 19, in __init__
+    self._launch(process_obj)
+  File "/usr/lib/python3.8/multiprocessing/popen_spawn_posix.py", line 62, in _launch
+    f.write(fp.getbuffer())
+KeyboardInterrupt

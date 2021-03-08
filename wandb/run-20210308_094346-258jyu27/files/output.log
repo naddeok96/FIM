@@ -1,0 +1,30 @@
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | criterion | CrossEntropyLoss | 0     
+1 | accuracy  | Accuracy         | 0     
+2 | conv1     | Conv2d           | 156   
+3 | pool1     | MaxPool2d        | 0     
+4 | conv2     | Conv2d           | 2.4 K 
+5 | pool2     | MaxPool2d        | 0     
+6 | conv3     | Conv2d           | 48.1 K
+7 | fc1       | Linear           | 10.2 K
+8 | fc2       | Linear           | 850   
+-----------------------------------------------
+61.7 K    Trainable params
+0         Non-trainable params
+61.7 K    Total params
+0.247     Total estimated model params size (MB)
+/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Your val_dataloader has `shuffle=True`, it is best practice to turn this off for validation and test dataloaders.
+  warnings.warn(*args, **kwargs)
+Validation sanity check: 0it [00:00, ?it/s]/home/naddeok5/.local/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  warnings.warn(*args, **kwargs)
+Validation sanity check:   0%|          | 0/2 [00:00<?, ?it/s]
+tensor([[-4.8326, -4.8240, -4.8149,  ..., -4.8261, -4.8163, -4.8403],
+        [-4.8145, -4.7978, -4.7977,  ..., -4.8200, -4.8515, -4.8497],
+        [-4.8182, -4.8345, -4.8267,  ..., -4.8188, -4.7907, -4.8327],
+        ...,
+        [-4.7812, -4.7755, -4.7913,  ..., -4.8659, -4.7980, -4.8550],
+        [-4.8088, -4.8413, -4.8213,  ..., -4.8304, -4.8213, -4.8651],
+        [-4.8676, -4.8412, -4.8088,  ..., -4.8043, -4.8350, -4.8182]],
+       device='cuda:0')

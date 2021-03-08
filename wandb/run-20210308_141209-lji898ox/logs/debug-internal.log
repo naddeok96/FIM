@@ -1,0 +1,46 @@
+2021-03-08 14:12:10,367 INFO    MainThread:1178816 [internal.py:wandb_internal():88] W&B internal server running at pid: 1178816, started at: 2021-03-08 14:12:10.366920
+2021-03-08 14:12:10,369 DEBUG   HandlerThread:1178816 [handler.py:handle_request():101] handle_request: check_version
+2021-03-08 14:12:10,369 INFO    WriterThread:1178816 [datastore.py:open_for_write():77] open: /home/naddeok5/FIM/wandb/run-20210308_141209-lji898ox/run-lji898ox.wandb
+2021-03-08 14:12:10,371 DEBUG   SenderThread:1178816 [sender.py:send():122] send: header
+2021-03-08 14:12:10,371 DEBUG   SenderThread:1178816 [sender.py:send():122] send: request
+2021-03-08 14:12:10,372 DEBUG   SenderThread:1178816 [sender.py:send_request():131] send_request: check_version
+2021-03-08 14:12:10,428 DEBUG   SenderThread:1178816 [sender.py:send():122] send: run
+2021-03-08 14:12:10,544 INFO    SenderThread:1178816 [sender.py:_start_run_threads():596] run started: lji898ox with start time 1615230729
+2021-03-08 14:12:10,545 DEBUG   SenderThread:1178816 [sender.py:send():122] send: summary
+2021-03-08 14:12:10,545 INFO    SenderThread:1178816 [sender.py:_save_file():730] saving file wandb-summary.json with policy end
+2021-03-08 14:12:10,546 DEBUG   HandlerThread:1178816 [handler.py:handle_request():101] handle_request: run_start
+2021-03-08 14:12:12,009 DEBUG   HandlerThread:1178816 [meta.py:__init__():34] meta init
+2021-03-08 14:12:12,009 DEBUG   HandlerThread:1178816 [meta.py:__init__():48] meta init done
+2021-03-08 14:12:12,009 DEBUG   HandlerThread:1178816 [meta.py:probe():190] probe
+2021-03-08 14:12:12,016 DEBUG   HandlerThread:1178816 [meta.py:_setup_git():180] setup git
+2021-03-08 14:12:12,049 DEBUG   HandlerThread:1178816 [meta.py:_setup_git():187] setup git done
+2021-03-08 14:12:12,049 DEBUG   HandlerThread:1178816 [meta.py:_save_pip():52] save pip
+2021-03-08 14:12:12,050 DEBUG   HandlerThread:1178816 [meta.py:_save_pip():66] save pip done
+2021-03-08 14:12:12,050 DEBUG   HandlerThread:1178816 [meta.py:probe():231] probe done
+2021-03-08 14:12:12,054 DEBUG   SenderThread:1178816 [sender.py:send():122] send: files
+2021-03-08 14:12:12,055 INFO    SenderThread:1178816 [sender.py:_save_file():730] saving file wandb-metadata.json with policy now
+2021-03-08 14:12:12,063 DEBUG   HandlerThread:1178816 [handler.py:handle_request():101] handle_request: status
+2021-03-08 14:12:12,064 DEBUG   SenderThread:1178816 [sender.py:send():122] send: request
+2021-03-08 14:12:12,064 DEBUG   SenderThread:1178816 [sender.py:send_request():131] send_request: status
+2021-03-08 14:12:16,319 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:21,851 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:27,191 DEBUG   HandlerThread:1178816 [handler.py:handle_request():101] handle_request: status
+2021-03-08 14:12:27,192 DEBUG   SenderThread:1178816 [sender.py:send():122] send: request
+2021-03-08 14:12:27,192 DEBUG   SenderThread:1178816 [sender.py:send_request():131] send_request: status
+2021-03-08 14:12:27,277 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:32,622 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:37,967 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:42,280 DEBUG   HandlerThread:1178816 [handler.py:handle_request():101] handle_request: status
+2021-03-08 14:12:42,281 DEBUG   SenderThread:1178816 [sender.py:send():122] send: request
+2021-03-08 14:12:42,281 DEBUG   SenderThread:1178816 [sender.py:send_request():131] send_request: status
+2021-03-08 14:12:43,285 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:48,696 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:54,110 DEBUG   SenderThread:1178816 [sender.py:send():122] send: stats
+2021-03-08 14:12:57,364 DEBUG   HandlerThread:1178816 [handler.py:handle_request():101] handle_request: status
+2021-03-08 14:12:57,365 DEBUG   SenderThread:1178816 [sender.py:send():122] send: request
+2021-03-08 14:12:57,365 DEBUG   SenderThread:1178816 [sender.py:send_request():131] send_request: status
+2021-03-08 14:12:58,325 DEBUG   HandlerThread:1178816 [handler.py:handle_request():101] handle_request: shutdown
+2021-03-08 14:12:58,326 INFO    HandlerThread:1178816 [handler.py:finish():535] shutting down handler
+2021-03-08 14:12:58,444 INFO    SenderThread:1178816 [sender.py:finish():833] shutting down sender
+2021-03-08 14:12:59,111 INFO    WriterThread:1178816 [datastore.py:close():258] close: /home/naddeok5/FIM/wandb/run-20210308_141209-lji898ox/run-lji898ox.wandb
+2021-03-08 14:12:59,620 INFO    MainThread:1178816 [internal.py:handle_exit():78] Internal process exited

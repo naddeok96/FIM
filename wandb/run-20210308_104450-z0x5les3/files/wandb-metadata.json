@@ -1,0 +1,24 @@
+{
+    "os": "Linux-5.4.0-66-generic-x86_64-with-glibc2.29",
+    "python": "3.8.5",
+    "heartbeatAt": "2021-03-08T15:44:53.198857",
+    "startedAt": "2021-03-08T15:44:50.430666",
+    "docker": null,
+    "gpu": "TITAN RTX",
+    "gpu_count": 8,
+    "cpu_count": 64,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "mnist_lighting_trainer.py",
+    "codePath": "mnist_lighting_trainer.py",
+    "git": {
+        "remote": "https://github.com/naddeok96/FIM.git",
+        "commit": "854048ebf460901470af5dc156efe8928426fbb4"
+    },
+    "email": "naddeok5@students.rowan.edu",
+    "root": "/home/naddeok5/FIM",
+    "host": "lambda02",
+    "username": "naddeok5",
+    "executable": "/usr/bin/python3"
+}
