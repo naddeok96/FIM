@@ -1,0 +1,4 @@
+/__pycache__/*
+/wandb/*
+test.txt
+text.py
