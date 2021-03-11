@@ -14,7 +14,6 @@ class LitLeNet(pl.LightningModule):
     def __init__(self, set_name,
                        U = None,
                        batch_size = 124,
-                       num_classes = 10,
                        num_kernels_layer1 = 6, 
                        num_kernels_layer2 = 16, 
                        num_kernels_layer3 = 120,
@@ -30,8 +29,7 @@ class LitLeNet(pl.LightningModule):
 
         self.U = U
         self.batch_size = batch_size
-        self.num_classes = num_classes
-
+        
         self.num_kernels_layer1 = num_kernels_layer1
         self.num_kernels_layer2 = num_kernels_layer2
         self.num_kernels_layer3 = num_kernels_layer3
@@ -46,7 +44,10 @@ class LitLeNet(pl.LightningModule):
         self.accuracy = pl.metrics.Accuracy()
 
         if self.set_name == "CIFAR10":
-            self.image_size = 32
+            # Image Size
+            self.image_size = 3*32*32
+            self.num_classes = 10
+
             # Input (3,32,32)
             # Layer 1
             self.conv1 = nn.Conv2d(3, # Input channels
@@ -57,7 +58,10 @@ class LitLeNet(pl.LightningModule):
                                 padding = 0) # Output = (3,28,28)
 
         elif self.set_name == "MNIST":
-            self.image_size = 28
+            # Image Size
+            self.image_size = 1*28*28
+            self.num_classes = 10
+
             # Input (1,28,28)
             # Layer 1
             self.conv1 = nn.Conv2d(1, # Input channels
@@ -103,7 +107,7 @@ class LitLeNet(pl.LightningModule):
         if self.set_name == "CIFAR10":
             # Images are of size (3,32,32)
             self.transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
-                                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) #  Normalize about 0.5
+                                            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))]) #  Normalize about 0.5
 
             self.train_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch', # '../data' 
                                                     train=True,
@@ -114,6 +118,9 @@ class LitLeNet(pl.LightningModule):
                                                     train=False,
                                                     download=False,
                                                     transform=self.transform)
+            # Train/Val Split
+            self.test_set, self.val_set = torch.utils.data.random_split(self.test_set, [9000, 1000])
+            
         elif self.set_name == "MNIST":
             # Images are of size (1, 28, 28)
             self.mean = 0.1307
@@ -183,10 +190,16 @@ class LitLeNet(pl.LightningModule):
         # Calculate loss
         loss = self.criterion(outputs, labels)
 
-        # Using TrainResult to enable logging
-        self.log('train_acc', self.accuracy(preds, labels), sync_dist=True)
+        # Log to WandB
+        accuracy = self.accuracy(preds, labels)
+        self.log('train_acc', accuracy, prog_bar=True, sync_dist=True)
         self.log('train_loss', loss, sync_dist=True)
-        return loss
+
+        output = {
+                    'loss': loss, 
+                    'prog': {'acc': accuracy}
+        }
+        return output
 
     def validation_step(self, batch, batch_idx):
         # Load batch data
@@ -199,10 +212,16 @@ class LitLeNet(pl.LightningModule):
         # Calculate loss
         loss = self.criterion(outputs, labels)
 
-        # Using TrainResult to enable logging
-        self.log('val_acc', self.accuracy(preds, labels), sync_dist=True)
+        # Log to WandB
+        accuracy = self.accuracy(preds, labels)
+        self.log('val_acc', accuracy, prog_bar=True, sync_dist=True)
         self.log('val_loss', loss, sync_dist=True)
-        return loss
+
+        output = {
+            'loss': loss, 
+            'prog': {'acc': accuracy}
+        }
+        return output
 
     def test_step(self, batch, batch_idx):
         # Load batch data
@@ -215,11 +234,16 @@ class LitLeNet(pl.LightningModule):
         # Calculate loss
         loss = self.criterion(outputs, labels)
 
-        # Using TrainResult to enable logging
+        # Log to WandB
         accuracy = self.accuracy(preds, labels)
-        self.log('test_acc', accuracy, prog_bar=True, sync_dist=True)
+        self.log('test_acc', accuracy, sync_dist=True)
         self.log('test_loss', loss, sync_dist=True)
-        return loss
+
+        output = {
+            'loss': loss, 
+            'prog': {'acc': accuracy}
+        }
+        return output
 
     # Generate orthoganal matrix
     def get_orthogonal_matrix(self, size):
@@ -268,10 +292,10 @@ class LitLeNet(pl.LightningModule):
 
         # Repeat U and U transpose for all batches
         input_tensor = input_tensor.cuda()
-        U = copy(U.view((1, A_side_size**2, A_side_size**2)).repeat(channel_num * batch_size, 1, 1))
+        U = copy(U.view((1, channel_num * A_side_size**2, channel_num * A_side_size**2)).repeat(batch_size, 1, 1))
         
         # Batch muiltply UA
-        return torch.bmm(U, input_tensor.view(channel_num *batch_size, A_side_size**2, 1)).view(batch_size, channel_num, A_side_size, A_side_size)
+        return torch.bmm(U, input_tensor.view(batch_size, channel_num *A_side_size**2, 1)).view(batch_size, channel_num, A_side_size, A_side_size)
 
     def forward(self, x):
         
