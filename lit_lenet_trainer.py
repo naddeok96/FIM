@@ -7,37 +7,43 @@ import namegenerator
 import pytorch_lightning as pl
 from unorm import UnNormalize
 from pytorch_lightning.loggers import WandbLogger
-from models.classes.lightning_lenet import LitLeNet
+from models.classes.lit_lenet import LitLeNet
 from pytorch_lightning.callbacks import ModelCheckpoint
 
 
 # Parameters
-set_name = "MNIST"
-wandb_project_name = 'LeNet MNIST Lightning'
-run_name = "random_U"
-gpus = "0,1,2"
-n_epochs = 1000
-
+set_name           = "CIFAR10"
+wandb_project_name = "LeNet " + set_name + " Lightning"
+wandb_mode         = "online" # "online", "offline" or "disabled"
+save_k_models      = 0
+run_name           = "no_U"
+gpus               = "0,1,2"
+n_epochs           = 2000
 
 # Initalize Weights and Biases
-wandb_logger = WandbLogger(name = run_name, project=wandb_project_name)
+wandb_logger = WandbLogger(name = run_name, 
+                            project=wandb_project_name,
+                            mode = wandb_mode)
 
 # Initalize Model
 net = LitLeNet(set_name=set_name,
+                learning_rate = 0.01, 
+                momentum = 0.9, 
+                weight_decay = 0.001,
                 batch_size=512)
 
 
 # Setup Orthoganal Matrix
 # net.load_orthogonal_matrix("models/pretrained/high_R_U.pkl")
 # net.set_orthogonal_matrix()
-net.set_random_matrix()
-net.save_orthogonal_matrix("models/pretrained/LeNet_MNIST_" + run_name + ".pkl")
+# net.set_random_matrix()
+# net.save_orthogonal_matrix("models/pretrained/LeNet_MNIST_" + run_name + ".pkl")
 
 # Setup Automatic Saving
 checkpoint_callback = ModelCheckpoint(
     dirpath='/home/naddeok5/FIM/models/pretrained/',
     filename='Lit_LeNet_MNIST_' + run_name + '-{val_acc:.2f}',
-    save_top_k = 1,
+    save_top_k = save_k_models,
     verbose=False,
     monitor='train_loss',
     mode='min',
@@ -52,4 +58,4 @@ trainer = pl.Trainer(logger=wandb_logger,
 
 # Train!
 trainer.fit(net)
-trainer.test()
+trainer.test(net)
