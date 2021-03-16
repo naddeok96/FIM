@@ -174,10 +174,15 @@ class LitLeNet(pl.LightningModule):
         return test_loader
 
     def configure_optimizers(self):
-        return torch.optim.SGD(self.parameters(), 
-                                lr = self.learning_rate, 
-                                momentum = self.momentum,
-                                weight_decay = self.weight_decay)
+        # return torch.optim.SGD(self.parameters(), 
+        #                         lr = self.learning_rate, 
+        #                         momentum = self.momentum,
+        #                         weight_decay = self.weight_decay)
+
+        return torch.optim.Adam(self.parameters(), 
+                                 lr = self.learning_rate, 
+                                 amsgrad = True,
+                                 weight_decay = self.weight_decay)
 
     def training_step(self, batch, batch_idx):
         # Load batch data
