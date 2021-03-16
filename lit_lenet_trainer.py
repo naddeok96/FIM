@@ -15,10 +15,10 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 set_name           = "CIFAR10"
 wandb_project_name = "LeNet " + set_name + " Lightning"
 wandb_mode         = "online" # "online", "offline" or "disabled"
-save_k_models      = 0
+save_k_models      = 1
 run_name           = "no_U"
-gpus               = "0,1,2"
-n_epochs           = 2000
+gpus               = "0,1"
+n_epochs           = 1500
 
 # Initalize Weights and Biases
 wandb_logger = WandbLogger(name = run_name, 
@@ -30,7 +30,7 @@ net = LitLeNet(set_name=set_name,
                 learning_rate = 0.01, 
                 momentum = 0.9, 
                 weight_decay = 0.001,
-                batch_size=512)
+                batch_size=256)
 
 
 # Setup Orthoganal Matrix
@@ -42,7 +42,7 @@ net = LitLeNet(set_name=set_name,
 # Setup Automatic Saving
 checkpoint_callback = ModelCheckpoint(
     dirpath='/home/naddeok5/FIM/models/pretrained/',
-    filename='Lit_LeNet_MNIST_' + run_name + '-{val_acc:.2f}',
+    filename='Lit_LeNet_' + set_name + '_' + run_name + '-{val_acc:.2f}',
     save_top_k = save_k_models,
     verbose=False,
     monitor='train_loss',
