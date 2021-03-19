@@ -59,7 +59,7 @@ pexpect==4.2.1
 pickle-mixin==1.0.2
 pickle5==0.0.11
 pickleshare==0.7.4
-pillow==5.1.0
+pillow==8.1.1
 pip==9.0.1
 prettytable==1.0.1
 promise==2.3
