@@ -1,13 +1,5 @@
-"""
-This is the code for QR factorization using Householder Transformation.
-This program is made in python 3.5.3 but will be compatible to any python 3.4+ version
-We used numpy library for matrix manipulation.
-Install numpy using ** pip3 install numpy ** command on terminal.
-To run the code write ** python3 qr_householder.py ** on terminal
-User has to give dimension of the matrix as input in space separated format and matrix will be generated randomly.
-QR factorization can be done for both square and non-square matrices and hence the code supports both.
-"""
-import numpy as np
+# Imports
+import torch
 
 def column_convertor(x):
     """
@@ -49,7 +41,7 @@ def qr_step_factorization(q, r, iter, n):
     return q, r
 
 def main():
-    n, m = list(map(int, input("Write size of the matrix in space separated format\n").split()))
+    size = 10
     A = np.random.rand(n,m)
     print('The random matrix is \n', A)
     Q = np.identity(n)
