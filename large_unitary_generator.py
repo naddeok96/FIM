@@ -143,24 +143,30 @@ def load_full_matrix(mat_filename, size):
 
     return A
 
+def main():
+    # Parameters
+    size = 4
 
+    # Initialize Matricies
+    initalize_random_matrix("V", size)
+    # initalize_identity_matrix("U", size)
+    initalize_empty_matrix("Q", size)
 
-size = 4
-initalize_random_matrix("V", size)
-# initalize_identity_matrix("U", size)
-initalize_empty_matrix("Q", size)
+    # Matrix Multiply
+    save_transpose("V", size)
+    vector_by_vector_matmul("VT", "V", "Q", size)
 
+    # Check Step
+    V  = load_full_matrix("V", size)
+    VT = load_full_matrix("VT", size)
+    print("V\n", V)
+    print("\nVT\n", VT)
 
-save_transpose("V", size)
-vector_by_vector_matmul("VT", "V", "Q", size)
+    print("\nVtV\n", torch.matmul(VT, V))
+    print("\nQ\n", load_full_matrix("Q", size))
 
-V = load_full_matrix("V", size)
-VT = load_full_matrix("VT", size)
-print("VT", VT)
-
-print("Truth\n", torch.matmul(VT, V))
-print(load_full_matrix("Q", size))
-
+if __name__ == '__main__':
+    main()
 # check_U(size)
 
 
