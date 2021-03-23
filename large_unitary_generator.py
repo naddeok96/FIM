@@ -7,26 +7,40 @@ import copy
 import time
 
 # Decalre GPU
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "6"
-
+# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 
 # Generate U
-def save_vector(UorV, index, vector):
-    with open("../../../data/naddeok/imagenet_U_files/" + UorV + str(index) + ".pkl", 'wb') as output:
+def save_vector(vector_filename, index, vector):
+    with open("imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'wb') as output:
         pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
 
-def load_vector(UorV, index):
-    with open("../../../data/naddeok/imagenet_U_files/" + UorV + str(index) + ".pkl", 'rb') as input:
+def load_vector(vector_filename, index):
+    with open("imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'rb') as input:
        vector = pickle.load(input).type(torch.FloatTensor)
     return vector
 
-def initalize_Vs(size):
+def initalize_random_matrix(mat_filename, size):
     for i in range(size):
         if i % 1000 == 0:
-            print("Init V", i)
+            print("Init " + mat_filename, i)
         random_vector = torch.rand(size, 1)
-        save_vector("V", i, random_vector)
+        save_vector(mat_filename, i, random_vector)
+
+def initalize_identity_matrix(mat_filename, size):
+    for i in range(size):
+        if i % 1000 == 0:
+            print("Init " + mat_filename, i)
+        unit_vector = torch.zeros(size)
+        unit_vector[i] = 1
+        save_vector(mat_filename, i, unit_vector)
+
+def initalize_empty_matrix(mat_filename, size):
+    for i in range(size):
+        if i % 1000 == 0:
+            print("Init " + mat_filename, i)
+        empty_vector = torch.empty(size).view(-1, 1)
+        save_vector(mat_filename, i, empty_vector)
 
 def GramSchmidt(size):
     for i in range(size):
@@ -61,6 +75,24 @@ def GramSchmidt(size):
 
             save_vector("U", i, Ui)
 
+def Householder(size):
+    for i in range(size):
+
+        # Calculate u vector
+        x = V[i:, i].view(-1, 1)
+        x[0] = x[0] + torch.sign(x[0]) * torch.norm(x, p=2)
+
+        # Compute H matrix
+        Hbar = torch.eye(x.size(0)) - (2 * torch.matmul(x, torch.t(x)) / torch.matmul(torch.t(x), x))
+        H = torch.eye(size)
+        H[i:, i:] = Hbar
+
+        # Update Q and R
+        V = torch.matmul(H, V)
+        U = torch.matmul(U, H)
+
+    return U
+
 def check_U(size):
     for i in range(size):
         Ui = load_vector("U", i)
@@ -73,10 +105,62 @@ def check_U(size):
     check = torch.matmul(torch.t(U), U)
     print(torch.round(check))
 
+def vector_by_vector_matmul(transposed_mat1_filename, mat2_filename, out_filename, size):
+    
+    for i in range(size):
+        
+        at = load_vector(transposed_mat1_filename, i).view(1, -1)
+        print("AT", at)
+    
+        c = load_vector(out_filename, i).view(-1)
 
-size = 3*224*224
-# initalize_Vs(size)
-GramSchmidt(size)
+        for j in range(size):
+            b = load_vector(mat2_filename, j).view(-1, 1)
+
+            c[j] = torch.matmul(at, b)
+
+        # print("C", c)
+
+        save_vector(out_filename, i, c)
+    
+def save_transpose(mat_filename, size):
+
+    for i in range(size):
+        at = torch.empty(size)
+
+        for j in range(size):
+            at[j] = load_vector(mat_filename, j)[i]
+
+        if i % 1000 == 0:
+            print("Init " + mat_filename, i)
+        save_vector(mat_filename + "T", i, at)
+
+def load_full_matrix(mat_filename, size):
+    A = torch.empty(size, size)
+
+    for i in range(size):
+        A[:,i] = load_vector(mat_filename, i).view(-1)
+
+    return A
+
+
+
+size = 4
+initalize_random_matrix("V", size)
+# initalize_identity_matrix("U", size)
+initalize_empty_matrix("Q", size)
+
+
+save_transpose("V", size)
+vector_by_vector_matmul("VT", "V", "Q", size)
+
+V = load_full_matrix("V", size)
+VT = load_full_matrix("VT", size)
+print("VT", VT)
+
+print("Truth\n", torch.matmul(VT, V))
+print(load_full_matrix("Q", size))
+
 # check_U(size)
 
 
