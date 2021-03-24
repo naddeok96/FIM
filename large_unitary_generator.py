@@ -7,9 +7,6 @@ import shutil
 import copy
 import time
 
-# Decalre GPU
-# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-# os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 def initalize_dir(dir):
     if check_dir_exists(dir):
         if not check_dir_empty(dir):
@@ -42,7 +39,6 @@ def save_vector_in_temp_dir(vector_filename, index, vector):
     with open("imagenet_U_files/Temp/" + vector_filename + str(index) + ".pkl", 'wb') as output:
         pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
 
-
 def load_vector(vector_filename, index):
     with open("imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'rb') as input:
        vector = pickle.load(input).type(torch.FloatTensor)
@@ -53,23 +49,17 @@ def get_saved_column_size(vector_filename):
 
 def initalize_random_matrix(mat_filename, size):
     for i in range(size):
-        if i % 1000 == 0:
-            print("Init " + mat_filename, i)
         random_vector = torch.rand(size, 1)
         save_vector(mat_filename, i, random_vector)
 
 def initalize_identity_matrix(mat_filename, size):
     for i in range(size):
-        if i % 1000 == 0:
-            print("Init " + mat_filename, i)
         unit_vector = torch.zeros(size)
         unit_vector[i] = 1
         save_vector(mat_filename, i, unit_vector)
 
 def initalize_empty_matrix(mat_filename, size):
     for i in range(size):
-        if i % 1000 == 0:
-            print("Init " + mat_filename, i)
         empty_vector = torch.empty(size).view(-1, 1)
         save_vector(mat_filename, i, empty_vector)
 
@@ -106,7 +96,15 @@ def GramSchmidt(size):
 
             save_vector("U", i, Ui)
 
-def Householder(size):
+def Householder(size, print_every):
+    initalize_dir("V")
+    initalize_random_matrix("V", size)
+
+    initalize_dir("U")
+    initalize_identity_matrix("U", size)
+
+    print("Beginning Householder QR Decomp...")
+    start = time.time()
     for i in range(size):
         # Load column of V
         V = load_vector("V", i)
@@ -130,15 +128,26 @@ def Householder(size):
             save_vector("Hbar", j, Hbar)
         
         for j, k  in enumerate(range(i, size)):
-            print(os.listdir("imagenet_U_files/Hbar/"))
             H = load_vector("H", k)
             Hbar = load_vector("Hbar", j)
             H[i:] = Hbar
-            save_vector("H", k, H)
+            save_vector("H", k, H)       
+
+        # Clean
+        shutil.rmtree("imagenet_U_files/Hbar")
 
         # Update U and V
         vector_by_vector_matmul("H", "V", "V", size)
         vector_by_vector_matmul("U", "H", "U", size)
+        
+        # Clean
+        shutil.rmtree("imagenet_U_files/H")
+
+        # Talk
+        if i % print_every == 0:
+            print("Column: ", i, " of ", size, "\tTime to make ", print_every, " column(s): ", round(time.time() - start, 2) , " [s]")
+            start = time.time()
+    shutil.rmtree("imagenet_U_files/V")
 
 def check_U(size):
     for i in range(size):
@@ -206,8 +215,10 @@ def vector_by_vector_matmul(mat1_filename, mat2_filename, product_mat_filename, 
     
     shutil.rmtree("imagenet_U_files/" + product_mat_filename)
     os.replace("imagenet_U_files/Temp", "imagenet_U_files/" + product_mat_filename)
+    shutil.rmtree("imagenet_U_files/" + mat1_filename + "T")
         
 def save_transpose(mat_filename, size):
+    initalize_dir(mat_filename + "T")
 
     # Decalre dimensions
     nrows = size
@@ -219,9 +230,6 @@ def save_transpose(mat_filename, size):
 
         for j in range(ncols):
             at[j] = load_vector(mat_filename, j)[i]
-
-        if i % 1000 == 0:
-            print("Init " + mat_filename, i)
 
         save_vector(mat_filename + "T", i, at)
 
@@ -235,31 +243,17 @@ def load_full_matrix(mat_filename, size):
 
 def main():
     # Parameters
-    size = 4
-
-    # Initalize Directories
-    initalize_dir("H")
-    initalize_dir("Hbar")
-    initalize_dir("HT")
-    initalize_dir("U")
-    initalize_dir("UT")
-    initalize_dir("V")
-    
-
-    # Initialize Matricies
-    initalize_random_matrix("V", size)
-    initalize_identity_matrix("U", size)
-    initalize_empty_matrix("Hbar", size)
-    
+    size = 400
+    print_every = 1
 
     # Generate U Matrix with Householder
-    Householder(size)
+    Householder(size, print_every)
 
     # Load U
-    U = load_full_matrix("U", size)
-    print("U\n", U)
-    check = torch.matmul(torch.t(U), U)
-    print("\nUTU\n", torch.round(check))
+    # U = load_full_matrix("U", size)
+    # print("U\n", U)
+    # check = torch.matmul(torch.t(U), U)
+    # print("\nUTU\n", abs(torch.round(check)))
 
     # Matrix Multiply
     # vector_by_vector_matmul("VT", "V", "Q", size)
@@ -273,8 +267,12 @@ def main():
     # print("\nVV\n", torch.matmul(V, V))
     # print("\nQ\n", load_full_matrix("Q", size))
 
+import time
+start = time.time()
 if __name__ == '__main__':
     main()
+
+print(time.time() - start)
 # check_U(size)
 
 
