@@ -3,22 +3,53 @@ import torchvision.transforms as transforms
 import pickle
 import torch
 import os
+import shutil
 import copy
 import time
 
 # Decalre GPU
 # os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 # os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+def initalize_dir(dir):
+    if check_dir_exists(dir):
+        if not check_dir_empty(dir):
+            clean_dir(dir)
+    else:
+        os.mkdir("imagenet_U_files/" + dir)
 
-# Generate U
+def check_dir_empty(dir):
+    return (len(os.listdir("imagenet_U_files/" + dir)) == 0)
+
+def check_dir_exists(dir):
+    return (dir in os.listdir("imagenet_U_files/"))
+
+def clean_dir(dir):
+    for filename in os.listdir("imagenet_U_files/" + dir + "/"):
+        file_path = os.path.join("imagenet_U_files/" + dir + "/", filename)
+        os.remove(file_path)
+
 def save_vector(vector_filename, index, vector):
+    if not check_dir_exists(vector_filename):
+        os.mkdir("imagenet_U_files/" + vector_filename)
+
     with open("imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'wb') as output:
         pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
+
+def save_vector_in_temp_dir(vector_filename, index, vector):
+    if not check_dir_exists("Temp"):
+        os.mkdir("imagenet_U_files/Temp")
+
+    with open("imagenet_U_files/Temp/" + vector_filename + str(index) + ".pkl", 'wb') as output:
+        pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
+
 
 def load_vector(vector_filename, index):
     with open("imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'rb') as input:
        vector = pickle.load(input).type(torch.FloatTensor)
     return vector
+
+def get_saved_column_size(vector_filename):
+    return len(os.listdir("imagenet_U_files/" + vector_filename + "/"))
 
 def initalize_random_matrix(mat_filename, size):
     for i in range(size):
@@ -77,21 +108,37 @@ def GramSchmidt(size):
 
 def Householder(size):
     for i in range(size):
+        # Load column of V
+        V = load_vector("V", i)
 
-        # Calculate u vector
-        x = V[i:, i].view(-1, 1)
+        # Calculate x vector
+        x = V[i:].view(-1)
         x[0] = x[0] + torch.sign(x[0]) * torch.norm(x, p=2)
 
         # Compute H matrix
-        Hbar = torch.eye(x.size(0)) - (2 * torch.matmul(x, torch.t(x)) / torch.matmul(torch.t(x), x))
-        H = torch.eye(size)
-        H[i:, i:] = Hbar
+        initalize_dir("Hbar")
+        initalize_empty_matrix("Hbar", size - i)
+        initalize_dir("H")
+        initalize_identity_matrix("H", size)
 
-        # Update Q and R
-        V = torch.matmul(H, V)
-        U = torch.matmul(U, H)
+        coefficent = 2/torch.dot(x, x)
+        vector_by_vector_dot2mat(x, x, "Hbar")
+        for j in range(x.view(-1).size(0)):
+            Hbar =  -coefficent * load_vector("Hbar", j)
+            Hbar[j] = Hbar[j] + 1
 
-    return U
+            save_vector("Hbar", j, Hbar)
+        
+        for j, k  in enumerate(range(i, size)):
+            print(os.listdir("imagenet_U_files/Hbar/"))
+            H = load_vector("H", k)
+            Hbar = load_vector("Hbar", j)
+            H[i:] = Hbar
+            save_vector("H", k, H)
+
+        # Update U and V
+        vector_by_vector_matmul("H", "V", "V", size)
+        vector_by_vector_matmul("U", "H", "U", size)
 
 def check_U(size):
     for i in range(size):
@@ -105,34 +152,77 @@ def check_U(size):
     check = torch.matmul(torch.t(U), U)
     print(torch.round(check))
 
-def vector_by_vector_matmul(transposed_mat1_filename, mat2_filename, out_filename, size):
+def vector_by_vector_dot2mat(vec1, vec2, product_mat_filename):
+    # Correct the size
+    vec1 = vec1.view(-1)
+    vec2 = vec2.view(-1)
+
+    # Determine Dimensions
+    ncols = vec1.size(0)
+    nrows = vec2.size(0)
+
+    # MatMul
+    for i in range(ncols):
+        # Load column of vector 2
+        b = vec2[i]
     
-    for i in range(size):
+        # Initalize Column of product Matrix
+        c = torch.empty(nrows)
+
+        for j in range(nrows):
+            # Load row of vector 1
+            at = vec1[j]
+            
+            c[j] = at*b
+
+        save_vector(product_mat_filename, i, c)
+
+def vector_by_vector_matmul(mat1_filename, mat2_filename, product_mat_filename, size):
+    # Save on Temp File
+    initalize_dir("Temp")
+
+    # Save the rows of the first matrix
+    save_transpose(mat1_filename, size)
+
+    # Determine Dimensions
+    ncols = get_saved_column_size(mat2_filename)
+    nrows = get_saved_column_size(mat1_filename + "T")
+
+    # MatMul
+    for i in range(ncols):
+        # Load Column of B Matrix
+        b = load_vector(mat2_filename, i).view(-1)
+    
+        # Initalize Column of product Matrix
+        c = load_vector(product_mat_filename, i).view(-1)
+
+        for j in range(nrows):
+            at = load_vector(mat1_filename + "T", j).view(-1)
+
+            c[j] = torch.dot(at, b)
+
+        save_vector_in_temp_dir(product_mat_filename, i, c)
+
+    
+    shutil.rmtree("imagenet_U_files/" + product_mat_filename)
+    os.replace("imagenet_U_files/Temp", "imagenet_U_files/" + product_mat_filename)
         
-        at = load_vector(transposed_mat1_filename, i).view(1, -1)
-        print("AT", at)
-    
-        c = load_vector(out_filename, i).view(-1)
-
-        for j in range(size):
-            b = load_vector(mat2_filename, j).view(-1, 1)
-
-            c[j] = torch.matmul(at, b)
-
-        # print("C", c)
-
-        save_vector(out_filename, i, c)
-    
 def save_transpose(mat_filename, size):
 
-    for i in range(size):
-        at = torch.empty(size)
+    # Decalre dimensions
+    nrows = size
+    ncols = get_saved_column_size(mat_filename)
 
-        for j in range(size):
+    # Convert
+    for i in range(nrows):
+        at = torch.empty(ncols)
+
+        for j in range(ncols):
             at[j] = load_vector(mat_filename, j)[i]
 
         if i % 1000 == 0:
             print("Init " + mat_filename, i)
+
         save_vector(mat_filename + "T", i, at)
 
 def load_full_matrix(mat_filename, size):
@@ -147,23 +237,41 @@ def main():
     # Parameters
     size = 4
 
+    # Initalize Directories
+    initalize_dir("H")
+    initalize_dir("Hbar")
+    initalize_dir("HT")
+    initalize_dir("U")
+    initalize_dir("UT")
+    initalize_dir("V")
+    
+
     # Initialize Matricies
     initalize_random_matrix("V", size)
-    # initalize_identity_matrix("U", size)
-    initalize_empty_matrix("Q", size)
+    initalize_identity_matrix("U", size)
+    initalize_empty_matrix("Hbar", size)
+    
+
+    # Generate U Matrix with Householder
+    Householder(size)
+
+    # Load U
+    U = load_full_matrix("U", size)
+    print("U\n", U)
+    check = torch.matmul(torch.t(U), U)
+    print("\nUTU\n", torch.round(check))
 
     # Matrix Multiply
-    save_transpose("V", size)
-    vector_by_vector_matmul("VT", "V", "Q", size)
+    # vector_by_vector_matmul("VT", "V", "Q", size)
 
     # Check Step
-    V  = load_full_matrix("V", size)
-    VT = load_full_matrix("VT", size)
-    print("V\n", V)
-    print("\nVT\n", VT)
+    # V  = load_full_matrix("V", size)
+    # VT = load_full_matrix("VT", size)
+    # print("V\n", V)
+    # print("\n1by1 VT\n", VT)
 
-    print("\nVtV\n", torch.matmul(VT, V))
-    print("\nQ\n", load_full_matrix("Q", size))
+    # print("\nVV\n", torch.matmul(V, V))
+    # print("\nQ\n", load_full_matrix("Q", size))
 
 if __name__ == '__main__':
     main()
