@@ -12,40 +12,40 @@ def initalize_dir(dir):
         if not check_dir_empty(dir):
             clean_dir(dir)
     else:
-        os.mkdir("imagenet_U_files/" + dir)
+        os.mkdir("../../../data/naddeok/imagenet_U_files/" + dir)
 
 def check_dir_empty(dir):
-    return (len(os.listdir("imagenet_U_files/" + dir)) == 0)
+    return (len(os.listdir("../../../data/naddeok/imagenet_U_files/" + dir)) == 0)
 
 def check_dir_exists(dir):
-    return (dir in os.listdir("imagenet_U_files/"))
+    return (dir in os.listdir("../../../data/naddeok/imagenet_U_files/"))
 
 def clean_dir(dir):
-    for filename in os.listdir("imagenet_U_files/" + dir + "/"):
-        file_path = os.path.join("imagenet_U_files/" + dir + "/", filename)
+    for filename in os.listdir("../../../data/naddeok/imagenet_U_files/" + dir + "/"):
+        file_path = os.path.join("../../../data/naddeok/imagenet_U_files/" + dir + "/", filename)
         os.remove(file_path)
 
 def save_vector(vector_filename, index, vector):
     if not check_dir_exists(vector_filename):
-        os.mkdir("imagenet_U_files/" + vector_filename)
+        os.mkdir("../../../data/naddeok/imagenet_U_files/" + vector_filename)
 
-    with open("imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'wb') as output:
+    with open("../../../data/naddeok/imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'wb') as output:
         pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
 
 def save_vector_in_temp_dir(vector_filename, index, vector):
     if not check_dir_exists("Temp"):
-        os.mkdir("imagenet_U_files/Temp")
+        os.mkdir("../../../data/naddeok/imagenet_U_files/Temp")
 
-    with open("imagenet_U_files/Temp/" + vector_filename + str(index) + ".pkl", 'wb') as output:
+    with open("../../../data/naddeok/imagenet_U_files/Temp/" + vector_filename + str(index) + ".pkl", 'wb') as output:
         pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
 
 def load_vector(vector_filename, index):
-    with open("imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'rb') as input:
+    with open("../../../data/naddeok/imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'rb') as input:
        vector = pickle.load(input).type(torch.FloatTensor)
     return vector
 
 def get_saved_column_size(vector_filename):
-    return len(os.listdir("imagenet_U_files/" + vector_filename + "/"))
+    return len(os.listdir("../../../data/naddeok/imagenet_U_files/" + vector_filename + "/"))
 
 def initalize_random_matrix(mat_filename, size):
     for i in range(size):
@@ -134,20 +134,20 @@ def Householder(size, print_every):
             save_vector("H", k, H)       
 
         # Clean
-        shutil.rmtree("imagenet_U_files/Hbar")
+        shutil.rmtree("../../../data/naddeok/imagenet_U_files/Hbar")
 
         # Update U and V
         vector_by_vector_matmul("H", "V", "V", size)
         vector_by_vector_matmul("U", "H", "U", size)
         
         # Clean
-        shutil.rmtree("imagenet_U_files/H")
+        shutil.rmtree("../../../data/naddeok/imagenet_U_files/H")
 
         # Talk
         if i % print_every == 0:
             print("Column: ", i, " of ", size, "\tTime to make ", print_every, " column(s): ", round(time.time() - start, 2) , " [s]")
             start = time.time()
-    shutil.rmtree("imagenet_U_files/V")
+    shutil.rmtree("../../../data/naddeok/imagenet_U_files/V")
 
 def check_U(size):
     for i in range(size):
@@ -213,9 +213,9 @@ def vector_by_vector_matmul(mat1_filename, mat2_filename, product_mat_filename, 
         save_vector_in_temp_dir(product_mat_filename, i, c)
 
     
-    shutil.rmtree("imagenet_U_files/" + product_mat_filename)
-    os.replace("imagenet_U_files/Temp", "imagenet_U_files/" + product_mat_filename)
-    shutil.rmtree("imagenet_U_files/" + mat1_filename + "T")
+    shutil.rmtree("../../../data/naddeok/imagenet_U_files/" + product_mat_filename)
+    os.replace("../../../data/naddeok/imagenet_U_files/Temp", "../../../data/naddeok/imagenet_U_files/" + product_mat_filename)
+    shutil.rmtree("../../../data/naddeok/imagenet_U_files/" + mat1_filename + "T")
         
 def save_transpose(mat_filename, size):
     initalize_dir(mat_filename + "T")
@@ -243,7 +243,7 @@ def load_full_matrix(mat_filename, size):
 
 def main():
     # Parameters
-    size = 400
+    size = 4
     print_every = 1
 
     # Generate U Matrix with Householder
