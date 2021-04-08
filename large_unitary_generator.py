@@ -1,5 +1,6 @@
 # Imports 
 import torchvision.transforms as transforms
+import numpy as np
 import pickle
 import torch
 import os
@@ -7,63 +8,68 @@ import shutil
 import copy
 import time
 
-def initalize_dir(dir):
-    if check_dir_exists(dir):
-        if not check_dir_empty(dir):
-            clean_dir(dir)
+def initalize_dir(folder_path, dir):
+    if check_dir_exists(folder_path, dir):
+        if not check_dir_empty(folder_path, dir):
+            clean_dir(folder_path, dir)
     else:
-        os.mkdir("../../../data/naddeok/imagenet_U_files/" + dir)
+        os.mkdir(folder_path + dir)
 
-def check_dir_empty(dir):
-    return (len(os.listdir("../../../data/naddeok/imagenet_U_files/" + dir)) == 0)
+def check_dir_empty(folder_path, dir):
+    return (len(os.listdir(folder_path + dir)) == 0)
 
-def check_dir_exists(dir):
-    return (dir in os.listdir("../../../data/naddeok/imagenet_U_files/"))
+def check_dir_exists(folder_path, dir):
+    return (dir in os.listdir(folder_path))
 
-def clean_dir(dir):
-    for filename in os.listdir("../../../data/naddeok/imagenet_U_files/" + dir + "/"):
-        file_path = os.path.join("../../../data/naddeok/imagenet_U_files/" + dir + "/", filename)
+def clean_dir(folder_path, dir):
+    for filename in os.listdir(folder_path + dir + "/"):
+        file_path = os.path.join(folder_path + dir + "/", filename)
         os.remove(file_path)
 
-def save_vector(vector_filename, index, vector):
-    if not check_dir_exists(vector_filename):
-        os.mkdir("../../../data/naddeok/imagenet_U_files/" + vector_filename)
+def save_status(folder_path, status):
+    f = open(folder_path + "status.txt", "w")
+    f.write(str(status))
+    f.close()
 
-    with open("../../../data/naddeok/imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'wb') as output:
+def save_vector(folder_path, vector_filename, index, vector):
+    if not check_dir_exists(folder_path, vector_filename):
+        os.mkdir(folder_path + vector_filename)
+
+    with open(folder_path + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'wb') as output:
         pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
 
-def save_vector_in_temp_dir(vector_filename, index, vector):
-    if not check_dir_exists("Temp"):
-        os.mkdir("../../../data/naddeok/imagenet_U_files/Temp")
+def save_vector_in_temp_dir(folder_path, vector_filename, index, vector):
+    if not check_dir_exists(folder_path, "Temp"):
+        os.mkdir(folder_path + "/Temp")
 
-    with open("../../../data/naddeok/imagenet_U_files/Temp/" + vector_filename + str(index) + ".pkl", 'wb') as output:
+    with open(folder_path + "/Temp/" + vector_filename + str(index) + ".pkl", 'wb') as output:
         pickle.dump(vector, output, pickle.HIGHEST_PROTOCOL)
 
-def load_vector(vector_filename, index):
-    with open("../../../data/naddeok/imagenet_U_files/" + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'rb') as input:
+def load_vector(folder_path, vector_filename, index):
+    with open(folder_path + vector_filename + "/" + vector_filename + str(index) + ".pkl", 'rb') as input:
        vector = pickle.load(input).type(torch.FloatTensor)
-    return vector
+    return vector.cuda()
 
-def get_saved_column_size(vector_filename):
-    return len(os.listdir("../../../data/naddeok/imagenet_U_files/" + vector_filename + "/"))
+def get_saved_column_size(folder_path, vector_filename):
+    return len(os.listdir(folder_path + vector_filename + "/"))
 
-def initalize_random_matrix(mat_filename, size):
+def initalize_random_matrix(folder_path, mat_filename, size):
     for i in range(size):
         random_vector = torch.rand(size, 1)
-        save_vector(mat_filename, i, random_vector)
+        save_vector(folder_path, mat_filename, i, random_vector)
 
-def initalize_identity_matrix(mat_filename, size):
+def initalize_identity_matrix(folder_path, mat_filename, size):
     for i in range(size):
         unit_vector = torch.zeros(size)
         unit_vector[i] = 1
-        save_vector(mat_filename, i, unit_vector)
+        save_vector(folder_path, mat_filename, i, unit_vector)
 
-def initalize_empty_matrix(mat_filename, size):
+def initalize_empty_matrix(folder_path, mat_filename, size):
     for i in range(size):
         empty_vector = torch.empty(size).view(-1, 1)
-        save_vector(mat_filename, i, empty_vector)
+        save_vector(folder_path, mat_filename, i, empty_vector)
 
-def GramSchmidt(size):
+def GramSchmidt(folder_path, size):
     for i in range(size):
 
         if i < 356: 
@@ -73,12 +79,12 @@ def GramSchmidt(size):
             print("Build U", i)
 
         # Load V[:, i] as V
-        Vi = load_vector("V", i)
+        Vi = load_vector(folder_path, "V", i)
 
         # Orthonormalize
         if i == 0:
             Ui = Vi / torch.linalg.norm(Vi, ord = 2)
-            save_vector("U", i, Ui)
+            save_vector(folder_path, "U", i, Ui)
 
         else:
             start = time.time()
@@ -86,7 +92,7 @@ def GramSchmidt(size):
             Ui = Ui.cuda()
 
             for j in range(i):
-                Uj = load_vector("U", j)
+                Uj = load_vector(folder_path, "U", j)
                 Uj = Uj.cuda()
 
                 
@@ -94,64 +100,90 @@ def GramSchmidt(size):
                 
             Ui = Ui / torch.linalg.norm(Ui, ord = 2)
 
-            save_vector("U", i, Ui)
+            save_vector(folder_path, "U", i, Ui)
 
-def Householder(size, print_every):
-    initalize_dir("V")
-    initalize_random_matrix("V", size)
+def Householder(folder_path, size, print_every):
+    initalize_dir(folder_path, "V")
+    initalize_random_matrix(folder_path, "V", size)
 
-    initalize_dir("U")
-    initalize_identity_matrix("U", size)
+    initalize_dir(folder_path, "U")
+    initalize_identity_matrix(folder_path, "U", size)
 
-    print("Beginning Householder QR Decomp...")
+    print("\nBeginning Householder QR Decomp...\n--------------------------------------------------")
+    status = {"Overall Iteration": "Not Started",
+              "Hbar Iteration": "Not Started",
+              "H Iteration": "Not Started"}
+    save_status(folder_path, status)
     start = time.time()
     for i in range(size):
+        status["Overall Iteration"] = i
+        status["Hbar Iteration"]    = "Not Started for Iteration " + str(i)
+        status["H Iteration"]       = "Not Started for Iteration " + str(i)
+        save_status(folder_path, status)
+
         # Load column of V
-        V = load_vector("V", i)
+        V = load_vector(folder_path, "V", i)
 
         # Calculate x vector
         x = V[i:].view(-1)
         x[0] = x[0] + torch.sign(x[0]) * torch.norm(x, p=2)
+        x = x.cuda()
 
         # Compute H matrix
-        initalize_dir("Hbar")
-        initalize_empty_matrix("Hbar", size - i)
-        initalize_dir("H")
-        initalize_identity_matrix("H", size)
+        initalize_dir(folder_path, "Hbar")
+        initalize_empty_matrix(folder_path, "Hbar", size - i)
+        initalize_dir(folder_path, "H")
+        initalize_identity_matrix(folder_path, "H", size)
 
         coefficent = 2/torch.dot(x, x)
-        vector_by_vector_dot2mat(x, x, "Hbar")
+        vector_by_vector_dot2mat(folder_path, x, x, "Hbar")
         for j in range(x.view(-1).size(0)):
-            Hbar =  -coefficent * load_vector("Hbar", j)
+            status["Hbar Iteration"] = j
+            save_status(folder_path, status)
+            Hbar =  -coefficent * load_vector(folder_path, "Hbar", j)
             Hbar[j] = Hbar[j] + 1
 
-            save_vector("Hbar", j, Hbar)
-        
+            save_vector(folder_path, "Hbar", j, Hbar)
+        status["Hbar Iteration"] = "Done for Iteration " + str(i)
+        save_status(folder_path, status)
+
         for j, k  in enumerate(range(i, size)):
-            H = load_vector("H", k)
-            Hbar = load_vector("Hbar", j)
+            status["H Iteration"] = j
+            save_status(folder_path, status)
+            H = load_vector(folder_path, "H", k)
+            Hbar = load_vector(folder_path, "Hbar", j)
             H[i:] = Hbar
-            save_vector("H", k, H)       
+            save_vector(folder_path, "H", k, H)   
+        status["H Iteration"] = "Done for Iteration " + str(i)    
+        save_status(folder_path, status)
 
         # Clean
-        shutil.rmtree("../../../data/naddeok/imagenet_U_files/Hbar")
+        shutil.rmtree(folder_path + "/Hbar")
 
         # Update U and V
-        vector_by_vector_matmul("H", "V", "V", size)
-        vector_by_vector_matmul("U", "H", "U", size)
+        vector_by_vector_matmul(folder_path, "H", "V", "V", size)
+        vector_by_vector_matmul(folder_path, "U", "H", "U", size)
         
         # Clean
-        shutil.rmtree("../../../data/naddeok/imagenet_U_files/H")
+        shutil.rmtree(folder_path + "/H")
 
         # Talk
-        if i % print_every == 0:
-            print("Column: ", i, " of ", size, "\tTime to make ", print_every, " column(s): ", round(time.time() - start, 2) , " [s]")
+        if i % print_every == 0 and i != 0:
+            print("Column: ", i, " of ", size - 1, "\tTime to make ", print_every, " column(s): ", round(time.time() - start, 2) , " [s]")
             start = time.time()
-    shutil.rmtree("../../../data/naddeok/imagenet_U_files/V")
+        elif i == 0:
+            print("Time to make first column (usually takes longer than rest to initalize everything): ", round(time.time() - start, 2) , " [s]")
+            start = time.time()
 
-def check_U(size):
+    shutil.rmtree(folder_path + "/V")
+    status["Overall Iteration"] = "Done"
+    status["Hbar Iteration"] ="Done"
+    status["H Iteration"] = "Done"
+    save_status(folder_path, status)
+
+def check_U(folder_path, size):
     for i in range(size):
-        Ui = load_vector("U", i)
+        Ui = load_vector(folder_path, "U", i)
 
         if i == 0:
             U = Ui
@@ -161,7 +193,7 @@ def check_U(size):
     check = torch.matmul(torch.t(U), U)
     print(torch.round(check))
 
-def vector_by_vector_dot2mat(vec1, vec2, product_mat_filename):
+def vector_by_vector_dot2mat(folder_path, vec1, vec2, product_mat_filename):
     # Correct the size
     vec1 = vec1.view(-1)
     vec2 = vec2.view(-1)
@@ -184,102 +216,106 @@ def vector_by_vector_dot2mat(vec1, vec2, product_mat_filename):
             
             c[j] = at*b
 
-        save_vector(product_mat_filename, i, c)
+        save_vector(folder_path, product_mat_filename, i, c)
 
-def vector_by_vector_matmul(mat1_filename, mat2_filename, product_mat_filename, size):
+def vector_by_vector_matmul(folder_path, mat1_filename, mat2_filename, product_mat_filename, size):
     # Save on Temp File
-    initalize_dir("Temp")
+    initalize_dir(folder_path, "Temp")
 
     # Save the rows of the first matrix
-    save_transpose(mat1_filename, size)
+    save_transpose(folder_path, mat1_filename, size)
 
     # Determine Dimensions
-    ncols = get_saved_column_size(mat2_filename)
-    nrows = get_saved_column_size(mat1_filename + "T")
+    ncols = get_saved_column_size(folder_path, mat2_filename)
+    nrows = get_saved_column_size(folder_path, mat1_filename + "T")
 
     # MatMul
     for i in range(ncols):
         # Load Column of B Matrix
-        b = load_vector(mat2_filename, i).view(-1)
+        b = load_vector(folder_path, mat2_filename, i).view(-1)
     
         # Initalize Column of product Matrix
-        c = load_vector(product_mat_filename, i).view(-1)
+        c = load_vector(folder_path, product_mat_filename, i).view(-1)
 
         for j in range(nrows):
-            at = load_vector(mat1_filename + "T", j).view(-1)
+            at = load_vector(folder_path, mat1_filename + "T", j).view(-1)
 
             c[j] = torch.dot(at, b)
 
-        save_vector_in_temp_dir(product_mat_filename, i, c)
+        save_vector_in_temp_dir(folder_path, product_mat_filename, i, c)
 
     
-    shutil.rmtree("../../../data/naddeok/imagenet_U_files/" + product_mat_filename)
-    os.replace("../../../data/naddeok/imagenet_U_files/Temp", "../../../data/naddeok/imagenet_U_files/" + product_mat_filename)
-    shutil.rmtree("../../../data/naddeok/imagenet_U_files/" + mat1_filename + "T")
+    shutil.rmtree(folder_path + product_mat_filename)
+    os.replace(folder_path + "/Temp", folder_path + product_mat_filename)
+    shutil.rmtree(folder_path + mat1_filename + "T")
         
-def save_transpose(mat_filename, size):
-    initalize_dir(mat_filename + "T")
+def save_transpose(folder_path, mat_filename, size):
+    initalize_dir(folder_path, mat_filename + "T")
 
     # Decalre dimensions
     nrows = size
-    ncols = get_saved_column_size(mat_filename)
+    ncols = get_saved_column_size(folder_path, mat_filename)
 
     # Convert
     for i in range(nrows):
         at = torch.empty(ncols)
 
         for j in range(ncols):
-            at[j] = load_vector(mat_filename, j)[i]
+            at[j] = load_vector(folder_path, mat_filename, j)[i]
 
-        save_vector(mat_filename + "T", i, at)
+        save_vector(folder_path, mat_filename + "T", i, at)
 
-def load_full_matrix(mat_filename, size):
+def load_full_matrix(folder_path, mat_filename, size):
     A = torch.empty(size, size)
 
     for i in range(size):
-        A[:,i] = load_vector(mat_filename, i).view(-1)
+        A[:,i] = load_vector(folder_path, mat_filename, i).view(-1)
 
     return A
 
 def main():
+    # Decalre GPU
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+
     # Parameters
-    size = 4
-    print_every = 1
+    folder_path = "../../../data/naddeok/imagenet_U_files/"
+    size = 3*224*224
+    print_every = np.ceil(size/100)
 
     # Generate U Matrix with Householder
-    Householder(size, print_every)
+    Householder(folder_path, size, print_every)
 
-    # Load U
-    # U = load_full_matrix("U", size)
+    # # Load U
+    # U = load_full_matrix(folder_path, "U", size)
     # print("U\n", U)
     # check = torch.matmul(torch.t(U), U)
     # print("\nUTU\n", abs(torch.round(check)))
 
     # Matrix Multiply
-    # vector_by_vector_matmul("VT", "V", "Q", size)
+    # vector_by_vector_matmul(folder_path, "VT", "V", "Q", size)
 
     # Check Step
-    # V  = load_full_matrix("V", size)
-    # VT = load_full_matrix("VT", size)
+    # V  = load_full_matrix(folder_path, "V", size)
+    # VT = load_full_matrix(folder_path, "VT", size)
     # print("V\n", V)
     # print("\n1by1 VT\n", VT)
 
     # print("\nVV\n", torch.matmul(V, V))
-    # print("\nQ\n", load_full_matrix("Q", size))
+    # print("\nQ\n", load_full_matrix(folder_path, "Q", size))
 
 import time
 start = time.time()
 if __name__ == '__main__':
     main()
 
-print(time.time() - start)
+print("--------------------------------------------------\nTotal run time: ", round(time.time() - start, 2), " [s]\n--------------------------------------------------")
+
 # check_U(size)
 
 
 
-# Decalre GPU
-# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-# os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+
 
 # Generate Unitary Transform
 # class UnitaryTransform(object):
