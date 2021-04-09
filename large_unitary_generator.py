@@ -103,13 +103,6 @@ def GramSchmidt(folder_path, size):
             save_vector(folder_path, "U", i, Ui)
 
 def Householder(folder_path, size, print_every):
-    # initalize_dir(folder_path, "V")
-    # initalize_random_matrix(folder_path, "V", size)
-
-    # initalize_dir(folder_path, "U")
-    # initalize_identity_matrix(folder_path, "U", size)
-
-    print("\nBeginning Householder QR Decomp...\n--------------------------------------------------")
     status = {"Initializing" : "None",
               "Overall Iteration": "Not Started",
               "Hbar Iteration": "Not Started",
@@ -117,6 +110,20 @@ def Householder(folder_path, size, print_every):
               "U" : "Not Started",
               "V" : "Not Started"}
     save_status(folder_path, status)
+
+    # status["Initializing"] = "V"
+    # save_status(folder_path, status)
+    # initalize_dir(folder_path, "V")
+    # initalize_random_matrix(folder_path, "V", size)
+
+    # status["Initializing"] = "U"
+    # save_status(folder_path, status)
+    # initalize_dir(folder_path, "U")
+    # initalize_identity_matrix(folder_path, "U", size)
+    # status["Initializing"] = "None"
+    # save_status(folder_path, status)
+
+    print("\nBeginning Householder QR Decomp...\n--------------------------------------------------")
     start = time.time()
     for i in range(size):
         status["Overall Iteration"] = i
@@ -132,13 +139,8 @@ def Householder(folder_path, size, print_every):
         x[0] = x[0] + torch.sign(x[0]) * torch.norm(x, p=2)
         x = x.cuda()
 
-        # Compute H matrix
-        if i != 0:
-            initalize_dir(folder_path, "Hbar")
-            initalize_empty_matrix(folder_path, "Hbar", size - i)
-            initalize_dir(folder_path, "H")
-            initalize_identity_matrix(folder_path, "H", size)
-
+        
+        # Compute Hbar Matrix
         status["Hbar Iteration"] = "calculating coefficient for iteration " + str(i)
         save_status(folder_path, status)
         coefficent = 2/torch.dot(x, x)
@@ -154,6 +156,14 @@ def Householder(folder_path, size, print_every):
             save_vector(folder_path, "Hbar", j, Hbar)
 
         status["Hbar Iteration"] = "Done for Iteration " + str(i)
+        save_status(folder_path, status)
+
+        # Compute H matrix
+        status["Initializing"] = "H"
+        save_status(folder_path, status)
+        initalize_dir(folder_path, "H")
+        initalize_identity_matrix(folder_path, "H", size)
+        status["Initializing"] = "Done"
         save_status(folder_path, status)
 
         for j, k  in enumerate(range(i, size)):
@@ -231,15 +241,11 @@ def vector_by_vector_dot2mat(folder_path, vec1, vec2, product_mat_filename):
     for i in range(ncols):
         # Load column of vector 2
         b = vec2[i]
+
+        start_for = time.time()
     
         # Initalize Column of product Matrix
-        c = torch.empty(nrows)
-
-        for j in range(nrows):
-            # Load row of vector 1
-            at = vec1[j]
-            
-            c[j] = at*b
+        c = b*vec1
 
         save_vector(folder_path, product_mat_filename, i, c)
 
