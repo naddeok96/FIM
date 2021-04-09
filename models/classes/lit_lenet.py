@@ -266,9 +266,9 @@ class LitLeNet(pl.LightningModule):
         with open(filename, 'rb') as input:
             self.U = pickle.load(input).type(torch.FloatTensor)
 
-     # Set a new U
     def set_orthogonal_matrix(self):
-        self.U = self.get_orthogonal_matrix(self.image_size**2)
+        self.U = self.get_orthogonal_matrix(self.image_size)
+        # self.U = self.get_orthogonal_matrix(self.image_size**2)
 
     def set_random_matrix(self):
         self.U = torch.rand(self.image_size**2, self.image_size**2)
@@ -292,15 +292,21 @@ class LitLeNet(pl.LightningModule):
         else:
             U = copy(self.U)
 
-        # Push to GPU if True
+        # Push to GPU
         U = copy(U.cuda())
 
         # Repeat U and U transpose for all batches
-        input_tensor = input_tensor.cuda()
-        U = copy(U.view((1, channel_num * A_side_size**2, channel_num * A_side_size**2)).repeat(batch_size, 1, 1))
-        
+        U = copy(U.view(1, A_side_size, A_side_size)).repeat(batch_size * channel_num, 1, 1)
+
         # Batch muiltply UA
-        return torch.bmm(U, input_tensor.view(batch_size, channel_num *A_side_size**2, 1)).view(batch_size, channel_num, A_side_size, A_side_size)
+        return torch.bmm(U, input_tensor.view(batch_size * channel_num, A_side_size, A_side_size)).view(batch_size, channel_num, A_side_size, A_side_size)
+
+        # # Repeat U and U transpose for all batches
+        # input_tensor = input_tensor.cuda()
+        # U = copy(U.view((1, channel_num * A_side_size**2, channel_num * A_side_size**2)).repeat(batch_size, 1, 1))
+        
+        # # Batch muiltply UA
+        # return torch.bmm(U, input_tensor.view(batch_size, channel_num *A_side_size**2, 1)).view(batch_size, channel_num, A_side_size, A_side_size)
 
     def forward(self, x):
         
