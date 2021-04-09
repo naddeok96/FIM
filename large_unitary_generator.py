@@ -103,16 +103,19 @@ def GramSchmidt(folder_path, size):
             save_vector(folder_path, "U", i, Ui)
 
 def Householder(folder_path, size, print_every):
-    initalize_dir(folder_path, "V")
-    initalize_random_matrix(folder_path, "V", size)
+    # initalize_dir(folder_path, "V")
+    # initalize_random_matrix(folder_path, "V", size)
 
-    initalize_dir(folder_path, "U")
-    initalize_identity_matrix(folder_path, "U", size)
+    # initalize_dir(folder_path, "U")
+    # initalize_identity_matrix(folder_path, "U", size)
 
     print("\nBeginning Householder QR Decomp...\n--------------------------------------------------")
-    status = {"Overall Iteration": "Not Started",
+    status = {"Initializing" : "None",
+              "Overall Iteration": "Not Started",
               "Hbar Iteration": "Not Started",
-              "H Iteration": "Not Started"}
+              "H Iteration": "Not Started",
+              "U" : "Not Started",
+              "V" : "Not Started"}
     save_status(folder_path, status)
     start = time.time()
     for i in range(size):
@@ -130,12 +133,17 @@ def Householder(folder_path, size, print_every):
         x = x.cuda()
 
         # Compute H matrix
-        initalize_dir(folder_path, "Hbar")
-        initalize_empty_matrix(folder_path, "Hbar", size - i)
-        initalize_dir(folder_path, "H")
-        initalize_identity_matrix(folder_path, "H", size)
+        if i != 0:
+            initalize_dir(folder_path, "Hbar")
+            initalize_empty_matrix(folder_path, "Hbar", size - i)
+            initalize_dir(folder_path, "H")
+            initalize_identity_matrix(folder_path, "H", size)
 
+        status["Hbar Iteration"] = "calculating coefficient for iteration " + str(i)
+        save_status(folder_path, status)
         coefficent = 2/torch.dot(x, x)
+        status["Hbar Iteration"] = "x by x running for iteration " + str(i)
+        save_status(folder_path, status)
         vector_by_vector_dot2mat(folder_path, x, x, "Hbar")
         for j in range(x.view(-1).size(0)):
             status["Hbar Iteration"] = j
@@ -144,6 +152,7 @@ def Householder(folder_path, size, print_every):
             Hbar[j] = Hbar[j] + 1
 
             save_vector(folder_path, "Hbar", j, Hbar)
+
         status["Hbar Iteration"] = "Done for Iteration " + str(i)
         save_status(folder_path, status)
 
@@ -154,18 +163,34 @@ def Householder(folder_path, size, print_every):
             Hbar = load_vector(folder_path, "Hbar", j)
             H[i:] = Hbar
             save_vector(folder_path, "H", k, H)   
+
         status["H Iteration"] = "Done for Iteration " + str(i)    
         save_status(folder_path, status)
 
         # Clean
+        status["Hbar Iteration"] = "Cleaning for iteration " + str(i)
+        save_status(folder_path, status)
         shutil.rmtree(folder_path + "/Hbar")
+        status["Hbar Iteration"] = "Done cleaning for iteration " + str(i)
+        save_status(folder_path, status)
 
         # Update U and V
+        status ["V"] = "Updating for iteration " + str(i)
+        save_status(folder_path, status)
         vector_by_vector_matmul(folder_path, "H", "V", "V", size)
+        status ["V"] = "Updated for iteration " + str(i)
+        status ["U"] = "Updating for iteration " + str(i)
+        save_status(folder_path, status)
         vector_by_vector_matmul(folder_path, "U", "H", "U", size)
+        status ["U"] = "Updated for iteration " + str(i)
+        save_status(folder_path, status)
         
         # Clean
+        status["H Iteration"] = "Cleaning for iteration " + str(i)
+        save_status(folder_path, status)
         shutil.rmtree(folder_path + "/H")
+        status["H Iteration"] = "Done cleaning for iteration " + str(i)
+        save_status(folder_path, status)
 
         # Talk
         if i % print_every == 0 and i != 0:
@@ -276,7 +301,7 @@ def load_full_matrix(folder_path, mat_filename, size):
 def main():
     # Decalre GPU
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 
     # Parameters
     folder_path = "../../../data/naddeok/imagenet_U_files/"
