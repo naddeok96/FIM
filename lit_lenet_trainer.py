@@ -12,11 +12,11 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 
 
 # Parameters
-set_name           = "CIFAR10"
+set_name           = "MNIST"
 wandb_project_name = "LeNet " + set_name + " Lightning"
 wandb_mode         = "online" # "online", "offline" or "disabled"
 save_k_models      = 1
-run_name           = "no_U"
+run_name           = "standard_U2"
 gpus               = "0,1"
 n_epochs           = 1500
 
