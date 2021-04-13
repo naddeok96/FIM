@@ -3,7 +3,6 @@ import os
 import wandb
 import pickle
 import torch
-import namegenerator
 import pytorch_lightning as pl
 from unorm import UnNormalize
 from pytorch_lightning.loggers import WandbLogger
@@ -14,11 +13,11 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 # Parameters
 set_name           = "MNIST"
 wandb_project_name = "LeNet " + set_name + " Lightning"
-wandb_mode         = "online" # "online", "offline" or "disabled"
-save_k_models      = 1
-run_name           = "standard_U2"
-gpus               = "0,1"
-n_epochs           = 1500
+wandb_mode         = "disabled" # "online", "offline" or "disabled"
+save_k_models      = 0
+run_name           = "mini_standard_U"
+gpus               = "5"
+n_epochs           = 1
 
 # Initalize Weights and Biases
 wandb_logger = WandbLogger(name = run_name, 
@@ -35,9 +34,9 @@ net = LitLeNet(set_name=set_name,
 
 # Setup Orthoganal Matrix
 # net.load_orthogonal_matrix("models/pretrained/high_R_U.pkl")
-# net.set_orthogonal_matrix()
+net.set_orthogonal_matrix()
 # net.set_random_matrix()
-# net.save_orthogonal_matrix("models/pretrained/LeNet_MNIST_" + run_name + ".pkl")
+net.save_orthogonal_matrix("models/pretrained/LeNet_MNIST_" + run_name + ".pkl")
 
 # Setup Automatic Saving
 checkpoint_callback = ModelCheckpoint(
