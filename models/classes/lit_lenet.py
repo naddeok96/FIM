@@ -45,7 +45,8 @@ class LitLeNet(pl.LightningModule):
 
         if self.set_name == "CIFAR10":
             # Image Size
-            self.image_size = 3*32*32
+            # self.image_size = 3*32*32
+            self.image_size = 32
             self.num_classes = 10
 
             # Input (3,32,32)
@@ -59,7 +60,8 @@ class LitLeNet(pl.LightningModule):
 
         elif self.set_name == "MNIST":
             # Image Size
-            self.image_size = 1*28*28
+            # self.image_size = 1*28*28
+            self.image_size = 28
             self.num_classes = 10
 
             # Input (1,28,28)
@@ -101,7 +103,6 @@ class LitLeNet(pl.LightningModule):
 
         self.fc2 = nn.Linear(self.num_nodes_fc_layer, self.num_classes)
 
-
     def prepare_data(self):
         # Pull in data
         if self.set_name == "CIFAR10":
@@ -142,6 +143,7 @@ class LitLeNet(pl.LightningModule):
                                                     train=False,
                                                     download=False,
                                                     transform=self.transform)
+
         else:
             print("Please enter vaild dataset.")
             exit()

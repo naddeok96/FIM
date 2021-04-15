@@ -13,11 +13,11 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 # Parameters
 set_name           = "MNIST"
 wandb_project_name = "LeNet " + set_name + " Lightning"
-wandb_mode         = "disabled" # "online", "offline" or "disabled"
-save_k_models      = 0
+wandb_mode         = "online" # "online", "offline" or "disabled"
+save_k_models      = 1
 run_name           = "mini_standard_U"
-gpus               = "5"
-n_epochs           = 1
+gpus               = "4, 6"
+n_epochs           = 100
 
 # Initalize Weights and Biases
 wandb_logger = WandbLogger(name = run_name, 
@@ -30,13 +30,14 @@ net = LitLeNet(set_name=set_name,
                 momentum = 0.9, 
                 weight_decay = 0.001,
                 batch_size=256)
-
+net, 
+                       data,
 
 # Setup Orthoganal Matrix
-# net.load_orthogonal_matrix("models/pretrained/high_R_U.pkl")
-net.set_orthogonal_matrix()
-# net.set_random_matrix()
-net.save_orthogonal_matrix("models/pretrained/LeNet_MNIST_" + run_name + ".pkl")
+net.load_orthogonal_matrix("models/pretrained/LeNet_MNIST_mini_standard_U.pkl") # Load a pretrained U
+# net.set_orthogonal_matrix() # Generate a new random U
+# net.set_random_matrix() # Generate a new random matrix that is not unitary just random
+# net.save_orthogonal_matrix("models/pretrained/LeNet_MNIST_" + run_name + ".pkl") # Save new U
 
 # Setup Automatic Saving
 checkpoint_callback = ModelCheckpoint(

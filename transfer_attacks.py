@@ -18,7 +18,7 @@ epsilons = [x/5 for x in range(61)]
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "4"
 
 # Initialize table
 table = PrettyTable()
@@ -45,6 +45,12 @@ weak_Unet.load_state_dict(torch.load('models/pretrained/High_R_Unet_w_acc_98.pt'
 with open("models/pretrained/high_R_U.pkl", 'rb') as input:
     weak_Unet.U = pickle.load(input).type(torch.FloatTensor)
 weak_Unet.eval()
+
+# Load MiniUnet
+miniUnet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
+miniUnet.load_state_dict(torch.load('models/pretrained/MNIST_miniU_lenet_w_acc_97.pt', map_location=torch.device('cpu')))
+miniUnet.U = torch.load("models/pretrained/U_MNIST_miniU_lenet_w_acc_97.pt", map_location=torch.device('cpu'))
+miniUnet.eval()
 
 # Load Attacker Net
 attacker_lenet = AdjLeNet(set_name = set_name)
@@ -83,6 +89,12 @@ weak_Unet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
 weak_Unet_ossa_fool_ratio = attacker.get_fool_ratio(0.95, weak_Unet_ossa_accs)
 table.add_column("Weak UNet OSSA Fool Ratio", weak_Unet_ossa_fool_ratio)
 
+# Mini Unet 
+print("Working on Mini UNet OSSA Attacks...")
+miniUnet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
+                                                     transfer_network = miniUnet)                                              
+miniUnet_ossa_fool_ratio = attacker.get_fool_ratio(0.97, miniUnet_ossa_accs)
+table.add_column("Mini UNet OSSA Fool Ratio", miniUnet_ossa_fool_ratio)
 
 # Display
 print(table)
@@ -103,12 +115,14 @@ if save_to_excel:
                ossa_fool_ratio,
                lenet_ossa_fool_ratio,
                Unet_ossa_fool_ratio,
-               weak_Unet_ossa_fool_ratio]
+               weak_Unet_ossa_fool_ratio,
+               miniUnet_ossa_fool_ratio]
     names = ["epsilons", 
              "ossa_fool_ratio",
              "lenet_ossa_fool_ratio",
              "Unet_ossa_fool_ratio", 
-             "weak_Unet_ossa_fool_ratio"]
+             "weak_Unet_ossa_fool_ratio",
+             "mini_Unet_ossa_fool_ratio"]
 
     for i, result in enumerate(results):
         sheet.write(0, i, names[i])
@@ -116,4 +130,4 @@ if save_to_excel:
         for j, value in enumerate(result):
             sheet.write(j + 1, i, value)
 
-    wb.save('High_R_Unet_transfer_attack_results.xls') 
+    wb.save('mini_Unet_transfer_attack_results.xls') 

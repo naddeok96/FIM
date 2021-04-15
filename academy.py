@@ -71,7 +71,7 @@ class Academy:
         criterion = torch.nn.CrossEntropyLoss()
 
         #Loop for n_epochs
-        for epoch in range(n_epochs):            
+        for epoch in range(n_epochs):      
             for i, data in enumerate(train_loader, 0):
                 
                 # Get inputs and labels from train_loader
@@ -95,6 +95,9 @@ class Academy:
                 # Backward pass and optimize
                 loss.backward()                   # Find the gradient for each parameter
                 optimizer.step()                  # Parameter update
+            
+            if epoch % 10 == 0:
+                print("Epoch: ", epoch, "\tLoss: ", loss)     
                 
     def test(self):
         """Test model on unseen data

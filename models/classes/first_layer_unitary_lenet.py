@@ -111,7 +111,8 @@ class FstLayUniLeNet(nn.Module):
 
     # Set a new U
     def set_orthogonal_matrix(self):
-        self.U = self.get_orthogonal_matrix(self.image_size**2)
+        self.U = self.get_orthogonal_matrix(self.image_size)
+        # self.U = self.get_orthogonal_matrix(self.image_size**2)
 
     # Orthogonal transformation
     def orthogonal_operation(self, input_tensor):
@@ -128,7 +129,7 @@ class FstLayUniLeNet(nn.Module):
 
         # Determine if U is available
         if self.U == None:
-            U = copy(torch.eye(A_side_size**2))
+            return input_tensor
         else:
             U = copy(self.U)
 
@@ -137,11 +138,10 @@ class FstLayUniLeNet(nn.Module):
 
         # Repeat U and U transpose for all batches
         input_tensor = input_tensor if self.gpu == False else input_tensor.cuda()
-        # Ut = U.t().view((1, A_side_size**2, A_side_size**2)).repeat(batch_size, 1, 1)
-        U = copy(U.view((1, A_side_size**2, A_side_size**2)).repeat(channel_num * batch_size, 1, 1))
+        U = copy(U.view((1, A_side_size, A_side_size)).repeat(channel_num * batch_size, 1, 1))
         
         # Batch muiltply UA
-        return torch.bmm(U, input_tensor.view(channel_num *batch_size, A_side_size**2, 1)).view(batch_size, channel_num, A_side_size, A_side_size)
+        return torch.bmm(U, input_tensor.view(channel_num * batch_size, A_side_size, A_side_size)).view(batch_size, channel_num, A_side_size, A_side_size)
 
     def forward(self, x):
         
