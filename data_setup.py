@@ -1,6 +1,7 @@
 '''
 This class loads the data data and splits it into training and testing sets
 '''
+
 # Imports
 import torch
 from torch import nn

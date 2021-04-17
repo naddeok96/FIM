@@ -27,6 +27,8 @@ class Attacker:
 
         # Move inputs to CPU or GPU
         self.gpu = gpu
+        if self.gpu:
+            print("Using GPU")
         self.net   = net if self.gpu == False else net.cuda()
         self.data = data
 
@@ -56,7 +58,6 @@ class Attacker:
 
         # Divide all elements in vector by norm
         return torch.bmm(1 / norms, input_tensor.view(-1, 1, max(dim1_size, dim2_size))).view(-1, dim1_size, dim2_size)
-
 
     def get_FIM(self, images, labels):
         """Calculate the Fisher Information Matrix for all images
@@ -120,7 +121,11 @@ class Attacker:
             Eigenvalues, Eigenvectors
         """
         # Find eigen system
-        eig_values, eig_vectors = torch.symeig(tensor, eigenvectors = True, upper = True)       
+        tensor = tensor.cpu()
+        eig_values, eig_vectors = torch.symeig(tensor, eigenvectors = True, upper = True)   
+
+        if self.gpu:
+            eig_values, eig_vectors = eig_values.cuda(), eig_vectors.cuda()
 
         if max_only == True:     
             eig_val_max =  eig_values[:, :, -1]
@@ -158,9 +163,11 @@ class Attacker:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
             # Calculate FIM
+            print("FIM")
             fisher, losses, predicted = self.get_FIM(inputs, labels)
 
             # Highest Eigenvalue and vector
+            print("Eigen")
             eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
 
             # Create U(eta) attack
@@ -170,6 +177,7 @@ class Attacker:
             #     eig_vec_max = torch.bmm(batch_U, eig_vec_max.view(batch_size , 784, 1)).view(batch_size , 1, 784)
 
             # Cycle over all espiplons
+            print("Epsilons")
             for i, epsilon in enumerate(epsilons):
                 # Set the unit norm of the highest eigenvector to epsilon
                 perturbations = epsilon * self.normalize(eig_vec_max, p = float('inf'), dim = 2)
