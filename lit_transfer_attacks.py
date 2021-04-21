@@ -7,6 +7,7 @@ from prettytable import PrettyTable
 from adversarial_attacks import Attacker
 from models.classes.adjustable_lenet import AdjLeNet
 from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
+from models.classes.lit_lenet import LitLeNet
 
 # Hyperparameters
 save_to_excel = True
@@ -18,7 +19,7 @@ epsilons = [x/5 for x in range(31)]
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # Initialize table
 table = PrettyTable()

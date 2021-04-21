@@ -27,8 +27,6 @@ class Attacker:
 
         # Move inputs to CPU or GPU
         self.gpu = gpu
-        if self.gpu:
-            print("Using GPU")
         self.net   = net if self.gpu == False else net.cuda()
         self.data = data
 
@@ -135,6 +133,84 @@ class Attacker:
         else:
             return eig_values, eig_vectors
 
+    def get_max_eigenpair(self, images, labels, max_iter = int(1e4)):
+        """Use Lanczos Algorthmn to generate eigenvector associated with the highest eigenvalue
+
+        Args:
+            tensor (Tensor): matrix with which eigenvector is desired from
+        """
+        # Declare Similarity Metric
+        mse_sim = torch.nn.MSELoss(reduction='none')
+        cos_sim = torch.nn.CosineSimilarity()
+
+        # Push to gpu
+        images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
+        labels = labels if self.gpu == False else labels.cuda()
+
+        # Make images require gradients
+        images.requires_grad_(True)
+
+        #Forward pass
+        outputs = self.net.forward(images)
+        soft_max_output = self.soft_max(outputs)
+        losses = self.indv_criterion(outputs, labels)
+        _, predicted = torch.max(outputs.data, 1)
+
+        # Find size parameters
+        image_size  = images.size(-1)
+        batch_size  = outputs.size(0)
+        num_classes = outputs.size(1)
+
+        # Initilize Eigenvector
+        eigenvector0 = torch.rand(batch_size, image_size**2, 1).cuda()
+        norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
+        eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
+                
+        eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
+
+        # Oterate until convergence
+        for i in range(max_iter):
+            # Calculate expectation
+            for i in range(num_classes):
+                # Clear Gradients
+                self.net.zero_grad()
+                images.grad = None
+
+                # Cycle through lables (y)
+                temp_labels = torch.tensor([i]).repeat(batch_size)
+                temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
+
+                # Calculate losses
+                temp_loss = self.criterion(outputs, temp_labels)
+                temp_loss.backward(retain_graph = True)
+
+                # Accumulate expectation
+                p = soft_max_output[:,i].view(batch_size, 1, 1)
+                grad = images.grad.data.view(batch_size, image_size**2, 1)
+                
+                # p * (gT * eta) * g
+                eigenvector += p * (torch.bmm(torch.transpose(grad, 1, 2), eigenvector0) * grad)
+
+            # Normalize
+            norms = torch.linalg.norm(eigenvector, ord=2, dim=1).view(-1, 1, 1)
+            eigenvector = torch.bmm(1 / norms, eigenvector.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
+            
+            # Check Convegence
+            similarity = torch.mean(cos_sim(eigenvector0.view(-1, 1), 
+                                    eigenvector.view(-1, 1))).item()
+
+            if similarity > 0.997:
+                # Return vector
+                return eigenvector.view(batch_size, 1, -1), losses
+
+            else:
+                # Restart Cycle
+                eigenvector0 = eigenvector
+                eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
+
+        print("Lanczos did not converge...")
+        exit()
+
     def get_OSSA_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None,
                                        U = None,
@@ -163,21 +239,14 @@ class Attacker:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
             # Calculate FIM
-            print("FIM")
-            fisher, losses, predicted = self.get_FIM(inputs, labels)
+            # fisher, losses, predicted = self.get_FIM(inputs, labels)
+            # eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
 
             # Highest Eigenvalue and vector
-            print("Eigen")
-            eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
-
-            # Create U(eta) attack
-            # if U is not None:
-            #     batch_size = eig_vec_max.size(0)
-            #     batch_U = U.view((1, 784, 784)).repeat(batch_size, 1, 1)
-            #     eig_vec_max = torch.bmm(batch_U, eig_vec_max.view(batch_size , 784, 1)).view(batch_size , 1, 784)
+            eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
+            
 
             # Cycle over all espiplons
-            print("Epsilons")
             for i, epsilon in enumerate(epsilons):
                 # Set the unit norm of the highest eigenvector to epsilon
                 perturbations = epsilon * self.normalize(eig_vec_max, p = float('inf'), dim = 2)
@@ -196,7 +265,7 @@ class Attacker:
                 perturbations = signs.view(-1, 1, 1) * perturbations
             
                 # Compute attack and models prediction of it
-                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+                attacks = (inputs.view(batch_size, 1, self.net.image_size**2) + perturbations).view(batch_size, 1, self.net.image_size, self.net.image_size)
 
                 if return_attacks_only:
                     return attacks
