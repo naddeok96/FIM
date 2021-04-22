@@ -11,10 +11,10 @@ from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
 # Hyperparameters
 gpu         = True
 save_model  = True
-n_epochs    = 100
+n_epochs    = 30
 set_name    = "MNIST"
-model_name  = "Large_LeNet_Attacker"
-seed        = 200
+model_name  = "Rnet3"
+seed        = 3
 
 # Push to GPU if necessary
 if gpu == True:
@@ -25,7 +25,6 @@ if gpu == True:
 # Declare seed and initalize network
 torch.manual_seed(seed)
 
-
 # Load data
 data = Data(gpu = gpu, set_name = set_name)
 print(set_name, "Data Loaded")
@@ -33,13 +32,9 @@ print(set_name, "Data Loaded")
 # Unet
 # net = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
 
-net = FstLayUniLeNet(set_name = set_name, gpu = gpu,
-                    num_kernels_layer1 = 12, 
-                       num_kernels_layer2 = 32, 
-                       num_kernels_layer3 = 240,
-                       num_nodes_fc_layer = 168)
+net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
 # net.set_orthogonal_matrix()
-# net.set_random_matrix()
+net.set_random_matrix()
 # with open("models/pretrained/MNIST/weak_U.pkl", 'rb') as input:
 #     net.U = pickle.load(input).type(torch.FloatTensor)
 # print("U size: ", net.U.size())
@@ -57,9 +52,9 @@ academy.train(n_epochs = n_epochs,
               batch_size = 256)
 
 # Calculate accuracy on test set
+print("Testing")
 accuracy  = academy.test()
-print("Testing Done")
-print(accuracy)
+print("Accuarcy: ", accuracy)
 
 # Save Model
 if save_model:
@@ -67,8 +62,8 @@ if save_model:
     filename  = model_name + "_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
-    torch.save(academy.net.state_dict(), "models/pretrained/" + set_name + "/" + filename)
+    torch.save(academy.net.state_dict(), "models/pretrained/" + set_name + "2/" + filename)
 
     # Save U
     if net.U is not None:
-        torch.save(net.U, "models/pretrained/" + set_name + "/U_" + filename)
+        torch.save(net.U, "models/pretrained/" + set_name + "2/U_" + filename)
