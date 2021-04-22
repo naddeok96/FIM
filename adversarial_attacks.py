@@ -238,11 +238,11 @@ class Attacker:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
             # Calculate FIM
-            # fisher, losses, predicted = self.get_FIM(inputs, labels)
-            # eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
+            fisher, losses, predicted = self.get_FIM(inputs, labels)
+            eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
 
             # Highest Eigenvalue and vector
-            eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
+            # eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
             
 
             # Cycle over all espiplons
