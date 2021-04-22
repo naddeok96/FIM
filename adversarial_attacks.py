@@ -140,18 +140,13 @@ class Attacker:
             tensor (Tensor): matrix with which eigenvector is desired from
         """
         # Declare Similarity Metric
-        mse_sim = torch.nn.MSELoss(reduction='none')
         cos_sim = torch.nn.CosineSimilarity()
-
-        # Push to gpu
-        images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
-        labels = labels if self.gpu == False else labels.cuda()
 
         # Make images require gradients
         images.requires_grad_(True)
 
         #Forward pass
-        outputs = self.net.forward(images)
+        outputs = self.net(images)
         soft_max_output = self.soft_max(outputs)
         losses = self.indv_criterion(outputs, labels)
         _, predicted = torch.max(outputs.data, 1)
@@ -168,7 +163,7 @@ class Attacker:
                 
         eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
 
-        # Oterate until convergence
+        # Iterate until convergence
         for i in range(max_iter):
             # Calculate expectation
             for i in range(num_classes):
@@ -211,6 +206,7 @@ class Attacker:
         print("Lanczos did not converge...")
         exit()
 
+    @profile
     def get_OSSA_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None,
                                        U = None,
@@ -265,7 +261,7 @@ class Attacker:
                 perturbations = signs.view(-1, 1, 1) * perturbations
             
                 # Compute attack and models prediction of it
-                attacks = (inputs.view(batch_size, 1, self.net.image_size**2) + perturbations).view(batch_size, 1, self.net.image_size, self.net.image_size)
+                attacks = (inputs.view(batch_size, 1, self.data.image_size**2) + perturbations).view(batch_size, 1, self.data.image_size, self.data.image_size)
 
                 if return_attacks_only:
                     return attacks

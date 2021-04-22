@@ -24,17 +24,17 @@ def embed_rotation_matrix(rotation, unitary, start_coords = [0, 0]):
     return unitary
 
 R = get_rotation_matrix(1, degrees = True)
-I = torch.eye(784)
+I = torch.eye(28)
 
 U = embed_rotation_matrix(R, I, [0, 0])
 cos_sim = torch.nn.CosineSimilarity()
 rotation_angle = cos_sim(U.view(1, -1), I.view(1, -1))
 
-# Save 
-with open("models/pretrained/high_R.pkl", 'wb') as output:
-    pickle.dump(rotation_angle, output, pickle.HIGHEST_PROTOCOL)
+# # Save 
+# with open("models/pretrained/high_R.pkl", 'wb') as output:
+#     pickle.dump(rotation_angle, output, pickle.HIGHEST_PROTOCOL)
 
-with open("models/pretrained/high_R_U" + '.pkl', 'wb') as output:
+with open("models/pretrained//MNIST/weak_U" + '.pkl', 'wb') as output:
     pickle.dump(U, output, pickle.HIGHEST_PROTOCOL)
 
 

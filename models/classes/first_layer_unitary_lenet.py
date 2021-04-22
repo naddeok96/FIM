@@ -112,7 +112,9 @@ class FstLayUniLeNet(nn.Module):
     # Set a new U
     def set_orthogonal_matrix(self):
         self.U = self.get_orthogonal_matrix(self.image_size)
-        # self.U = self.get_orthogonal_matrix(self.image_size**2)
+        
+    def set_random_matrix(self):
+        self.U = torch.rand(self.image_size, self.image_size)
 
     # Orthogonal transformation
     def orthogonal_operation(self, input_tensor):

@@ -97,7 +97,7 @@ class Academy:
                 optimizer.step()                  # Parameter update
             
             if epoch % 10 == 0:
-                print("Epoch: ", epoch, "\tLoss: ", loss)     
+                print("Epoch: ", epoch, "\tLoss: ", loss.item())     
                 
     def test(self):
         """Test model on unseen data

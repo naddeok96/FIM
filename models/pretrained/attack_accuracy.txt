@@ -1,9 +1,0 @@
-=========================================================
-|	  Model Name		|    Attack Accuracy	|
-|-------------------------------|-----------------------|
-|mnist_lenet_w_acc_98		|	 26.93		|
-|mnist_fstlay_randlenet_w_acc_35|	 18.78		|
-|mnist_fstlay_unilenet_w_acc_30 |	 7.52		|
-|mnist_randlenet_w_acc_97 	|	 39.82		|
-|mnist_unilenet_w_acc_95 	|	 47.95		|
-=========================================================

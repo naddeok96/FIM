@@ -28,6 +28,9 @@ class Data:
 
         # Pull in data
         if self.set_name == "CIFAR10":
+            # Image size
+            self.image_size = 32
+
             # Images are of size (3,32,32)
             self.transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
                                             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) #  Normalize about 0.5
@@ -42,6 +45,9 @@ class Data:
                                                     download=False,
                                                     transform=self.transform)
         elif self.set_name == "MNIST":
+            # Image size
+            self.image_size = 28
+
             # Images are of size (1, 28, 28)
             self.mean = 0.1307
             self.std = 0.3081

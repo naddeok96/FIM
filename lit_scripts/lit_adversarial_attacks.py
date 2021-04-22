@@ -1,71 +1,40 @@
 '''
-This class implements adversarial attacks with PyTorch Lighting
+This class implements adversarial attacks
 '''
 # Imports
-import numpy as np
 import torch
+import torch.nn.functional as F
+import operator
+from torch.autograd import Variable
+import numpy as np
+import matplotlib.pyplot as plt
+import copy
 
 # Class
 class LitAttacker: 
     def __init__(self, net):
-        """This class will use data to generate attacks on network
-
-        Args:
-            net (pytorch lighting model): Neural Network to be attacked
-        """
 
         super(LitAttacker,self).__init__()
-
-        # Add network
-        self.net = net
-        
-        # Get Image size
-        if self.net.set_name == "MNIST":
-            self.image_size = 28
-        else:
-            print("Please initalize image size in lit_adversarial_attacks.py")
-            exit()
 
         # Evaluation Tools 
         self.criterion = torch.nn.CrossEntropyLoss()
         self.indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
         self.soft_max = torch.nn.Softmax(dim = 1)
 
-
-    def normalize(self, input_tensor, p, dim):
-        """Normalizes a batch of vectors along diminesion with L-p norms
-
-        Args:
-            input_tensor (Tensor): batch of vectors
-            p (int, np.inf or float('inf)): type of norm to use
-            dim (int): dimension of vectors
-
-        Returns:
-            Tensor: normalized batch of vectors
-        """
-        # Orginal Size
-        dim1_size = input_tensor.size(1)
-        dim2_size = input_tensor.size(2)
-
-        # Find norm of vectors
-        norms = torch.linalg.norm(input_tensor, ord=p, dim=dim).view(-1, 1, 1)
-
-        # Divide all elements in vector by norm
-        return torch.bmm(1 / norms, input_tensor.view(-1, 1, max(dim1_size, dim2_size))).view(-1, dim1_size, dim2_size)
-
-    def get_FIM(self, images, labels):
-        """Calculate the Fisher Information Matrix for all images
+    def get_max_eigenpair(self, images, labels, max_iter = int(1e4)):
+        """Use Lanczos Algorthmn to generate eigenvector associated with the highest eigenvalue
 
         Args:
-            images : Images to be used
-            labels : Correct labels of images
-
-        Returns:
-            FIM, Loss for each Image, Predicted Class for each image
+            tensor (Tensor): matrix with which eigenvector is desired from
         """
-        # Push to gpu
-        images = Variable(images.cuda(), requires_grad = True)
-        labels = labels.cuda()
+        # Evaluation Tools 
+        criterion = torch.nn.CrossEntropyLoss()
+        indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
+        soft_max = torch.nn.Softmax(dim = 1)
+
+        # Declare Similarity Metric
+        mse_sim = torch.nn.MSELoss(reduction='none')
+        cos_sim = torch.nn.CosineSimilarity()
 
         # Make images require gradients
         images.requires_grad_(True)
@@ -77,58 +46,63 @@ class LitAttacker:
         _, predicted = torch.max(outputs.data, 1)
 
         # Find size parameters
+        image_size  = images.size(-1)
         batch_size  = outputs.size(0)
         num_classes = outputs.size(1)
 
-        # Calculate FIMs
-        fisher = 0 
-        for i in range(num_classes):
-            # Clear Gradients
-            self.net.zero_grad()
-            images.grad = None
+        # Initilize Eigenvector
+        eigenvector0 = torch.rand(batch_size, image_size**2, 1).cuda()
+        norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
+        eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
+                
+        eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
 
-            # Cycle through lables (y)
-            temp_labels = torch.tensor([i]).repeat(batch_size) 
-
-            # Calculate losses
-            temp_loss = self.criterion(outputs, temp_labels)
-            temp_loss.backward(retain_graph = True)
-
+        # Oterate until convergence
+        for i in range(max_iter):
             # Calculate expectation
-            p = soft_max_output[:,i].view(batch_size, 1, 1, 1)
-            grad = images.grad.data.view(batch_size, self.image_size**2, 1)
+            for i in range(num_classes):
+                # Clear Gradients
+                self.net.zero_grad()
+                images.grad = None
 
-            fisher += p * torch.bmm(grad, torch.transpose(grad, 1, 2)).view(batch_size, 1, self.image_size**2, self.image_size**2)
-       
-        return fisher, losses, predicted
+                # Cycle through lables (y)
+                temp_labels = torch.tensor([i]).repeat(batch_size) 
 
-    def get_eigensystem(self, tensor, max_only = False):
-        """Given a tensor find the eigensystem
+                # Calculate losses
+                temp_loss = self.criterion(outputs, temp_labels)
+                temp_loss.backward(retain_graph = True)
 
-        Args:
-            tensor (Tensor): A tensor object
-            max_only (bool, optional): Wheater to just return the maximum or all. Defaults to False.
+                # Accumulate expectation
+                p = soft_max_output[:,i].view(batch_size, 1, 1)
+                grad = images.grad.data.view(batch_size, image_size**2, 1)
+                
+                # p * (gT * eta) * g
+                eigenvector += p * (torch.bmm(torch.transpose(grad, 1, 2), eigenvector0) * grad)
 
-        Returns:
-            Eigenvalues, Eigenvectors
-        """
-        # Find eigen system
-        eig_values, eig_vectors = torch.symeig(tensor, eigenvectors = True, upper = True)       
+            # Normalize
+            norms = torch.linalg.norm(eigenvector, ord=2, dim=1).view(-1, 1, 1)
+            eigenvector = torch.bmm(1 / norms, eigenvector.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
+            
+            # Check Convegence
+            similarity = torch.mean(cos_sim(eigenvector0.view(-1, 1), 
+                                    eigenvector.view(-1, 1))).item()
 
-        if max_only == True:     
-            eig_val_max =  eig_values[:, :, -1]
-            eig_vec_max = eig_vectors[:, :, :, -1] 
-            return eig_val_max, eig_vec_max
+            if similarity > 0.997:
+                # Return vector
+                return eigenvector.view(batch_size, 1, -1)
 
-        else:
-            return eig_values, eig_vectors
+            else:
+                # Restart Cycle
+                eigenvector0 = eigenvector
+                eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
 
-    def get_OSSA_attack_accuracy(self, epsilons = [1],
+        print("Lanczos did not converge...")
+        exit()
+
+    def get_OSSA_attack_accuracy(self, inputs, labels,
+                                       epsilons = [1],
                                        transfer_network = None,
-                                       U = None,
-                                       return_attacks_only = False,
-                                       attack_images = None,
-                                       attack_labels  = None):
+                                       return_attacks_only = False):
         """Determine the accuracy of the network after it is attacked by OSSA
 
         Returns:
@@ -137,69 +111,51 @@ class LitAttacker:
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
 
-        # Initalize data
-        self.net.prepare_data()
+        # Calculate FIM then Eigendecomp
+        # fisher, losses, predicted = self.get_FIM(inputs, labels)
+        # eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
+        
+        # Highest Eigenvalue's eigenvector from Lanczos Method
+        eig_vec_max = self.get_max_eigenpair(inputs, labels)
 
-        # Generate Attacks
-        for inputs, labels in self.net.test_dataloader():
-            # Use predefined attacks mif given
-            if attack_images is not None:
-                inputs = attack_images
-                labels = attack_labels
+        # Cycle over all espiplons
+        for i, epsilon in enumerate(epsilons):
+            # Set the unit norm of the highest eigenvector to epsilon
+            perturbations = epsilon * self.normalize(eig_vec_max, p = float('inf'), dim = 2)
 
-            # Calculate FIM
-            fisher, losses, predicted = self.get_FIM(inputs, labels)
+            # Declare attacks as the perturbation added to the image
+            batch_size = np.shape(inputs)[0]
+            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            print(fisher.size())
-            exit()
+            # Check if loss has increased
+            adv_outputs = self.net.forward(attacks)
+            adv_losses  = self.indv_criterion(adv_outputs, labels)
 
-            # Highest Eigenvalue and vector
-            eig_val_max, eig_vec_max = self.get_eigensystem(fisher, max_only = True)
+            # If losses has not increased flip direction
+            signs = (losses < adv_losses).type(torch.float) 
+            signs[signs == 0] = -1
+            perturbations = signs.view(-1, 1, 1) * perturbations
+        
+            # Compute attack and models prediction of it
+            attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
 
-            # # Create U(eta) attack
-            # if U is not None:
-            #     batch_size = eig_vec_max.size(0)
-            #     batch_U = U.view((1, self.image_size, self.image_size)).repeat(batch_size, 1, 1)
-            #     eig_vec_max = torch.bmm(batch_U, eig_vec_max.view(batch_size , 784, 1)).view(batch_size , 1, 784)
+            if return_attacks_only:
+                return attacks
 
-            # Cycle over all espiplons
-            for i, epsilon in enumerate(epsilons):
-                # Set the unit norm of the highest eigenvector to epsilon
-                perturbations = epsilon * self.normalize(eig_vec_max, p = float('inf'), dim = 2)
-
-                # Declare attacks as the perturbation added to the image
-                batch_size = np.shape(inputs)[0]
-                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
-
-                # Check if loss has increased
+            if transfer_network == None:
                 adv_outputs = self.net.forward(attacks)
-                adv_losses  = self.indv_criterion(adv_outputs, labels)
+            else:
+                adv_outputs = transfer_network.forward(attacks)
 
-                # If losses has not increased flip direction
-                signs = (losses < adv_losses).type(torch.float) 
-                signs[signs == 0] = -1
-                perturbations = signs.view(-1, 1, 1) * perturbations
+            _, adv_predicted = torch.max(adv_outputs.data, 1)     
+
+            # Save Attack Accuracy
+            attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
             
-                # Compute attack and models prediction of it
-                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
-
-                if return_attacks_only:
-                    return attacks
-
-                if transfer_network == None:
-                    adv_outputs = self.net.forward(attacks)
-                else:
-                    adv_outputs = transfer_network.forward(attacks)
-
-                _, adv_predicted = torch.max(adv_outputs.data, 1)     
-
-                # Save Attack Accuracy
-                attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
-                
         # Divide by total
-        attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
+        attack_accuracies = attack_accuracies / (batch_size)
                                                         
-        return attack_accuracies
+        return attack_accuracies, batch_size
 
     def get_gradients(self, images, labels):
         """Calculate the gradients of an image
@@ -211,6 +167,10 @@ class LitAttacker:
         Returns:
             gradients, batch_size, num_classes, losses, predicted
         """
+        # Push to gpu
+        images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
+        labels = labels if self.gpu == False else labels.cuda()
+
         # Make images require gradients
         images.requires_grad_(True)
 
@@ -219,7 +179,7 @@ class LitAttacker:
         images.grad = None
 
         #Forward pass
-        outputs = self.net.forward(images)
+        outputs = self.net(images)
         soft_max_output = self.soft_max(outputs)
         loss = self.criterion(outputs, labels)
         losses = self.indv_criterion(outputs, labels)
@@ -248,14 +208,22 @@ class LitAttacker:
 
         Returns:
             Float: Attack Accuracy
-        """   
+        """
+        # Push transfer_network to GPU
+        if self.gpu and (transfer_network is not None):
+            transfer_network = transfer_network.cuda()
+            
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
-        for inputs, labels in self.net.test_loader:
+        for inputs, labels in self.data.test_loader:
 
             if attack_images is not None:
                 inputs = attack_images
                 labels = attack_labels
+
+            # Push to gpu
+            if self.gpu:
+                inputs, labels = inputs.cuda(), labels.cuda()
 
             # Calculate FIM
             gradients, batch_size, num_classes, losses, predicted = self.get_gradients(inputs, labels)
@@ -296,7 +264,6 @@ class LitAttacker:
 
         return attack_accuracies
 
-
     def get_fool_ratio(self, test_acc, attack_accs):
         """Calculate the fooling ratio of attacks
 
@@ -309,7 +276,6 @@ class LitAttacker:
         """
         return [round(100*((test_acc - attack_acc) / test_acc), 2) for attack_acc in attack_accs]
         
-    
     def check_attack_perception(self, epsilons = [1]):
 
         # Initalize images and labels for one of each number
