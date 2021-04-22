@@ -2,7 +2,8 @@ import xlrd
 import matplotlib.pyplot as plt
 
 
-wb = xlrd.open_workbook("results/MNIST/transfer_attack_results.xls")
+# wb = xlrd.open_workbook("results/MNIST/transfer_attack_results.xls")
+wb = xlrd.open_workbook("results/MNIST/nonLanczos_transfer_attack_results.xls")
 ws = wb.sheet_by_name("Results")
 
 results = {}
