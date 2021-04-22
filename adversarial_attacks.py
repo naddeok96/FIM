@@ -132,7 +132,6 @@ class Attacker:
         else:
             return eig_values, eig_vectors
 
-    @profile
     def get_max_eigenpair(self, images, labels, max_iter = int(1e2)):
         """Use Lanczos Algorthmn to generate eigenvector associated with the highest eigenvalue
 
@@ -160,7 +159,6 @@ class Attacker:
 
         # Iterate until convergence
         for j in range(max_iter):
-            print(j)
             # Initilize Eigenvector
             eigenvector0 = torch.rand(batch_size, image_size**2, 1).cuda()
             norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
@@ -168,7 +166,8 @@ class Attacker:
                     
             eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
 
-            for k in range(100):
+            # If it does not converge in max_iter tries try again with new random vector
+            for k in range(max_iter):
 
                 # Calculate expectation
                 for i in range(num_classes):
@@ -211,7 +210,6 @@ class Attacker:
         print("Lanczos did not converge...")
         exit()
 
-    @profile
     def get_OSSA_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None,
                                        U = None,

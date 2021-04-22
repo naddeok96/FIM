@@ -71,23 +71,23 @@ attacker = Attacker(attacker_lenet,
                     data, 
                     gpu)
 
-# # Get regular attack accuracies on attacker network
-# print("Working on OSSA Attacks...")
-# ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons)                                          
-# ossa_fool_ratio = attacker.get_fool_ratio(attacker_lenet_acc, ossa_accs)
-# table.add_column("OSSA Fool Ratio", ossa_fool_ratio)
-# results.append(ossa_fool_ratio)
-# names.append("White Box Attack")
+# Get regular attack accuracies on attacker network
+print("Working on OSSA Attacks...")
+ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons)                                          
+ossa_fool_ratio = attacker.get_fool_ratio(attacker_lenet_acc, ossa_accs)
+table.add_column("OSSA Fool Ratio", ossa_fool_ratio)
+results.append(ossa_fool_ratio)
+names.append("White Box Attack")
 
 
-# # Get transfer attack accuracies for Lenet
-# print("Working on LeNet OSSA Attacks...")
-# lenet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
-#                                                      transfer_network = lenet)                                          
-# lenet_ossa_fool_ratio = attacker.get_fool_ratio(lenet_acc, lenet_ossa_accs)
-# table.add_column("LeNet OSSA Fool Ratio", lenet_ossa_fool_ratio)
-# results.append(lenet_ossa_fool_ratio)
-# names.append("LeNet")
+# Get transfer attack accuracies for Lenet
+print("Working on LeNet OSSA Attacks...")
+lenet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
+                                                     transfer_network = lenet)                                          
+lenet_ossa_fool_ratio = attacker.get_fool_ratio(lenet_acc, lenet_ossa_accs)
+table.add_column("LeNet OSSA Fool Ratio", lenet_ossa_fool_ratio)
+results.append(lenet_ossa_fool_ratio)
+names.append("LeNet")
 
 # Weak Unet 
 print("Working on Weak UNet OSSA Attacks...")
