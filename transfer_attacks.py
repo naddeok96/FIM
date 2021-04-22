@@ -32,8 +32,12 @@ data = Data(gpu = gpu, set_name = set_name)
 # Load Networks
 #-------------------------------------------------------------------------------------------------------------------------------------___#
 # # Load Attacker LeNet
-attacker_lenet = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-attacker_lenet.load_state_dict(torch.load('models/pretrained/MNIST/LeNet_Attacker_w_acc_98.pt', map_location=torch.device('cpu')))
+attacker_lenet = FstLayUniLeNet(set_name = set_name, gpu = gpu,
+                                num_kernels_layer1 = 12, 
+                                num_kernels_layer2 = 32, 
+                                num_kernels_layer3 = 240,
+                                num_nodes_fc_layer = 168)
+attacker_lenet.load_state_dict(torch.load('models/pretrained/MNIST/Large_LeNet_Attacker_w_acc_98.pt', map_location=torch.device('cpu')))
 attacker_lenet.eval()
 attacker_lenet_acc = 0.98
 
@@ -138,4 +142,4 @@ if save_to_excel:
         for j, value in enumerate(result):
             sheet.write(j + 1, i, value)
 
-    wb.save('results/MNIST/nonLanczos_transfer_attack_results.xls') 
+    wb.save('results/MNIST/Large_LeNet_transfer_attack_results.xls') 

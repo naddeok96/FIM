@@ -13,14 +13,14 @@ gpu         = True
 save_model  = True
 n_epochs    = 100
 set_name    = "MNIST"
-model_name  = "RNet"
-seed        = 100
+model_name  = "Large_LeNet_Attacker"
+seed        = 200
 
 # Push to GPU if necessary
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
@@ -28,19 +28,23 @@ torch.manual_seed(seed)
 
 # Load data
 data = Data(gpu = gpu, set_name = set_name)
-print(set_name, " Data Loaded")
+print(set_name, "Data Loaded")
 
 # Unet
 # net = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
 
-net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
+net = FstLayUniLeNet(set_name = set_name, gpu = gpu,
+                    num_kernels_layer1 = 12, 
+                       num_kernels_layer2 = 32, 
+                       num_kernels_layer3 = 240,
+                       num_nodes_fc_layer = 168)
 # net.set_orthogonal_matrix()
-net.set_random_matrix()
+# net.set_random_matrix()
 # with open("models/pretrained/MNIST/weak_U.pkl", 'rb') as input:
 #     net.U = pickle.load(input).type(torch.FloatTensor)
-print("U size: ", net.U.size())
+# print("U size: ", net.U.size())
 net.eval()
-print(model_name, " Network Loaded")
+print(model_name, "Network Loaded")
 
 
 # Enter student network and curriculum data into an academy
