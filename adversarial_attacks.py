@@ -35,7 +35,6 @@ class Attacker:
         self.indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
         self.soft_max = torch.nn.Softmax(dim = 1)
 
-
     def normalize(self, input_tensor, p, dim):
         """Normalizes a batch of vectors along diminesion with L-p norms
 
@@ -133,6 +132,7 @@ class Attacker:
         else:
             return eig_values, eig_vectors
 
+    @profile
     def get_max_eigenpair(self, images, labels, max_iter = int(1e4)):
         """Use Lanczos Algorthmn to generate eigenvector associated with the highest eigenvalue
 
@@ -164,7 +164,8 @@ class Attacker:
         eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
 
         # Iterate until convergence
-        for i in range(max_iter):
+        for j in range(max_iter):
+            print(j)
             # Calculate expectation
             for i in range(num_classes):
                 # Clear Gradients
