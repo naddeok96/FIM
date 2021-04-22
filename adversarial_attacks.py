@@ -133,7 +133,7 @@ class Attacker:
             return eig_values, eig_vectors
 
     @profile
-    def get_max_eigenpair(self, images, labels, max_iter = int(1e4)):
+    def get_max_eigenpair(self, images, labels, max_iter = int(1e2)):
         """Use Lanczos Algorthmn to generate eigenvector associated with the highest eigenvalue
 
         Args:
@@ -156,53 +156,57 @@ class Attacker:
         batch_size  = outputs.size(0)
         num_classes = outputs.size(1)
 
-        # Initilize Eigenvector
-        eigenvector0 = torch.rand(batch_size, image_size**2, 1).cuda()
-        norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
-        eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
-                
-        eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
+        
 
         # Iterate until convergence
         for j in range(max_iter):
             print(j)
-            # Calculate expectation
-            for i in range(num_classes):
-                # Clear Gradients
-                self.net.zero_grad()
-                images.grad = None
+            # Initilize Eigenvector
+            eigenvector0 = torch.rand(batch_size, image_size**2, 1).cuda()
+            norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
+            eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
+                    
+            eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
 
-                # Cycle through lables (y)
-                temp_labels = torch.tensor([i]).repeat(batch_size)
-                temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
+            for k in range(100):
 
-                # Calculate losses
-                temp_loss = self.criterion(outputs, temp_labels)
-                temp_loss.backward(retain_graph = True)
+                # Calculate expectation
+                for i in range(num_classes):
+                    # Clear Gradients
+                    self.net.zero_grad()
+                    images.grad = None
 
-                # Accumulate expectation
-                p = soft_max_output[:,i].view(batch_size, 1, 1)
-                grad = images.grad.data.view(batch_size, image_size**2, 1)
+                    # Cycle through lables (y)
+                    temp_labels = torch.tensor([i]).repeat(batch_size)
+                    temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
+
+                    # Calculate losses
+                    temp_loss = self.criterion(outputs, temp_labels)
+                    temp_loss.backward(retain_graph = True)
+
+                    # Accumulate expectation
+                    p = soft_max_output[:,i].view(batch_size, 1, 1)
+                    grad = images.grad.data.view(batch_size, image_size**2, 1)
+                    
+                    # p * (gT * eta) * g
+                    eigenvector += p * (torch.bmm(torch.transpose(grad, 1, 2), eigenvector0) * grad)
+
+                # Normalize
+                norms = torch.linalg.norm(eigenvector, ord=2, dim=1).view(-1, 1, 1)
+                eigenvector = torch.bmm(1 / norms, eigenvector.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
                 
-                # p * (gT * eta) * g
-                eigenvector += p * (torch.bmm(torch.transpose(grad, 1, 2), eigenvector0) * grad)
+                # Check Convegence
+                similarity = torch.mean(cos_sim(eigenvector0.view(-1, 1), 
+                                        eigenvector.view(-1, 1))).item()
 
-            # Normalize
-            norms = torch.linalg.norm(eigenvector, ord=2, dim=1).view(-1, 1, 1)
-            eigenvector = torch.bmm(1 / norms, eigenvector.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
-            
-            # Check Convegence
-            similarity = torch.mean(cos_sim(eigenvector0.view(-1, 1), 
-                                    eigenvector.view(-1, 1))).item()
+                if similarity > 0.997:
+                    # Return vector
+                    return eigenvector.view(batch_size, 1, -1), losses
 
-            if similarity > 0.997:
-                # Return vector
-                return eigenvector.view(batch_size, 1, -1), losses
-
-            else:
-                # Restart Cycle
-                eigenvector0 = eigenvector
-                eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
+                else:
+                    # Restart Cycle
+                    eigenvector0 = eigenvector
+                    eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
 
         print("Lanczos did not converge...")
         exit()
