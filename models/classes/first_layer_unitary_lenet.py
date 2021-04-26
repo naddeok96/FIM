@@ -93,6 +93,8 @@ class FstLayUniLeNet(nn.Module):
 
         self.fc2 = nn.Linear(self.num_nodes_fc_layer, self.num_classes)
 
+        self.soft_max = torch.nn.Softmax(dim =1)
+
         # Load pretrained parameters
         if pretrained_unitary_matrix_filename is not None:
             self.U = torch.load(pretrained_unitary_matrix_filename, map_location=torch.device('cpu'))
@@ -159,6 +161,7 @@ class FstLayUniLeNet(nn.Module):
         x = x.view(-1, self.num_kernels_layer3 * 1 * 1)
         x = torch.tanh(self.fc1(x))
         x = self.fc2(x)
+        x = self.soft_max(x)
 
         return x
 

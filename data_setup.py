@@ -33,17 +33,18 @@ class Data:
 
             # Images are of size (3,32,32)
             self.transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
-                                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) #  Normalize about 0.5
+                                            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))]) #  Normalize
 
-            self.train_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch', # '../data' 
+            self.train_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10', # '../data' 
                                                     train=True,
                                                     download=False,
                                                     transform=self.transform)
 
-            self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch',
+            self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10',
                                                     train=False,
                                                     download=False,
                                                     transform=self.transform)
+                                                    
         elif self.set_name == "MNIST":
             # Image size
             self.image_size = 28
