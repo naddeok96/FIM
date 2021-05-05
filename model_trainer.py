@@ -7,13 +7,17 @@ import pickle
 from data_setup import Data
 from academy import Academy
 from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
+from models.classes.first_layer_unitary_effnet  import FstLayUniEffNet
+
 
 # Hyperparameters
 gpu         = True
-save_model  = True
-n_epochs    = 30
-set_name    = "MNIST"
-model_name  = "Rnet3"
+save_model  = False
+n_epochs    = 200
+set_name    = "CIFAR10"
+model_name  = "EffNet-B0"
+pretrained  = True
+use_SAM     = True
 seed        = 3
 
 # Push to GPU if necessary
@@ -30,11 +34,15 @@ data = Data(gpu = gpu, set_name = set_name)
 print(set_name, "Data Loaded")
 
 # Unet
+net = FstLayUniEffNet(  set_name = set_name,
+                        gpu = gpu,
+                        model_name = 'efficientnet-b0',
+                        pretrained = pretrained)
 # net = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
 
-net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-# net.set_orthogonal_matrix()
-net.set_random_matrix()
+# net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
+net.set_orthogonal_matrix()
+# net.set_random_matrix()
 # with open("models/pretrained/MNIST/weak_U.pkl", 'rb') as input:
 #     net.U = pickle.load(input).type(torch.FloatTensor)
 # print("U size: ", net.U.size())
@@ -43,7 +51,7 @@ print(model_name, "Network Loaded")
 
 
 # Enter student network and curriculum data into an academy
-academy  = Academy(net, data, gpu)
+academy  = Academy(net, data, gpu, use_SAM)
 print("Academy Set Up")
 
 # Fit Model
