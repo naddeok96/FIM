@@ -1,0 +1,2377 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(wandb_model_trainer.py:1390613): Gdk-CRITICAL **: 07:01:36.392: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: hj9wd3ma with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: mse
+wandb: 	epochs: 500
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 512
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.05
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
+Create sweep with ID: 64v0odqd
+Sweep URL: https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 07:01:41.435195: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 07:01:41.440459: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run fragrant-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/hj9wd3ma
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_070139-hj9wd3ma
+wandb: Run `wandb offline` to turn off syncing.
+Epoch:  1 	Train Loss:  0.001406923566311598 	Val Loss:  0.0003599951557815075
+Epoch:  51 	Train Loss:  0.0014076011185348034 	Val Loss:  0.00035999990105628965
+Epoch:  101 	Train Loss:  0.0014076010516285897 	Val Loss:  0.00035999997556209563
+Epoch:  151 	Train Loss:  0.0014076010240614415 	Val Loss:  0.0003600001625716686
+Epoch:  201 	Train Loss:  0.0014076010303199292 	Val Loss:  0.0003599999323487282
+Epoch:  251 	Train Loss:  0.001407601066827774 	Val Loss:  0.0003600000850856304
+Epoch:  301 	Train Loss:  0.0014076011061668395 	Val Loss:  0.0003600000634789467
+Epoch:  351 	Train Loss:  0.0014076010826230049 	Val Loss:  0.0003599999934434891
+Epoch:  401 	Train Loss:  0.0014076010240614415 	Val Loss:  0.0003600000113248825
+Epoch:  451 	Train Loss:  0.0014076009441912174 	Val Loss:  0.0003600000947713852
+wandb: Waiting for W&B process to finish, PID 1390772
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_070139-hj9wd3ma/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_070139-hj9wd3ma/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 499
+wandb:    Train MSE 0.00141
+wandb:    Train Acc 0.09785
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 3018
+wandb:   _timestamp 1619524317
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ▁██████████
+wandb:    Train Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val MSE ▁██████████
+wandb:      Val Acc ▁▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced fragrant-sweep-1: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/hj9wd3ma
+wandb: Agent Starting Run: 7b0sty4y with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.8
+wandb: 	num_kernels_layer1: 16
+wandb: 	num_kernels_layer2: 64
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 07:52:03.656921: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 07:52:03.662969: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run dazzling-sweep-2
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/7b0sty4y
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_075201-7b0sty4y
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.01793679301261902 	Val Loss:  0.008683175492286681
+Epoch:  11 	Train Loss:  0.016972603788375853 	Val Loss:  0.008382262516021729
+Epoch:  21 	Train Loss:  0.016849003872871398 	Val Loss:  0.008365350484848022
+Epoch:  31 	Train Loss:  0.016848737692832946 	Val Loss:  0.008395878219604492
+Epoch:  41 	Train Loss:  0.01681945666074753 	Val Loss:  0.008321565937995911
+Epoch:  51 	Train Loss:  0.016795684065818786 	Val Loss:  0.008345744848251343
+Epoch:  61 	Train Loss:  0.016798188557624816 	Val Loss:  0.00834682343006134
+Epoch:  71 	Train Loss:  0.016787504339218138 	Val Loss:  0.008487651777267456
+Epoch:  81 	Train Loss:  0.01680345324277878 	Val Loss:  0.008307422304153442
+Epoch:  91 	Train Loss:  0.01679106326818466 	Val Loss:  0.00830815508365631
+wandb: Waiting for W&B process to finish, PID 1450459
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_075201-7b0sty4y/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_075201-7b0sty4y/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.01679
+wandb:    Train Acc 0.38671
+wandb:      Val MSE 0.00835
+wandb:      Val Acc 0.3875
+wandb:        _step 10
+wandb:     _runtime 319
+wandb:   _timestamp 1619524640
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▂▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▆▇▇▇██████
+wandb:      Val MSE █▂▂▃▁▂▂▄▁▁▂
+wandb:      Val Acc ▁▆▇▆▇▇▆▅██▇
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced dazzling-sweep-2: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/7b0sty4y
+wandb: Agent Starting Run: q9owqnhd with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: mse
+wandb: 	epochs: 5000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 07:57:26.164694: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 07:57:26.169634: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run youthful-sweep-3
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/q9owqnhd
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_075724-q9owqnhd
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0014028579579293727 	Val Loss:  0.0003591146469116211
+Epoch:  501 	Train Loss:  0.0014076100459694861 	Val Loss:  0.00036000027731060983
+Epoch:  1001 	Train Loss:  0.0014076087667047978 	Val Loss:  0.0003600006766617298
+Epoch:  1501 	Train Loss:  0.0014076104249060154 	Val Loss:  0.000360000841319561
+Epoch:  2001 	Train Loss:  0.0014076081734895707 	Val Loss:  0.0003600013710558414
+Epoch:  2501 	Train Loss:  0.0014076098763942718 	Val Loss:  0.0003600011833012104
+Epoch:  3001 	Train Loss:  0.0014076111137866973 	Val Loss:  0.0003600010402500629
+Epoch:  3501 	Train Loss:  0.001407608634531498 	Val Loss:  0.0003600010007619858
+Epoch:  4001 	Train Loss:  0.0014076088789105414 	Val Loss:  0.0003599996313452721
+Epoch:  4501 	Train Loss:  0.001407610211521387 	Val Loss:  0.0003600012846291065
+wandb: Waiting for W&B process to finish, PID 1456406
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_075724-q9owqnhd/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_075724-q9owqnhd/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 4999
+wandb:    Train MSE 0.00141
+wandb:    Train Acc 0.09803
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 24619
+wandb:   _timestamp 1619549263
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ▁██████████
+wandb:    Train Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val MSE ▁██████████
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced youthful-sweep-3: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/q9owqnhd
+wandb: Agent Starting Run: s4d83fld with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.8
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 14:47:49.794654: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 14:47:49.799731: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run fiery-sweep-4
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/s4d83fld
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_144747-s4d83fld
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.036016990513801576 	Val Loss:  0.009210271048545838
+Epoch:  11 	Train Loss:  0.03577218147754669 	Val Loss:  0.009140063333511353
+Epoch:  21 	Train Loss:  0.03538188298225403 	Val Loss:  0.009038224816322327
+Epoch:  31 	Train Loss:  0.03520339963912964 	Val Loss:  0.008993151736259461
+Epoch:  41 	Train Loss:  0.03506555607318878 	Val Loss:  0.00895834219455719
+Epoch:  51 	Train Loss:  0.034930018849372864 	Val Loss:  0.008924208402633667
+Epoch:  61 	Train Loss:  0.0348007670545578 	Val Loss:  0.008891773676872253
+Epoch:  71 	Train Loss:  0.034672710723876954 	Val Loss:  0.008859436726570129
+Epoch:  81 	Train Loss:  0.034537488040924075 	Val Loss:  0.008825229120254517
+Epoch:  91 	Train Loss:  0.03439231841564178 	Val Loss:  0.008787732529640198
+wandb: Waiting for W&B process to finish, PID 1742835
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_144747-s4d83fld/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_144747-s4d83fld/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.03425
+wandb:    Train Acc 0.22025
+wandb:      Val MSE 0.00875
+wandb:      Val Acc 0.3013
+wandb:        _step 10
+wandb:     _runtime 603
+wandb:   _timestamp 1619549870
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▇▅▅▄▄▃▃▂▂▁
+wandb:    Train Acc ▁▄▅▅▆▆▆▇▇██
+wandb:      Val MSE █▇▅▅▄▄▃▃▂▂▁
+wandb:      Val Acc ▁▄▄▄▅▅▆▆▇▇█
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced fiery-sweep-4: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/s4d83fld
+wandb: Agent Starting Run: xcy0d6cr with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.8
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 1024
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 14:57:57.186394: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 14:57:57.193352: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run effortless-sweep-5
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/xcy0d6cr
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_145755-xcy0d6cr
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.03600008235931396 	Val Loss:  0.009203253078460693
+Epoch:  11 	Train Loss:  0.035152899703979494 	Val Loss:  0.008970906972885133
+Epoch:  21 	Train Loss:  0.03458671979427338 	Val Loss:  0.008830975770950317
+Epoch:  31 	Train Loss:  0.034217566475868225 	Val Loss:  0.008733988189697266
+Epoch:  41 	Train Loss:  0.033916428184509274 	Val Loss:  0.00865301263332367
+Epoch:  51 	Train Loss:  0.03370298943042755 	Val Loss:  0.008598131847381592
+Epoch:  61 	Train Loss:  0.03351811481714249 	Val Loss:  0.008552164077758788
+Epoch:  71 	Train Loss:  0.03333987298488617 	Val Loss:  0.008507960867881775
+Epoch:  81 	Train Loss:  0.033165220160484316 	Val Loss:  0.008465857148170471
+Epoch:  91 	Train Loss:  0.03300805978059769 	Val Loss:  0.008427315711975098
+wandb: Waiting for W&B process to finish, PID 1749636
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_145755-xcy0d6cr/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_145755-xcy0d6cr/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.03288
+wandb:    Train Acc 0.30087
+wandb:      Val MSE 0.0084
+wandb:      Val Acc 0.375
+wandb:        _step 10
+wandb:     _runtime 858
+wandb:   _timestamp 1619550733
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▆▅▄▃▃▂▂▂▁▁
+wandb:    Train Acc ▁▄▅▅▆▆▇▇▇██
+wandb:      Val MSE █▆▅▄▃▃▂▂▂▁▁
+wandb:      Val Acc ▁▃▄▅▆▆▇▇▇██
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced effortless-sweep-5: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/xcy0d6cr
+wandb: Agent Starting Run: 8wj5oiah with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: mse
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 1024
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 15:12:19.511508: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 15:12:19.518214: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run curious-sweep-6
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/8wj5oiah
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_151217-8wj5oiah
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0007268804857134819 	Val Loss:  0.0003599988915026188
+Epoch:  11 	Train Loss:  0.0007272038805484772 	Val Loss:  0.00036000046506524084
+Epoch:  21 	Train Loss:  0.0007272041884064675 	Val Loss:  0.0003599983789026737
+Epoch:  31 	Train Loss:  0.0007272046495974064 	Val Loss:  0.00036000133007764814
+Epoch:  41 	Train Loss:  0.0007272047512233257 	Val Loss:  0.00036000139936804773
+Epoch:  51 	Train Loss:  0.0007272052079439163 	Val Loss:  0.0003599996730685234
+Epoch:  61 	Train Loss:  0.0007272059470415115 	Val Loss:  0.0003600012250244617
+Epoch:  71 	Train Loss:  0.0007272033955156803 	Val Loss:  0.00035999933555722237
+Epoch:  81 	Train Loss:  0.0007272049753367901 	Val Loss:  0.00036000114902853966
+Epoch:  91 	Train Loss:  0.0007272060272097587 	Val Loss:  0.00036000156104564667
+wandb: Waiting for W&B process to finish, PID 1757635
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_151217-8wj5oiah/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_151217-8wj5oiah/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.00073
+wandb:    Train Acc 0.0989
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 340
+wandb:   _timestamp 1619551077
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ▁██████████
+wandb:    Train Acc █▂▁▁▁▁▁▁▁▁▁
+wandb:      Val MSE ▂▅▁▇▇▄▇▃▇██
+wandb:      Val Acc ▁▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced curious-sweep-6: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/8wj5oiah
+wandb: Agent Starting Run: fg2j0he7 with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.8
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 64
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 128
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 15:18:03.580691: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 15:18:03.587036: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run true-sweep-7
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/fg2j0he7
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_151801-fg2j0he7
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0003529345691204071 	Val Loss:  0.00035995338857173917
+Epoch:  101 	Train Loss:  0.0003140688157081604 	Val Loss:  0.0003193150945007801
+Epoch:  201 	Train Loss:  0.00028765369281172755 	Val Loss:  0.00029293651282787325
+Epoch:  301 	Train Loss:  0.00025848695114254953 	Val Loss:  0.0002646152969449759
+Epoch:  401 	Train Loss:  0.00023294249340891838 	Val Loss:  0.00024076344296336175
+Epoch:  501 	Train Loss:  0.00021369727328419686 	Val Loss:  0.0002236021563410759
+Epoch:  601 	Train Loss:  0.00019589500270783902 	Val Loss:  0.00020883196368813516
+Epoch:  701 	Train Loss:  0.0001810401613265276 	Val Loss:  0.00019686015211045743
+Epoch:  801 	Train Loss:  0.00016851608723402023 	Val Loss:  0.00018738184235990047
+Epoch:  901 	Train Loss:  0.00015750100918114184 	Val Loss:  0.00018013458661735057
+wandb: Waiting for W&B process to finish, PID 1763306
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_151801-fg2j0he7/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_151801-fg2j0he7/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00015
+wandb:    Train Acc 0.55068
+wandb:      Val MSE 0.00018
+wandb:      Val Acc 0.6788
+wandb:        _step 10
+wandb:     _runtime 2317
+wandb:   _timestamp 1619553398
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▇▆▅▄▃▃▂▂▁▁
+wandb:    Train Acc ▁▃▄▅▆▆▇▇▇██
+wandb:      Val MSE █▆▅▄▃▃▂▂▁▁▁
+wandb:      Val Acc ▁▄▅▆▆▇▇▇███
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced true-sweep-7: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/fg2j0he7
+wandb: Agent Starting Run: 6nlguk3f with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 15:56:44.163933: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 15:56:44.171392: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run peach-sweep-8
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/6nlguk3f
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_155642-6nlguk3f
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.008848782825469971 	Val Loss:  0.008838319778442382
+Epoch:  101 	Train Loss:  0.00704627464056015 	Val Loss:  0.007392320144176483
+Epoch:  201 	Train Loss:  0.006954034371376038 	Val Loss:  0.007379001343250275
+Epoch:  301 	Train Loss:  0.0069281608772277835 	Val Loss:  0.007379882526397705
+Epoch:  401 	Train Loss:  0.00691015252828598 	Val Loss:  0.007259787690639495
+Epoch:  501 	Train Loss:  0.00690280600309372 	Val Loss:  0.00732535365819931
+Epoch:  601 	Train Loss:  0.00688730269908905 	Val Loss:  0.007375016224384308
+Epoch:  701 	Train Loss:  0.006882062704563141 	Val Loss:  0.007316202509403229
+Epoch:  801 	Train Loss:  0.0068792578363418575 	Val Loss:  0.007288735723495483
+Epoch:  901 	Train Loss:  0.006874217808246612 	Val Loss:  0.007288665246963501
+wandb: Waiting for W&B process to finish, PID 1808591
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_155642-6nlguk3f/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_155642-6nlguk3f/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00687
+wandb:    Train Acc 0.72473
+wandb:      Val MSE 0.00733
+wandb:      Val Acc 0.6496
+wandb:        _step 10
+wandb:     _runtime 2579
+wandb:   _timestamp 1619555981
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▂▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▇▇▇███████
+wandb:      Val MSE █▂▂▂▁▁▂▁▁▁▁
+wandb:      Val Acc ▁▇▇▇██▇████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced peach-sweep-8: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/6nlguk3f
+wandb: Agent Starting Run: pszs58fd with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 5000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 64
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 16:39:47.467360: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 16:39:47.472317: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run smart-sweep-9
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/pszs58fd
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_163945-pszs58fd
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.017387275512218477 	Val Loss:  0.00828377079963684
+Epoch:  501 	Train Loss:  0.015093657248020172 	Val Loss:  0.007742311108112335
+Epoch:  1001 	Train Loss:  0.015066423654556274 	Val Loss:  0.007633899891376496
+Epoch:  1501 	Train Loss:  0.015094197580814362 	Val Loss:  0.007706288254261017
+Epoch:  2001 	Train Loss:  0.015084800221920014 	Val Loss:  0.007558284771442414
+Epoch:  2501 	Train Loss:  0.015076954836845399 	Val Loss:  0.007663390016555786
+Epoch:  3001 	Train Loss:  0.015076607112884522 	Val Loss:  0.007468840312957764
+Epoch:  3501 	Train Loss:  0.015095397727489471 	Val Loss:  0.007654253077507019
+Epoch:  4001 	Train Loss:  0.015097054986953736 	Val Loss:  0.007640722525119782
+Epoch:  4501 	Train Loss:  0.015075712552070618 	Val Loss:  0.007593319034576416
+wandb: Waiting for W&B process to finish, PID 1855415
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_163945-pszs58fd/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_163945-pszs58fd/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 4999
+wandb:    Train MSE 0.01508
+wandb:    Train Acc 0.61668
+wandb:      Val MSE 0.00764
+wandb:      Val Acc 0.5656
+wandb:        _step 10
+wandb:     _runtime 15688
+wandb:   _timestamp 1619571673
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁██████████
+wandb:      Val MSE █▃▂▃▂▃▁▃▂▂▂
+wandb:      Val Acc ▁▅▆▆▇▆█▆▇▇▆
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced smart-sweep-9: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/pszs58fd
+wandb: Agent Starting Run: q9mn6vun with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 128
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 21:01:20.365011: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 21:01:20.369646: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run bumbling-sweep-10
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/q9mn6vun
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_210118-q9mn6vun
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0014061460414528846 	Val Loss:  0.0003598589800298214
+Epoch:  101 	Train Loss:  0.0014076029329001905 	Val Loss:  0.00035999983921647074
+Epoch:  201 	Train Loss:  0.0014076030386984348 	Val Loss:  0.0003599998638033867
+Epoch:  301 	Train Loss:  0.0014076034566760064 	Val Loss:  0.00036000053212046626
+Epoch:  401 	Train Loss:  0.001407603053599596 	Val Loss:  0.0003599999934434891
+Epoch:  501 	Train Loss:  0.0014076033119857312 	Val Loss:  0.00035999980568885803
+Epoch:  601 	Train Loss:  0.0014076035472750663 	Val Loss:  0.00036000013202428817
+Epoch:  701 	Train Loss:  0.0014076032283902168 	Val Loss:  0.0003600000113248825
+Epoch:  801 	Train Loss:  0.0014076032000780105 	Val Loss:  0.00035999986827373504
+Epoch:  901 	Train Loss:  0.0014076031218469144 	Val Loss:  0.00035999976992607115
+wandb: Waiting for W&B process to finish, PID 3123695
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_210118-q9mn6vun/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_210118-q9mn6vun/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00141
+wandb:    Train Acc 0.09766
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 5914
+wandb:   _timestamp 1619577592
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ▁██████████
+wandb:    Train Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val MSE ▁██████████
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced bumbling-sweep-10: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/q9mn6vun
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: 0z45nbmn with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 16
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 512
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 22:40:08.779640: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 22:40:08.785793: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run clean-sweep-11
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/0z45nbmn
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_224006-0z45nbmn
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.00034937035158276556 	Val Loss:  0.00035254769548773764
+Epoch:  101 	Train Loss:  0.0001535483219847083 	Val Loss:  0.00018343496881425382
+Epoch:  201 	Train Loss:  6.914467215538025e-05 	Val Loss:  0.0001863713338971138
+Epoch:  301 	Train Loss:  2.7433706829324366e-05 	Val Loss:  0.00020764916688203813
+Epoch:  401 	Train Loss:  1.905694192741066e-05 	Val Loss:  0.0002138128798455
+Epoch:  501 	Train Loss:  1.621215717168525e-05 	Val Loss:  0.00021768296398222447
+Epoch:  601 	Train Loss:  1.4775851799640805e-05 	Val Loss:  0.00021987153403460978
+Epoch:  701 	Train Loss:  1.3831601636484266e-05 	Val Loss:  0.00022127703614532946
+Epoch:  801 	Train Loss:  1.3072655946016312e-05 	Val Loss:  0.0002221067599952221
+Epoch:  901 	Train Loss:  1.2476583294119337e-05 	Val Loss:  0.00022275707460939884
+wandb: Waiting for W&B process to finish, PID 3720408
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_224006-0z45nbmn/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_224006-0z45nbmn/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 1e-05
+wandb:    Train Acc 0.91221
+wandb:      Val MSE 0.00022
+wandb:      Val Acc 0.6601
+wandb:        _step 10
+wandb:     _runtime 2411
+wandb:   _timestamp 1619580017
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▄▂▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▅▆▇▇▇█████
+wandb:      Val MSE █▁▁▂▂▂▃▃▃▃▃
+wandb:      Val Acc ▁██████████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced clean-sweep-11: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/0z45nbmn
+wandb: Agent Starting Run: 77cg35d6 with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: mse
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 512
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 23:20:23.437806: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 23:20:23.442808: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run playful-sweep-12
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/77cg35d6
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_232021-77cg35d6
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.000727318135946989 	Val Loss:  0.00035987087935209275
+Epoch:  11 	Train Loss:  0.0007264161275327205 	Val Loss:  0.0003596137024462223
+Epoch:  21 	Train Loss:  0.0007270304057002068 	Val Loss:  0.00035991542115807536
+Epoch:  31 	Train Loss:  0.0007271844679117203 	Val Loss:  0.00035998922884464263
+Epoch:  41 	Train Loss:  0.0007272039358317852 	Val Loss:  0.0003599993623793125
+Epoch:  51 	Train Loss:  0.0007272037820518017 	Val Loss:  0.00035999987572431566
+Epoch:  61 	Train Loss:  0.0007272018313407898 	Val Loss:  0.0003599996939301491
+Epoch:  71 	Train Loss:  0.0007272007536888122 	Val Loss:  0.00035999960377812386
+Epoch:  81 	Train Loss:  0.0007272002959251404 	Val Loss:  0.00035999965146183967
+Epoch:  91 	Train Loss:  0.0007272002854943275 	Val Loss:  0.000359999743103981
+wandb: Waiting for W&B process to finish, PID 3831279
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_232021-77cg35d6/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_232021-77cg35d6/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.00073
+wandb:    Train Acc 0.10222
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 363
+wandb:   _timestamp 1619580384
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▆▇▇▇▇▇▇▇▇
+wandb:    Train Acc ▁█▅▄▄▃▃▃▃▃▃
+wandb:      Val MSE ▆▁▆████████
+wandb:      Val Acc ▃█▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced playful-sweep-12: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/77cg35d6
+wandb: Agent Starting Run: 21hu4zlm with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-27 23:26:30.712797: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-27 23:26:30.718395: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run dry-sweep-13
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/21hu4zlm
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210427_232628-21hu4zlm
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0003527210703492165 	Val Loss:  0.00035964223966002465
+Epoch:  101 	Train Loss:  0.0003385362070798874 	Val Loss:  0.00034481436163187026
+Epoch:  201 	Train Loss:  0.0003386663283407688 	Val Loss:  0.000344883494079113
+Epoch:  301 	Train Loss:  0.0003385459136962891 	Val Loss:  0.0003447812341153622
+Epoch:  401 	Train Loss:  0.0003384833423793316 	Val Loss:  0.00034469251185655596
+Epoch:  501 	Train Loss:  0.0003384108993411064 	Val Loss:  0.00034462877660989763
+Epoch:  601 	Train Loss:  0.0003383821745216846 	Val Loss:  0.00034457965046167375
+Epoch:  701 	Train Loss:  0.00033832270488142965 	Val Loss:  0.00034454231932759283
+Epoch:  801 	Train Loss:  0.0003382948645949364 	Val Loss:  0.0003445161208510399
+Epoch:  901 	Train Loss:  0.0003382912716269493 	Val Loss:  0.0003444911479949951
+wandb: Waiting for W&B process to finish, PID 3840315
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_232628-21hu4zlm/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210427_232628-21hu4zlm/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00034
+wandb:    Train Acc 0.17894
+wandb:      Val MSE 0.00034
+wandb:      Val Acc 0.1805
+wandb:        _step 10
+wandb:     _runtime 2321
+wandb:   _timestamp 1619582709
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁█▇▇▇▇▇▇▇▇▇
+wandb:      Val MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val Acc ▁█▇▇▇▇▇▇▇▇▇
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced dry-sweep-13: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/21hu4zlm
+wandb: Agent Starting Run: kbae769f with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.05
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 00:05:18.018011: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 00:05:18.024785: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run pretty-sweep-14
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/kbae769f
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_000515-kbae769f
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.00902519540309906 	Val Loss:  0.009208046579360961
+Epoch:  11 	Train Loss:  0.009025555114746094 	Val Loss:  0.009209966707229613
+Epoch:  21 	Train Loss:  0.009026136922836304 	Val Loss:  0.00921040232181549
+Epoch:  31 	Train Loss:  0.009026135611534118 	Val Loss:  0.0092103688955307
+Epoch:  41 	Train Loss:  0.009026134495735168 	Val Loss:  0.009210352635383607
+Epoch:  51 	Train Loss:  0.009026133890151977 	Val Loss:  0.009210345506668091
+Epoch:  61 	Train Loss:  0.00902613401889801 	Val Loss:  0.009210342478752137
+Epoch:  71 	Train Loss:  0.009026134099960326 	Val Loss:  0.009210341596603394
+Epoch:  81 	Train Loss:  0.00902613420009613 	Val Loss:  0.009210340738296508
+Epoch:  91 	Train Loss:  0.009026134128570557 	Val Loss:  0.009210340023040772
+wandb: Waiting for W&B process to finish, PID 3899505
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_000515-kbae769f/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_000515-kbae769f/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.00903
+wandb:    Train Acc 0.10062
+wandb:      Val MSE 0.00921
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 245
+wandb:   _timestamp 1619582961
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ▁▄█████████
+wandb:    Train Acc ▁█▅▄▃▃▃▃▂▂▂
+wandb:      Val MSE ▁▇█████████
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced pretty-sweep-14: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/kbae769f
+wandb: Agent Starting Run: rvjipa8q with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 00:09:27.948395: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 00:09:27.953301: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run balmy-sweep-15
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/rvjipa8q
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_000926-rvjipa8q
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0007081034116446971 	Val Loss:  0.00033827339336276054
+Epoch:  101 	Train Loss:  0.00019245144192129373 	Val Loss:  0.00020313424095511436
+Epoch:  201 	Train Loss:  7.344460001681e-05 	Val Loss:  0.0002489156313240528
+Epoch:  301 	Train Loss:  5.993951699958416e-05 	Val Loss:  0.000255621537938714
+Epoch:  401 	Train Loss:  5.537069061538205e-05 	Val Loss:  0.00026105871461331844
+Epoch:  501 	Train Loss:  5.3109307682025246e-05 	Val Loss:  0.0002620846547186375
+Epoch:  601 	Train Loss:  5.103603041745373e-05 	Val Loss:  0.00026496393270790576
+Epoch:  701 	Train Loss:  4.9856522583068e-05 	Val Loss:  0.00026455777660012243
+Epoch:  801 	Train Loss:  4.850623745238408e-05 	Val Loss:  0.0002681222900748253
+Epoch:  901 	Train Loss:  4.734545040228113e-05 	Val Loss:  0.00026658541820943356
+wandb: Waiting for W&B process to finish, PID 3905357
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_000926-rvjipa8q/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_000926-rvjipa8q/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 5e-05
+wandb:    Train Acc 0.92538
+wandb:      Val MSE 0.00027
+wandb:      Val Acc 0.6112
+wandb:        _step 10
+wandb:     _runtime 2836
+wandb:   _timestamp 1619585802
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▃▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▆▇▇███████
+wandb:      Val MSE █▁▃▄▄▄▄▄▄▄▄
+wandb:      Val Acc ▁█▇▇▇▇▇▇▇▇▇
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced balmy-sweep-15: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/rvjipa8q
+wandb: Agent Starting Run: z9iqsro5 with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 1024
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 00:56:48.853365: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 00:56:48.858231: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run rose-sweep-16
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/z9iqsro5
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_005646-z9iqsro5
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0013144364601373672 	Val Loss:  0.0003177699394524097
+Epoch:  101 	Train Loss:  5.3203045550035313e-05 	Val Loss:  0.00021059571690857412
+Epoch:  201 	Train Loss:  3.090662451981189e-05 	Val Loss:  0.0002143761157989502
+Epoch:  301 	Train Loss:  2.4957766631850973e-05 	Val Loss:  0.00021552337184548378
+Epoch:  401 	Train Loss:  2.176686894166778e-05 	Val Loss:  0.00021695323809981347
+Epoch:  501 	Train Loss:  1.9825521770121667e-05 	Val Loss:  0.00021796306520700454
+Epoch:  601 	Train Loss:  1.8220492724672114e-05 	Val Loss:  0.0002185801174491644
+Epoch:  701 	Train Loss:  1.6927082920358316e-05 	Val Loss:  0.0002183054581284523
+Epoch:  801 	Train Loss:  1.6010635161767367e-05 	Val Loss:  0.00021932835541665555
+Epoch:  901 	Train Loss:  1.5408267449695358e-05 	Val Loss:  0.00021943519748747348
+wandb: Waiting for W&B process to finish, PID 4056752
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_005646-z9iqsro5/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_005646-z9iqsro5/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 1e-05
+wandb:    Train Acc 0.97459
+wandb:      Val MSE 0.00022
+wandb:      Val Acc 0.668
+wandb:        _step 10
+wandb:     _runtime 4781
+wandb:   _timestamp 1619590588
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▇▇████████
+wandb:      Val MSE █▁▁▁▁▁▂▂▂▂▂
+wandb:      Val Acc ▁██████████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced rose-sweep-16: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/z9iqsro5
+wandb: Agent Starting Run: uuqgd7x5 with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 5000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 02:16:34.698576: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 02:16:34.703370: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run dry-sweep-17
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/uuqgd7x5
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_021632-uuqgd7x5
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0003522248002886772 	Val Loss:  0.00035895651057362554
+Epoch:  501 	Train Loss:  0.00035280026614665984 	Val Loss:  0.00035999999120831487
+Epoch:  1001 	Train Loss:  0.000352800264954567 	Val Loss:  0.0003600000105798245
+Epoch:  1501 	Train Loss:  0.00035280025139451025 	Val Loss:  0.0003599999412894249
+Epoch:  2001 	Train Loss:  0.00035280026108026506 	Val Loss:  0.0003600000523030758
+Epoch:  2501 	Train Loss:  0.00035280025705695153 	Val Loss:  0.0003599999815225601
+wandb: Network error (ReadTimeout), entering retry loop. See wandb/debug-internal.log for full traceback.
+wandb: Network error resolved after 0:01:32.112104, resuming normal operation.
+wandb: Network error (ReadTimeout), entering retry loop. See wandb/debug-internal.log for full traceback.
+wandb: Network error (HTTPError), entering retry loop. See /home/naddeok5/FIM/wandb/run-20210428_021632-uuqgd7x5/logs/debug-internal.log for full traceback.
+wandb: ERROR Error while calling W&B API: Error 1040: Too many connections (<Response [500]>)
+wandb: Network error resolved after 0:00:20.499552, resuming normal operation.
+wandb: Network error resolved after 0:00:53.718632, resuming normal operation.
+Epoch:  3001 	Train Loss:  0.00035280025467276574 	Val Loss:  0.00035999999940395354
+Epoch:  3501 	Train Loss:  0.0003528002658486366 	Val Loss:  0.0003599999949336052
+Epoch:  4001 	Train Loss:  0.00035280024260282515 	Val Loss:  0.00036000002920627593
+Epoch:  4501 	Train Loss:  0.0003528002692759037 	Val Loss:  0.00036000001206994056
+wandb: Waiting for W&B process to finish, PID 4124959
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_021632-uuqgd7x5/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_021632-uuqgd7x5/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 4999
+wandb:    Train MSE 0.00035
+wandb:    Train Acc 0.09743
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 11860
+wandb:   _timestamp 1619602452
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ▁██████████
+wandb:    Train Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val MSE ▁██████████
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced dry-sweep-17: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/uuqgd7x5
+wandb: Agent Starting Run: xehf8fwd with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 128
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.05
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 05:34:18.453734: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 05:34:18.458666: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run neat-sweep-18
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/xehf8fwd
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_053416-xehf8fwd
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0003528886216878891 	Val Loss:  0.000359952936321497
+Epoch:  11 	Train Loss:  0.000352800237685442 	Val Loss:  0.00036000038832426074
+Epoch:  21 	Train Loss:  0.00035280009418725967 	Val Loss:  0.00035999999418854714
+Epoch:  31 	Train Loss:  0.0003528000800311565 	Val Loss:  0.00036000003814697264
+Epoch:  41 	Train Loss:  0.0003528000830113888 	Val Loss:  0.0003600000075995922
+Epoch:  51 	Train Loss:  0.0003528000889718533 	Val Loss:  0.000360000005364418
+Epoch:  61 	Train Loss:  0.0003528000953793526 	Val Loss:  0.00036000001505017283
+Epoch:  71 	Train Loss:  0.00035280009880661963 	Val Loss:  0.00036000000685453416
+Epoch:  81 	Train Loss:  0.00035280008763074875 	Val Loss:  0.00036000000834465024
+Epoch:  91 	Train Loss:  0.00035280008643865583 	Val Loss:  0.00035999999791383745
+wandb: Waiting for W&B process to finish, PID 409079
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_053416-xehf8fwd/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_053416-xehf8fwd/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.00035
+wandb:    Train Acc 0.09821
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 248
+wandb:   _timestamp 1619602704
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▅█▅▃▃▂▂▁▁▁▁
+wandb:      Val MSE ▁██████████
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced neat-sweep-18: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/xehf8fwd
+wandb: Agent Starting Run: lhqdjoaf with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 128
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 05:38:30.611874: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 05:38:30.617737: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run ethereal-sweep-19
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/lhqdjoaf
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_053828-lhqdjoaf
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.03479044308662414 	Val Loss:  0.008691814184188842
+Epoch:  11 	Train Loss:  0.03160196253061295 	Val Loss:  0.008070796930789947
+Epoch:  21 	Train Loss:  0.030995754392147065 	Val Loss:  0.007964524841308595
+Epoch:  31 	Train Loss:  0.03072827091693878 	Val Loss:  0.00787476850748062
+Epoch:  41 	Train Loss:  0.030615395681858063 	Val Loss:  0.00795092307329178
+Epoch:  51 	Train Loss:  0.030567853691577912 	Val Loss:  0.007904256963729858
+Epoch:  61 	Train Loss:  0.030528417665958405 	Val Loss:  0.0078556227684021
+Epoch:  71 	Train Loss:  0.030501588521003722 	Val Loss:  0.00782367333173752
+Epoch:  81 	Train Loss:  0.0304798361992836 	Val Loss:  0.007875700843334199
+Epoch:  91 	Train Loss:  0.030460998611450196 	Val Loss:  0.007822225689888001
+wandb: Waiting for W&B process to finish, PID 414726
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_053828-lhqdjoaf/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_053828-lhqdjoaf/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.03044
+wandb:    Train Acc 0.51764
+wandb:      Val MSE 0.00784
+wandb:      Val Acc 0.5292
+wandb:        _step 10
+wandb:     _runtime 624
+wandb:   _timestamp 1619603332
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▃▂▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▅▆▇▇▇█████
+wandb:      Val MSE █▃▂▁▂▂▁▁▁▁▁
+wandb:      Val Acc ▁▆▇█▇▇██▇██
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced ethereal-sweep-19: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/lhqdjoaf
+wandb: Agent Starting Run: 1rovmhbg with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 500
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 128
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 05:48:58.269991: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 05:48:58.274902: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run eager-sweep-20
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/1rovmhbg
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_054856-1rovmhbg
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0360001168346405 	Val Loss:  0.009205644297599793
+Epoch:  51 	Train Loss:  0.034225266437530516 	Val Loss:  0.00873719835281372
+Epoch:  101 	Train Loss:  0.03303832505464554 	Val Loss:  0.00843409035205841
+Epoch:  151 	Train Loss:  0.032132913763523105 	Val Loss:  0.008214733624458313
+Epoch:  201 	Train Loss:  0.03140243368148804 	Val Loss:  0.008041711902618409
+Epoch:  251 	Train Loss:  0.03086977387189865 	Val Loss:  0.007913172614574433
+Epoch:  301 	Train Loss:  0.03046968906402588 	Val Loss:  0.007818919348716737
+Epoch:  351 	Train Loss:  0.030086557500362397 	Val Loss:  0.007734149241447449
+Epoch:  401 	Train Loss:  0.02974355768918991 	Val Loss:  0.007662733674049378
+Epoch:  451 	Train Loss:  0.02940953333854675 	Val Loss:  0.007593915379047394
+wandb: Waiting for W&B process to finish, PID 422843
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_054856-1rovmhbg/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_054856-1rovmhbg/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 499
+wandb:    Train MSE 0.02911
+wandb:    Train Acc 0.4671
+wandb:      Val MSE 0.00753
+wandb:      Val Acc 0.591
+wandb:        _step 10
+wandb:     _runtime 2950
+wandb:   _timestamp 1619606286
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▆▅▄▃▃▂▂▂▁▁
+wandb:    Train Acc ▁▃▄▅▆▆▇▇▇██
+wandb:      Val MSE █▆▅▄▃▃▂▂▂▁▁
+wandb:      Val Acc ▁▄▅▅▆▇▇▇███
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced eager-sweep-20: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/1rovmhbg
+wandb: Agent Starting Run: 7kvh23gt with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 5000
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 512
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 06:38:13.156976: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 06:38:13.163220: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run gentle-sweep-21
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/7kvh23gt
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_063811-7kvh23gt
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.03589113152503967 	Val Loss:  0.009129835247993469
+Epoch:  501 	Train Loss:  0.02855164078950882 	Val Loss:  0.007465475237369537
+Epoch:  1001 	Train Loss:  0.028179075787067413 	Val Loss:  0.007436503517627716
+Epoch:  1501 	Train Loss:  0.027286483225822448 	Val Loss:  0.0073043699026107784
+Epoch:  2001 	Train Loss:  0.027003590931892394 	Val Loss:  0.007293993055820465
+Epoch:  2501 	Train Loss:  0.026876354277133942 	Val Loss:  0.0072913391470909115
+Epoch:  3001 	Train Loss:  0.026800130014419554 	Val Loss:  0.00728811081647873
+Epoch:  3501 	Train Loss:  0.026742114880084992 	Val Loss:  0.007291540706157684
+Epoch:  4001 	Train Loss:  0.02670275936841965 	Val Loss:  0.00728992201089859
+Epoch:  4501 	Train Loss:  0.02666752477645874 	Val Loss:  0.0072840167760849
+wandb: Waiting for W&B process to finish, PID 508189
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_063811-7kvh23gt/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_063811-7kvh23gt/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 4999
+wandb:    Train MSE 0.02664
+wandb:    Train Acc 0.76878
+wandb:      Val MSE 0.00729
+wandb:      Val Acc 0.6745
+wandb:        _step 10
+wandb:     _runtime 31775
+wandb:   _timestamp 1619638066
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▂▂▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▆▇▇▇▇█████
+wandb:      Val MSE █▂▂▁▁▁▁▁▁▁▁
+wandb:      Val Acc ▁▇▇████████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced gentle-sweep-21: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/7kvh23gt
+wandb: Agent Starting Run: w1b11g25 with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 500
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.8
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 64
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 15:27:52.534259: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 15:27:52.539155: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run bright-sweep-22
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/w1b11g25
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_152750-w1b11g25
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.009024971027374267 	Val Loss:  0.009208335089683533
+Epoch:  51 	Train Loss:  0.008905943303108215 	Val Loss:  0.009081538248062133
+Epoch:  101 	Train Loss:  0.008774470868110658 	Val Loss:  0.008945302796363831
+Epoch:  151 	Train Loss:  0.008669467616081238 	Val Loss:  0.00883518841266632
+Epoch:  201 	Train Loss:  0.008575496063232421 	Val Loss:  0.008735627007484436
+Epoch:  251 	Train Loss:  0.008491107082366943 	Val Loss:  0.008647462081909179
+Epoch:  301 	Train Loss:  0.008407355031967163 	Val Loss:  0.00856221113204956
+Epoch:  351 	Train Loss:  0.00832561845779419 	Val Loss:  0.008482635641098022
+Epoch:  401 	Train Loss:  0.008251063060760499 	Val Loss:  0.008411451578140258
+Epoch:  451 	Train Loss:  0.008178062801361083 	Val Loss:  0.008343315005302429
+wandb: Waiting for W&B process to finish, PID 1432819
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_152750-w1b11g25/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_152750-w1b11g25/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 499
+wandb:    Train MSE 0.0081
+wandb:    Train Acc 0.30175
+wandb:      Val MSE 0.00827
+wandb:      Val Acc 0.411
+wandb:        _step 10
+wandb:     _runtime 1206
+wandb:   _timestamp 1619639276
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▇▆▅▅▄▃▃▂▂▁
+wandb:    Train Acc ▁▃▄▅▅▆▆▇▇██
+wandb:      Val MSE █▇▆▅▄▄▃▃▂▂▁
+wandb:      Val Acc ▁▃▄▅▅▆▆▇▇▇█
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced bright-sweep-22: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/w1b11g25
+wandb: Agent Starting Run: pa0hj3b1 with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 15:48:02.854605: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 15:48:02.859694: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run comic-sweep-23
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/pa0hj3b1
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_154800-pa0hj3b1
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.00035297699555754663 	Val Loss:  0.0003597610093653202
+Epoch:  101 	Train Loss:  0.0003528002718091011 	Val Loss:  0.0003600000888109207
+Epoch:  201 	Train Loss:  0.0003528002405166626 	Val Loss:  0.00035999997034668924
+Epoch:  301 	Train Loss:  0.0003528002533316612 	Val Loss:  0.0003600000999867916
+Epoch:  401 	Train Loss:  0.0003528002817928791 	Val Loss:  0.00036000003293156624
+Epoch:  501 	Train Loss:  0.0003528002706170082 	Val Loss:  0.0003599999502301216
+Epoch:  601 	Train Loss:  0.0003528002677857876 	Val Loss:  0.00035999994426965716
+Epoch:  701 	Train Loss:  0.00035280026108026506 	Val Loss:  0.0003600000575184822
+Epoch:  801 	Train Loss:  0.00035280026629567145 	Val Loss:  0.00036000005155801775
+Epoch:  901 	Train Loss:  0.0003528002651035786 	Val Loss:  0.0003599999472498894
+wandb: Waiting for W&B process to finish, PID 1458744
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_154800-pa0hj3b1/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_154800-pa0hj3b1/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00035
+wandb:    Train Acc 0.09768
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 2325
+wandb:   _timestamp 1619641605
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁█▇▆▆▆▆▆▆▆▆
+wandb:      Val MSE ▁██████████
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced comic-sweep-23: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/pa0hj3b1
+wandb: Agent Starting Run: pmv8wi5d with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: mse
+wandb: 	epochs: 5000
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0
+wandb: 	num_kernels_layer1: 16
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 512
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.27 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 16:26:51.285629: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 16:26:51.291853: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run swift-sweep-24
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/pmv8wi5d
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_162649-pmv8wi5d
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0007276555360853672 	Val Loss:  0.00036018890738487243
+Epoch:  501 	Train Loss:  0.0007271885164082051 	Val Loss:  0.00035999169945716855
+Epoch:  1001 	Train Loss:  0.0007272000446915626 	Val Loss:  0.0003599998049438
+Epoch:  1501 	Train Loss:  0.0007271999990940094 	Val Loss:  0.00035999998301267626
+Epoch:  2001 	Train Loss:  0.0007271999980509281 	Val Loss:  0.00036000000908970834
+Epoch:  2501 	Train Loss:  0.0007272000016272068 	Val Loss:  0.00035999998226761816
+Epoch:  3001 	Train Loss:  0.0007272000016272068 	Val Loss:  0.0003600000105798245
+Epoch:  3501 	Train Loss:  0.0007271999998390674 	Val Loss:  0.00036000000685453416
+Epoch:  4001 	Train Loss:  0.0007272000002861023 	Val Loss:  0.00036000001803040505
+Epoch:  4501 	Train Loss:  0.0007271999999880791 	Val Loss:  0.0003600000075995922
+wandb: Waiting for W&B process to finish, PID 1605612
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_162649-pmv8wi5d/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_162649-pmv8wi5d/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 4999
+wandb:    Train MSE 0.00073
+wandb:    Train Acc 0.10473
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 15145
+wandb:   _timestamp 1619656754
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁█▄▃▂▂▂▂▁▁▁
+wandb:      Val MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced swift-sweep-24: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/pmv8wi5d
+wandb: Agent Starting Run: peqblju6 with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 500
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.8
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.001
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 20:39:20.583710: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 20:39:20.588678: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run decent-sweep-25
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/peqblju6
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_203918-peqblju6
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0003532417821884155 	Val Loss:  0.0003603971265256405
+Epoch:  51 	Train Loss:  0.0003523350141942501 	Val Loss:  0.00035945632606744764
+Epoch:  101 	Train Loss:  0.000351455819606781 	Val Loss:  0.0003585307851433754
+Epoch:  151 	Train Loss:  0.0003504059374332428 	Val Loss:  0.000357424446195364
+Epoch:  201 	Train Loss:  0.0003490349926054478 	Val Loss:  0.0003559718519449234
+Epoch:  251 	Train Loss:  0.00034723548471927643 	Val Loss:  0.00035405185669660567
+Epoch:  301 	Train Loss:  0.00034499072447419167 	Val Loss:  0.00035165374428033826
+Epoch:  351 	Train Loss:  0.00034245159491896627 	Val Loss:  0.000348952354490757
+Epoch:  401 	Train Loss:  0.00033995036229491233 	Val Loss:  0.0003462899714708328
+Epoch:  451 	Train Loss:  0.00033773939341306687 	Val Loss:  0.00034398489966988566
+wandb: Waiting for W&B process to finish, PID 2280911
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_203918-peqblju6/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_203918-peqblju6/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 499
+wandb:    Train MSE 0.00034
+wandb:    Train Acc 0.19922
+wandb:      Val MSE 0.00034
+wandb:      Val Acc 0.2301
+wandb:        _step 10
+wandb:     _runtime 1195
+wandb:   _timestamp 1619657953
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ██▇▇▆▆▅▄▃▂▁
+wandb:    Train Acc ▁▂▄▅▆▆▇▇███
+wandb:      Val MSE ██▇▇▆▆▅▄▃▂▁
+wandb:      Val Acc ▁▃▅▆▇▇█████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced decent-sweep-25: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/peqblju6
+wandb: Agent Starting Run: 5m5g1a89 with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: mse
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0
+wandb: 	num_kernels_layer1: 16
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 20:59:19.999022: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 20:59:20.005321: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run electric-sweep-26
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/5m5g1a89
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_205917-5m5g1a89
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0014035598048567771 	Val Loss:  0.000357802490144968
+Epoch:  11 	Train Loss:  0.001321680411696434 	Val Loss:  0.0003364969961345196
+Epoch:  21 	Train Loss:  0.0012734915819764138 	Val Loss:  0.00032415503710508345
+Epoch:  31 	Train Loss:  0.001235194473862648 	Val Loss:  0.0003143741004168987
+Epoch:  41 	Train Loss:  0.0011999378448724746 	Val Loss:  0.0003055336847901344
+Epoch:  51 	Train Loss:  0.001166465067267418 	Val Loss:  0.0002973456010222435
+Epoch:  61 	Train Loss:  0.0011326934710144997 	Val Loss:  0.0002892179481685162
+Epoch:  71 	Train Loss:  0.001096909960731864 	Val Loss:  0.00028043759092688563
+Epoch:  81 	Train Loss:  0.0010631584998965263 	Val Loss:  0.0002721809200942516
+Epoch:  91 	Train Loss:  0.0010320028704404831 	Val Loss:  0.0002646986037492752
+wandb: Waiting for W&B process to finish, PID 2358096
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_205917-5m5g1a89/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_205917-5m5g1a89/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.001
+wandb:    Train Acc 0.38976
+wandb:      Val MSE 0.00026
+wandb:      Val Acc 0.5031
+wandb:        _step 10
+wandb:     _runtime 600
+wandb:   _timestamp 1619658558
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▇▆▅▄▄▃▃▂▁▁
+wandb:    Train Acc ▁▃▄▅▆▆▇▇▇██
+wandb:      Val MSE █▇▆▅▄▄▃▃▂▁▁
+wandb:      Val Acc ▁▃▄▅▅▆▆▇▇██
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced electric-sweep-26: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/5m5g1a89
+wandb: Agent Starting Run: hwcvltmc with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 500
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 21:09:24.863731: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 21:09:24.868631: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run swift-sweep-27
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/hwcvltmc
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_210922-hwcvltmc
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.03481956118106842 	Val Loss:  0.008649936962127685
+Epoch:  51 	Train Loss:  0.03002291827201843 	Val Loss:  0.007723948419094085
+Epoch:  101 	Train Loss:  0.029898378977775572 	Val Loss:  0.00775303338766098
+Epoch:  151 	Train Loss:  0.02989781643629074 	Val Loss:  0.007851240503787995
+Epoch:  201 	Train Loss:  0.029882510435581208 	Val Loss:  0.007817221522331238
+Epoch:  251 	Train Loss:  0.02988381985902786 	Val Loss:  0.0077870698451995846
+Epoch:  301 	Train Loss:  0.029874979116916656 	Val Loss:  0.00793450779914856
+Epoch:  351 	Train Loss:  0.029896344213485717 	Val Loss:  0.007876688313484191
+Epoch:  401 	Train Loss:  0.029875917019844055 	Val Loss:  0.007974164819717407
+Epoch:  451 	Train Loss:  0.02988365257024765 	Val Loss:  0.007761598587036133
+wandb: Waiting for W&B process to finish, PID 2415770
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_210922-hwcvltmc/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_210922-hwcvltmc/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 499
+wandb:    Train MSE 0.0299
+wandb:    Train Acc 0.56682
+wandb:      Val MSE 0.00788
+wandb:      Val Acc 0.5017
+wandb:        _step 10
+wandb:     _runtime 2293
+wandb:   _timestamp 1619660856
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▇█████████
+wandb:      Val MSE █▁▁▂▂▁▃▂▃▁▂
+wandb:      Val Acc ▁██▇▇█▆▇▆▇▇
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced swift-sweep-27: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/hwcvltmc
+wandb: Agent Starting Run: 38ziqh7o with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 128
+wandb: 	num_kernels_layer3: 1024
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 21:47:42.623710: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 21:47:42.630011: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run vibrant-sweep-28
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/38ziqh7o
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_214740-38ziqh7o
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.00035091464951634405 	Val Loss:  0.0003569721035659313
+Epoch:  101 	Train Loss:  0.00035280024588108064 	Val Loss:  0.00036000006422400477
+Epoch:  201 	Train Loss:  0.000352800255715847 	Val Loss:  0.0003600000873208046
+Epoch:  301 	Train Loss:  0.000352800253033638 	Val Loss:  0.00035999998450279234
+Epoch:  401 	Train Loss:  0.00035280026733875276 	Val Loss:  0.00035999996736645697
+Epoch:  501 	Train Loss:  0.0003528002680838108 	Val Loss:  0.00035999998822808265
+Epoch:  601 	Train Loss:  0.0003528002560138702 	Val Loss:  0.00036000006794929503
+Epoch:  701 	Train Loss:  0.00035280025213956835 	Val Loss:  0.00036000001430511473
+Epoch:  801 	Train Loss:  0.0003528002621233463 	Val Loss:  0.00035999998301267626
+Epoch:  901 	Train Loss:  0.0003528002455830574 	Val Loss:  0.0003599999867379665
+wandb: Waiting for W&B process to finish, PID 2454546
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_214740-38ziqh7o/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_214740-38ziqh7o/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00035
+wandb:    Train Acc 0.0981
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 3254
+wandb:   _timestamp 1619664114
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE ▁██████████
+wandb:    Train Acc █▂▁▁▁▁▁▁▁▁▁
+wandb:      Val MSE ▁██████████
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced vibrant-sweep-28: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/38ziqh7o
+wandb: Agent Starting Run: rjx72wta with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 512
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 22:42:00.930706: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 22:42:00.938434: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run prime-sweep-29
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/rjx72wta
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_224158-rjx72wta
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.03481572735309601 	Val Loss:  0.008590228533744812
+Epoch:  11 	Train Loss:  0.0296689813709259 	Val Loss:  0.007619873154163361
+Epoch:  21 	Train Loss:  0.028426353397369385 	Val Loss:  0.007443557262420655
+Epoch:  31 	Train Loss:  0.02746210224866867 	Val Loss:  0.0074371772050857545
+Epoch:  41 	Train Loss:  0.02649404702425003 	Val Loss:  0.007352046370506286
+Epoch:  51 	Train Loss:  0.02557214321374893 	Val Loss:  0.007353426337242126
+Epoch:  61 	Train Loss:  0.025047681307792665 	Val Loss:  0.007374117290973663
+Epoch:  71 	Train Loss:  0.024746056706905366 	Val Loss:  0.007353167998790741
+Epoch:  81 	Train Loss:  0.024610595746040343 	Val Loss:  0.007360788905620575
+Epoch:  91 	Train Loss:  0.02454503152370453 	Val Loss:  0.0073588894367218015
+wandb: Waiting for W&B process to finish, PID 2519617
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_224158-rjx72wta/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_224158-rjx72wta/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.02449
+wandb:    Train Acc 0.76959
+wandb:      Val MSE 0.00736
+wandb:      Val Acc 0.6181
+wandb:        _step 10
+wandb:     _runtime 487
+wandb:   _timestamp 1619664605
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▅▄▃▂▂▁▁▁▁▁
+wandb:    Train Acc ▁▄▅▆▆▇▇▇███
+wandb:      Val MSE █▃▂▁▁▁▁▁▁▁▁
+wandb:      Val Acc ▁▇█████████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced prime-sweep-29: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/rjx72wta
+wandb: Agent Starting Run: yafktaby with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.001
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 22:50:12.318599: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 22:50:12.323424: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run wild-sweep-30
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/yafktaby
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_225010-yafktaby
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.00035328377068042754 	Val Loss:  0.00036028778553009034
+Epoch:  101 	Train Loss:  0.00032392011135816575 	Val Loss:  0.0003296738609671593
+Epoch:  201 	Train Loss:  0.0003114330096542835 	Val Loss:  0.0003169142432510853
+Epoch:  301 	Train Loss:  0.0003000015118718147 	Val Loss:  0.0003053186118602753
+Epoch:  401 	Train Loss:  0.0002888236844539642 	Val Loss:  0.0002942007772624493
+Epoch:  501 	Train Loss:  0.0002801863552629948 	Val Loss:  0.0002854850955307484
+Epoch:  601 	Train Loss:  0.0002711258940398693 	Val Loss:  0.0002764831617474556
+Epoch:  701 	Train Loss:  0.0002599680206179619 	Val Loss:  0.00026549311876296995
+Epoch:  801 	Train Loss:  0.00025025105766952036 	Val Loss:  0.0002559307117015123
+Epoch:  901 	Train Loss:  0.0002435221853107214 	Val Loss:  0.0002490312770009041
+wandb: Waiting for W&B process to finish, PID 2656194
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_225010-yafktaby/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_225010-yafktaby/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00024
+wandb:    Train Acc 0.41038
+wandb:      Val MSE 0.00024
+wandb:      Val Acc 0.5254
+wandb:        _step 10
+wandb:     _runtime 2347
+wandb:   _timestamp 1619666957
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▆▅▅▄▄▃▂▂▁▁
+wandb:    Train Acc ▁▄▅▆▆▆▇▇▇██
+wandb:      Val MSE █▆▅▅▄▃▃▂▂▁▁
+wandb:      Val Acc ▁▄▅▆▆▆▇▇███
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced wild-sweep-30: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/yafktaby
+wandb: Agent Starting Run: m64corzh with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 512
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.05
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 23:29:23.524109: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 23:29:23.528919: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run brisk-sweep-31
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/m64corzh
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_232921-m64corzh
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.018605925064086915 	Val Loss:  0.009210421180725098
+Epoch:  11 	Train Loss:  0.01859410400867462 	Val Loss:  0.009204906487464904
+Epoch:  21 	Train Loss:  0.018595492601394654 	Val Loss:  0.00920567126274109
+Epoch:  31 	Train Loss:  0.018599033393859862 	Val Loss:  0.0092074458360672
+Epoch:  41 	Train Loss:  0.018601845021247863 	Val Loss:  0.009208838558197022
+Epoch:  51 	Train Loss:  0.01860348747730255 	Val Loss:  0.009209650564193726
+Epoch:  61 	Train Loss:  0.018604294128417968 	Val Loss:  0.009210048985481263
+Epoch:  71 	Train Loss:  0.01860465048789978 	Val Loss:  0.009210224175453186
+Epoch:  81 	Train Loss:  0.018604797406196593 	Val Loss:  0.009210295462608337
+Epoch:  91 	Train Loss:  0.018604854621887205 	Val Loss:  0.00921032383441925
+wandb: Waiting for W&B process to finish, PID 2713013
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_232921-m64corzh/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_232921-m64corzh/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.0186
+wandb:    Train Acc 0.13314
+wandb:      Val MSE 0.00921
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 299
+wandb:   _timestamp 1619667260
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▂▄▆▇▇▇▇▇▇
+wandb:    Train Acc ▁▆████▇▆▆▅▅
+wandb:      Val MSE █▁▂▄▆▇█████
+wandb:      Val Acc ▁██▇▆▅▂▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced brisk-sweep-31: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/m64corzh
+wandb: Agent Starting Run: mixc21lv with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 500
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 256
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 23:34:26.603035: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 23:34:26.607725: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run snowy-sweep-32
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/mixc21lv
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_233424-mixc21lv
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.00902327733516693 	Val Loss:  0.00920503113269806
+Epoch:  51 	Train Loss:  0.008448521084785462 	Val Loss:  0.008600306868553162
+Epoch:  101 	Train Loss:  0.008176538457870483 	Val Loss:  0.00833234395980835
+Epoch:  151 	Train Loss:  0.008001557857990265 	Val Loss:  0.008168998241424561
+Epoch:  201 	Train Loss:  0.007897342903614045 	Val Loss:  0.008070260179042816
+Epoch:  251 	Train Loss:  0.007829362535476685 	Val Loss:  0.008003746569156646
+Epoch:  301 	Train Loss:  0.007772754032611847 	Val Loss:  0.007947434914112091
+Epoch:  351 	Train Loss:  0.0077261067223548885 	Val Loss:  0.00790700649023056
+Epoch:  401 	Train Loss:  0.0076853275871276855 	Val Loss:  0.007871391427516937
+Epoch:  451 	Train Loss:  0.007640702614784241 	Val Loss:  0.007832464027404786
+wandb: Waiting for W&B process to finish, PID 2719791
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_233424-mixc21lv/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_233424-mixc21lv/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 499
+wandb:    Train MSE 0.0076
+wandb:    Train Acc 0.45141
+wandb:      Val MSE 0.0078
+wandb:      Val Acc 0.5309
+wandb:        _step 10
+wandb:     _runtime 1189
+wandb:   _timestamp 1619668453
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▅▄▃▂▂▂▂▁▁▁
+wandb:    Train Acc ▁▄▅▆▆▇▇▇███
+wandb:      Val MSE █▅▄▃▂▂▂▂▁▁▁
+wandb:      Val Acc ▁▄▆▆▇▇▇▇███
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced snowy-sweep-32: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/mixc21lv
+wandb: Agent Starting Run: xd7nsliv with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.8
+wandb: 	num_kernels_layer1: 16
+wandb: 	num_kernels_layer2: 64
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: sgd
+wandb: 	weight_decay: 0.001
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 23:54:20.266562: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 23:54:20.273097: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run stoic-sweep-33
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/xd7nsliv
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_235418-xd7nsliv
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0003534786237776279 	Val Loss:  0.00036065654680132866
+Epoch:  11 	Train Loss:  0.00035185576260089876 	Val Loss:  0.00035896252393722536
+Epoch:  21 	Train Loss:  0.00035025839060544967 	Val Loss:  0.00035725994557142256
+Epoch:  31 	Train Loss:  0.0003483758834004402 	Val Loss:  0.00035524777099490165
+Epoch:  41 	Train Loss:  0.00034607124879956243 	Val Loss:  0.0003527676045894623
+Epoch:  51 	Train Loss:  0.0003434681235253811 	Val Loss:  0.0003499744862318039
+Epoch:  61 	Train Loss:  0.00034096311315894126 	Val Loss:  0.00034731417894363404
+Epoch:  71 	Train Loss:  0.0003388784745335579 	Val Loss:  0.0003451032668352127
+Epoch:  81 	Train Loss:  0.0003372106477618217 	Val Loss:  0.0003433431752026081
+Epoch:  91 	Train Loss:  0.00033580709293484686 	Val Loss:  0.0003419060967862606
+wandb: Waiting for W&B process to finish, PID 2795386
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_235418-xd7nsliv/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_235418-xd7nsliv/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.00033
+wandb:    Train Acc 0.19488
+wandb:      Val MSE 0.00034
+wandb:      Val Acc 0.2451
+wandb:        _step 10
+wandb:     _runtime 245
+wandb:   _timestamp 1619668703
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▇▇▆▅▄▃▃▂▁▁
+wandb:    Train Acc ▁▂▃▅▆▆▇▇▇██
+wandb:      Val MSE █▇▇▆▅▄▃▃▂▁▁
+wandb:      Val Acc ▁▃▅▆▆▇▇▇▇██
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced stoic-sweep-33: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/xd7nsliv
+wandb: Agent Starting Run: gne48lq9 with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: mse
+wandb: 	epochs: 500
+wandb: 	learning_rate: 0.001
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 8
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 128
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.05
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-28 23:58:29.826963: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-28 23:58:29.832072: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run absurd-sweep-34
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/gne48lq9
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210428_235827-gne48lq9
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0014090531626343727 	Val Loss:  0.0003603563629090786
+Epoch:  51 	Train Loss:  0.001407608522027731 	Val Loss:  0.00036000639125704766
+Epoch:  101 	Train Loss:  0.001407600439786911 	Val Loss:  0.0003600007615983486
+Epoch:  151 	Train Loss:  0.0014076000791788102 	Val Loss:  0.00036000012308359146
+Epoch:  201 	Train Loss:  0.0014076000618934632 	Val Loss:  0.0003600000247359276
+Epoch:  251 	Train Loss:  0.001407600060403347 	Val Loss:  0.00036000000610947607
+Epoch:  301 	Train Loss:  0.0014076000599563122 	Val Loss:  0.00036000000685453416
+Epoch:  351 	Train Loss:  0.0014076000621914863 	Val Loss:  0.000359999992698431
+Epoch:  401 	Train Loss:  0.0014076000626385213 	Val Loss:  0.0003600000105798245
+Epoch:  451 	Train Loss:  0.0014076000593602658 	Val Loss:  0.00035999999418854714
+wandb: Waiting for W&B process to finish, PID 2800789
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_235827-gne48lq9/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210428_235827-gne48lq9/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 499
+wandb:    Train MSE 0.00141
+wandb:    Train Acc 0.09938
+wandb:      Val MSE 0.00036
+wandb:      Val Acc 0.1
+wandb:        _step 10
+wandb:     _runtime 3021
+wandb:   _timestamp 1619671728
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc █▄▃▂▂▂▂▁▁▁▁
+wandb:      Val MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val Acc █▁▁▁▁▁▁▁▁▁▁
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced absurd-sweep-34: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/gne48lq9
+wandb: Agent Starting Run: mj5etm9h with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: mse
+wandb: 	epochs: 1000
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 16
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.001
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-29 00:48:54.639475: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-29 00:48:54.645571: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run glowing-sweep-35
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/mj5etm9h
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210429_004852-mj5etm9h
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.0014090633696317674 	Val Loss:  0.0003600130222737789
+Epoch:  101 	Train Loss:  0.0012547886031866074 	Val Loss:  0.000320052582770586
+Epoch:  201 	Train Loss:  0.001166901788190007 	Val Loss:  0.00029775000736117363
+Epoch:  301 	Train Loss:  0.0011047712586820125 	Val Loss:  0.0002825317099690437
+Epoch:  401 	Train Loss:  0.001039684342816472 	Val Loss:  0.0002659174107015133
+Epoch:  501 	Train Loss:  0.001001575392484665 	Val Loss:  0.0002563566118478775
+Epoch:  601 	Train Loss:  0.0009764193990081548 	Val Loss:  0.00025060023218393323
+Epoch:  701 	Train Loss:  0.0009562261091917753 	Val Loss:  0.00024596061594784257
+Epoch:  801 	Train Loss:  0.000938142716512084 	Val Loss:  0.00024222140125930308
+Epoch:  901 	Train Loss:  0.0009220355822890997 	Val Loss:  0.0002386506050825119
+wandb: Waiting for W&B process to finish, PID 2915230
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+[lambda01][[42440,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(19) failed: Connection reset by peer (104)
+[lambda01][[42440,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda01][[42440,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(34) failed: Connection reset by peer (104)
+[lambda01][[42440,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(50) failed: Connection reset by peer (104)
+[lambda01][[42440,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(56) failed: Connection reset by peer (104)
+[lambda01][[42440,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(58) failed: Connection reset by peer (104)
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210429_004852-mj5etm9h/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210429_004852-mj5etm9h/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 999
+wandb:    Train MSE 0.00091
+wandb:    Train Acc 0.46511
+wandb:      Val MSE 0.00024
+wandb:      Val Acc 0.5477
+wandb:        _step 10
+wandb:     _runtime 6008
+wandb:   _timestamp 1619677740
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▆▅▄▃▂▂▂▁▁▁
+wandb:    Train Acc ▁▄▅▆▆▇▇▇███
+wandb:      Val MSE █▆▅▄▃▂▂▂▁▁▁
+wandb:      Val Acc ▁▅▆▆▇▇▇████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced glowing-sweep-35: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/mj5etm9h
+wandb: Agent Starting Run: rfyv60cd with config:
+wandb: 	batch_size: 64
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.01
+wandb: 	momentum: 0.9
+wandb: 	num_kernels_layer1: 64
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 32
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.01
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-29 02:29:06.904705: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-29 02:29:06.910957: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run amber-sweep-36
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/rfyv60cd
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210429_022904-rfyv60cd
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.035934154601097106 	Val Loss:  0.009161855459213258
+Epoch:  11 	Train Loss:  0.03504671628952026 	Val Loss:  0.008957640099525451
+Epoch:  21 	Train Loss:  0.03483260621547699 	Val Loss:  0.008899448919296265
+Epoch:  31 	Train Loss:  0.03446418016910553 	Val Loss:  0.00880635061264038
+Epoch:  41 	Train Loss:  0.03408078234195709 	Val Loss:  0.008707901215553284
+Epoch:  51 	Train Loss:  0.03377144550323486 	Val Loss:  0.008630209183692932
+Epoch:  61 	Train Loss:  0.033514460639953614 	Val Loss:  0.008566661334037782
+Epoch:  71 	Train Loss:  0.03325398258686066 	Val Loss:  0.008498258399963378
+Epoch:  81 	Train Loss:  0.03296886561632156 	Val Loss:  0.00842898051738739
+Epoch:  91 	Train Loss:  0.032788139581680295 	Val Loss:  0.008383966970443725
+wandb: Waiting for W&B process to finish, PID 3079494
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210429_022904-rfyv60cd/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210429_022904-rfyv60cd/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 99
+wandb:    Train MSE 0.03268
+wandb:    Train Acc 0.2958
+wandb:      Val MSE 0.00836
+wandb:      Val Acc 0.3887
+wandb:        _step 10
+wandb:     _runtime 622
+wandb:   _timestamp 1619678366
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▆▆▅▄▃▃▂▂▁▁
+wandb:    Train Acc ▁▂▂▃▄▅▆▆▇██
+wandb:      Val MSE █▆▆▅▄▃▃▂▂▁▁
+wandb:      Val Acc ▁▁▂▄▅▅▆▆▇██
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▅▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▅▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced amber-sweep-36: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/rfyv60cd
+wandb: Agent Starting Run: i5wvivyd with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 5000
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 16
+wandb: 	num_kernels_layer3: 256
+wandb: 	num_nodes_fc_layer: 64
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.001
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-29 02:39:32.585030: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-29 02:39:32.590050: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run firm-sweep-37
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/i5wvivyd
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210429_023930-i5wvivyd
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.008954531545639037 	Val Loss:  0.009003846764564514
+Epoch:  501 	Train Loss:  0.006435700316429138 	Val Loss:  0.007154728662967682
+wandb: ERROR Error while calling W&B API: Error 1040: Too many connections (<Response [500]>)
+wandb: Network error (HTTPError), entering retry loop. See wandb/debug-internal.log for full traceback.
+wandb: ERROR Error while calling W&B API: Error 1040: Too many connections (<Response [500]>)
+wandb: ERROR Error while calling W&B API: Error 1040: Too many connections (<Response [500]>)
+wandb: ERROR Error while calling W&B API: Error 1040: Too many connections (<Response [500]>)
+wandb: Network error (HTTPError), entering retry loop. See /home/naddeok5/FIM/wandb/run-20210429_023930-i5wvivyd/logs/debug-internal.log for full traceback.
+wandb: Network error resolved after 0:01:08.204702, resuming normal operation.
+wandb: Network error resolved after 0:01:37.716297, resuming normal operation.
+Epoch:  1001 	Train Loss:  0.006290957241058349 	Val Loss:  0.007115964424610138
+Epoch:  1501 	Train Loss:  0.006236321144104004 	Val Loss:  0.007110442566871643
+Epoch:  2001 	Train Loss:  0.006209294209480285 	Val Loss:  0.007107559978961945
+Epoch:  2501 	Train Loss:  0.006186559469699859 	Val Loss:  0.00711502046585083
+Epoch:  3001 	Train Loss:  0.006169165897369384 	Val Loss:  0.0071199283957481384
+Epoch:  3501 	Train Loss:  0.006160402565002441 	Val Loss:  0.007111032104492187
+Epoch:  4001 	Train Loss:  0.0061494405150413515 	Val Loss:  0.007105897665023803
+Epoch:  4501 	Train Loss:  0.006143596262931823 	Val Loss:  0.007105374348163605
+wandb: Waiting for W&B process to finish, PID 3134927
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210429_023930-i5wvivyd/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210429_023930-i5wvivyd/logs/debug-internal.log
+wandb: Run summary:
+wandb:        epoch 4999
+wandb:    Train MSE 0.00614
+wandb:    Train Acc 0.8987
+wandb:      Val MSE 0.0071
+wandb:      Val Acc 0.6933
+wandb:        _step 10
+wandb:     _runtime 11774
+wandb:   _timestamp 1619690144
+wandb: Run history:
+wandb:        epoch ▁▂▂▃▄▅▅▆▇▇█
+wandb:    Train MSE █▂▁▁▁▁▁▁▁▁▁
+wandb:    Train Acc ▁▇▇▇███████
+wandb:      Val MSE █▁▁▁▁▁▁▁▁▁▁
+wandb:      Val Acc ▁██████████
+wandb:        _step ▁▂▂▃▄▅▅▆▇▇█
+wandb:     _runtime ▁▂▂▃▄▄▅▆▇▇█
+wandb:   _timestamp ▁▂▂▃▄▄▅▆▇▇█
+wandb: 
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced firm-sweep-37: https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/i5wvivyd
+wandb: Agent Starting Run: sfqamx3q with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: mse
+wandb: 	epochs: 100
+wandb: 	learning_rate: 0.1
+wandb: 	momentum: 0.7
+wandb: 	num_kernels_layer1: 32
+wandb: 	num_kernels_layer2: 32
+wandb: 	num_kernels_layer3: 128
+wandb: 	num_nodes_fc_layer: 128
+wandb: 	optimizer: adadelta
+wandb: 	weight_decay: 0.005
+
+wandb: wandb version 0.10.28 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-04-29 05:55:51.397018: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-04-29 05:55:51.401782: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run electric-sweep-38
+wandb: ⭐️ View project at https://wandb.ai/naddeok/LeNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/LeNet%20CIFAR10/sweeps/64v0odqd
+wandb: 🚀 View run at https://wandb.ai/naddeok/LeNet%20CIFAR10/runs/sfqamx3q
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210429_055549-sfqamx3q
+wandb: Run `wandb offline` to turn off syncing.
+
+Epoch:  1 	Train Loss:  0.00035205543413758275 	Val Loss:  0.0003581771649420261
+Epoch:  11 	Train Loss:  0.0003410113500058651 	Val Loss:  0.0003472168520092964
+Epoch:  21 	Train Loss:  0.0003396217779815197 	Val Loss:  0.0003459419660270214
+Epoch:  31 	Train Loss:  0.00033933853298425673 	Val Loss:  0.00034563780650496485
+Epoch:  41 	Train Loss:  0.0003391840873658657 	Val Loss:  0.0003454653270542622
+Epoch:  51 	Train Loss:  0.00033906490474939344 	Val Loss:  0.0003453703038394451
+Epoch:  61 	Train Loss:  0.00033903360232710836 	Val Loss:  0.00034528974145650864
+Epoch:  71 	Train Loss:  0.0003389648993313313 	Val Loss:  0.000345265431702137
+Epoch:  81 	Train Loss:  0.0003389291439950466 	Val Loss:  0.00034525597095489503
+Epoch:  91 	Train Loss:  0.0003389306037127972 	Val Loss:  0.00034520400762557985
+Problem finishing run
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 1374, in _atexit_cleanup
+    self._on_finish()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 1513, in _on_finish
+    self._console_stop()  # TODO: there's a race here with jupyter console logging
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 1410, in _console_stop
+    self._restore()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 1342, in _restore
+    self._out_redir.uninstall()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/lib/redirect.py", line 233, in uninstall
+    self._redirect(to_fd=self._old_fp.fileno(), close=True)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/lib/redirect.py", line 195, in _redirect
+    setattr(sys, self._stream, os.fdopen(self._old_fd, "w"))
+  File "/usr/lib/python3.8/os.py", line 1023, in fdopen
+    return io.open(fd, *args, **kwargs)
+OSError: [Errno 9] Bad file descriptor
+wandb: ERROR Problem finishing run
+/usr/lib/python3.8/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 228 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

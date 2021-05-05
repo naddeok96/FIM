@@ -28,7 +28,7 @@ seed         = 100
 # Push to GPU if necessary
 if gpu:
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 # Declare seed and initalize network
 torch.manual_seed(seed)

@@ -18,7 +18,7 @@ sweep_config = {
                         'values': [0, 1e-2, 5e-2, 1e-3, 5e-3]
                     },
                     'learning_rate': {
-                        'values': [1e-1, 1e-2, 1e-3]
+                        'values': [1, 1e-1, 1e-2, 1e-3]
                     },
                     'optimizer': {
                         'values': ['sgd', 'adadelta']
