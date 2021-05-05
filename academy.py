@@ -7,13 +7,15 @@ import torch.nn.functional as F
 import torchvision.transforms as transforms
 import math
 import operator
+from sam import SAM
 
 
 class Academy:
     def __init__(self,
                  net, 
                  data,
-                 gpu = False):
+                 gpu = False,
+                 use_SAM = False):
         """The academy will train and test a network on data
 
         Args:
@@ -32,6 +34,9 @@ class Academy:
         
         # Declare data
         self.data = data
+
+        # Declare SAM usage
+        self.use_SAM = use_SAM
 
     def freeze(self, frozen_layers):
         """Remove gradients from specified layers
@@ -68,6 +73,10 @@ class Academy:
                                     lr = learning_rate, 
                                     momentum = momentum,
                                     weight_decay = weight_decay)
+
+        if self.use_SAM:
+            optim = SAM(self.net.parameters(), optimizer)
+
         criterion = torch.nn.CrossEntropyLoss()
 
         #Loop for n_epochs
