@@ -13,18 +13,22 @@ from models.classes.first_layer_unitary_effnet  import FstLayUniEffNet
 # Hyperparameters
 gpu         = True
 save_model  = False
-n_epochs    = 200
+n_epochs    = 100
 set_name    = "CIFAR10"
-model_name  = "EffNet-B0"
+model_name  = 'efficientnet-b7'
 pretrained  = True
 use_SAM     = True
 seed        = 3
+
+print("Epochs: ", n_epochs)
+print("Pretrained: ", pretrained)
+print("SAM: ", use_SAM)
 
 # Push to GPU if necessary
 if gpu == True:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
@@ -36,7 +40,7 @@ print(set_name, "Data Loaded")
 # Unet
 net = FstLayUniEffNet(  set_name = set_name,
                         gpu = gpu,
-                        model_name = 'efficientnet-b0',
+                        model_name = model_name,
                         pretrained = pretrained)
 # net = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
 
