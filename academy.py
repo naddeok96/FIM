@@ -75,7 +75,7 @@ class Academy:
                                     weight_decay = weight_decay)
 
         if self.use_SAM:
-            optim = SAM(self.net.parameters(), optimizer)
+            optimizer = SAM(self.net.parameters(), optimizer)
 
         criterion = torch.nn.CrossEntropyLoss()
 
