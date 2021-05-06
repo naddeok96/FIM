@@ -6,17 +6,18 @@ import torch
 import pickle
 from data_setup import Data
 from academy import Academy
+from torchsummary import summary
 from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
 from models.classes.first_layer_unitary_effnet  import FstLayUniEffNet
 
 
 # Hyperparameters
-gpu         = True
-save_model  = False
-n_epochs    = 100
+gpu         = False
+save_model  = True
+n_epochs    = 10000
 set_name    = "CIFAR10"
-model_name  = 'efficientnet-b7'
-pretrained  = True
+model_name  = 'efficientnet-l2'
+pretrained  = False
 use_SAM     = True
 seed        = 3
 
@@ -34,7 +35,7 @@ if gpu == True:
 torch.manual_seed(seed)
 
 # Load data
-data = Data(gpu = gpu, set_name = set_name)
+# data = Data(gpu = gpu, set_name = set_name)
 print(set_name, "Data Loaded")
 
 # Unet
@@ -45,12 +46,14 @@ net = FstLayUniEffNet(  set_name = set_name,
 # net = torch.hub.load('pytorch/vision:v0.6.0', 'vgg16', pretrained=True)
 
 # net = FstLayUniLeNet(set_name = set_name, gpu = gpu)
-net.set_orthogonal_matrix()
+# net.set_orthogonal_matrix()
 # net.set_random_matrix()
 # with open("models/pretrained/MNIST/weak_U.pkl", 'rb') as input:
 #     net.U = pickle.load(input).type(torch.FloatTensor)
 # print("U size: ", net.U.size())
 net.eval()
+summary(net, (3, 32, 32))
+exit()
 print(model_name, "Network Loaded")
 
 
