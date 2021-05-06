@@ -52,7 +52,7 @@ net = FstLayUniEffNet(  set_name = set_name,
 #     net.U = pickle.load(input).type(torch.FloatTensor)
 # print("U size: ", net.U.size())
 net.eval()
-summary(net, (3, 32, 32))
+summary(net, (3, 32, 32))git 
 exit()
 print(model_name, "Network Loaded")
 
