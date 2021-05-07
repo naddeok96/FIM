@@ -17,7 +17,8 @@ import matplotlib.pyplot as plt
 class Data:
     def __init__(self,set_name = "MNIST",
                       gpu = False,
-                      test_batch_size = 256):
+                      test_batch_size = 256,
+                      desired_image_size = None):
 
         super(Data,self).__init__()
 
@@ -25,25 +26,38 @@ class Data:
         self.gpu = gpu
         self.set_name = set_name
         self.test_batch_size = test_batch_size
+        self.desired_image_size = desired_image_size
 
         # Pull in data
         if self.set_name == "CIFAR10":
             # Image size
-            self.image_size = 32
+            self.image_size = 32 if self.desired_image_size is None else self.desired_image_size
 
             # Images are of size (3,32,32)
-            self.transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
-                                            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))]) #  Normalize
+            self.train_transform = transforms.Compose([ transforms.Resize(self.image_size),
+                                                        transforms.CenterCrop(self.image_size),
+                                                        transforms.RandomCrop(self.image_size, padding=4),
+                                                        transforms.RandomHorizontalFlip(),
+                                                        transforms.ToTensor(), # Convert the images into tensors
+                                                        transforms.Normalize((0.4914, 0.4822, 0.4465), 
+                                                                             (0.2023, 0.1994, 0.2010))]) #  Normalize
+
+            self.test_transform = transforms.Compose([transforms.Resize(self.image_size),
+                                                      transforms.CenterCrop(self.image_size),
+                                                      transforms.ToTensor(), # Convert the images into tensors
+                                                      transforms.Normalize((0.4914, 0.4822, 0.4465), 
+                                                                           (0.2023, 0.1994, 0.2010))]) #  Normalize
+
 
             self.train_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10', # '../data' 
                                                     train=True,
                                                     download=False,
-                                                    transform=self.transform)
+                                                    transform=self.train_transform)
 
             self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10',
                                                     train=False,
                                                     download=False,
-                                                    transform=self.transform)
+                                                    transform=self.test_transform)
                                                     
         elif self.set_name == "MNIST":
             # Image size
@@ -52,23 +66,33 @@ class Data:
             # Images are of size (1, 28, 28)
             self.mean = 0.1307
             self.std = 0.3081
-            self.transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
+            self.train_transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
                                                  transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
+
+            self.test_transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
+                                                 transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
+
             self.inverse_transform = transforms.Compose([transforms.ToTensor(), 
                                                          transforms.Normalize((-self.mean * self.std,), (1/self.std,))])
 
             self.train_set = datasets.MNIST(root='../../../data/pytorch',
                                             train = True,
                                             download = False,
-                                            transform = self.transform) 
+                                            transform = self.train_transform) 
 
             self.test_set = torchvision.datasets.MNIST(root='../../../data/pytorch',
                                                     train=False,
                                                     download=False,
-                                                    transform=self.transform)
+                                                    transform=self.test_transform)
 
         elif self.set_name == "ImageNet":
-            self.transform = transforms.Compose([transforms.Resize(256),
+            self.train_transform = transforms.Compose([transforms.Resize(256),
+                                                transforms.CenterCrop(224),
+                                                transforms.ToTensor(),
+                                                transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                                                     std=[0.229, 0.224, 0.225])])
+
+            self.test_transform = transforms.Compose([transforms.Resize(256),
                                                 transforms.CenterCrop(224),
                                                 transforms.ToTensor(),
                                                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -76,11 +100,12 @@ class Data:
 
             self.inverse_transform = UnNormalize(mean=[0.485, 0.456, 0.406],
                                                 std=[0.229, 0.224, 0.225])
+
             self.train_set = torchvision.datasets.ImageFolder(root='../../../data/ImageNet/train', # '../data' 
-                                                    transform=self.transform)
+                                                    transform=self.train_transform)
 
             self.test_set = torchvision.datasets.ImageFolder(root='../../../data/ImageNet/val',
-                                                    transform=self.transform)
+                                                    transform=self.test_transform)
 
             # import matplotlib
             # matplotlib.use('Agg')
