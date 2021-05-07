@@ -17,11 +17,9 @@ class FstLayUniEffNet(nn.Module):
                        gpu = False,
                        U = None,
                        model_name = 'efficientnet-b0',
-                       pretrained = True,
-                       seed = 1):
+                       pretrained = True):
 
         super(FstLayUniEffNet,self).__init__()
-        torch.manual_seed(seed)
 
         # Declare Setname 
         self.set_name = set_name

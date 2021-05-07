@@ -27,10 +27,11 @@ if gpu:
     os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 
 # Declare seed and initalize network
-torch.manual_seed(seed)
+# torch.manual_seed(seed)
 
 # Load data
 data = Data(gpu = gpu, set_name = set_name)
+print(set_name + " is Loaded")
 
 # Functions
 #-------------------------------------------------------------------------------------#
@@ -50,7 +51,7 @@ def initalize_net(set_name, gpu, config):
 
     # Add unitary transformation
     # net.set_random_matrix()
-    # net.set_orthogonal_matrix()
+    net.set_orthogonal_matrix()
     # with open("models/pretrained/high_R_U.pkl", 'rb') as input:
     #     net.U = pickle.load(input).type(torch.FloatTensor)
 
@@ -166,7 +167,7 @@ def train(data, save_model, best_loss):
                     optimizer.step()
 
         # Display 
-        if epoch % (config.epochs/10) == 0:
+        if epoch % 10 == 0:
             val_loss, val_acc = test(net, data, config)
             print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(train_loader.dataset), "\tVal Loss: ", val_loss)
 
