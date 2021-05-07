@@ -17,7 +17,8 @@ class FstLayUniEffNet(nn.Module):
                        gpu = False,
                        U = None,
                        model_name = 'efficientnet-b0',
-                       pretrained = True):
+                       pretrained = True,
+                       desired_image_size = None):
 
         super(FstLayUniEffNet,self).__init__()
 
@@ -25,7 +26,7 @@ class FstLayUniEffNet(nn.Module):
         self.set_name = set_name
 
         if self.set_name == "CIFAR10":
-            self.image_size = 32
+            self.image_size = 32 if desired_image_size is None else desired_image_size
             self.num_classes = 10
 
         elif self.set_name == "ImageNet":
