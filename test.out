@@ -1,0 +1,21 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(wandb_model_trainer.py:3756431): Gdk-CRITICAL **: 10:01:01.206: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
+CIFAR10 is Loaded
+Create sweep with ID: d9xgiagl
+Sweep URL: https://wandb.ai/naddeok/EffNet%20CIFAR10/sweeps/d9xgiagl
+wandb: wandb version 0.10.29 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-05-07 10:01:05.175528: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+2021-05-07 10:01:05.181132: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.2
+wandb: Tracking run with wandb version 0.10.15
+wandb: Syncing run polar-plasma-32
+wandb: ⭐️ View project at https://wandb.ai/naddeok/EffNet%20CIFAR10
+wandb: 🚀 View run at https://wandb.ai/naddeok/EffNet%20CIFAR10/runs/16culz0t
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210507_100103-16culz0t
+wandb: Run `wandb offline` to turn off syncing.
+Epoch:  1 	Train Loss:  0.03428742920875549 	Val Loss:  0.03159666217565536
+Epoch:  11 	Train Loss:  0.022567167541980744 	Val Loss:  0.022808419704437255
+Epoch:  21 	Train Loss:  0.019262571185827256 	Val Loss:  0.020095855033397676
