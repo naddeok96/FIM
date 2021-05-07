@@ -10,12 +10,14 @@ import pickle
 import random
 from sam import SAM
 from data_setup import Data
-from effnet_sweep_config import sweep_config
-from models.classes.first_layer_unitary_effnet  import FstLayUniEffNet
+# from effnet_sweep_config import sweep_config
+from dimah_net_sweep_config import sweep_config
+from models.classes.first_layer_unitary_effnet    import FstLayUniEffNet
+from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
 
 # Hyperparameters
 gpu          = True
-save_model   = False
+save_model   = True
 project_name = "EffNet CIFAR10"
 set_name     = "CIFAR10"
 seed         = 100
@@ -30,7 +32,7 @@ if gpu:
 # torch.manual_seed(seed)
 
 # Load data
-data = Data(gpu = gpu, set_name = set_name)
+data = Data(gpu = gpu, set_name = set_name) #, desired_image_size = 224, test_batch_size = 64)
 print(set_name + " is Loaded")
 
 # Functions
@@ -43,15 +45,17 @@ def initalize_config_defaults(sweep_config):
     return config_defaults
 
 def initalize_net(set_name, gpu, config):
-    # Network
-    net = FstLayUniEffNet(set_name = set_name,
-                          gpu = gpu,
-                          model_name = config.model_name,
-                          pretrained = config.pretrained)
+    # Network'
+    net = FstLayUniDimahNet(gpu = gpu)
+    # net = FstLayUniEffNet(set_name = set_name,
+    #                       gpu = gpu,
+    #                       model_name = config.model_name,
+    #                       pretrained = config.pretrained,
+    #                       desired_image_size = 224)
 
     # Add unitary transformation
     # net.set_random_matrix()
-    net.set_orthogonal_matrix()
+    # net.set_orthogonal_matrix()
     # with open("models/pretrained/high_R_U.pkl", 'rb') as input:
     #     net.U = pickle.load(input).type(torch.FloatTensor)
 
@@ -172,9 +176,9 @@ def train(data, save_model, best_loss):
             print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(train_loader.dataset), "\tVal Loss: ", val_loss)
 
             wandb.log({ "epoch"     : epoch, 
-                        "Train MSE" : epoch_loss/len(train_loader.dataset),
+                        "Train Loss" : epoch_loss/len(train_loader.dataset),
                         "Train Acc" : correct/total_tested,
-                        "Val MSE"   : val_loss,
+                        "Val Loss"   : val_loss,
                         "Val Acc"   : val_acc})
 
     # Test
@@ -233,7 +237,7 @@ def test(net, data, config):
 #-------------------------------------------------------------------------------------#
 
 # Run the sweep
-best_loss = 1e6
+best_loss = 1
 sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
 wandb.agent(sweep_id, train(data, save_model, best_loss))
 
