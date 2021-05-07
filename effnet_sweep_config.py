@@ -9,7 +9,7 @@ sweep_config = {
                         'values': [5e5]
                     },
                     'batch_size': {
-                        'values': [124]
+                        'values': [64]
                     },
                     'momentum': {
                         'values': [0.9]
