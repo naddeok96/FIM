@@ -32,6 +32,10 @@ class FstLayUniDimahNet(nn.Module):
         # Softmax Function
         self.soft_max = torch.nn.Softmax(dim = 1)
 
+        # Image Size
+        self.image_size = 32
+
+
         # Layer Dictionary
         # Intro Block
         self.conv1 = nn.Conv2d( 3, 32,
@@ -214,5 +218,5 @@ class FstLayUniDimahNet(nn.Module):
         x = self.fc1(x)
         x = self.soft_max(x)
 
-        return x.cuda() if self.gpu else x
+        return x
 

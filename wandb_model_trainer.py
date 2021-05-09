@@ -52,15 +52,15 @@ def initalize_net(set_name, gpu, config):
     #                       model_name = config.model_name,
     #                       pretrained = config.pretrained,
     #                       desired_image_size = 224)
-
+    net = net.cuda() if gpu == True else net
     # Add unitary transformation
     if config.transformation == "R":
         net.set_random_matrix()
 
-    if config.transformation == "U":
+    elif config.transformation == "U":
         net.set_orthogonal_matrix()
 
-    if isinstance(config.transformation, str):
+    elif isinstance(config.transformation, str):
         with open(config.transformation, 'rb') as input:
             net.U = pickle.load(input).type(torch.FloatTensor)
 
