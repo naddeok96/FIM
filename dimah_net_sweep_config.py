@@ -15,7 +15,7 @@ sweep_config = {
                         'values': [0.9]
                     },
                     'weight_decay': {
-                        'values': [1e-3]
+                        'values': [1e-2, 1e-3]
                     },
                     'learning_rate': {
                         'values': [1e-2]
@@ -27,10 +27,10 @@ sweep_config = {
                         'values': ['cross_entropy']  
                     },
                     'use_SAM':{
-                        'values' : [False]
+                        'values' : [True, False]
                     },
                     'transformation':{
-                        'values' : ["U"]
+                        'values' : ["U", None]
                     }
                 }
             }

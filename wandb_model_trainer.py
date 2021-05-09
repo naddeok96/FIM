@@ -16,7 +16,7 @@ from models.classes.first_layer_unitary_effnet    import FstLayUniEffNet
 from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
 
 # Hyperparameters
-gpu          = True
+gpu          = True 
 save_model   = True
 project_name = "DimahNet CIFAR10"
 set_name     = "CIFAR10"
@@ -26,7 +26,7 @@ set_name     = "CIFAR10"
 # Push to GPU if necessary
 if gpu:
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 # Declare seed and initalize network
 # torch.manual_seed(seed)
