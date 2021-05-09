@@ -64,9 +64,6 @@ def initalize_net(set_name, gpu, config):
         with open(config.transformation, 'rb') as input:
             net.U = pickle.load(input).type(torch.FloatTensor)
 
-    print(net.parameters())
-    exit()
-
     # Return network
     return net
 
