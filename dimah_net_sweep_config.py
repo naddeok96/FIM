@@ -6,7 +6,7 @@ sweep_config = {
                 },
                 'parameters': {
                     'epochs': {
-                        'values': [1] # [1e2, 1e3]
+                        'values': [1e2, 5e2, 1e3]
                     },
                     'batch_size': {
                         'values': [64, 124]
@@ -24,13 +24,13 @@ sweep_config = {
                         'values': ['adadelta']
                     },
                     'criterion': {
-                        'values': ['mse', 'cross_entropy']  
+                        'values': ['cross_entropy']  
                     },
                     'use_SAM':{
                         'values' : [False]
                     },
                     'transformation':{
-                        'values' : [None]
+                        'values' : ["U"]
                     }
                 }
             }
