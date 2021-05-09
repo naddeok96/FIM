@@ -15,10 +15,10 @@ sweep_config = {
                         'values': [0.9]
                     },
                     'weight_decay': {
-                        'values': [1e-2, 1e-3]
+                        'values': [1e-2, 1e-3, 1e-4, 1e-5]
                     },
                     'learning_rate': {
-                        'values': [1e-2]
+                        'values': [1, 1e-1, 1e-2, 1e-3]
                     },
                     'optimizer': {
                         'values': ['adadelta']
