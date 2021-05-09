@@ -33,173 +33,88 @@ class FstLayUniDimahNet(nn.Module):
         self.soft_max = torch.nn.Softmax(dim = 1)
 
         # Layer Dictionary
-        self.layer = {"Conv" : {  1 : { "in"  : 3,
-                                    "out" : 32,
-                                    "kernel_size" : 5,
-                                    "stride" : 1,
-                                    "padding" : 0},
-                                    # Input 3x32x32 -> Output 32x28x28
+        # Intro Block
+        self.conv1 = nn.Conv2d( 3, 32,
+                                kernel_size = 5, 
+                                stride = 1, 
+                                padding = 0)
+        self.batch_norm1 = nn.BatchNorm2d(32)
+        self.pool1 = nn.MaxPool2d(kernel_size = 2, 
+                                    stride = 1, 
+                                    padding = 0)
 
-                                    ## Batch Norm 1 ##
+        # Intermediate Block1
+        self.conv2 = nn.Conv2d( 32, 32,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm2 =  nn.BatchNorm2d(32)
+        self.conv3 = nn.Conv2d( 32, 32,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm3 = nn.BatchNorm2d(32)
+        self.pool2 = nn.MaxPool2d(kernel_size = 2, 
+                                    stride = 1, 
+                                    padding = 0)
+            
+        # Intermediate Block2
+        self.conv4 = nn.Conv2d( 32, 32,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm4 = nn.BatchNorm2d(32)
+        self.conv5 = nn.Conv2d( 32, 64,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm5 = nn.BatchNorm2d(64)
+        self.pool3 = nn.MaxPool2d(kernel_size = 2, 
+                                stride = 1, 
+                                padding = 0)
 
-                                    ## MaxPooling1 ##
-                                    # Output 32x27x27
+        # Intermediate Block3
+        self.conv6 = nn.Conv2d( 64, 64,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm6 = nn.BatchNorm2d(64)
+        self.conv7 = nn.Conv2d( 64, 64,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm7 = nn.BatchNorm2d(64)
+        self.pool4 = nn.MaxPool2d(kernel_size = 2, 
+                                    stride = 1, 
+                                    padding = 0)
 
-                                2 : { "in"  : 32,
-                                    "out" : 32,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 32x27x27
+        # Intermediate Block4
+        self.conv8 = nn.Conv2d( 64, 128,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm8 = nn.BatchNorm2d(128)
+        self.conv9 = nn.Conv2d( 128, 128,
+                                kernel_size = 3, 
+                                stride = 1, 
+                                padding = 1)
+        self.batch_norm9 = nn.BatchNorm2d(128)
+        self.pool5 = nn.MaxPool2d(kernel_size = 2, 
+                                    stride = 1, 
+                                    padding = 0)
 
-                                    ## Batch Norm 2 ##
+        # Outro Block
+        self.conv10 = nn.Conv2d( 128, 128,
+                                kernel_size = 1, 
+                                stride = 1, 
+                                padding = 0)
+        self.batch_norm10 = nn.BatchNorm2d(128)
+        self.pool6 = nn.MaxPool2d(kernel_size = 2, 
+                                    stride = 1, 
+                                    padding = 0)
 
-                                3 : { "in"  : 32,
-                                    "out" : 32,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 32x27x27
-
-                                    ## Batch Norm 3 ##
-
-                                    ## MaxPooling2 ##
-                                    # Output 32x26x26
-
-                                4 : { "in"  : 32,
-                                    "out" : 32,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 32x26x26
-
-                                    ## Batch Norm 4 ##
-
-                                5 : { "in"  : 32,
-                                    "out" : 64,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 64x26x26
-
-                                    ## Batch Norm 5 ##
-
-                                    ## MaxPooling3 ##
-                                    # Output 64x25x25
-
-                                6 : { "in"  : 64,
-                                    "out" : 64,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 64x25x25
-
-                                    ## Batch Norm 6 ##
-
-                                7 : { "in"  : 64,
-                                    "out" : 64,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 64x25x25
-
-                                    ## Batch Norm 7 ##
-
-                                    ## MaxPooling4 ##
-                                    # Output 64x24x24
-
-                                8 : { "in"  : 64,
-                                    "out" : 128,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 128x24x24
-
-                                    ## Batch Norm 8 ##
-
-                                9 : { "in"  : 128,
-                                    "out" : 128,
-                                    "kernel_size" : 3,
-                                    "stride" : 1,
-                                    "padding" : 1},
-                                    # Output 128x24x24
-
-                                    ## Batch Norm 9 ##
-
-                                    ## MaxPooling5 ##
-                                    # Output 128x23x23
-
-                                10 : { "in"  : 128,
-                                    "out"   : 128,
-                                    "kernel_size" : 1,
-                                    "stride" : 1,
-                                    "padding" : 0}},
-                                    # Output 128x23x23
-
-               "Pool" : {1 :    {"kernel_size" : 2,
-                                "stride" : 1,
-                                "padding" : 0},
-                         2 :    {"kernel_size" : 2,
-                                "stride" : 1,
-                                "padding" : 0},
-                         3 :    {"kernel_size" : 2,
-                                "stride" : 1,
-                                "padding" : 0},
-                         4 :    {"kernel_size" : 2,
-                                "stride" : 1,
-                                "padding" : 0},
-                         5 :    {"kernel_size" : 2,
-                                "stride" : 1,
-                                "padding" : 0}},
-
-               "BatchNorm" : {1 : {"in"   :  32},
-                              2 : {"in"   :  32},
-                              3 : {"in"   :  32},
-                              4 : {"in"   :  32},
-                              5 : {"in"   :  64},
-                              6 : {"in"   :  64},
-                              7 : {"in"   :  64},
-                              8 : {"in"   :  128},
-                              9 : {"in"   :  128}},
-
-               "FC"        : {1 : {"in"  : 23*23*128,
-                                   "out" : 10}}
-               
-        }
-        
-        # Initalize functions
-        self.load_layer_functions()
-        
-    def load_layer_functions(self):
-            self.conv      = {}
-            self.pool      = {}
-            self.batchnorm = {}
-            self.fc        = {}
-            for layer_type in self.layer:
-                for i in self.layer[layer_type]:
-                    layer_data = self.layer[layer_type][i]
-
-                    if layer_type == "Conv":
-                        self.conv.update({i: nn.Conv2d( layer_data["in"], layer_data["out"],
-                                                        kernel_size = layer_data["kernel_size"], 
-                                                        stride = layer_data["stride"], 
-                                                        padding = layer_data["padding"])}) 
-
-                    elif layer_type == "Pool":
-                        self.pool.update({i: nn.MaxPool2d(kernel_size = layer_data["kernel_size"], 
-                                                                     stride = layer_data["stride"], 
-                                                                     padding = layer_data["padding"])})
-
-                    elif layer_type == "BatchNorm":
-                        self.batchnorm.update({i: nn.BatchNorm2d(layer_data["in"])})
-
-                    elif layer_type == "FC":
-                        self.fc.update({i : nn.Linear(layer_data["in"], 
-                                                         layer_data["out"])})
-
-                    else:
-                        print("Invalid Layer Type")
-                        exit()
+        # FC
+        self.fc1 = nn.Linear(22*22*128, 10)
 
     # Generate orthoganal matrix
     def get_orthogonal_matrix(self, size):
@@ -253,27 +168,50 @@ class FstLayUniDimahNet(nn.Module):
         # Feedforward
 
         # Intro Block
-        x = self.elu(self.conv[1](x))
-        x = self.batch_norm[1](x)
-        x = self.pool[1](x)
+        x = self.elu(self.conv1(x))
+        x = self.batch_norm1(x)
+        x = self.pool1(x)
 
-        # 4 Intermediate Blocks
-        for i in range(4):
-            x = self.elu(self.conv[2 + 2*i](x))
-            x = self.batch_norm[2 + 2*i](x)
-            x = self.elu(self.conv[3 + 2*i](x))
-            x = self.batch_norm[3 + 2*i](x)
-            x = self.pool[2 + i](x)
-            x = self.dropout(x)
+        # Intermediate Block1
+        x = self.elu(self.conv2(x))
+        x = self.batch_norm2(x)
+        x = self.elu(self.conv3(x))
+        x = self.batch_norm3(x)
+        x = self.pool2(x)
+        x = self.dropout(x)
+            
+        # Intermediate Block2
+        x = self.elu(self.conv4(x))
+        x = self.batch_norm4(x)
+        x = self.elu(self.conv5(x))
+        x = self.batch_norm5(x)
+        x = self.pool3(x)
+        x = self.dropout(x)
+
+        # Intermediate Block3
+        x = self.elu(self.conv6(x))
+        x = self.batch_norm6(x)
+        x = self.elu(self.conv7(x))
+        x = self.batch_norm7(x)
+        x = self.pool4(x)
+        x = self.dropout(x)
+
+        # Intermediate Block4
+        x = self.elu(self.conv8(x))
+        x = self.batch_norm8(x)
+        x = self.elu(self.conv9(x))
+        x = self.batch_norm9(x)
+        x = self.pool5(x)
+        x = self.dropout(x)
 
         # Outro Block
-        x = self.elu(self.conv[10](x))
-        x = self.batch_norm[9](x)
-        x = self.pool[6](x)
+        x = self.elu(self.conv10(x))
+        x = self.batch_norm10(x)
+        x = self.pool6(x)
 
         # Flatten and Feed to FC
-        x = x.view(-1, 1)
-        x = self.fc[1](x)
+        x = x.view(x.size(0), -1)
+        x = self.fc1(x)
         x = self.soft_max(x)
 
         return x.cuda() if self.gpu else x
