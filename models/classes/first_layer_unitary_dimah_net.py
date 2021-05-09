@@ -15,7 +15,7 @@ class FstLayUniDimahNet(nn.Module):
     def __init__(self, gpu,
                        U = None):
 
-        super(FstLayUniLeNet,self).__init__()
+        super(FstLayUniDimahNet,self).__init__()
 
         # Decalre GPU usage
         self.gpu = gpu
@@ -33,13 +33,12 @@ class FstLayUniDimahNet(nn.Module):
         self.soft_max = torch.nn.Softmax(dim = 1)
 
         # Layer Dictionary
-        # Input 3x32x32
         self.layer = {"Conv" : {  1 : { "in"  : 3,
                                     "out" : 32,
                                     "kernel_size" : 5,
                                     "stride" : 1,
                                     "padding" : 0},
-                                    # Output 32x28x28
+                                    # Input 3x32x32 -> Output 32x28x28
 
                                     ## Batch Norm 1 ##
 
@@ -168,8 +167,8 @@ class FstLayUniDimahNet(nn.Module):
                
         }
         
-        self.load_layer_functions
-
+        # Initalize functions
+        self.load_layer_functions()
         
     def load_layer_functions(self):
             self.conv      = {}
@@ -181,22 +180,22 @@ class FstLayUniDimahNet(nn.Module):
                     layer_data = self.layer[layer_type][i]
 
                     if layer_type == "Conv":
-                        self.conv.update{i + 1: nn.Conv2d( layer_data["in"], layer_data["out"],
+                        self.conv.update({i: nn.Conv2d( layer_data["in"], layer_data["out"],
                                                         kernel_size = layer_data["kernel_size"], 
                                                         stride = layer_data["stride"], 
-                                                        padding = layer_data["padding"])} 
+                                                        padding = layer_data["padding"])}) 
 
                     elif layer_type == "Pool":
-                        self.pool.update{i + 1: nn.MaxPool2d(kernel_size = layer_data["kernel_size"], 
+                        self.pool.update({i: nn.MaxPool2d(kernel_size = layer_data["kernel_size"], 
                                                                      stride = layer_data["stride"], 
-                                                                     padding = layer_data["padding"])}
+                                                                     padding = layer_data["padding"])})
 
                     elif layer_type == "BatchNorm":
-                        self.batchnorm.update{i + 1: nn.BatchNorm2d(layer_data["in"])}
+                        self.batchnorm.update({i: nn.BatchNorm2d(layer_data["in"])})
 
                     elif layer_type == "FC":
-                        self.fc.update{i + 1 : nn.Linear(layer_data["in"], 
-                                                         layer_data["out"])}
+                        self.fc.update({i : nn.Linear(layer_data["in"], 
+                                                         layer_data["out"])})
 
                     else:
                         print("Invalid Layer Type")
@@ -277,5 +276,5 @@ class FstLayUniDimahNet(nn.Module):
         x = self.fc[1](x)
         x = self.soft_max(x)
 
-        return x
+        return x.cuda() if self.gpu else x
 

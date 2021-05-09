@@ -1,0 +1,28 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(wandb_model_trainer.py:4102800): Gdk-CRITICAL **: 05:01:39.031: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+CIFAR10 is Loaded
+Create sweep with ID: xfy3ls5t
+Sweep URL: https://wandb.ai/naddeok/DimahNet%20CIFAR10/sweeps/xfy3ls5t
+2021-05-08 05:18:12.426614: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-08 05:18:12.428822: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: W&B syncing is set to `offline` in this directory.  Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
+Traceback (most recent call last):
+  File "wandb_model_trainer.py", line 248, in <module>
+  File "wandb_model_trainer.py", line 108, in train
+    wandb.watch(net)
+  File "wandb_model_trainer.py", line 74, in initalize_optimizer
+    if config.use_SAM:
+  File "/usr/lib/python3/dist-packages/torch/optim/adadelta.py", line 36, in __init__
+    super(Adadelta, self).__init__(params, defaults)
+  File "/usr/lib/python3/dist-packages/torch/optim/optimizer.py", line 47, in __init__
+    raise ValueError("optimizer got an empty parameter list")
+ValueError: optimizer got an empty parameter list
+wandb: Waiting for W&B process to finish, PID 4108579
+wandb: Program failed with code 1. 
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210508_051811-1pn2rnxp/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210508_051811-1pn2rnxp/logs/debug-internal.log
+wandb: You can sync this run to the cloud by running:
+wandb: wandb sync /home/naddeok5/FIM/wandb/offline-run-20210508_051811-1pn2rnxp
+

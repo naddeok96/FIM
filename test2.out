@@ -1,0 +1,18 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(wandb_model_trainer.py:4118284): Gdk-CRITICAL **: 05:38:49.946: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+CIFAR10 is Loaded
+Create sweep with ID: 4hdax891
+Sweep URL: https://wandb.ai/naddeok/DimahNet%20CIFAR10/sweeps/4hdax891
+2021-05-08 06:00:27.315324: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-08 06:00:27.317718: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: W&B syncing is set to `offline` in this directory.  Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
+<generator object Module.parameters at 0x7fa0bde05ac0>
+wandb: Waiting for W&B process to finish, PID 4126614
+wandb: Program ended successfully.
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210508_060025-17r7akfu/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210508_060025-17r7akfu/logs/debug-internal.log
+wandb: You can sync this run to the cloud by running:
+wandb: wandb sync /home/naddeok5/FIM/wandb/offline-run-20210508_060025-17r7akfu
+

@@ -1,0 +1,37 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(wandb_model_trainer.py:3330930): Gdk-CRITICAL **: 15:00:55.798: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+CIFAR10 is Loaded
+Create sweep with ID: t83l2ib7
+Sweep URL: https://wandb.ai/naddeok/DimahNet%20CIFAR10/sweeps/t83l2ib7
+2021-05-07 16:05:10.857473: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-07 16:05:10.859769: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: W&B syncing is set to `offline` in this directory.  Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
+Traceback (most recent call last):
+  File "wandb_model_trainer.py", line 246, in <module>
+    wandb.agent(sweep_id, train(data, save_model, best_loss))
+  File "wandb_model_trainer.py", line 106, in train
+    net = initalize_net(data.set_name, data.gpu, config)
+  File "wandb_model_trainer.py", line 68, in initalize_net
+    summary(net, (3, 32, 32))
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torchsummary/torchsummary.py", line 72, in summary
+    model(*x)
+  File "/usr/lib/python3/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/naddeok5/FIM/models/classes/first_layer_unitary_dimah_net.py", line 256, in forward
+    x = self.elu(self.conv[1](x))
+  File "/usr/lib/python3/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/usr/lib/python3/dist-packages/torch/nn/modules/conv.py", line 423, in forward
+    return self._conv_forward(input, self.weight)
+  File "/usr/lib/python3/dist-packages/torch/nn/modules/conv.py", line 419, in _conv_forward
+    return F.conv2d(input, weight, self.bias, self.stride,
+RuntimeError: Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same
+wandb: Waiting for W&B process to finish, PID 3343053
+wandb: Program failed with code 1. 
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210507_160509-1j8ssqyn/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210507_160509-1j8ssqyn/logs/debug-internal.log
+wandb: You can sync this run to the cloud by running:
+wandb: wandb sync /home/naddeok5/FIM/wandb/offline-run-20210507_160509-1j8ssqyn
+

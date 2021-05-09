@@ -16,17 +16,17 @@ from models.classes.first_layer_unitary_effnet    import FstLayUniEffNet
 from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
 
 # Hyperparameters
-gpu          = True
+gpu          = False
 save_model   = True
-project_name = "EffNet CIFAR10"
+project_name = "DimahNet CIFAR10"
 set_name     = "CIFAR10"
-seed         = 100
-# os.environ['WANDB_MODE'] = 'dryrun'
+# seed         = 100
+os.environ['WANDB_MODE'] = 'dryrun'
 
 # Push to GPU if necessary
 if gpu:
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 # Declare seed and initalize network
 # torch.manual_seed(seed)
@@ -54,15 +54,18 @@ def initalize_net(set_name, gpu, config):
     #                       desired_image_size = 224)
 
     # Add unitary transformation
-    # net.set_random_matrix()
-    # net.set_orthogonal_matrix()
-    # with open("models/pretrained/high_R_U.pkl", 'rb') as input:
-    #     net.U = pickle.load(input).type(torch.FloatTensor)
+    if config.transformation == "R":
+        net.set_random_matrix()
 
-    # Evaluate, push to gpu if needed and set to training
-    net.eval()
-    net = net if gpu == False else net.cuda()
-    net.train(True)
+    if config.transformation == "U":
+        net.set_orthogonal_matrix()
+
+    if isinstance(config.transformation, str):
+        with open(config.transformation, 'rb') as input:
+            net.U = pickle.load(input).type(torch.FloatTensor)
+
+    print(net.parameters())
+    exit()
 
     # Return network
     return net
@@ -84,12 +87,17 @@ def initalize_criterion(config):
     # Setup Criterion
     if config.criterion=="mse":
         criterion = torch.nn.MSELoss()
-    if config.criterion=="cross_entropy":
+
+    elif config.criterion=="cross_entropy":
         criterion = torch.nn.CrossEntropyLoss()
+
+    else: 
+        print("Invalid criterion setting in sweep_config.py")
+        exit()
         
     return criterion
 
-def train(data, save_model, best_loss):
+def train(data, save_model):
     # Weights and Biases Setup
     config_defaults = initalize_config_defaults(sweep_config)
     wandb.init(config = config_defaults)
@@ -100,6 +108,11 @@ def train(data, save_model, best_loss):
 
     # Initialize Network
     net = initalize_net(data.set_name, data.gpu, config)
+    net.train(True)
+
+    # Save Model
+    if save_model:
+        wandb.watch(net)
 
     # Setup Optimzier and Criterion
     optimizer = initalize_optimizer(net, config)
@@ -110,6 +123,7 @@ def train(data, save_model, best_loss):
     total_tested = 0
     for epoch in range(int(config.epochs)):    
         epoch_loss = 0
+
         for i, batch_data in enumerate(train_loader, 0): 
             # Get labels and inputs from train_loader
             inputs, labels = batch_data
@@ -119,17 +133,16 @@ def train(data, save_model, best_loss):
             labels = torch.eq(labels.view(labels.size(0), 1), torch.arange(10).reshape(1, 10).repeat(labels.size(0), 1)).float()
                 
             # Push to gpu
-            if gpu:
+            if data.gpu:
                 orginal_labels = orginal_labels.cuda()
                 inputs, labels = inputs.cuda(), labels.cuda()
-
 
             #Set the parameter gradients to zero
             optimizer.zero_grad()   
 
             #Forward pass
             with torch.set_grad_enabled(True):
-                # SAM optiizer needs closure function to 
+                # SAM optimizer needs closure function to 
                 #  reevaluate the loss function many times
                 def closure():
                     #Set the parameter gradients to zero
@@ -173,28 +186,27 @@ def train(data, save_model, best_loss):
         # Display 
         if epoch % 10 == 0:
             val_loss, val_acc = test(net, data, config)
+            net.train(True)
             print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(train_loader.dataset), "\tVal Loss: ", val_loss)
 
-            wandb.log({ "epoch"     : epoch, 
+            wandb.log({ "epoch"      : epoch, 
                         "Train Loss" : epoch_loss/len(train_loader.dataset),
-                        "Train Acc" : correct/total_tested,
+                        "Train Acc"  : correct/total_tested,
                         "Val Loss"   : val_loss,
-                        "Val Acc"   : val_acc})
+                        "Val Acc"    : val_acc})
 
     # Test
     val_loss, val_acc = test(net, data, config)
     wandb.log({"epoch"        : epoch, 
-                "Train MSE"   : epoch_loss/len(train_loader.dataset),
+                "Train Loss"  : epoch_loss/len(train_loader.dataset),
                 "Train Acc"   : correct/total_tested,
-                "Val MSE"     : val_loss,
+                "Val Loss"    : val_loss,
                 "Val Acc"     : val_acc})
-
-    # Save Model
-    if (val_loss < best_loss) and save_model:
-        best_loss = val_loss
-        wandb.save(project_name + "_best_run.h5")
     
 def test(net, data, config):
+    # Set to test mode
+    net.train(False)
+
     #Create loss functions
     criterion = initalize_criterion(config)
 
@@ -237,8 +249,7 @@ def test(net, data, config):
 #-------------------------------------------------------------------------------------#
 
 # Run the sweep
-best_loss = 1
 sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
-wandb.agent(sweep_id, train(data, save_model, best_loss))
+wandb.agent(sweep_id, train(data, save_model))
 
 

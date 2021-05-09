@@ -6,7 +6,7 @@ sweep_config = {
                 },
                 'parameters': {
                     'epochs': {
-                        'values': [1e2, 1e3]
+                        'values': [1] # [1e2, 1e3]
                     },
                     'batch_size': {
                         'values': [64, 124]
@@ -28,6 +28,9 @@ sweep_config = {
                     },
                     'use_SAM':{
                         'values' : [False]
+                    },
+                    'transformation':{
+                        'values' : [None]
                     }
                 }
             }
