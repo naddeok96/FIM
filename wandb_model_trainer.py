@@ -15,26 +15,6 @@ from dimah_net_sweep_config import sweep_config
 from models.classes.first_layer_unitary_effnet    import FstLayUniEffNet
 from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
 
-# Hyperparameters
-gpu          = True 
-save_model   = True
-project_name = "DimahNet CIFAR10"
-set_name     = "CIFAR10"
-# seed         = 100
-# os.environ['WANDB_MODE'] = 'dryrun'
-
-# Push to GPU if necessary
-if gpu:
-    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
-
-# Declare seed and initalize network
-# torch.manual_seed(seed)
-
-# Load data
-data = Data(gpu = gpu, set_name = set_name) #, desired_image_size = 224, test_batch_size = 64)
-print(set_name + " is Loaded")
-
 # Functions
 #-------------------------------------------------------------------------------------#
 def initalize_config_defaults(sweep_config):
@@ -245,8 +225,30 @@ def test(net, data, config):
     return test_loss, test_acc
 #-------------------------------------------------------------------------------------#
 
-# Run the sweep
-sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
-wandb.agent(sweep_id, train(data, save_model))
+
+if __name__ == "__main__":
+    # Hyperparameters
+    gpu          = True 
+    save_model   = True
+    project_name = "DimahNet CIFAR10"
+    set_name     = "CIFAR10"
+    # seed         = 100
+    # os.environ['WANDB_MODE'] = 'dryrun'
+
+    # Push to GPU if necessary
+    if gpu:
+        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+        os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+
+    # Declare seed and initalize network
+    # torch.manual_seed(seed)
+
+    # Load data
+    data = Data(gpu = gpu, set_name = set_name) #, desired_image_size = 224, test_batch_size = 64)
+    print(set_name + " is Loaded")
+
+    # Run the sweep
+    sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
+    wandb.agent(sweep_id, train(data, save_model))
 
 
