@@ -18,19 +18,19 @@ sweep_config = {
                         'values': [1e-2, 1e-3, 1e-4, 1e-5]
                     },
                     'learning_rate': {
-                        'values': [1, 1e-1, 1e-2, 1e-3]
+                        'values': [1e-1, 1e-2, 1e-3]
                     },
                     'optimizer': {
-                        'values': ['adadelta']
+                        'values': ['sgd', 'adadelta']
                     },
                     'criterion': {
-                        'values': ['cross_entropy']  
+                        'values': ['mse', 'cross_entropy']  
                     },
                     'use_SAM':{
-                        'values' : [True, False]
+                        'values' : [True]
                     },
                     'transformation':{
-                        'values' : ["U", None]
+                        'values' : ["U"]
                     }
                 }
             }
