@@ -20,18 +20,18 @@ from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
 def initalize_config_defaults(sweep_config):
     config_defaults = {}
     for key in sweep_config['parameters']:
-        config_defaults.update({key : random.choice(sweep_config['parameters'][key]["values"])})
+        config_defaults.update({key : sweep_config['parameters'][key]["values"][0]})
 
     return config_defaults
 
 def initalize_net(set_name, gpu, config):
     # Network'
-    net = FstLayUniDimahNet(gpu = gpu)
-    # net = FstLayUniEffNet(set_name = set_name,
-    #                       gpu = gpu,
-    #                       model_name = config.model_name,
-    #                       pretrained = config.pretrained,
-    #                       desired_image_size = 224)
+    # net = FstLayUniDimahNet(gpu = gpu)
+    net = FstLayUniEffNet(set_name = set_name,
+                          gpu = gpu,
+                          model_name = config.model_name,
+                          pretrained = config.pretrained,
+                          desired_image_size = 224)
     net = net.cuda() if gpu == True else net
     # Add unitary transformation
     if config.transformation == "R":
@@ -230,7 +230,7 @@ if __name__ == "__main__":
     # Hyperparameters
     gpu          = True 
     save_model   = True
-    project_name = "DimahNet CIFAR10"
+    project_name = "EffNet CIFAR10"
     set_name     = "CIFAR10"
     # seed         = 100
     # os.environ['WANDB_MODE'] = 'dryrun'
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     # torch.manual_seed(seed)
 
     # Load data
-    data = Data(gpu = gpu, set_name = set_name) #, desired_image_size = 224, test_batch_size = 64)
+    data = Data(gpu = gpu, set_name = set_name, desired_image_size = 224, test_batch_size = 64)
     print(set_name + " is Loaded")
 
     # Run the sweep

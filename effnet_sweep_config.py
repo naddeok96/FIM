@@ -6,7 +6,7 @@ sweep_config = {
                 },
                 'parameters': {
                     'epochs': {
-                        'values': [5e5]
+                        'values': [5e2, 1e3]
                     },
                     'batch_size': {
                         'values': [64]
@@ -15,16 +15,16 @@ sweep_config = {
                         'values': [0.9]
                     },
                     'weight_decay': {
-                        'values': [1e-3]
+                        'values': [1e-2, 1e-3, 1e-5]
                     },
                     'learning_rate': {
-                        'values': [1e-2]
+                        'values': [1e-2, 1e-3]
                     },
                     'optimizer': {
-                        'values': ['adadelta']
+                        'values': ['sgd', 'adadelta']
                     },
                     'criterion': {
-                        'values': ['cross_entropy']  
+                        'values': ['mse', 'cross_entropy']  
                     },
                     'use_SAM':{
                         'values' : [True]
