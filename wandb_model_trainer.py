@@ -249,6 +249,6 @@ if __name__ == "__main__":
 
     # Run the sweep
     sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
-    wandb.agent(sweep_id, train(data, save_model))
+    wandb.agent(sweep_id, function=lambda: train(data, save_model))
 
 

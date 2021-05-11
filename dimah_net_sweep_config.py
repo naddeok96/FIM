@@ -6,7 +6,7 @@ sweep_config = {
                 },
                 'parameters': {
                     'epochs': {
-                        'values': [1e2, 5e2, 1e3]
+                        'values': [5e2, 1e3]
                     },
                     'batch_size': {
                         'values': [64, 124]
