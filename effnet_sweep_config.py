@@ -32,6 +32,9 @@ sweep_config = {
                     'pretrained':{
                         'values' : [False]
                     },
+                    'transfomation':{
+                        'values' : ["U"]
+                    },
                     'model_name':{
                         'values' : ['efficientnet-b1']
                     }

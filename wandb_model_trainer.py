@@ -10,8 +10,8 @@ import pickle
 import random
 from sam import SAM
 from data_setup import Data
-# from effnet_sweep_config import sweep_config
-from dimah_net_sweep_config import sweep_config
+from effnet_sweep_config import sweep_config
+# from dimah_net_sweep_config import sweep_config
 from models.classes.first_layer_unitary_effnet    import FstLayUniEffNet
 from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
 
