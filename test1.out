@@ -1,37 +1,36 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:3330930): Gdk-CRITICAL **: 15:00:55.798: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+(wandb_model_trainer.py:3274044): Gdk-CRITICAL **: 21:46:11.453: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: 5znr41r0 with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 300
+wandb: 	learning_rate: 0.01
+wandb: 	model_name: cifar10_resnet56
+wandb: 	momentum: 0.9
+wandb: 	optimizer: sgd
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: U
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 0.0005
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
 CIFAR10 is Loaded
-Create sweep with ID: t83l2ib7
-Sweep URL: https://wandb.ai/naddeok/DimahNet%20CIFAR10/sweeps/t83l2ib7
-2021-05-07 16:05:10.857473: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-07 16:05:10.859769: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-wandb: W&B syncing is set to `offline` in this directory.  Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
-Traceback (most recent call last):
-  File "wandb_model_trainer.py", line 246, in <module>
-    wandb.agent(sweep_id, train(data, save_model, best_loss))
-  File "wandb_model_trainer.py", line 106, in train
-    net = initalize_net(data.set_name, data.gpu, config)
-  File "wandb_model_trainer.py", line 68, in initalize_net
-    summary(net, (3, 32, 32))
-  File "/home/naddeok5/.local/lib/python3.8/site-packages/torchsummary/torchsummary.py", line 72, in summary
-    model(*x)
-  File "/usr/lib/python3/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "/home/naddeok5/FIM/models/classes/first_layer_unitary_dimah_net.py", line 256, in forward
-    x = self.elu(self.conv[1](x))
-  File "/usr/lib/python3/dist-packages/torch/nn/modules/module.py", line 727, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "/usr/lib/python3/dist-packages/torch/nn/modules/conv.py", line 423, in forward
-    return self._conv_forward(input, self.weight)
-  File "/usr/lib/python3/dist-packages/torch/nn/modules/conv.py", line 419, in _conv_forward
-    return F.conv2d(input, weight, self.bias, self.stride,
-RuntimeError: Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same
-wandb: Waiting for W&B process to finish, PID 3343053
-wandb: Program failed with code 1. 
-wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210507_160509-1j8ssqyn/logs/debug.log
-wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210507_160509-1j8ssqyn/logs/debug-internal.log
-wandb: You can sync this run to the cloud by running:
-wandb: wandb sync /home/naddeok5/FIM/wandb/offline-run-20210507_160509-1j8ssqyn
+Create sweep with ID: km4x53gv
+Sweep URL: https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/km4x53gv
+2021-05-13 21:46:15.273871: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-13 21:46:15.276405: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run ethereal-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/ResNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/km4x53gv
+wandb: 🚀 View run at https://wandb.ai/naddeok/ResNet%20CIFAR10/runs/5znr41r0
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210513_214613-5znr41r0
+wandb: Run `wandb offline` to turn off syncing.
 
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Epoch:  1 	Train Loss:  0.007898576607704162 	Val Loss:  0.007234476065635681
+Epoch:  11 	Train Loss:  0.004838041822910309 	Val Loss:  0.0050389939665794374
+Epoch:  21 	Train Loss:  0.00398586857676506 	Val Loss:  0.004488064271211624

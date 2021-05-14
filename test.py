@@ -1,10 +1,6 @@
 import torch
-from copy import copy
-from efficientnet_pytorch import EfficientNet
-from torchsummary import summary
+from pprint import pprint
+# pprint(torch.hub.list("chenyaofo/pytorch-cifar-models", force_reload=True))
+# exit()
 
-net = EfficientNet.from_pretrained(model_name = 'efficientnet-b8',
-                                                num_classes = 10,
-                                                image_size  = 32)
-# print(net.summary)
-# summary(net, (3, 32, 32))
+net = torch.hub.load("chenyaofo/pytorch-cifar-models", "cifar10_resnet56", pretrained=True)

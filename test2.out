@@ -1,55 +1,36 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:684042): Gdk-CRITICAL **: 08:03:04.914: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+(wandb_model_trainer.py:3275588): Gdk-CRITICAL **: 21:47:46.878: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: rejckqn0 with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 300
+wandb: 	learning_rate: 0.1
+wandb: 	model_name: cifar10_resnet56
+wandb: 	momentum: 0.9
+wandb: 	optimizer: adadelta
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: U
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 0.0005
 wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
 CIFAR10 is Loaded
-Create sweep with ID: 4ejccix8
-Sweep URL: https://wandb.ai/naddeok/DimahNet%20CIFAR10/sweeps/4ejccix8
-wandb: wandb version 0.10.30 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-2021-05-09 08:04:58.591258: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-09 08:04:58.593407: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-wandb: Tracking run with wandb version 0.10.29
-wandb: Syncing run floral-wood-9
-wandb: ⭐️ View project at https://wandb.ai/naddeok/DimahNet%20CIFAR10
-wandb: 🚀 View run at https://wandb.ai/naddeok/DimahNet%20CIFAR10/runs/35a3698l
-wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210509_080457-35a3698l
+Create sweep with ID: nshswmr1
+Sweep URL: https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/nshswmr1
+2021-05-13 21:47:50.434532: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-13 21:47:50.436587: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run usual-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/ResNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/nshswmr1
+wandb: 🚀 View run at https://wandb.ai/naddeok/ResNet%20CIFAR10/runs/rejckqn0
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210513_214748-rejckqn0
 wandb: Run `wandb offline` to turn off syncing.
 
-Epoch:  1 	Train Loss:  0.01863852663516998 	Val Loss:  0.009232967209815979
-Epoch:  11 	Train Loss:  0.018643827424049377 	Val Loss:  0.009232785177230834
-Epoch:  21 	Train Loss:  0.018637983551025392 	Val Loss:  0.009232993102073669
-Epoch:  31 	Train Loss:  0.018638691630363465 	Val Loss:  0.009232954597473144
-Epoch:  41 	Train Loss:  0.018636402688026427 	Val Loss:  0.0092328852891922
-Epoch:  51 	Train Loss:  0.018637931032180786 	Val Loss:  0.009232906270027161
-Epoch:  61 	Train Loss:  0.018637977199554442 	Val Loss:  0.009232960104942322
-Epoch:  71 	Train Loss:  0.018640286836624144 	Val Loss:  0.009232958745956421
-Epoch:  81 	Train Loss:  0.01863902298927307 	Val Loss:  0.009232929134368897
-Epoch:  91 	Train Loss:  0.01863814881324768 	Val Loss:  0.009232712531089782
-Epoch:  101 	Train Loss:  0.01863793992996216 	Val Loss:  0.009232901978492736
-Epoch:  111 	Train Loss:  0.018640600452423096 	Val Loss:  0.009232891583442688
-Epoch:  121 	Train Loss:  0.018638718948364257 	Val Loss:  0.00923309669494629
-Epoch:  131 	Train Loss:  0.018638212037086488 	Val Loss:  0.009232955193519592
-Epoch:  141 	Train Loss:  0.018636041402816772 	Val Loss:  0.009232897162437439
-Epoch:  151 	Train Loss:  0.01863985589027405 	Val Loss:  0.009233169889450074
-Epoch:  161 	Train Loss:  0.018641284646987916 	Val Loss:  0.009232974743843079
-Epoch:  171 	Train Loss:  0.01864061872959137 	Val Loss:  0.009232965779304504
-Epoch:  181 	Train Loss:  0.01863875807762146 	Val Loss:  0.009232749128341674
-Epoch:  191 	Train Loss:  0.018637569422721864 	Val Loss:  0.009233109736442566
-Epoch:  201 	Train Loss:  0.018641289310455323 	Val Loss:  0.009232861924171448
-Epoch:  211 	Train Loss:  0.018639233980178832 	Val Loss:  0.009233031177520752
-Epoch:  221 	Train Loss:  0.018640561676025392 	Val Loss:  0.009233041071891785
-Epoch:  231 	Train Loss:  0.018638395891189576 	Val Loss:  0.009232483625411987
-Epoch:  241 	Train Loss:  0.0186424143743515 	Val Loss:  0.00923296675682068
-Epoch:  251 	Train Loss:  0.018638584051132202 	Val Loss:  0.00923286898136139
-Epoch:  261 	Train Loss:  0.01864225691795349 	Val Loss:  0.009232928514480591
-Epoch:  271 	Train Loss:  0.018638236937522888 	Val Loss:  0.009232786059379577
-Epoch:  281 	Train Loss:  0.018638516693115233 	Val Loss:  0.009232996344566344
-Epoch:  291 	Train Loss:  0.01863952498435974 	Val Loss:  0.009232834792137146
-Epoch:  301 	Train Loss:  0.018641274418830872 	Val Loss:  0.009233040475845337
-Epoch:  311 	Train Loss:  0.018636895627975464 	Val Loss:  0.009232926964759827
-Epoch:  321 	Train Loss:  0.018637378659248353 	Val Loss:  0.009232939910888673
-Epoch:  331 	Train Loss:  0.018636248679161072 	Val Loss:  0.00923284559249878
-Epoch:  341 	Train Loss:  0.018642000727653502 	Val Loss:  0.009232847929000854
-Epoch:  351 	Train Loss:  0.018636204471588133 	Val Loss:  0.009232844662666322
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Epoch:  1 	Train Loss:  0.0090846040391922 	Val Loss:  0.00919756817817688
+Epoch:  11 	Train Loss:  0.009017475018501283 	Val Loss:  0.009195736908912658
+Epoch:  21 	Train Loss:  0.00834524561405182 	Val Loss:  0.00856513557434082

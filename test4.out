@@ -1,0 +1,35 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(wandb_model_trainer.py:3277558): Gdk-CRITICAL **: 21:48:09.867: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: zz3tilf5 with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 300
+wandb: 	learning_rate: 0.001
+wandb: 	model_name: cifar10_resnet56
+wandb: 	momentum: 0.9
+wandb: 	optimizer: adam
+wandb: 	pretrained: False
+wandb: 	scheduler: None
+wandb: 	transformation: U
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 0.0005
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
+CIFAR10 is Loaded
+Create sweep with ID: 0vcc0agc
+Sweep URL: https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/0vcc0agc
+2021-05-13 21:48:13.356872: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-13 21:48:13.358814: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run driven-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/ResNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/0vcc0agc
+wandb: 🚀 View run at https://wandb.ai/naddeok/ResNet%20CIFAR10/runs/zz3tilf5
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210513_214811-zz3tilf5
+wandb: Run `wandb offline` to turn off syncing.
+
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Epoch:  1 	Train Loss:  0.01408280787706375 	Val Loss:  0.0066032924175262455
+Epoch:  11 	Train Loss:  0.00820274007678032 	Val Loss:  0.004357069480419159

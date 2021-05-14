@@ -1,23 +1,36 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:4115269): Gdk-CRITICAL **: 05:32:43.198: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+(wandb_model_trainer.py:3276577): Gdk-CRITICAL **: 21:47:59.476: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: w3kfblhp with config:
+wandb: 	batch_size: 256
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 300
+wandb: 	learning_rate: 0.1
+wandb: 	model_name: cifar10_resnet56
+wandb: 	momentum: 0.9
+wandb: 	optimizer: adadelta
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: U
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 1e-05
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
 CIFAR10 is Loaded
-Create sweep with ID: 6qmolfoc
-Sweep URL: https://wandb.ai/naddeok/DimahNet%20CIFAR10/sweeps/6qmolfoc
-2021-05-08 05:59:31.330887: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-08 05:59:31.333038: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-wandb: W&B syncing is set to `offline` in this directory.  Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
-FstLayUniDimahNet(
-  (elu): ELU(alpha=1.0)
-  (dropout): Dropout(p=0.2, inplace=False)
-  (soft_max): Softmax(dim=1)
-)
-{1: Conv2d(3, 32, kernel_size=(5, 5), stride=(1, 1)), 2: Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 3: Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 4: Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 5: Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 6: Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 7: Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 8: Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 9: Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 10: Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))}
-wandb: Waiting for W&B process to finish, PID 4125755
-wandb: Program ended successfully.
-wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210508_055929-1yl6iwqe/logs/debug.log
-wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210508_055929-1yl6iwqe/logs/debug-internal.log
-wandb: You can sync this run to the cloud by running:
-wandb: wandb sync /home/naddeok5/FIM/wandb/offline-run-20210508_055929-1yl6iwqe
+Create sweep with ID: 59o6s0ni
+Sweep URL: https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/59o6s0ni
+2021-05-13 21:48:02.937032: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-13 21:48:02.939052: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run floral-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/ResNet%20CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/59o6s0ni
+wandb: 🚀 View run at https://wandb.ai/naddeok/ResNet%20CIFAR10/runs/w3kfblhp
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210513_214801-w3kfblhp
+wandb: Run `wandb offline` to turn off syncing.
 
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Epoch:  1 	Train Loss:  0.00926967185974121 	Val Loss:  0.009206116986274718
+Epoch:  11 	Train Loss:  0.008988616027832031 	Val Loss:  0.009197468829154969
+Epoch:  21 	Train Loss:  0.0081570463514328 	Val Loss:  0.008515292620658874
