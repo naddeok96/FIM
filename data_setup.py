@@ -13,6 +13,7 @@ import torchvision.datasets as datasets
 import os
 from unorm import UnNormalize
 import matplotlib.pyplot as plt
+from PIL.Image import BICUBIC
 
 class Data:
     def __init__(self,set_name = "MNIST",
@@ -34,16 +35,18 @@ class Data:
             self.image_size = 32 if self.desired_image_size is None else self.desired_image_size
 
             # Images are of size (3,32,32)
-            self.train_transform = transforms.Compose([ transforms.Resize(self.image_size),
-                                                        transforms.CenterCrop(self.image_size),
-                                                        transforms.RandomCrop(self.image_size, padding=4),
+            self.train_transform = transforms.Compose([ transforms.Resize(self.image_size, BICUBIC),
+                                                        transforms.RandomAffine(degrees=2, 
+                                                                                translate=(0.02, 0.02), 
+                                                                                scale=(0.98, 1.02), 
+                                                                                shear=2, 
+                                                                                fillcolor=(124,117,104)),
                                                         transforms.RandomHorizontalFlip(),
                                                         transforms.ToTensor(), # Convert the images into tensors
                                                         transforms.Normalize((0.4914, 0.4822, 0.4465), 
                                                                              (0.2023, 0.1994, 0.2010))]) #  Normalize
 
-            self.test_transform = transforms.Compose([transforms.Resize(self.image_size),
-                                                      transforms.CenterCrop(self.image_size),
+            self.test_transform = transforms.Compose([transforms.Resize(self.image_size, BICUBIC),
                                                       transforms.ToTensor(), # Convert the images into tensors
                                                       transforms.Normalize((0.4914, 0.4822, 0.4465), 
                                                                            (0.2023, 0.1994, 0.2010))]) #  Normalize
