@@ -6,37 +6,37 @@ sweep_config = {
                 },
                 'parameters': {
                     'epochs': {
-                        'values': [5e2, 1e3]
+                        'values': [5e2]
                     },
                     'batch_size': {
-                        'values': [64]
+                        'values': [32]
                     },
                     'momentum': {
                         'values': [0.9]
                     },
                     'weight_decay': {
-                        'values': [1e-2, 1e-3, 1e-5]
+                        'values': [1e-4, 1e-5]
                     },
                     'learning_rate': {
-                        'values': [1e-2, 1e-3]
+                        'values': [1e-3, 1e-4]
                     },
                     'optimizer': {
-                        'values': ['sgd', 'adadelta']
+                        'values': ['sgd', 'adam']
                     },
                     'criterion': {
-                        'values': ['mse', 'cross_entropy']  
+                        'values': ['cross_entropy']  
                     },
                     'use_SAM':{
-                        'values' : [True]
+                        'values' : [True, False]
                     },
                     'pretrained':{
                         'values' : [False]
                     },
-                    'transfomation':{
+                    'transformation':{
                         'values' : ["U"]
                     },
                     'model_name':{
-                        'values' : ['efficientnet-b1']
+                        'values' : ['efficientnet-b1', 'efficientnet-b0']
                     }
                 }
             }
