@@ -8,10 +8,12 @@ import wandb
 import torch
 import pickle
 import random
-from sam import SAM
+from sam.sam import SAM
 from data_setup import Data
-from effnet_sweep_config import sweep_config
+from resnet_sweep_config import sweep_config
+# from effnet_sweep_config import sweep_config
 # from dimah_net_sweep_config import sweep_config
+from models.classes.first_layer_unitary_resnet    import FstLayUniResNet
 from models.classes.first_layer_unitary_effnet    import FstLayUniEffNet
 from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
 
@@ -25,13 +27,16 @@ def initalize_config_defaults(sweep_config):
     return config_defaults
 
 def initalize_net(set_name, gpu, config):
-    # Network'
+    # Network
+    net = FstLayUniResNet(set_name, gpu =gpu,
+                       model_name = config.model_name,
+                       pretrained = config.pretrained)
     # net = FstLayUniDimahNet(gpu = gpu)
-    net = FstLayUniEffNet(set_name = set_name,
-                          gpu = gpu,
-                          model_name = config.model_name,
-                          pretrained = config.pretrained,
-                          desired_image_size = 224)
+    # net = FstLayUniEffNet(set_name = set_name,
+    #                       gpu = gpu,
+    #                       model_name = config.model_name,
+    #                       pretrained = config.pretrained,
+    #                       desired_image_size = 224)
     net = net.cuda() if gpu == True else net
     # Add unitary transformation
     if config.transformation == "R":
@@ -47,18 +52,47 @@ def initalize_net(set_name, gpu, config):
     # Return network
     return net
 
-def initalize_optimizer(net, config):
+def initalize_optimizer(data, net, config):
     if config.optimizer=='sgd':
-        optimizer = torch.optim.SGD(net.parameters(),lr=config.learning_rate, momentum=config.momentum,
-        weight_decay=config.weight_decay)
+        if config.use_SAM:
+            optimizer = SAM(net.parameters(), torch.optim.SGD,  lr=config.learning_rate,
+                                        momentum=config.momentum, weight_decay=config.weight_decay)
+        else:
+            optimizer = torch.optim.SGD(net.parameters(), lr=config.learning_rate, momentum=config.momentum,
+                                        weight_decay=config.weight_decay)
 
-    if config.optimizer=="adadelta":
-        optimizer = torch.optim.Adadelta(net.parameters(), lr=config.learning_rate, 
+    if config.optimizer=='nesterov':
+        if config.use_SAM:
+            optimizer = SAM(net.parameters(), torch.optim.SGD,  lr=config.learning_rate, momentum=config.momentum,
+                                        weight_decay=config.weight_decay, nesterov=True)
+        else:
+            optimizer = torch.optim.SGD(net.parameters(), lr=config.learning_rate, momentum=config.momentum,
+                                    weight_decay=config.weight_decay, nesterov=True)
+
+    if config.optimizer=='adam':
+        if config.use_SAM:
+            optimizer = SAM(net.parameters(), torch.optim.Adam,  lr=config.learning_rate, 
+                                                weight_decay=config.weight_decay)
+        else:
+            optimizer = torch.optim.Adam(net.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
+
+    if config.optimizer=='adadelta':
+        if config.use_SAM:
+            optimizer = SAM(net.parameters(), torch.optim.Adadelta,  **{"lr" : config.learning_rate, 
+                                                                 "weight_decay" : config.weight_decay, 
+                                                                 "rho" : config.momentum})
+        else:
+            optimizer = torch.optim.Adadelta(net.parameters(), lr=config.learning_rate, 
                                         weight_decay=config.weight_decay, rho=config.momentum)
-    if config.use_SAM:
-        optimizer = SAM(net.parameters(), optimizer)
+
 
     return optimizer
+
+def initalize_scheduler(optimizer, data, config):
+    if config.scheduler == "Cosine Annealing":
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = int(config.epochs))
+    
+    return scheduler
 
 def initalize_criterion(config):
     # Setup Criterion
@@ -92,8 +126,10 @@ def train(data, save_model):
         wandb.watch(net)
 
     # Setup Optimzier and Criterion
-    optimizer = initalize_optimizer(net, config)
+    optimizer = initalize_optimizer(data, net, config)
     criterion = initalize_criterion(config)
+    if config.scheduler is not None:
+        scheduler = initalize_scheduler(optimizer, data, config)
         
     # Loop for epochs
     correct = 0
@@ -153,12 +189,17 @@ def train(data, save_model):
                 correct += (predictions == orginal_labels).sum()
                 total_tested += labels.size(0)
                 epoch_loss += loss.item()
+                
 
                 # Update weights
+                loss.backward() 
                 if config.use_SAM:
                     optimizer.step(closure)
                 else:
                     optimizer.step()
+
+        if config.scheduler is not None:
+            scheduler.step()
 
         # Display 
         if epoch % 10 == 0:
@@ -182,7 +223,7 @@ def train(data, save_model):
     
 def test(net, data, config):
     # Set to test mode
-    net.train(False)
+    net.eval()
 
     #Create loss functions
     criterion = initalize_criterion(config)
@@ -230,7 +271,7 @@ if __name__ == "__main__":
     # Hyperparameters
     gpu          = True 
     save_model   = True
-    project_name = "EffNet CIFAR10"
+    project_name = "ResNet CIFAR10"
     set_name     = "CIFAR10"
     # seed         = 100
     # os.environ['WANDB_MODE'] = 'dryrun'
@@ -238,13 +279,13 @@ if __name__ == "__main__":
     # Push to GPU if necessary
     if gpu:
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+        os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 
     # Declare seed and initalize network
     # torch.manual_seed(seed)
 
     # Load data
-    data = Data(gpu = gpu, set_name = set_name, desired_image_size = 224, test_batch_size = 64)
+    data = Data(gpu = gpu, set_name = set_name) #, desired_image_size = 224, test_batch_size = 32)
     print(set_name + " is Loaded")
 
     # Run the sweep
