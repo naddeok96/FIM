@@ -1,1 +1,0 @@
-tensor(15.5941, device='cuda:0', grad_fn=<MseLossBackward>)

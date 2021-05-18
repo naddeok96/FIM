@@ -1,36 +1,30 @@
 sweep_config = {
-                'method': 'bayes',
+                'method': 'grid',
                 'metric': {
                     'name': 'loss',
-                    'goal': 'minimize'   
-                },
-                'early_terminate' : {
-                    "type": "hyperband",
-                    "s": 2,
-                    "eta": 3,
-                    "max_iter": 27
+                    'goal': 'minimize' 
                 },
                 'parameters': {
                     'epochs': {
-                        'values': [3e2]
+                        'values': [150]
                     },
                     'batch_size': {
-                        'values': [124, 256]
+                        'values': [124]
                     },
                     'momentum': {
                         'values': [0.9]
                     },
                     'weight_decay': {
-                        'values': [5e-4, 1e-5]
+                        'values': [1e-5]
                     },
                     'learning_rate': {
-                        'values': [1e-1, 1e-2, 1e-3]
+                        'values': [1e-1]
                     },
                     'optimizer': {
-                        'values': ['adam', 'adadelta', 'sgd', 'nesterov']
+                        'values': ['nesterov']
                     },
                     'scheduler': {
-                        'values': [None, "Cosine Annealing"]
+                        'values': ["Cosine Annealing"]
                     },
                     'criterion': {
                         'values': ['cross_entropy']  
@@ -45,7 +39,7 @@ sweep_config = {
                         'values' : ["U"]
                     },
                     'model_name':{
-                        'values' : ['cifar10_resnet56']
+                        'values' : ['cifar10_mobilenetv2_x1_0']
                     }
                 }
             }

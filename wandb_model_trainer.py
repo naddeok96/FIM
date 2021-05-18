@@ -24,7 +24,10 @@ def initalize_config_defaults(sweep_config):
     for key in sweep_config['parameters']:
         config_defaults.update({key : sweep_config['parameters'][key]["values"][0]})
 
-    return config_defaults
+    wandb.init(config = config_defaults)
+    config = wandb.config
+
+    return config
 
 def initalize_net(set_name, gpu, config):
     # Network
@@ -38,6 +41,7 @@ def initalize_net(set_name, gpu, config):
     #                       pretrained = config.pretrained,
     #                       desired_image_size = 224)
     net = net.cuda() if gpu == True else net
+
     # Add unitary transformation
     if config.transformation == "R":
         net.set_random_matrix()
@@ -48,6 +52,7 @@ def initalize_net(set_name, gpu, config):
     elif isinstance(config.transformation, str):
         with open(config.transformation, 'rb') as input:
             net.U = pickle.load(input).type(torch.FloatTensor)
+
 
     # Return network
     return net
@@ -110,20 +115,15 @@ def initalize_criterion(config):
 
 def train(data, save_model):
     # Weights and Biases Setup
-    config_defaults = initalize_config_defaults(sweep_config)
-    wandb.init(config = config_defaults)
-    config = wandb.config
+    config = initalize_config_defaults(sweep_config)
 
     #Get training data
     train_loader = data.get_train_loader(config.batch_size)
+    wandb.log({ "Data Augmentation" : data.data_augment})
 
     # Initialize Network
     net = initalize_net(data.set_name, data.gpu, config)
     net.train(True)
-
-    # Save Model
-    if save_model:
-        wandb.watch(net)
 
     # Setup Optimzier and Criterion
     optimizer = initalize_optimizer(data, net, config)
@@ -136,7 +136,6 @@ def train(data, save_model):
     total_tested = 0
     for epoch in range(int(config.epochs)):    
         epoch_loss = 0
-
         for i, batch_data in enumerate(train_loader, 0): 
             # Get labels and inputs from train_loader
             inputs, labels = batch_data
@@ -204,8 +203,15 @@ def train(data, save_model):
         # Display 
         if epoch % 10 == 0:
             val_loss, val_acc = test(net, data, config)
+
+            if (val_loss > epoch_loss/len(data.train_set)) and (epoch > 10):
+                data.data_augment = True
+                data.train_set = data.get_trainset()
+                train_loader = data.get_train_loader(config.batch_size)
+                wandb.log({ "Data Augmentation" : data.data_augment})
+
             net.train(True)
-            print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(train_loader.dataset), "\tVal Loss: ", val_loss)
+            print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(data.train_set), "\tVal Loss: ", val_loss)
 
             wandb.log({ "epoch"      : epoch, 
                         "Train Loss" : epoch_loss/len(train_loader.dataset),
@@ -216,10 +222,25 @@ def train(data, save_model):
     # Test
     val_loss, val_acc = test(net, data, config)
     wandb.log({"epoch"        : epoch, 
-                "Train Loss"  : epoch_loss/len(train_loader.dataset),
+                "Train Loss"  : epoch_loss/len(data.train_set),
                 "Train Acc"   : correct/total_tested,
                 "Val Loss"    : val_loss,
                 "Val Acc"     : val_acc})
+
+    # Save Model
+    if save_model:
+        # Define File Names
+        if net.U is not None:
+            filename  = str(config.transformation) + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+        else:
+            filename  = str(config.transformation) + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+        
+        # Save Models
+        torch.save(net.state_dict(), "models/pretrained/" + set_name  + "/" + filename)
+
+        # Save U
+        if net.U is not None:
+            torch.save(net.U, "models/pretrained/" + set_name  + "/" + str(config.transformation) + "_for_" + set_name + filename)
     
 def test(net, data, config):
     # Set to test mode
@@ -268,10 +289,11 @@ def test(net, data, config):
 
 
 if __name__ == "__main__":
+
     # Hyperparameters
     gpu          = True 
     save_model   = True
-    project_name = "ResNet CIFAR10"
+    project_name = "CIFAR10"
     set_name     = "CIFAR10"
     # seed         = 100
     # os.environ['WANDB_MODE'] = 'dryrun'
@@ -285,7 +307,7 @@ if __name__ == "__main__":
     # torch.manual_seed(seed)
 
     # Load data
-    data = Data(gpu = gpu, set_name = set_name) #, desired_image_size = 224, test_batch_size = 32)
+    data = Data(gpu = gpu, set_name = set_name, data_augment = False) #, desired_image_size = 224, test_batch_size = 32)
     print(set_name + " is Loaded")
 
     # Run the sweep

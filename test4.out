@@ -1,35 +1,66 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:3277558): Gdk-CRITICAL **: 21:48:09.867: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-wandb: Agent Starting Run: zz3tilf5 with config:
-wandb: 	batch_size: 124
-wandb: 	criterion: cross_entropy
-wandb: 	epochs: 300
-wandb: 	learning_rate: 0.001
-wandb: 	model_name: cifar10_resnet56
-wandb: 	momentum: 0.9
-wandb: 	optimizer: adam
-wandb: 	pretrained: False
-wandb: 	scheduler: None
-wandb: 	transformation: U
-wandb: 	use_SAM: True
-wandb: 	weight_decay: 0.0005
-wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
+(wandb_model_trainer.py:1600895): Gdk-CRITICAL **: 09:18:10.456: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+400 response executing GraphQL.
+{"errors":[{"message":"Invalid sweep config: Post \"http://anaconda.default.svc.cluster.local/search\": dial tcp 10.55.246.64:80: connect: connection refused","path":["upsertSweep"]}],"data":{"upsertSweep":null}}
+wandb: ERROR Error while calling W&B API: Invalid sweep config: Post "http://anaconda.default.svc.cluster.local/search": dial tcp 10.55.246.64:80: connect: connection refused (<Response [400]>)
 CIFAR10 is Loaded
-Create sweep with ID: 0vcc0agc
-Sweep URL: https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/0vcc0agc
-2021-05-13 21:48:13.356872: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-13 21:48:13.358814: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-wandb: Tracking run with wandb version 0.10.30
-wandb: Syncing run driven-sweep-1
-wandb: ⭐️ View project at https://wandb.ai/naddeok/ResNet%20CIFAR10
-wandb: 🧹 View sweep at https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/0vcc0agc
-wandb: 🚀 View run at https://wandb.ai/naddeok/ResNet%20CIFAR10/runs/zz3tilf5
-wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210513_214811-zz3tilf5
-wandb: Run `wandb offline` to turn off syncing.
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/lib/retry.py", line 102, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 133, in execute
+    six.reraise(*sys.exc_info())
+  File "/usr/lib/python3/dist-packages/six.py", line 703, in reraise
+    raise value
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 127, in execute
+    return self.client.execute(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/vendor/gql-0.2.0/gql/client.py", line 52, in execute
+    result = self._get_result(document, *args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/vendor/gql-0.2.0/gql/client.py", line 60, in _get_result
+    return self.transport.execute(document, *args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/vendor/gql-0.2.0/gql/transport/requests.py", line 39, in execute
+    request.raise_for_status()
+  File "/usr/lib/python3/dist-packages/requests/models.py", line 940, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.wandb.ai/graphql
 
-signal only works in main thread
-Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
-Epoch:  1 	Train Loss:  0.01408280787706375 	Val Loss:  0.0066032924175262455
-Epoch:  11 	Train Loss:  0.00820274007678032 	Val Loss:  0.004357069480419159
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/apis/normalize.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 1328, in upsert_sweep
+    raise (e)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 1314, in upsert_sweep
+    response = self.gql(
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/lib/retry.py", line 118, in __call__
+    if not check_retry_fn(e):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 1310, in no_retry_4xx
+    raise UsageError(body["errors"][0]["message"])
+wandb.errors.UsageError: Invalid sweep config: Post "http://anaconda.default.svc.cluster.local/search": dial tcp 10.55.246.64:80: connect: connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "wandb_model_trainer.py", line 314, in <module>
+    sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/wandb_controller.py", line 801, in sweep
+    sweep_id = api.upsert_sweep(sweep)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/apis/internal.py", line 100, in upsert_sweep
+    return self.api.upsert_sweep(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/apis/normalize.py", line 62, in wrapper
+    six.reraise(CommError, CommError(message, err), sys.exc_info()[2])
+  File "/usr/lib/python3/dist-packages/six.py", line 702, in reraise
+    raise value.with_traceback(tb)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/apis/normalize.py", line 24, in wrapper
+    return func(*args, **kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 1328, in upsert_sweep
+    raise (e)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 1314, in upsert_sweep
+    response = self.gql(
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/lib/retry.py", line 118, in __call__
+    if not check_retry_fn(e):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal_api.py", line 1310, in no_retry_4xx
+    raise UsageError(body["errors"][0]["message"])
+wandb.errors.CommError: Invalid sweep config: Post "http://anaconda.default.svc.cluster.local/search": dial tcp 10.55.246.64:80: connect: connection refused

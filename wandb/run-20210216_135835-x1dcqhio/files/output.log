@@ -1,8 +1,0 @@
-torch.Size([128, 3, 224, 224])
-torch.Size([128])
-Traceback (most recent call last):
-  File "vgg_model_trainer.py", line 41, in <module>
-    academy.train()
-  File "/home/naddeok5/FIM/wandb_academy.py", line 107, in train
-    plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
-NameError: name 'np' is not defined

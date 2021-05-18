@@ -1,41 +1,36 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:3119592): Gdk-CRITICAL **: 19:57:49.495: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+(wandb_model_trainer.py:1596256): Gdk-CRITICAL **: 09:14:51.265: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: w9q20v73 with config:
+wandb: 	batch_size: 124
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 150
+wandb: 	learning_rate: 0.1
+wandb: 	model_name: cifar10_mobilenetv2_x1_0
+wandb: 	momentum: 0.9
+wandb: 	optimizer: sgd
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: None
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 1e-05
 wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
 CIFAR10 is Loaded
-2021-05-13 19:57:53.026981: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-13 19:57:53.029420: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Create sweep with ID: fwwyyupt
+Sweep URL: https://wandb.ai/naddeok/CIFAR10/sweeps/fwwyyupt
+2021-05-18 09:15:02.451349: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-18 09:15:02.453296: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
 wandb: Tracking run with wandb version 0.10.30
-wandb: Syncing run ruby-dawn-2
-wandb: ⭐️ View project at https://wandb.ai/naddeok/FIM
-wandb: 🚀 View run at https://wandb.ai/naddeok/FIM/runs/3cntad3l
-wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210513_195751-3cntad3l
+wandb: Syncing run sweepy-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/fwwyyupt
+wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/w9q20v73
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210518_091501-w9q20v73
 wandb: Run `wandb offline` to turn off syncing.
+
+signal only works in main thread
 Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
-
-Traceback (most recent call last):
-  File "wandb_model_trainer.py", line 281, in <module>
-    train(data, save_model)
-  File "wandb_model_trainer.py", line 120, in train
-    optimizer = initalize_optimizer(data, net, config)
-  File "wandb_model_trainer.py", line 72, in initalize_optimizer
-    for key in optimizer:
-TypeError: 'SGD' object is not iterable
-Traceback (most recent call last):
-  File "wandb_model_trainer.py", line 281, in <module>
-    train(data, save_model)
-  File "wandb_model_trainer.py", line 120, in train
-    optimizer = initalize_optimizer(data, net, config)
-  File "wandb_model_trainer.py", line 72, in initalize_optimizer
-    for key in optimizer:
-TypeError: 'SGD' object is not iterable
-wandb: Waiting for W&B process to finish, PID 3119916
-wandb: Program failed with code 1.  Press ctrl-c to abort syncing.
-wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: / 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: / 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
-wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210513_195751-3cntad3l/logs/debug.log
-wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210513_195751-3cntad3l/logs/debug-internal.log
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: 
-wandb: Synced ruby-dawn-2: https://wandb.ai/naddeok/FIM/runs/3cntad3l
-
+Epoch:  1 	Train Loss:  0.01407380642414093 	Val Loss:  0.00512556859254837
+Epoch:  11 	Train Loss:  0.0016769070233404637 	Val Loss:  0.0020926485270261765
+Epoch:  21 	Train Loss:  0.00038980597719550134 	Val Loss:  0.0024584531396627425

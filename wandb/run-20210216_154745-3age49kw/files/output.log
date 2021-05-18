@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "vgg_model_trainer.py", line 41, in <module>
-    academy.train()
-  File "/home/naddeok5/FIM/wandb_academy.py", line 97, in train
-    labels = torch.eq(labels.view(labels.size(0), 1), torch.arange(1000).reshape(1, 1000).repeat(labels.size(0), 1).cuda()).long()
-RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!

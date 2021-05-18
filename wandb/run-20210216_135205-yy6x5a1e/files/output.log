@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "vgg_model_trainer.py", line 41, in <module>
-    academy.train()
-  File "/home/naddeok5/FIM/wandb_academy.py", line 102, in train
-    img = torchvision.utils.make_grid((inputs[0]))
-NameError: name 'torchvision' is not defined

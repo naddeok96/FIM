@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "vgg_model_trainer.py", line 41, in <module>
-    academy.train()
-  File "/home/naddeok5/FIM/wandb_academy.py", line 117, in train
-    print((predictions == orginal_labels).sum())
-  File "/home/naddeok5/.local/lib/python3.6/site-packages/torch/tensor.py", line 27, in wrapped
-    return f(*args, **kwargs)
-RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!

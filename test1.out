@@ -1,36 +1,36 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:3274044): Gdk-CRITICAL **: 21:46:11.453: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-wandb: Agent Starting Run: 5znr41r0 with config:
-wandb: 	batch_size: 256
+(wandb_model_trainer.py:1597222): Gdk-CRITICAL **: 09:15:36.263: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: ysspewcz with config:
+wandb: 	batch_size: 124
 wandb: 	criterion: cross_entropy
-wandb: 	epochs: 300
-wandb: 	learning_rate: 0.01
-wandb: 	model_name: cifar10_resnet56
+wandb: 	epochs: 150
+wandb: 	learning_rate: 0.1
+wandb: 	model_name: cifar10_mobilenetv2_x1_0
 wandb: 	momentum: 0.9
-wandb: 	optimizer: sgd
+wandb: 	optimizer: nesterov
 wandb: 	pretrained: False
 wandb: 	scheduler: Cosine Annealing
-wandb: 	transformation: U
+wandb: 	transformation: None
 wandb: 	use_SAM: True
-wandb: 	weight_decay: 0.0005
+wandb: 	weight_decay: 1e-05
 wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
 CIFAR10 is Loaded
-Create sweep with ID: km4x53gv
-Sweep URL: https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/km4x53gv
-2021-05-13 21:46:15.273871: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-13 21:46:15.276405: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Create sweep with ID: 5iv1g2vo
+Sweep URL: https://wandb.ai/naddeok/CIFAR10/sweeps/5iv1g2vo
+2021-05-18 09:15:47.317058: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-18 09:15:47.319034: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
 wandb: Tracking run with wandb version 0.10.30
-wandb: Syncing run ethereal-sweep-1
-wandb: ⭐️ View project at https://wandb.ai/naddeok/ResNet%20CIFAR10
-wandb: 🧹 View sweep at https://wandb.ai/naddeok/ResNet%20CIFAR10/sweeps/km4x53gv
-wandb: 🚀 View run at https://wandb.ai/naddeok/ResNet%20CIFAR10/runs/5znr41r0
-wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210513_214613-5znr41r0
+wandb: Syncing run dandy-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/5iv1g2vo
+wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/ysspewcz
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210518_091545-ysspewcz
 wandb: Run `wandb offline` to turn off syncing.
 
 signal only works in main thread
 Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
-Epoch:  1 	Train Loss:  0.007898576607704162 	Val Loss:  0.007234476065635681
-Epoch:  11 	Train Loss:  0.004838041822910309 	Val Loss:  0.0050389939665794374
-Epoch:  21 	Train Loss:  0.00398586857676506 	Val Loss:  0.004488064271211624
+Epoch:  1 	Train Loss:  0.013429229004383087 	Val Loss:  0.005636901009082794
+Epoch:  11 	Train Loss:  0.0015083742599189282 	Val Loss:  0.0021436517655849456
+Epoch:  21 	Train Loss:  0.0003668376024439931 	Val Loss:  0.002375531616806984
