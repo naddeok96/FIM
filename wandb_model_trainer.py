@@ -10,12 +10,8 @@ import pickle
 import random
 from sam.sam import SAM
 from data_setup import Data
-from resnet_sweep_config import sweep_config
-# from effnet_sweep_config import sweep_config
-# from dimah_net_sweep_config import sweep_config
-from models.classes.first_layer_unitary_resnet    import FstLayUniResNet
-from models.classes.first_layer_unitary_effnet    import FstLayUniEffNet
-from models.classes.first_layer_unitary_dimah_net import FstLayUniDimahNet
+from cifar10_sweep_config import sweep_config
+from models.classes.first_layer_unitary_net  import FstLayUniNet
 
 # Functions
 #-------------------------------------------------------------------------------------#
@@ -30,32 +26,14 @@ def initalize_config_defaults(sweep_config):
     return config
 
 def initalize_net(set_name, gpu, config):
-    # Network
-    net = FstLayUniResNet(set_name, gpu =gpu,
+    # Network 
+    net = FstLayUniNet(set_name, gpu =gpu,
+                       U_filename = config.transformation,
                        model_name = config.model_name,
                        pretrained = config.pretrained)
-    # net = FstLayUniDimahNet(gpu = gpu)
-    # net = FstLayUniEffNet(set_name = set_name,
-    #                       gpu = gpu,
-    #                       model_name = config.model_name,
-    #                       pretrained = config.pretrained,
-    #                       desired_image_size = 224)
-    net = net.cuda() if gpu == True else net
-
-    # Add unitary transformation
-    if config.transformation == "R":
-        net.set_random_matrix()
-
-    elif config.transformation == "U":
-        net.set_orthogonal_matrix()
-
-    elif isinstance(config.transformation, str):
-        with open(config.transformation, 'rb') as input:
-            net.U = pickle.load(input).type(torch.FloatTensor)
-
 
     # Return network
-    return net
+    return net.cuda() if gpu == True else net
 
 def initalize_optimizer(data, net, config):
     if config.optimizer=='sgd':
@@ -292,11 +270,11 @@ if __name__ == "__main__":
 
     # Hyperparameters
     gpu          = True 
-    save_model   = True
+    save_model   = False
     project_name = "CIFAR10"
     set_name     = "CIFAR10"
     # seed         = 100
-    # os.environ['WANDB_MODE'] = 'dryrun'
+    os.environ['WANDB_MODE'] = 'dryrun'
 
     # Push to GPU if necessary
     if gpu:
@@ -311,6 +289,8 @@ if __name__ == "__main__":
     print(set_name + " is Loaded")
 
     # Run the sweep
+    train(data, save_model)
+    exit()
     sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
     wandb.agent(sweep_id, function=lambda: train(data, save_model))
 

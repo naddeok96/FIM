@@ -27,7 +27,9 @@ class FstLayUniResNet(nn.Module):
         if self.set_name == "CIFAR10":
             self.image_size = 32
             self.num_classes = 10
-        
+        elif self.set_name == "MNIST":
+            self.image_size = 28
+            self.num_classes = 10
         else:
             print("Please enter a valid set_name for EffNet.")
             exit()

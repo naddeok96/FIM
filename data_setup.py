@@ -45,9 +45,9 @@ class Data:
                                                       transforms.Normalize((0.4914, 0.4822, 0.4465), 
                                                                            (0.2023, 0.1994, 0.2010))]) #  Normalize
 
-            self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10',
+            self.test_set = torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', #
                                                     train=False,
-                                                    download=False,
+                                                    download=True,
                                                     transform=self.test_transform)
                                                     
         elif self.set_name == "MNIST":
@@ -58,7 +58,8 @@ class Data:
             self.mean = 0.1307
             self.std = 0.3081
             self.train_transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
-                                                 transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
+                                                #  transforms.Normalize((self.mean,), (self.std,))
+                                                 ]) # Normalize 
 
             self.test_transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
                                                  transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
@@ -66,14 +67,14 @@ class Data:
             self.inverse_transform = transforms.Compose([transforms.ToTensor(), 
                                                          transforms.Normalize((-self.mean * self.std,), (1/self.std,))])
 
-            self.train_set = datasets.MNIST(root='../../../data/pytorch',
+            self.train_set = datasets.MNIST(root='../data/',
                                             train = True,
-                                            download = False,
+                                            download = True,
                                             transform = self.train_transform) 
 
-            self.test_set = torchvision.datasets.MNIST(root='../../../data/pytorch',
+            self.test_set = torchvision.datasets.MNIST(root='../data/',
                                                     train=False,
-                                                    download=False,
+                                                    download=True,
                                                     transform=self.test_transform)
 
         elif self.set_name == "ImageNet":
@@ -143,11 +144,12 @@ class Data:
             self.train_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
                                                       transforms.ToTensor(), # Convert the images into tensors
                                                       transforms.Normalize((0.4914, 0.4822, 0.4465), 
-                                                                           (0.2023, 0.1994, 0.2010))]) #  Normalize
+                                                                           (0.2023, 0.1994, 0.2010))
+                                                                           ]) #  Normalize
 
-        return torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10', # '../data' 
+        return torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', # 
                                                     train=True,
-                                                    download=False,
+                                                    download=True,
                                                     transform=self.train_transform)
 
     # Fucntion to break training set into batches
