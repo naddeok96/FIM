@@ -36,3 +36,47 @@ Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-mod
 Epoch:  1 	Train Loss:  0.018117267866134643 	Val Loss:  0.00775304696559906
 Epoch:  11 	Train Loss:  0.009317844432592391 	Val Loss:  0.005283086812496185
 Epoch:  21 	Train Loss:  0.005052471126914025 	Val Loss:  0.00568536701798439
+Epoch:  31 	Train Loss:  0.007791234246492386 	Val Loss:  0.004231228214502334
+Epoch:  41 	Train Loss:  0.0066346120619773866 	Val Loss:  0.004052262705564499
+Epoch:  51 	Train Loss:  0.0057548446208238605 	Val Loss:  0.0038565579056739807
+Epoch:  61 	Train Loss:  0.004905901561379432 	Val Loss:  0.003927823263406753
+Epoch:  71 	Train Loss:  0.004120221126675606 	Val Loss:  0.004030528354644776
+Epoch:  81 	Train Loss:  0.0034107575631141663 	Val Loss:  0.00415787456035614
+Epoch:  91 	Train Loss:  0.002661878252029419 	Val Loss:  0.004385340756177902
+Epoch:  101 	Train Loss:  0.002108985358476639 	Val Loss:  0.0046328783273696895
+Epoch:  111 	Train Loss:  0.0016053838439285756 	Val Loss:  0.004713965302705765
+Epoch:  121 	Train Loss:  0.0012210568369925023 	Val Loss:  0.00500616694688797
+Epoch:  131 	Train Loss:  0.0009968607304245234 	Val Loss:  0.005015775275230408
+Epoch:  141 	Train Loss:  0.0009046155891567468 	Val Loss:  0.005109471845626831
+wandb: Waiting for W&B process to finish, PID 1598804
+wandb: Program ended successfully.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: / 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: / 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210518_091628-61zkegtn/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210518_091628-61zkegtn/logs/debug-internal.log
+wandb: Run summary:
+wandb:   Data Augmentation True
+wandb:            _runtime 5961
+wandb:          _timestamp 1621349749
+wandb:               _step 24
+wandb:               epoch 149
+wandb:          Train Loss 0.00086
+wandb:           Train Acc 0.80515
+wandb:            Val Loss 0.00511
+wandb:             Val Acc 0.6991
+wandb: Run history:
+wandb:   Data Augmentation ▁████████
+wandb:            _runtime ▁▁▂▂▂▂▃▃▄▄▅▅▅▅▆▆▆▆▇▇▇▇███
+wandb:          _timestamp ▁▁▂▂▂▂▃▃▄▄▅▅▅▅▆▆▆▆▇▇▇▇███
+wandb:               _step ▁▁▂▂▂▂▃▃▃▄▄▄▅▅▅▅▆▆▆▇▇▇▇██
+wandb:               epoch ▁▁▂▂▃▃▄▄▅▅▆▆▇▇██
+wandb:          Train Loss █▄▃▄▃▃▃▂▂▂▂▁▁▁▁▁
+wandb:           Train Acc ▁▄▅▅▆▆▆▆▇▇▇▇████
+wandb:            Val Loss █▄▄▂▁▁▁▁▂▂▂▃▃▃▃▃
+wandb:             Val Acc ▁▅▆▇▇███████████
+wandb: 
+wandb: Synced 4 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced fresh-sweep-1: https://wandb.ai/naddeok/CIFAR10/runs/61zkegtn
+wandb: Sweep Agent: Waiting for job.
+wandb: Sweep Agent: Exiting.
+

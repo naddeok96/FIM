@@ -18,7 +18,13 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 def initalize_config_defaults(sweep_config):
     config_defaults = {}
     for key in sweep_config['parameters']:
-        config_defaults.update({key : sweep_config['parameters'][key]["values"][0]})
+
+        if list(sweep_config['parameters'][key].keys())[0] == 'values':
+            config_defaults.update({key : sweep_config['parameters'][key]["values"][0]})
+
+        else:
+            config_defaults.update({key : sweep_config['parameters'][key]["min"]})
+
 
     wandb.init(config = config_defaults)
     config = wandb.config
@@ -31,6 +37,7 @@ def initalize_net(set_name, gpu, config):
                        U_filename = config.transformation,
                        model_name = config.model_name,
                        pretrained = config.pretrained)
+    net.load_state_dict(torch.load('models/pretrained/CIFAR10/Ucifar10_mobilenetv2_x1_4_w_acc_78.pt', map_location=torch.device('cpu')))
 
     # Return network
     return net.cuda() if gpu == True else net
@@ -179,10 +186,10 @@ def train(data, save_model):
             scheduler.step()
 
         # Display 
-        if epoch % 10 == 0:
+        if epoch % 2 == 0:
             val_loss, val_acc = test(net, data, config)
 
-            if (val_loss > epoch_loss/len(data.train_set)) and (epoch > 10):
+            if ((val_loss > epoch_loss/len(data.train_set)) and (epoch > 10)) or (epoch > 0.9*config.epochs):
                 data.data_augment = True
                 data.train_set = data.get_trainset()
                 train_loader = data.get_train_loader(config.batch_size)
@@ -192,7 +199,7 @@ def train(data, save_model):
             print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(data.train_set), "\tVal Loss: ", val_loss)
 
             wandb.log({ "epoch"      : epoch, 
-                        "Train Loss" : epoch_loss/len(train_loader.dataset),
+                        "Train Loss" : epoch_loss/len(data.train_set),
                         "Train Acc"  : correct/total_tested,
                         "Val Loss"   : val_loss,
                         "Val Acc"    : val_acc})
@@ -209,9 +216,9 @@ def train(data, save_model):
     if save_model:
         # Define File Names
         if net.U is not None:
-            filename  = str(config.transformation) + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+            filename  = "U" + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
         else:
-            filename  = str(config.transformation) + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+            filename  = "U" + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
         
         # Save Models
         torch.save(net.state_dict(), "models/pretrained/" + set_name  + "/" + filename)
@@ -265,21 +272,21 @@ def test(net, data, config):
     return test_loss, test_acc
 #-------------------------------------------------------------------------------------#
 
-
+# Main
 if __name__ == "__main__":
 
     # Hyperparameters
     gpu          = True 
-    save_model   = False
+    save_model   = True
     project_name = "CIFAR10"
     set_name     = "CIFAR10"
     # seed         = 100
-    os.environ['WANDB_MODE'] = 'dryrun'
+    # os.environ['WANDB_MODE'] = 'dryrun'
 
     # Push to GPU if necessary
     if gpu:
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+        os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
     # Declare seed and initalize network
     # torch.manual_seed(seed)
@@ -289,8 +296,6 @@ if __name__ == "__main__":
     print(set_name + " is Loaded")
 
     # Run the sweep
-    train(data, save_model)
-    exit()
     sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
     wandb.agent(sweep_id, function=lambda: train(data, save_model))
 

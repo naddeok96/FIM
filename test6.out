@@ -1,0 +1,1312 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(wandb_model_trainer.py:2446921): Gdk-CRITICAL **: 21:20:17.403: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: 2dm5msvu with config:
+wandb: 	batch_size: 14
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 150
+wandb: 	learning_rate: 0.07987003314943773
+wandb: 	model_name: cifar10_vgg16_bn
+wandb: 	momentum: 0.9
+wandb: 	optimizer: nesterov
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: models/pretrained/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 1e-05
+wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
+Files already downloaded and verified
+Files already downloaded and verified
+CIFAR10 is Loaded
+Create sweep with ID: gcubc65s
+Sweep URL: https://wandb.ai/naddeok/CIFAR10/sweeps/gcubc65s
+2021-05-26 21:20:23.072311: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-26 21:20:23.074420: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run fiery-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/naddeok/CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/gcubc65s
+wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/2dm5msvu
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210526_212021-2dm5msvu
+wandb: Run `wandb offline` to turn off syncing.
+
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  1 	Train Loss:  0.16543097071647644 	Val Loss:  0.00925018630027771
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  3 	Train Loss:  0.165391848988533 	Val Loss:  0.009216794633865356
+Epoch:  5 	Train Loss:  0.16533807558059693 	Val Loss:  0.009271964573860168
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  7 	Train Loss:  0.1653431904411316 	Val Loss:  0.009262905645370483
+Epoch:  9 	Train Loss:  0.1654142699623108 	Val Loss:  0.009268973231315612
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  11 	Train Loss:  0.16533581315040588 	Val Loss:  0.009264767241477966
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  13 	Train Loss:  0.16534571719646454 	Val Loss:  0.009310967445373535
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  15 	Train Loss:  0.16536333084583282 	Val Loss:  0.00923480041027069
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.357377, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  17 	Train Loss:  0.16534280716896058 	Val Loss:  0.009240857791900635
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  19 	Train Loss:  0.16534185501098633 	Val Loss:  0.009256745481491089
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  21 	Train Loss:  0.16540942780017853 	Val Loss:  0.009260215735435486
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  23 	Train Loss:  0.16535405721664428 	Val Loss:  0.009268020319938659
+Epoch:  25 	Train Loss:  0.16533683791160583 	Val Loss:  0.00928517873287201
+Epoch:  27 	Train Loss:  0.16530390817165375 	Val Loss:  0.009286839818954468
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  29 	Train Loss:  0.1653236847782135 	Val Loss:  0.00922733690738678
+Epoch:  31 	Train Loss:  0.16530216119766236 	Val Loss:  0.009249571251869202
+Epoch:  33 	Train Loss:  0.16528374588012695 	Val Loss:  0.009269367742538451
+Epoch:  35 	Train Loss:  0.1652796152305603 	Val Loss:  0.00926607370376587
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  37 	Train Loss:  0.16531456734657288 	Val Loss:  0.009257534980773925
+Epoch:  39 	Train Loss:  0.16520610317707063 	Val Loss:  0.009268891620635987
+Epoch:  41 	Train Loss:  0.16523721601963043 	Val Loss:  0.00923655834197998
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  43 	Train Loss:  0.16524705873966217 	Val Loss:  0.00926594500541687
+Epoch:  45 	Train Loss:  0.1652030856513977 	Val Loss:  0.009251838660240173
+Epoch:  47 	Train Loss:  0.1651547237110138 	Val Loss:  0.009232473969459533
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  49 	Train Loss:  0.1652284451532364 	Val Loss:  0.009290893793106079
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  51 	Train Loss:  0.16516485767841338 	Val Loss:  0.009259002089500427
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  53 	Train Loss:  0.1651487481212616 	Val Loss:  0.009265655064582825
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  55 	Train Loss:  0.16514935215950013 	Val Loss:  0.009227191543579101
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  57 	Train Loss:  0.1651307788991928 	Val Loss:  0.009238405561447144
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  59 	Train Loss:  0.16511498216629028 	Val Loss:  0.00923223521709442
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.506027, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  61 	Train Loss:  0.16507442773342132 	Val Loss:  0.009224864339828491
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  63 	Train Loss:  0.16511259162902833 	Val Loss:  0.009260569715499878
+Epoch:  65 	Train Loss:  0.16501465651512146 	Val Loss:  0.009238375854492187
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  67 	Train Loss:  0.16502351426124573 	Val Loss:  0.00922772991657257
+Epoch:  69 	Train Loss:  0.16499594569206238 	Val Loss:  0.009232827472686767
+Epoch:  71 	Train Loss:  0.16503934436321258 	Val Loss:  0.009236471819877624
+Epoch:  73 	Train Loss:  0.16498256352901458 	Val Loss:  0.009267541742324829
+Epoch:  75 	Train Loss:  0.16498349357128142 	Val Loss:  0.00923497359752655
+Epoch:  77 	Train Loss:  0.164940984249115 	Val Loss:  0.009225407886505128
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  79 	Train Loss:  0.16496500094413757 	Val Loss:  0.009232352852821351
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  81 	Train Loss:  0.16493105031490327 	Val Loss:  0.009250246477127076
+Epoch:  83 	Train Loss:  0.1648957573080063 	Val Loss:  0.009220201349258423
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  85 	Train Loss:  0.16488879412174226 	Val Loss:  0.009218585085868836
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  87 	Train Loss:  0.1648373882627487 	Val Loss:  0.009220760607719421
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  89 	Train Loss:  0.16485947985172272 	Val Loss:  0.009219463562965394
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  91 	Train Loss:  0.1648531817483902 	Val Loss:  0.009220725464820861
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  93 	Train Loss:  0.1648127950334549 	Val Loss:  0.009247152876853943
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.134898, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  95 	Train Loss:  0.16479561188220979 	Val Loss:  0.00921789526939392
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  97 	Train Loss:  0.1647654615497589 	Val Loss:  0.009218448853492737
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  99 	Train Loss:  0.1647534121322632 	Val Loss:  0.009225895261764526
+Epoch:  101 	Train Loss:  0.16471522331237792 	Val Loss:  0.009224907898902892
+Epoch:  103 	Train Loss:  0.16471585770606995 	Val Loss:  0.009222833204269408
+Epoch:  105 	Train Loss:  0.16470758001804353 	Val Loss:  0.009214795112609864
+Epoch:  107 	Train Loss:  0.16468122917175293 	Val Loss:  0.009216208577156066
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  109 	Train Loss:  0.1646889176940918 	Val Loss:  0.009219816279411316
+Epoch:  111 	Train Loss:  0.16465694976329803 	Val Loss:  0.009214077997207642
+Epoch:  113 	Train Loss:  0.1646420468521118 	Val Loss:  0.009220215439796448
+Epoch:  115 	Train Loss:  0.16464398457050322 	Val Loss:  0.009217250108718872
+Epoch:  117 	Train Loss:  0.16461586661815644 	Val Loss:  0.00921412534713745
+Epoch:  119 	Train Loss:  0.1646079976463318 	Val Loss:  0.009215957641601562
+Epoch:  121 	Train Loss:  0.16457684414863585 	Val Loss:  0.009216132378578186
+Epoch:  123 	Train Loss:  0.16458484623908998 	Val Loss:  0.009213737893104553
+Epoch:  125 	Train Loss:  0.16457104794502259 	Val Loss:  0.009213805437088012
+Epoch:  127 	Train Loss:  0.16456355937480927 	Val Loss:  0.009214810371398926
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  129 	Train Loss:  0.16455767771244048 	Val Loss:  0.009212708759307861
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.197113, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  131 	Train Loss:  0.16453922745227814 	Val Loss:  0.009213159108161926
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  133 	Train Loss:  0.16453158802509307 	Val Loss:  0.009214749360084533
+Epoch:  135 	Train Loss:  0.16453344173431397 	Val Loss:  0.00921021692752838
+Files already downloaded and verified
+Epoch:  137 	Train Loss:  0.1645190166902542 	Val Loss:  0.009210839414596557
+Files already downloaded and verified
+Epoch:  139 	Train Loss:  0.1645180126619339 	Val Loss:  0.00921060607433319
+Files already downloaded and verified
+Epoch:  141 	Train Loss:  0.16451261896610261 	Val Loss:  0.009210529589653016
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  143 	Train Loss:  0.1645072731256485 	Val Loss:  0.009210298252105713
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  145 	Train Loss:  0.16450260383605958 	Val Loss:  0.009210395860671997
+Files already downloaded and verified
+Epoch:  147 	Train Loss:  0.16449992394924165 	Val Loss:  0.009210322523117065
+Files already downloaded and verified
+Epoch:  149 	Train Loss:  0.1644974961090088 	Val Loss:  0.009210338068008422
+wandb: Waiting for W&B process to finish, PID 2447248
+wandb: Program failed with code 1.  Press ctrl-c to abort syncing.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: / 0.00MB of 0.01MB uploaded (0.00MB deduped)wandb: - 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: \ 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: | 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: / 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: - 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: \ 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb:                                                                                
+[lambda02][[20649,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(19) failed: Connection reset by peer (104)
+[lambda02][[20649,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(21) failed: Connection reset by peer (104)
+[lambda02][[20649,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[20649,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(50) failed: Connection reset by peer (104)
+[lambda02][[20649,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(60) failed: Connection reset by peer (104)
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210526_212021-2dm5msvu/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210526_212021-2dm5msvu/logs/debug-internal.log
+wandb: Run summary:
+wandb:   Data Augmentation True
+wandb:            _runtime 20187
+wandb:          _timestamp 1622098608
+wandb:               _step 83
+wandb:               epoch 149
+wandb:          Train Loss 0.1645
+wandb:           Train Acc 0.09956
+wandb:            Val Loss 0.00921
+wandb:             Val Acc 0.1
+wandb: Run history:
+wandb:   Data Augmentation ▁███████
+wandb:            _runtime ▁▁▁▂▂▂▂▂▃▃▃▃▃▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇██████
+wandb:          _timestamp ▁▁▁▂▂▂▂▂▃▃▃▃▃▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇██████
+wandb:               _step ▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇███
+wandb:               epoch ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:          Train Loss ██▇▇▇▇▇▇▇▇▆▇▆▆▆▆▅▅▅▅▄▄▄▄▃▃▃▃▂▂▂▂▂▁▁▁▁▁▁▁
+wandb:           Train Acc ▂▁█▆▅▅▄▅▄▄▅▅▄▄▄▄▄▄▄▃▄▃▄▄▄▄▃▃▄▄▄▄▄▃▃▃▂▂▂▂
+wandb:            Val Loss ▅▂▆▆▃▅▆█▅▆▆▆▃▅▆▄▂▄▃▆▂▅▂▂▄▂▂▂▂▁▂▂▁▁▁▁▁▁▁▁
+wandb:             Val Acc ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Synced 4 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced fiery-sweep-1: https://wandb.ai/naddeok/CIFAR10/runs/2dm5msvu
+Run 2dm5msvu errored: FileNotFoundError(2, 'No such file or directory')
+wandb: ERROR Run 2dm5msvu errored: FileNotFoundError(2, 'No such file or directory')
+wandb: Agent Starting Run: 3fgurww9 with config:
+wandb: 	batch_size: 5
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 150
+wandb: 	learning_rate: 0.07111967462655185
+wandb: 	model_name: cifar10_mobilenetv2_x1_4
+wandb: 	momentum: 0.9
+wandb: 	optimizer: nesterov
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: models/pretrained/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 1e-05
+
+2021-05-27 02:56:56.242544: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-27 02:56:56.245318: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run bumbling-sweep-2
+wandb: ⭐️ View project at https://wandb.ai/naddeok/CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/gcubc65s
+wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/3fgurww9
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210527_025654-3fgurww9
+wandb: Run `wandb offline` to turn off syncing.
+
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  1 	Train Loss:  0.4205912560272217 	Val Loss:  0.007177780330181122
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  3 	Train Loss:  0.3350449334192276 	Val Loss:  0.006031788814067841
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  5 	Train Loss:  0.3052946696192026 	Val Loss:  0.005531817829608918
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.982448, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  7 	Train Loss:  0.2863232255461812 	Val Loss:  0.0053386300921440125
+Epoch:  9 	Train Loss:  0.2737685381235182 	Val Loss:  0.0052768469452857975
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  11 	Train Loss:  0.263029050693959 	Val Loss:  0.004852828431129456
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  13 	Train Loss:  0.25618229636371137 	Val Loss:  0.004757193922996521
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  15 	Train Loss:  0.24813913240730762 	Val Loss:  0.004661833429336548
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  17 	Train Loss:  0.24241391500532627 	Val Loss:  0.004462063217163086
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  19 	Train Loss:  0.23705627855330705 	Val Loss:  0.004368135631084442
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.278928, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  21 	Train Loss:  0.23372226042792202 	Val Loss:  0.004347205740213394
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.055592, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  23 	Train Loss:  0.22790154336936772 	Val Loss:  0.004505854487419129
+Epoch:  25 	Train Loss:  0.22557032239601016 	Val Loss:  0.004163632410764694
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  27 	Train Loss:  0.2236160172498226 	Val Loss:  0.004143714219331742
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  29 	Train Loss:  0.21886516649663448 	Val Loss:  0.004057291454076767
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  31 	Train Loss:  0.21493911817476152 	Val Loss:  0.0041584995806217195
+Epoch:  33 	Train Loss:  0.21368207465827466 	Val Loss:  0.003999716848134995
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  35 	Train Loss:  0.21122335563704372 	Val Loss:  0.004063102346658707
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  37 	Train Loss:  0.2089683652653545 	Val Loss:  0.004073148781061173
+Epoch:  39 	Train Loss:  0.2057022471847385 	Val Loss:  0.00389428848028183
+Epoch:  41 	Train Loss:  0.2030605892472714 	Val Loss:  0.0038737001419067384
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  43 	Train Loss:  0.20110546445734798 	Val Loss:  0.003736780333518982
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.479223, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  45 	Train Loss:  0.19897006599143147 	Val Loss:  0.0036923088014125826
+Epoch:  47 	Train Loss:  0.1954303014461696 	Val Loss:  0.003643241959810257
+Epoch:  49 	Train Loss:  0.1936035176960379 	Val Loss:  0.0036024245381355287
+Epoch:  51 	Train Loss:  0.19115573774322867 	Val Loss:  0.0036805548131465912
+Epoch:  53 	Train Loss:  0.18790523684881627 	Val Loss:  0.0037131712913513184
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  55 	Train Loss:  0.18546743709094823 	Val Loss:  0.0035746115267276763
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  57 	Train Loss:  0.1836650814755261 	Val Loss:  0.0037239940226078032
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  59 	Train Loss:  0.18168300384875388 	Val Loss:  0.0034745576441287994
+Epoch:  61 	Train Loss:  0.17967816742748022 	Val Loss:  0.0033238607943058013
+Epoch:  63 	Train Loss:  0.1772746419929713 	Val Loss:  0.0033407251358032225
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  65 	Train Loss:  0.17386286214590072 	Val Loss:  0.003360905957221985
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  67 	Train Loss:  0.17219365428829567 	Val Loss:  0.0037101721584796906
+Epoch:  69 	Train Loss:  0.16916001214392484 	Val Loss:  0.003302715706825256
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  71 	Train Loss:  0.16729603213369845 	Val Loss:  0.0032755382239818575
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  73 	Train Loss:  0.1644425868190825 	Val Loss:  0.003397849053144455
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  75 	Train Loss:  0.161613182936199 	Val Loss:  0.003340097016096115
+Epoch:  77 	Train Loss:  0.15953531845554708 	Val Loss:  0.0032043692648410795
+Epoch:  79 	Train Loss:  0.1563659181049466 	Val Loss:  0.0031900049448013307
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  81 	Train Loss:  0.15434139444485306 	Val Loss:  0.003198587727546692
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  83 	Train Loss:  0.15120303859449924 	Val Loss:  0.0032953299462795257
+Epoch:  85 	Train Loss:  0.14934267005149274 	Val Loss:  0.0030443687319755552
+Epoch:  87 	Train Loss:  0.14584130728352815 	Val Loss:  0.003094201284646988
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  89 	Train Loss:  0.14308213436970488 	Val Loss:  0.0030361326932907104
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.715340, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  91 	Train Loss:  0.14002328411603346 	Val Loss:  0.0030635339260101316
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  93 	Train Loss:  0.13673789886856452 	Val Loss:  0.0029417132079601286
+Epoch:  95 	Train Loss:  0.13417497768243775 	Val Loss:  0.002941508013010025
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.522697, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  97 	Train Loss:  0.13095244421927257 	Val Loss:  0.0030027246296405793
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  99 	Train Loss:  0.1276640540456213 	Val Loss:  0.0028364275455474855
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.603581, resuming normal operation.
+Epoch:  101 	Train Loss:  0.12392739074802026 	Val Loss:  0.002916916209459305
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  103 	Train Loss:  0.12083745145310648 	Val Loss:  0.002911409771442413
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  105 	Train Loss:  0.11721599740396253 	Val Loss:  0.002891950863599777
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.188386, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  107 	Train Loss:  0.1140333138005389 	Val Loss:  0.0028314757168293
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  109 	Train Loss:  0.11017650606276468 	Val Loss:  0.0028273014724254607
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  111 	Train Loss:  0.10706800883906893 	Val Loss:  0.002759632182121277
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  113 	Train Loss:  0.10230749792319722 	Val Loss:  0.0027362096190452576
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  115 	Train Loss:  0.09849073339696042 	Val Loss:  0.0027032733023166656
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  117 	Train Loss:  0.096138170637656 	Val Loss:  0.0026874227643013
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.870942, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  119 	Train Loss:  0.09146400840055198 	Val Loss:  0.0026574352622032167
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.739904, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  121 	Train Loss:  0.0874617276729038 	Val Loss:  0.002680722165107727
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  123 	Train Loss:  0.08402995456998237 	Val Loss:  0.0026493436366319656
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.476809, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.577229, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  125 	Train Loss:  0.08060627643015701 	Val Loss:  0.0026759085834026338
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  127 	Train Loss:  0.07725613314831163 	Val Loss:  0.0026309909701347353
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  129 	Train Loss:  0.07357670611934271 	Val Loss:  0.0026143718719482422
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  131 	Train Loss:  0.07015759896973614 	Val Loss:  0.002638157093524933
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.502270, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  133 	Train Loss:  0.066268585916101 	Val Loss:  0.0027101785242557527
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Epoch:  135 	Train Loss:  0.06417181523878593 	Val Loss:  0.00259730721116066
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  137 	Train Loss:  0.061274151522780304 	Val Loss:  0.0026232488989830017
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:08.606507, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  139 	Train Loss:  0.05874404755084776 	Val Loss:  0.002623521512746811
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  141 	Train Loss:  0.057623347112198825 	Val Loss:  0.0026156871914863587
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  143 	Train Loss:  0.0558187411393621 	Val Loss:  0.002595451247692108
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  145 	Train Loss:  0.05526814586443827 	Val Loss:  0.002638237500190735
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: 429 encountered ({"error":"rate limit exceeded"}), retrying request
+wandb: Network error resolved after 0:00:07.844844, resuming normal operation.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  147 	Train Loss:  0.0552147909408377 	Val Loss:  0.0026419876515865327
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+wandb: Network error (HTTPError), entering retry loop.
+Files already downloaded and verified
+Epoch:  149 	Train Loss:  0.05352078612321755 	Val Loss:  0.0026410067975521086
+wandb: Waiting for W&B process to finish, PID 2530996
+wandb: Program failed with code 1.  Press ctrl-c to abort syncing.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)429 response executing GraphQL.
+{"error":"rate limit exceeded"}
+
+wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.01MB uploaded (0.00MB deduped)wandb: / 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: - 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: \ 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: | 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: / 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: - 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb:                                                                                
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(72) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(58) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(59) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(60) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(61) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(62) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(64) failed: Connection reset by peer (104)
+[lambda02][[38791,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(69) failed: Connection reset by peer (104)
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210527_025654-3fgurww9/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210527_025654-3fgurww9/logs/debug-internal.log
+wandb: Run summary:
+wandb:   Data Augmentation True
+wandb:            _runtime 107359
+wandb:          _timestamp 1622205973
+wandb:               _step 83
+wandb:               epoch 149
+wandb:          Train Loss 0.05491
+wandb:           Train Acc 0.71744
+wandb:            Val Loss 0.00265
+wandb:             Val Acc 0.7809
+wandb: Run history:
+wandb:   Data Augmentation ▁▁▁▁▁▁▁▁
+wandb:            _runtime ▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇█████
+wandb:          _timestamp ▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇█████
+wandb:               _step ▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇███
+wandb:               epoch ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:          Train Loss █▆▅▅▅▄▄▄▄▄▄▄▄▄▄▃▃▃▃▃▃▃▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁
+wandb:           Train Acc ▁▂▃▄▅▅▅▅▅▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇███████
+wandb:            Val Loss █▆▅▄▄▄▄▃▃▃▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:             Val Acc ▁▃▄▅▅▅▅▆▆▆▆▆▇▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇████████████
+wandb: 
+wandb: Synced 4 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced bumbling-sweep-2: https://wandb.ai/naddeok/CIFAR10/runs/3fgurww9
+Run 3fgurww9 errored: FileNotFoundError(2, 'No such file or directory')
+wandb: ERROR Run 3fgurww9 errored: FileNotFoundError(2, 'No such file or directory')
+wandb: Agent Starting Run: ksn3yo4w with config:
+wandb: 	batch_size: 32
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 150
+wandb: 	learning_rate: 0.027685364402940702
+wandb: 	model_name: cifar10_mobilenetv2_x1_4
+wandb: 	momentum: 0.9
+wandb: 	optimizer: nesterov
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: models/pretrained/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 1e-05
+
+wandb: wandb version 0.10.31 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-05-28 08:46:21.148831: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-28 08:46:21.151555: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run absurd-sweep-3
+wandb: ⭐️ View project at https://wandb.ai/naddeok/CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/gcubc65s
+wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/ksn3yo4w
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210528_084619-ksn3yo4w
+wandb: Run `wandb offline` to turn off syncing.
+
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Epoch:  1 	Train Loss:  0.056953017973899844 	Val Loss:  0.006214897847175598
+Epoch:  3 	Train Loss:  0.04424938645720482 	Val Loss:  0.005169980335235596
+Epoch:  5 	Train Loss:  0.039481619925498965 	Val Loss:  0.004691328036785126
+Epoch:  7 	Train Loss:  0.036328341683149336 	Val Loss:  0.004412682241201401
+Epoch:  9 	Train Loss:  0.033955267697572705 	Val Loss:  0.004162717980146408
+Epoch:  11 	Train Loss:  0.03201017101287842 	Val Loss:  0.004056955337524414
+Epoch:  13 	Train Loss:  0.030273525961637498 	Val Loss:  0.0039022838056087493
+Epoch:  15 	Train Loss:  0.028711365015506744 	Val Loss:  0.0037500629484653472
+Epoch:  17 	Train Loss:  0.02753117589175701 	Val Loss:  0.0036655256450176237
+Epoch:  19 	Train Loss:  0.02618889617562294 	Val Loss:  0.003502567756175995
+Epoch:  21 	Train Loss:  0.025112010120153426 	Val Loss:  0.0034744419634342195
+Epoch:  23 	Train Loss:  0.02418877538919449 	Val Loss:  0.0034163044571876525
+Epoch:  25 	Train Loss:  0.02311492643535137 	Val Loss:  0.0034894159257411956
+Epoch:  27 	Train Loss:  0.02219399191737175 	Val Loss:  0.003357401567697525
+Epoch:  29 	Train Loss:  0.021318258550465107 	Val Loss:  0.003276042741537094
+Epoch:  31 	Train Loss:  0.02049932619303465 	Val Loss:  0.00328201385140419
+Epoch:  33 	Train Loss:  0.01966940822839737 	Val Loss:  0.00332898228764534
+Epoch:  35 	Train Loss:  0.018951266177594663 	Val Loss:  0.0031933089554309845
+Epoch:  37 	Train Loss:  0.01807403958231211 	Val Loss:  0.0031819103658199312
+Epoch:  39 	Train Loss:  0.01748546936750412 	Val Loss:  0.0032111253678798676
+Epoch:  41 	Train Loss:  0.016715319159924982 	Val Loss:  0.003209617280960083
+Epoch:  43 	Train Loss:  0.01611274868488312 	Val Loss:  0.00316913543343544
+Epoch:  45 	Train Loss:  0.015516945627331734 	Val Loss:  0.0032027194797992708
+Epoch:  47 	Train Loss:  0.014715926105976105 	Val Loss:  0.003212079733610153
+Epoch:  49 	Train Loss:  0.014146197914034129 	Val Loss:  0.0031492186725139617
+Epoch:  51 	Train Loss:  0.013492724785208701 	Val Loss:  0.003146325647830963
+Epoch:  53 	Train Loss:  0.012759143714159727 	Val Loss:  0.0032540095150470735
+Epoch:  55 	Train Loss:  0.012190236765295267 	Val Loss:  0.003225568246841431
+Epoch:  57 	Train Loss:  0.01172612982854247 	Val Loss:  0.0032886231124401094
+Epoch:  59 	Train Loss:  0.011065167089700699 	Val Loss:  0.0033026858806610108
+Epoch:  61 	Train Loss:  0.01060551024787128 	Val Loss:  0.0032985822916030885
+Epoch:  63 	Train Loss:  0.01004613812893629 	Val Loss:  0.003280969351530075
+Epoch:  65 	Train Loss:  0.009459824907630683 	Val Loss:  0.003341940140724182
+Epoch:  67 	Train Loss:  0.008862622640579939 	Val Loss:  0.00336516210436821
+Epoch:  69 	Train Loss:  0.008477644408345222 	Val Loss:  0.003335322791337967
+Epoch:  71 	Train Loss:  0.007987234641537071 	Val Loss:  0.0034554465651512145
+Epoch:  73 	Train Loss:  0.007519954985156656 	Val Loss:  0.0034373338997364046
+Epoch:  75 	Train Loss:  0.007033048792555928 	Val Loss:  0.003401866865158081
+Epoch:  77 	Train Loss:  0.006609205063804984 	Val Loss:  0.0035081979513168337
+Epoch:  79 	Train Loss:  0.006357742725536227 	Val Loss:  0.0034832318365573883
+Epoch:  81 	Train Loss:  0.006022691828534007 	Val Loss:  0.0034743935704231264
+Epoch:  83 	Train Loss:  0.005459637902751565 	Val Loss:  0.0035870866894721987
+Epoch:  85 	Train Loss:  0.005182792496569454 	Val Loss:  0.0036463949918746946
+Epoch:  87 	Train Loss:  0.0048589172905124725 	Val Loss:  0.0034879768669605253
+Epoch:  89 	Train Loss:  0.004556857975646853 	Val Loss:  0.003539136242866516
+Epoch:  91 	Train Loss:  0.004206876657642424 	Val Loss:  0.0035669970571994784
+Epoch:  93 	Train Loss:  0.003980003402866423 	Val Loss:  0.003666502791643143
+Files already downloaded and verified
+Epoch:  95 	Train Loss:  0.003612645592093468 	Val Loss:  0.0036736233234405517
+Files already downloaded and verified
+Epoch:  97 	Train Loss:  0.003397411678051576 	Val Loss:  0.0036392437398433683
+Files already downloaded and verified
+Epoch:  99 	Train Loss:  0.0031621396643668415 	Val Loss:  0.0037452486455440523
+Files already downloaded and verified
+Epoch:  101 	Train Loss:  0.0030838762080855667 	Val Loss:  0.003683995109796524
+Files already downloaded and verified
+Epoch:  103 	Train Loss:  0.0027717253622412683 	Val Loss:  0.003754213255643845
+Files already downloaded and verified
+Epoch:  105 	Train Loss:  0.0026031172112748026 	Val Loss:  0.003681107145547867
+Files already downloaded and verified
+Epoch:  107 	Train Loss:  0.002422723829494789 	Val Loss:  0.0036840539813041686
+Files already downloaded and verified
+Epoch:  109 	Train Loss:  0.0023284202168043703 	Val Loss:  0.0037299010574817658
+Files already downloaded and verified
+Epoch:  111 	Train Loss:  0.0021872302110120655 	Val Loss:  0.0037252038836479186
+Files already downloaded and verified
+Epoch:  113 	Train Loss:  0.002044146818295121 	Val Loss:  0.0038025412023067473
+Files already downloaded and verified
+Epoch:  115 	Train Loss:  0.0019176424651779235 	Val Loss:  0.003765880596637726
+Files already downloaded and verified
+Epoch:  117 	Train Loss:  0.0018176328825298697 	Val Loss:  0.00376235032081604
+Files already downloaded and verified
+Epoch:  119 	Train Loss:  0.0017011084387823939 	Val Loss:  0.003828226810693741
+Files already downloaded and verified
+Epoch:  121 	Train Loss:  0.0016532814037520439 	Val Loss:  0.0038545202851295473
+Files already downloaded and verified
+Epoch:  123 	Train Loss:  0.0015552550020068883 	Val Loss:  0.0038917107999324797
+Files already downloaded and verified
+Epoch:  125 	Train Loss:  0.001455541726788506 	Val Loss:  0.00391263964176178
+Files already downloaded and verified
+Epoch:  127 	Train Loss:  0.0014127217677794397 	Val Loss:  0.0038150730967521666
+Files already downloaded and verified
+Epoch:  129 	Train Loss:  0.0013246320639271288 	Val Loss:  0.003896488094329834
+Files already downloaded and verified
+Epoch:  131 	Train Loss:  0.001343314133575186 	Val Loss:  0.003879994833469391
+Files already downloaded and verified
+Epoch:  133 	Train Loss:  0.0012898815733753146 	Val Loss:  0.003863152664899826
+Files already downloaded and verified
+Epoch:  135 	Train Loss:  0.0012599287077598273 	Val Loss:  0.0038524032771587373
+Files already downloaded and verified
+Epoch:  137 	Train Loss:  0.0012820800935430452 	Val Loss:  0.003921539652347565
+Files already downloaded and verified
+Epoch:  139 	Train Loss:  0.001245006398060359 	Val Loss:  0.003822850739955902
+Files already downloaded and verified
+Epoch:  141 	Train Loss:  0.0012451354593643919 	Val Loss:  0.0038449187159538267
+Files already downloaded and verified
+Epoch:  143 	Train Loss:  0.0011970434552337973 	Val Loss:  0.003854264122247696
+Files already downloaded and verified
+Epoch:  145 	Train Loss:  0.001156649227058515 	Val Loss:  0.0037994300484657287
+Files already downloaded and verified
+Epoch:  147 	Train Loss:  0.0011401364827388898 	Val Loss:  0.0038469518423080444
+Files already downloaded and verified
+Epoch:  149 	Train Loss:  0.0011890533124981448 	Val Loss:  0.0038461205065250395
+wandb: Waiting for W&B process to finish, PID 2647813
+wandb: Program failed with code 1.  Press ctrl-c to abort syncing.
+wandb: - 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: \ 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: | 0.00MB of 0.00MB uploaded (0.00MB deduped)wandb: / 0.00MB of 0.01MB uploaded (0.00MB deduped)wandb: - 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: \ 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: | 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: / 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb: - 0.01MB of 0.01MB uploaded (0.00MB deduped)wandb:                                                                                
+wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/run-20210528_084619-ksn3yo4w/logs/debug.log
+wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/run-20210528_084619-ksn3yo4w/logs/debug-internal.log
+wandb: Run summary:
+wandb:   Data Augmentation True
+wandb:            _runtime 17811
+wandb:          _timestamp 1622223790
+wandb:               _step 104
+wandb:               epoch 149
+wandb:          Train Loss 0.00117
+wandb:           Train Acc 0.87423
+wandb:            Val Loss 0.00383
+wandb:             Val Acc 0.7654
+wandb: Run history:
+wandb:   Data Augmentation ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:            _runtime ▁▁▁▂▂▂▂▃▃▃▃▄▄▄▄▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇████
+wandb:          _timestamp ▁▁▁▂▂▂▂▃▃▃▃▄▄▄▄▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇████
+wandb:               _step ▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb:               epoch ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:          Train Loss █▆▅▅▄▄▄▄▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:           Train Acc ▁▂▃▄▄▄▅▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇██████████
+wandb:            Val Loss █▆▄▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▂▃▃▃▃▃▃▃▃▃
+wandb:             Val Acc ▁▃▅▅▆▆▇▇▇▇▇▇▇█▇▇▇██▇████████████████████
+wandb: 
+wandb: Synced 4 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: 
+wandb: Synced absurd-sweep-3: https://wandb.ai/naddeok/CIFAR10/runs/ksn3yo4w
+Run ksn3yo4w errored: FileNotFoundError(2, 'No such file or directory')
+wandb: ERROR Run ksn3yo4w errored: FileNotFoundError(2, 'No such file or directory')
+wandb: Agent Starting Run: h4q21z7b with config:
+wandb: 	batch_size: 24
+wandb: 	criterion: cross_entropy
+wandb: 	epochs: 150
+wandb: 	learning_rate: 0.07175809113217042
+wandb: 	model_name: cifar10_vgg16_bn
+wandb: 	momentum: 0.9
+wandb: 	optimizer: nesterov
+wandb: 	pretrained: False
+wandb: 	scheduler: Cosine Annealing
+wandb: 	transformation: models/pretrained/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt
+wandb: 	use_SAM: True
+wandb: 	weight_decay: 1e-05
+429 response executing GraphQL.
+{"error":"rate limit exceeded"}
+
+
+wandb: wandb version 0.10.31 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+2021-05-28 13:43:17.620503: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-28 13:43:17.623207: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+wandb: Tracking run with wandb version 0.10.30
+wandb: Syncing run misty-sweep-4
+wandb: ⭐️ View project at https://wandb.ai/naddeok/CIFAR10
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/gcubc65s
+wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/h4q21z7b
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210528_134315-h4q21z7b
+wandb: Run `wandb offline` to turn off syncing.
+
+signal only works in main thread
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+/usr/lib/python3.8/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 24 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

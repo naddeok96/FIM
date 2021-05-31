@@ -34,7 +34,7 @@ class FstLayUniNet(nn.Module):
 
         # Declare U
         self.U_filename = U_filename
-        if U_filename is not None:
+        if U_filename is None:
             self.U = None
         else:
             self.load_U_from_Ufilename()
@@ -51,7 +51,7 @@ class FstLayUniNet(nn.Module):
         sofar = ""
         for c in self.U_filename:        
             sofar += c
-            if sofar == "U_w_means_":
+            if sofar == "models/pretrained/U_w_means_":
                 state = 1
                 continue
             
@@ -72,11 +72,18 @@ class FstLayUniNet(nn.Module):
                 else: 
                     stats[state - 1] += c
 
+        # Seperate Stats
         self.U_means = torch.tensor(stats[0:3])
         self.U_stds  = torch.tensor(stats[3:])
 
         # Load U 
         self.U = torch.load(self.U_filename)
+
+        # Push to GPU
+        if self.gpu:
+            self.U       = self.U.cuda()
+            self.U_means = self.U_means.cuda()
+            self.U_stds  = self.U_stds.cuda()
 
     def display_pretrained_models(self):
         from pprint import pprint
@@ -112,6 +119,7 @@ class FstLayUniNet(nn.Module):
         UA = torch.bmm(U, input_tensor.view(channel_num * batch_size, A_side_size, A_side_size)).view(batch_size, channel_num, A_side_size, A_side_size)
 
         # Normalize
+        UA = UA.view(UA.size(0), UA.size(1), -1)
         batch_means = self.U_means.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
         batch_stds  = self.U_stds.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
         return UA.sub_(batch_means).div_(batch_stds).view(UA.size(0), UA.size(1), 32, 32)
@@ -121,9 +129,6 @@ class FstLayUniNet(nn.Module):
         
         # Unitary transformation
         x = self.orthogonal_operation(x)
-
-        print(x.mean(2).mean(0), stds  = x.std(2).mean(0))
-        exit()
 
         # Feedforward
         x = self.net(x)
