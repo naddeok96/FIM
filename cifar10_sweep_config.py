@@ -1,24 +1,24 @@
 sweep_config = {
-                'method': 'grid',
+                'method': 'bayes',
                 'metric': {
                     'name': 'loss',
                     'goal': 'minimize' 
                 },
-                # 'early_terminate' : {
-                #     "type": 'hyperband',
-                #     "s": 2,
-                #     "eta": 3,
-                #     "max_iter": 27
-                # },
+                'early_terminate' : {
+                    "type": 'hyperband',
+                    "s": 2,
+                    "eta": 3,
+                    "max_iter": 27
+                },
   
                 'parameters': {
                     'epochs': {
-                        'values': [100]
+                        'values': [300]
                     },
                     'batch_size': {
-                        'values': [5]
-                        # 'min' : 1,
-                        # 'max' : 32
+                        # 'values': [5]
+                        'min' : 1,
+                        'max' : 32
                     },
                     'momentum': {
                         'values': [0.9]
@@ -27,9 +27,9 @@ sweep_config = {
                         'values': [1e-5]
                     },
                     'learning_rate': {
-                        'values': [0.07112]
-                        # 'min' : 1e-6,
-                        # 'max' : 1e-1
+                        # 'values': [0.07112]
+                        'min' : 1e-6,
+                        'max' : 1e-1
                     },
                     'optimizer': {
                         'values': ['nesterov']

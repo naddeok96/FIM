@@ -1,12 +1,12 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:3251834): Gdk-CRITICAL **: 11:34:07.714: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-wandb: Agent Starting Run: mhu4437d with config:
-wandb: 	batch_size: 5
+(wandb_model_trainer.py:3492446): Gdk-CRITICAL **: 21:20:12.304: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+wandb: Agent Starting Run: juthsr1k with config:
+wandb: 	batch_size: 7
 wandb: 	criterion: cross_entropy
-wandb: 	epochs: 100
-wandb: 	learning_rate: 0.07112
+wandb: 	epochs: 200
+wandb: 	learning_rate: 0.02265181180086462
 wandb: 	model_name: cifar10_mobilenetv2_x1_4
 wandb: 	momentum: 0.9
 wandb: 	optimizer: nesterov
@@ -19,33 +19,62 @@ wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force rel
 Files already downloaded and verified
 Files already downloaded and verified
 CIFAR10 is Loaded
-Create sweep with ID: wl5t0np4
-Sweep URL: https://wandb.ai/naddeok/CIFAR10/sweeps/wl5t0np4
+Create sweep with ID: 8ib38zhd
+Sweep URL: https://wandb.ai/naddeok/CIFAR10/sweeps/8ib38zhd
 wandb: wandb version 0.10.31 is available!  To upgrade, please run:
 wandb:  $ pip install wandb --upgrade
-2021-05-31 11:34:11.794685: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-31 11:34:11.796890: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-31 21:20:16.859123: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-05-31 21:20:16.861413: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
 wandb: Tracking run with wandb version 0.10.30
-wandb: Syncing run noble-sweep-1
+wandb: Syncing run lunar-sweep-1
 wandb: ⭐️ View project at https://wandb.ai/naddeok/CIFAR10
-wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/wl5t0np4
-wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/mhu4437d
-wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210531_113410-mhu4437d
+wandb: 🧹 View sweep at https://wandb.ai/naddeok/CIFAR10/sweeps/8ib38zhd
+wandb: 🚀 View run at https://wandb.ai/naddeok/CIFAR10/runs/juthsr1k
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20210531_212015-juthsr1k
 wandb: Run `wandb offline` to turn off syncing.
 
 signal only works in main thread
 Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
-Epoch:  1 	Train Loss:  0.18358960870528593 	Val Loss:  0.003935142004489899
-Epoch:  3 	Train Loss:  0.16391113547876476 	Val Loss:  0.003606900465488434
-Epoch:  5 	Train Loss:  0.15458240093072875 	Val Loss:  0.00391753495335579
-Epoch:  7 	Train Loss:  0.14784635870873927 	Val Loss:  0.0035273059964179994
-Epoch:  9 	Train Loss:  0.14213754386605695 	Val Loss:  0.0035873981416225434
-Epoch:  11 	Train Loss:  0.13895758012594656 	Val Loss:  0.0036020564675331114
-Epoch:  13 	Train Loss:  0.13468126755570992 	Val Loss:  0.0034023234128952025
-Epoch:  15 	Train Loss:  0.1313545286798477 	Val Loss:  0.003583028620481491
-Epoch:  17 	Train Loss:  0.13194302266371435 	Val Loss:  0.0035475360572338106
-Epoch:  19 	Train Loss:  0.1274695551844407 	Val Loss:  0.0034242487907409666
-Epoch:  21 	Train Loss:  0.12279525621111505 	Val Loss:  0.003588613176345825
-Epoch:  23 	Train Loss:  0.12050330141762272 	Val Loss:  0.0035960869550704954
-Epoch:  25 	Train Loss:  0.11828712391188369 	Val Loss:  0.00339913227558136
-Epoch:  27 	Train Loss:  0.11445003042315599 	Val Loss:  0.003619139802455902
+Epoch:  1 	Train Loss:  0.051035946232583375 	Val Loss:  0.0029219609916210174
+Epoch:  3 	Train Loss:  0.04322429585282458 	Val Loss:  0.003020916700363159
+Epoch:  5 	Train Loss:  0.03854748800085159 	Val Loss:  0.0029936856925487517
+Epoch:  7 	Train Loss:  0.034271081547990905 	Val Loss:  0.003259668743610382
+Epoch:  9 	Train Loss:  0.03086472523113247 	Val Loss:  0.0033203139483928682
+Epoch:  11 	Train Loss:  0.027665883710773196 	Val Loss:  0.003400485450029373
+Epoch:  13 	Train Loss:  0.024908081417587817 	Val Loss:  0.0034239911556243896
+Epoch:  15 	Train Loss:  0.02247464194256754 	Val Loss:  0.0035142809867858885
+Epoch:  17 	Train Loss:  0.02121091462274664 	Val Loss:  0.003530095887184143
+Epoch:  19 	Train Loss:  0.019169938615374266 	Val Loss:  0.0036986001014709473
+Epoch:  21 	Train Loss:  0.017766465283312136 	Val Loss:  0.003785942006111145
+Epoch:  23 	Train Loss:  0.01668375209423888 	Val Loss:  0.003670770251750946
+Epoch:  25 	Train Loss:  0.01492082996199577 	Val Loss:  0.0037835998833179473
+Epoch:  27 	Train Loss:  0.013739910357521149 	Val Loss:  0.003859791016578674
+Epoch:  29 	Train Loss:  0.013134489072999567 	Val Loss:  0.004086188578605652
+Epoch:  31 	Train Loss:  0.012101228953051614 	Val Loss:  0.003991355752944946
+Epoch:  33 	Train Loss:  0.011283103183165003 	Val Loss:  0.003983481308817863
+Epoch:  35 	Train Loss:  0.010541560720844428 	Val Loss:  0.004023630523681641
+Epoch:  37 	Train Loss:  0.009838756990435649 	Val Loss:  0.003955859923362732
+Epoch:  39 	Train Loss:  0.009521177579942159 	Val Loss:  0.0040695748388767244
+Epoch:  41 	Train Loss:  0.008900746737389127 	Val Loss:  0.004282801294326782
+Epoch:  43 	Train Loss:  0.008682661871016899 	Val Loss:  0.004191694992780685
+Epoch:  45 	Train Loss:  0.008390562985764119 	Val Loss:  0.004040696787834168
+Epoch:  47 	Train Loss:  0.00757490081955475 	Val Loss:  0.004260919362306595
+Epoch:  49 	Train Loss:  0.007132259033086302 	Val Loss:  0.0041706919312477116
+Epoch:  51 	Train Loss:  0.006838896758891751 	Val Loss:  0.004207957273721695
+Epoch:  53 	Train Loss:  0.006679328845079581 	Val Loss:  0.004088791906833649
+Epoch:  55 	Train Loss:  0.00628973680679097 	Val Loss:  0.004251783585548401
+Epoch:  57 	Train Loss:  0.005770407403672143 	Val Loss:  0.004391847056150437
+Epoch:  59 	Train Loss:  0.005708077837805394 	Val Loss:  0.0042173206567764285
+Epoch:  61 	Train Loss:  0.004972208837646831 	Val Loss:  0.0043298666477203365
+Epoch:  63 	Train Loss:  0.005013903632441288 	Val Loss:  0.004318326056003571
+Files already downloaded and verified
+Epoch:  65 	Train Loss:  0.00449209858697519 	Val Loss:  0.004495868897438049
+Epoch:  67 	Train Loss:  0.08100946109805256 	Val Loss:  0.002895326733589172
+Epoch:  69 	Train Loss:  0.07542742454901337 	Val Loss:  0.002807675898075104
+Epoch:  71 	Train Loss:  0.07198576525047422 	Val Loss:  0.002827786064147949
+Epoch:  73 	Train Loss:  0.06936750885054468 	Val Loss:  0.002795765316486359
+Epoch:  75 	Train Loss:  0.06726851264921949 	Val Loss:  0.0027597199141979217
+Epoch:  77 	Train Loss:  0.06559330213301814 	Val Loss:  0.0027641452074050905
+Epoch:  79 	Train Loss:  0.06371946236132645 	Val Loss:  0.0027953475534915925
+Epoch:  81 	Train Loss:  0.06287272754529491 	Val Loss:  0.0027589172422885894
+Epoch:  83 	Train Loss:  0.06088250693065114 	Val Loss:  0.002782791310548782

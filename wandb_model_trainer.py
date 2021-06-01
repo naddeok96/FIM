@@ -286,16 +286,18 @@ if __name__ == "__main__":
     # Push to GPU if necessary
     if gpu:
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+        os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 
     # Declare seed and initalize network
-    # torch.manual_seed(seed)
+    # torch.manual_seed(seed) 
 
     # Load data
     data = Data(gpu = gpu, set_name = set_name, data_augment = False) #, desired_image_size = 224, test_batch_size = 32)
     print(set_name + " is Loaded")
 
     # Run the sweep
+    # config = initalize_config_defaults(sweep_config)
+    # net = initalize_net(data.set_name, data.gpu, config)
     sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
     wandb.agent(sweep_id, function=lambda: train(data, save_model))
 
