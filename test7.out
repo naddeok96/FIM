@@ -78,3 +78,19 @@ Epoch:  77 	Train Loss:  0.06559330213301814 	Val Loss:  0.0027641452074050905
 Epoch:  79 	Train Loss:  0.06371946236132645 	Val Loss:  0.0027953475534915925
 Epoch:  81 	Train Loss:  0.06287272754529491 	Val Loss:  0.0027589172422885894
 Epoch:  83 	Train Loss:  0.06088250693065114 	Val Loss:  0.002782791310548782
+Epoch:  85 	Train Loss:  0.05951032204466872 	Val Loss:  0.002755352371931076
+Epoch:  87 	Train Loss:  0.05775821762527339 	Val Loss:  0.002841214621067047
+Epoch:  89 	Train Loss:  0.056880799251645804 	Val Loss:  0.0028885146498680114
+Epoch:  91 	Train Loss:  0.05532290585052222 	Val Loss:  0.0027759639382362367
+Epoch:  93 	Train Loss:  0.05405815169880167 	Val Loss:  0.0027822090208530427
+Epoch:  95 	Train Loss:  0.0523644212162029 	Val Loss:  0.0028286065220832824
+Epoch:  97 	Train Loss:  0.052040810904726384 	Val Loss:  0.0028809275805950166
+Epoch:  99 	Train Loss:  0.050451430914672094 	Val Loss:  0.002775682258605957
+Epoch:  101 	Train Loss:  0.049305321910688656 	Val Loss:  0.0027348088324069975
+[lambda02][[17215,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(59) failed: Connection reset by peer (104)
+[lambda02][[17215,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(60) failed: Connection reset by peer (104)
+[lambda02][[17215,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(19) failed: Connection reset by peer (104)
+[lambda02][[17215,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(25) failed: Connection reset by peer (104)
+[lambda02][[17215,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(26) failed: Connection reset by peer (104)
+/usr/lib/python3.8/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

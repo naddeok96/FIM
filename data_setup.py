@@ -34,6 +34,7 @@ class Data:
         # Pull in data
         if self.set_name == "CIFAR10":
             # Images are of size (3,32,32)
+            self.num_channels = 3
             self.image_size = 32 if self.desired_image_size is None else self.desired_image_size
 
             # Train Set
@@ -52,6 +53,7 @@ class Data:
                                                     
         elif self.set_name == "MNIST":
             # Image size
+            self.num_channels = 1
             self.image_size = 28
 
             # Images are of size (1, 28, 28)

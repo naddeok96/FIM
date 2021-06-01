@@ -2,6 +2,7 @@
 This class implements adversarial attacks
 '''
 # Imports
+from typing import Counter
 import torch
 import torch.nn.functional as F
 import operator
@@ -9,6 +10,7 @@ from torch.autograd import Variable
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+from tqdm import tqdm
 
 # Class
 class Attacker: 
@@ -27,7 +29,7 @@ class Attacker:
 
         # Move inputs to CPU or GPU
         self.gpu = gpu
-        self.net   = net if self.gpu == False else net.cuda()
+        self.net = net if self.gpu == False else net.cuda()
         self.data = data
 
         # Evaluation Tools 
@@ -151,20 +153,20 @@ class Attacker:
         _, predicted = torch.max(outputs.data, 1)
 
         # Find size parameters
-        image_size  = images.size(-1)
-        batch_size  = outputs.size(0)
+        batch_size = images.size(0)
+        channel_num = images.size(1)
+        image_size  = images.size(2)
+        
         num_classes = outputs.size(1)
 
-        
-
         # Iterate until convergence
+        print("Begin Lancoz")
         for j in range(max_iter):
             # Initilize Eigenvector
-            eigenvector0 = torch.rand(batch_size, image_size**2, 1).cuda()
+            eigenvector0 = torch.rand(batch_size, channel_num * image_size**2, 1).cuda()
             norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
-            eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
-                    
-            eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
+            eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, channel_num * image_size**2, 1)
+            eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1).cuda()
 
             # If it does not converge in max_iter tries try again with new random vector
             for k in range(max_iter):
@@ -185,34 +187,34 @@ class Attacker:
 
                     # Accumulate expectation
                     p = soft_max_output[:,i].view(batch_size, 1, 1)
-                    grad = images.grad.data.view(batch_size, image_size**2, 1)
+                    grad = images.grad.data.view(batch_size, channel_num * image_size**2, 1)
                     
                     # p * (gT * eta) * g
                     eigenvector += p * (torch.bmm(torch.transpose(grad, 1, 2), eigenvector0) * grad)
 
                 # Normalize
                 norms = torch.linalg.norm(eigenvector, ord=2, dim=1).view(-1, 1, 1)
-                eigenvector = torch.bmm(1 / norms, eigenvector.view(batch_size, 1, -1)).view(-1, image_size**2, 1)
+                eigenvector = torch.bmm(1 / norms, eigenvector.view(batch_size, 1, -1)).view(-1, channel_num * image_size**2, 1)
                 
                 # Check Convegence
                 similarity = torch.mean(cos_sim(eigenvector0.view(-1, 1), 
                                         eigenvector.view(-1, 1))).item()
+                print("Iteration: ", j*max_iter + k ,"\tSimilarity: ", similarity)
 
-                if similarity > 0.997:
+                if similarity > 0.99:
                     # Return vector
                     return eigenvector.view(batch_size, 1, -1), losses
 
                 else:
                     # Restart Cycle
                     eigenvector0 = eigenvector
-                    eigenvector = torch.zeros(batch_size, image_size**2, 1).cuda()
+                    eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1).cuda()
 
         print("Lanczos did not converge...")
         exit()
 
     def get_OSSA_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None,
-                                       U = None,
                                        return_attacks_only = False,
                                        attack_images = None,
                                        attack_labels  = None):
@@ -227,7 +229,7 @@ class Attacker:
 
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
-        for inputs, labels in self.data.test_loader:
+        for inputs, labels in tqdm (self.data.test_loader, desc="Batches Done..."):
 
             if attack_images is not None:
                 inputs = attack_images
@@ -243,16 +245,21 @@ class Attacker:
 
             # Highest Eigenvalue and vector
             eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
+            normed_eig_vec_max = self.normalize(eig_vec_max, p = float('inf'), dim = 2)
+
+            print("min/max perturbations: ", torch.min(eig_vec_max).item(), torch.max(eig_vec_max).item())
+            print("min/max perturbations: ", torch.min(normed_eig_vec_max).item(), torch.max(normed_eig_vec_max).item())
             
 
             # Cycle over all espiplons
             for i, epsilon in enumerate(epsilons):
                 # Set the unit norm of the highest eigenvector to epsilon
-                perturbations = epsilon * self.normalize(eig_vec_max, p = float('inf'), dim = 2)
+                perturbations = epsilon * normed_eig_vec_max
 
                 # Declare attacks as the perturbation added to the image
                 batch_size = np.shape(inputs)[0]
-                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+                    
+                attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
 
                 # Check if loss has increased
                 adv_outputs = self.net(attacks)
@@ -264,7 +271,7 @@ class Attacker:
                 perturbations = signs.view(-1, 1, 1) * perturbations
             
                 # Compute attack and models prediction of it
-                attacks = (inputs.view(batch_size, 1, self.data.image_size**2) + perturbations).view(batch_size, 1, self.data.image_size, self.data.image_size)
+                attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
 
                 if return_attacks_only:
                     return attacks

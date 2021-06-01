@@ -73,3 +73,55 @@ Epoch:  67 	Train Loss:  0.003966412833379581 	Val Loss:  0.003239312535524368
 Epoch:  69 	Train Loss:  0.004004834160599858 	Val Loss:  0.003275015103816986
 Epoch:  71 	Train Loss:  0.003906939989086241 	Val Loss:  0.00327134245634079
 Epoch:  73 	Train Loss:  0.0038041765248123557 	Val Loss:  0.0032850399136543276
+Epoch:  75 	Train Loss:  0.003676270609702915 	Val Loss:  0.0033441047191619874
+Epoch:  77 	Train Loss:  0.003806671984586865 	Val Loss:  0.0032134001433849336
+Epoch:  79 	Train Loss:  0.003714478787695989 	Val Loss:  0.0032899945974349974
+Epoch:  81 	Train Loss:  0.0035433214274514465 	Val Loss:  0.0033436333417892457
+Epoch:  83 	Train Loss:  0.0035836907497420905 	Val Loss:  0.003380808264017105
+Epoch:  85 	Train Loss:  0.0035363035204727202 	Val Loss:  0.0032808155953884125
+Epoch:  87 	Train Loss:  0.003355143461925909 	Val Loss:  0.0033176976323127747
+Epoch:  89 	Train Loss:  0.0033040029851347207 	Val Loss:  0.0032173609852790834
+Epoch:  91 	Train Loss:  0.003298845146065578 	Val Loss:  0.003274438226222992
+Files already downloaded and verified
+Epoch:  93 	Train Loss:  0.0032378810475580393 	Val Loss:  0.0033314504086971283
+Epoch:  95 	Train Loss:  0.003314389719185419 	Val Loss:  0.0033000652611255648
+Files already downloaded and verified
+Epoch:  97 	Train Loss:  0.0031993774483771993 	Val Loss:  0.0032706177592277527
+Files already downloaded and verified
+Epoch:  99 	Train Loss:  0.0031342595898825676 	Val Loss:  0.0033327376544475557
+Files already downloaded and verified
+Epoch:  101 	Train Loss:  0.0030001908186124636 	Val Loss:  0.003442256486415863
+Files already downloaded and verified
+Epoch:  103 	Train Loss:  0.0030018662229832262 	Val Loss:  0.0033660489737987517
+Files already downloaded and verified
+Epoch:  105 	Train Loss:  0.0030230249753175303 	Val Loss:  0.003302133572101593
+Files already downloaded and verified
+Epoch:  107 	Train Loss:  0.0029724007630581037 	Val Loss:  0.0033027449667453767
+Files already downloaded and verified
+Epoch:  109 	Train Loss:  0.0029715923551097514 	Val Loss:  0.0032535381615161896
+Files already downloaded and verified
+Epoch:  111 	Train Loss:  0.002836052026418038 	Val Loss:  0.003396755123138428
+Files already downloaded and verified
+Epoch:  113 	Train Loss:  0.0027056650098599496 	Val Loss:  0.0033274398863315582
+Files already downloaded and verified
+Epoch:  115 	Train Loss:  0.0027537645783927292 	Val Loss:  0.0034177395641803742
+Files already downloaded and verified
+Epoch:  117 	Train Loss:  0.002701406895406544 	Val Loss:  0.00342345906496048
+Files already downloaded and verified
+Epoch:  119 	Train Loss:  0.0026847321024211124 	Val Loss:  0.003448970574140549
+Files already downloaded and verified
+Epoch:  121 	Train Loss:  0.002532694008341059 	Val Loss:  0.0033905104398727418
+Files already downloaded and verified
+Epoch:  123 	Train Loss:  0.0025713706838618963 	Val Loss:  0.0033808786749839784
+Files already downloaded and verified
+Epoch:  125 	Train Loss:  0.0024809814375685527 	Val Loss:  0.003351687228679657
+Files already downloaded and verified
+Epoch:  127 	Train Loss:  0.002470398604418151 	Val Loss:  0.0034007029235363006
+Files already downloaded and verified
+Epoch:  129 	Train Loss:  0.002352115630330518 	Val Loss:  0.003388973993062973
+Files already downloaded and verified
+Epoch:  131 	Train Loss:  0.002357077779350802 	Val Loss:  0.0033472779154777527
+Files already downloaded and verified
+Epoch:  133 	Train Loss:  0.0023071067572478206 	Val Loss:  0.0033257409632205964
+Files already downloaded and verified
+Epoch:  135 	Train Loss:  0.0021623001056024806 	Val Loss:  0.0034513688027858736
