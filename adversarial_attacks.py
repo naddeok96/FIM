@@ -7,6 +7,7 @@ import torch
 import torch.nn.functional as F
 import operator
 from torch.autograd import Variable
+import torchvision as tv
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
@@ -163,10 +164,18 @@ class Attacker:
         # print("Begin Lancoz")
         for j in range(max_iter):
             # Initilize Eigenvector
-            eigenvector0 = torch.rand(batch_size, channel_num * image_size**2, 1).cuda()
+            eigenvector0 = torch.rand(batch_size, channel_num * image_size**2, 1)
+            eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1)
+
+            # Push to gpus
+            if self.gpu:
+                eigenvector0 = eigenvector0.cuda()
+                eigenvector = eigenvector.cuda()
+
+            # Normalize eigenvector
             norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
             eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, channel_num * image_size**2, 1)
-            eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1).cuda()
+            
 
             # If it does not converge in max_iter tries try again with new random vector
             for k in range(max_iter):
@@ -208,7 +217,10 @@ class Attacker:
                 else:
                     # Restart Cycle
                     eigenvector0 = eigenvector
-                    eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1).cuda()
+                    eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1)
+
+                    if self.gpu:
+                        eigenvector = eigenvector.cuda()
 
         print("Lanczos did not converge...")
         exit()
@@ -413,8 +425,8 @@ class Attacker:
     def check_attack_perception(self, epsilons = [1]):
 
         # Initalize images and labels for one of each number
-        images = torch.zeros((10, 1, 28, 28))
-        labels = torch.zeros((10)).type(torch.LongTensor)
+        images = torch.zeros((self.data.num_classes, self.data.num_channels, self.data.image_size, self.data.image_size))
+        labels = torch.zeros((self.data.num_classes)).type(torch.LongTensor)
         
         # Find one of each number
         found = False
@@ -426,7 +438,7 @@ class Attacker:
                 image, label, = test_inputs[0], test_labels[0]
 
                 if label.item() == number:
-                    images[number, 0, :, :] = image
+                    images[number, :, :, :] = image
                     labels[number] = label
 
                     number += 1
@@ -434,8 +446,6 @@ class Attacker:
                         found = True
                 index += 1
 
-
-        figsize = 7
         fig, axes2d = plt.subplots(nrows=len(epsilons),
                                     ncols=10,
                                     sharex=True, sharey=True)
@@ -453,8 +463,17 @@ class Attacker:
             #                                                 epsilons = [epsilons[i]],
             #                                                 return_attacks_only = True)
 
+            # UNnormalize
+            attacks = attacks.view(attacks.size(0), attacks.size(1), -1)
+            batch_means = torch.tensor(self.data.mean).repeat(attacks.size(0), 1).view(attacks.size(0), attacks.size(1), 1)
+            batch_stds  = torch.tensor(self.data.std).repeat(attacks.size(0), 1).view(attacks.size(0), attacks.size(1), 1)
+            attacks = attacks.mul_(batch_stds).add_(batch_means)
+            attacks = attacks.sub_(torch.min(attacks)).div_(torch.max(attacks) - torch.min(attacks)).view(attacks.size(0), attacks.size(1), self.data.image_size, self.data.image_size)
+
             for j, cell in enumerate(row):
-                cell.imshow(attacks[j,:,:,:].detach().numpy()[0], cmap='gray')
+                # Plot in cell
+                img = tv.utils.make_grid(attacks[j,:,:,:])
+                cell.imshow(np.transpose(img.detach().numpy(), (1, 2, 0)))
                 cell.set_xticks([])
                 cell.set_yticks([])
 

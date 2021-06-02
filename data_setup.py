@@ -34,6 +34,7 @@ class Data:
         # Pull in data
         if self.set_name == "CIFAR10":
             # Images are of size (3,32,32)
+            self.num_classes = 10
             self.num_channels = 3
             self.image_size = 32 if self.desired_image_size is None else self.desired_image_size
 
@@ -41,10 +42,12 @@ class Data:
             self.train_set = self.get_trainset()
 
             # Test Set
+            self.mean = (0.4914, 0.4822, 0.4465)
+            self.std  = (0.2023, 0.1994, 0.2010)
             self.test_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
                                                       transforms.ToTensor(), # Convert the images into tensors
-                                                      transforms.Normalize((0.4914, 0.4822, 0.4465), 
-                                                                           (0.2023, 0.1994, 0.2010))]) #  Normalize
+                                                      transforms.Normalize(self.mean, 
+                                                                           self.std)]) #  Normalize
 
             self.test_set = torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', #
                                                     train=False,
