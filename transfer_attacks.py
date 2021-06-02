@@ -2,6 +2,7 @@
 import os
 import torch
 import pickle5 as pickle
+import numpy as np
 from data_setup import Data
 from prettytable import PrettyTable
 from adversarial_attacks import Attacker
@@ -11,13 +12,13 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 save_to_excel = True
 gpu = True
 set_name = "CIFAR10"
-epsilons = [x/5 for x in range(31)]
+epsilons = np.linspace(0, 0.15, num=31)
 
 # Declare which GPU PCI number to use
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 # Initialize table
 table = PrettyTable()
@@ -63,13 +64,13 @@ results.append(ossa_fool_ratio)
 names.append("White Box Attack")
 
 # Unet 
-# print("Working on Unet OSSA Attacks...")
-# Unet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
-#                                                      transfer_network = Unet)                                              
-# Unet_ossa_fool_ratio = attacker.get_fool_ratio(Unet_acc, Unet_ossa_accs)
-# table.add_column("Unet OSSA Fool Ratio", Unet_ossa_fool_ratio)
-# results.append(Unet_ossa_fool_ratio)
-# names.append("Unet")
+print("Working on Unet OSSA Attacks...")
+Unet_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
+                                                     transfer_network = Unet)                                              
+Unet_ossa_fool_ratio = attacker.get_fool_ratio(Unet_acc, Unet_ossa_accs)
+table.add_column("Unet OSSA Fool Ratio", Unet_ossa_fool_ratio)
+results.append(Unet_ossa_fool_ratio)
+names.append("Unet")
 
 
 # Display

@@ -160,7 +160,7 @@ class Attacker:
         num_classes = outputs.size(1)
 
         # Iterate until convergence
-        print("Begin Lancoz")
+        # print("Begin Lancoz")
         for j in range(max_iter):
             # Initilize Eigenvector
             eigenvector0 = torch.rand(batch_size, channel_num * image_size**2, 1).cuda()
@@ -199,7 +199,7 @@ class Attacker:
                 # Check Convegence
                 similarity = torch.mean(cos_sim(eigenvector0.view(-1, 1), 
                                         eigenvector.view(-1, 1))).item()
-                print("Iteration: ", j*max_iter + k ,"\tSimilarity: ", similarity)
+                # print("Iteration: ", j*max_iter + k ,"\tSimilarity: ", similarity)
 
                 if similarity > 0.99:
                     # Return vector
@@ -231,9 +231,13 @@ class Attacker:
         attack_accuracies = np.zeros(len(epsilons))
         for inputs, labels in tqdm (self.data.test_loader, desc="Batches Done..."):
 
+            # Optionally use custom images
             if attack_images is not None:
                 inputs = attack_images
                 labels = attack_labels
+
+            # Get Batch Size
+            batch_size = np.shape(inputs)[0]
 
             # Push to gpu
             if self.gpu:
@@ -245,20 +249,16 @@ class Attacker:
 
             # Highest Eigenvalue and vector
             eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
-            normed_eig_vec_max = self.normalize(eig_vec_max, p = float('inf'), dim = 2)
-
-            print("min/max perturbations: ", torch.min(eig_vec_max).item(), torch.max(eig_vec_max).item())
-            print("min/max perturbations: ", torch.min(normed_eig_vec_max).item(), torch.max(normed_eig_vec_max).item())
-            
+            normed_eig_vec_max = self.normalize(eig_vec_max, p = None, dim = 2)
 
             # Cycle over all espiplons
             for i, epsilon in enumerate(epsilons):
+                
                 # Set the unit norm of the highest eigenvector to epsilon
-                perturbations = epsilon * normed_eig_vec_max
+                input_norms = torch.linalg.norm(inputs.view(batch_size, 1, -1), ord=None, dim=2).view(-1, 1, 1)
+                perturbations = (epsilon * input_norms) * normed_eig_vec_max
 
-                # Declare attacks as the perturbation added to the image
-                batch_size = np.shape(inputs)[0]
-                    
+                # Declare attacks as the perturbation added to the image                    
                 attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
 
                 # Check if loss has increased
@@ -398,7 +398,6 @@ class Attacker:
 
         return attack_accuracies
 
-
     def get_fool_ratio(self, test_acc, attack_accs):
         """Calculate the fooling ratio of attacks
 
@@ -411,7 +410,6 @@ class Attacker:
         """
         return [round(100*((test_acc - attack_acc) / test_acc), 2) for attack_acc in attack_accs]
         
-    
     def check_attack_perception(self, epsilons = [1]):
 
         # Initalize images and labels for one of each number
@@ -422,7 +420,6 @@ class Attacker:
         found = False
         number = 0
         index = 0
-
         while found is not True:
             for test_inputs, test_labels in self.data.test_loader:
                 
@@ -443,8 +440,8 @@ class Attacker:
                                     ncols=10,
                                     sharex=True, sharey=True)
 
-        plt.suptitle("MNIST", fontsize=20)
-        fig.text(0.02, 0.5, 'L-inf Norm of Attack', va='center', ha='center', rotation='vertical', fontsize=20)
+        plt.suptitle(self.data.set_name, fontsize=20)
+        fig.text(0.02, 0.5, 'SNR', va='center', ha='center', rotation='vertical', fontsize=20)
 
         for i, row in enumerate(axes2d):
             attacks = self. get_OSSA_attack_accuracy(attack_images = images,
