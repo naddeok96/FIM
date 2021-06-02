@@ -44,10 +44,10 @@ sweep_config = {
                         'values' : [True]
                     },
                     'pretrained':{
-                        'values' : [False]
+                        'values' : [True]
                     },
                     'transformation':{
-                        'values' : ["models/pretrained/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt"]
+                        'values' : [None] # ["models/pretrained/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt"]
                     },
                     'model_name':{
                         'values' : ['cifar10_mobilenetv2_x1_4']

@@ -40,6 +40,14 @@ attacker_net.load_state_dict(torch.load('models/pretrained/CIFAR10/Nonecifar10_m
 attacker_net.eval()
 attacker_net_acc = 0.91
 
+# # Load Regular Net
+reg_net = FstLayUniNet(set_name, gpu =gpu,
+                       U_filename = None,
+                       model_name = "cifar10_mobilenetv2_x1_4",
+                       pretrained = True)
+reg_net.eval()
+reg_net_acc = 0.94
+
 # # Load UNet
 Unet = FstLayUniNet(set_name, gpu =gpu,
                        U_filename = "models/pretrained/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt",
@@ -62,6 +70,15 @@ ossa_fool_ratio = attacker.get_fool_ratio(attacker_net_acc, ossa_accs)
 table.add_column("OSSA Fool Ratio", ossa_fool_ratio)
 results.append(ossa_fool_ratio)
 names.append("White Box Attack")
+
+# Reg net 
+print("Working on RegNet OSSA Attacks...")
+reg_net_ossa_accs  = attacker.get_OSSA_attack_accuracy(epsilons = epsilons,
+                                                     transfer_network = reg_net)                                              
+reg_net_ossa_fool_ratio = attacker.get_fool_ratio(reg_net_acc, reg_net_ossa_accs)
+table.add_column("RegNet OSSA Fool Ratio", reg_net_ossa_fool_ratio)
+results.append(reg_net_ossa_fool_ratio)
+names.append("RegNet")
 
 # Unet 
 print("Working on Unet OSSA Attacks...")

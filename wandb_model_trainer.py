@@ -37,7 +37,7 @@ def initalize_net(set_name, gpu, config):
                        U_filename = config.transformation,
                        model_name = config.model_name,
                        pretrained = config.pretrained)
-    net.load_state_dict(torch.load('models/pretrained/CIFAR10/Ucifar10_mobilenetv2_x1_4_w_acc_78.pt', map_location=torch.device('cpu')))
+    # net.load_state_dict(torch.load('models/pretrained/CIFAR10/Ucifar10_mobilenetv2_x1_4_w_acc_78.pt', map_location=torch.device('cpu')))
 
     # Return network
     return net.cuda() if gpu == True else net
@@ -281,12 +281,12 @@ if __name__ == "__main__":
     project_name = "CIFAR10"
     set_name     = "CIFAR10"
     # seed         = 100
-    # os.environ['WANDB_MODE'] = 'dryrun'
+    os.environ['WANDB_MODE'] = 'dryrun'
 
     # Push to GPU if necessary
     if gpu:
         os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+        os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
     # Declare seed and initalize network
     # torch.manual_seed(seed) 
@@ -296,9 +296,10 @@ if __name__ == "__main__":
     print(set_name + " is Loaded")
 
     # Run the sweep
-    # config = initalize_config_defaults(sweep_config)
-    # net = initalize_net(data.set_name, data.gpu, config)
-    sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
-    wandb.agent(sweep_id, function=lambda: train(data, save_model))
+    config = initalize_config_defaults(sweep_config)
+    net = initalize_net(data.set_name, data.gpu, config)
+    print(test(net, data, config))
+    # sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
+    # wandb.agent(sweep_id, function=lambda: train(data, save_model))
 
 
