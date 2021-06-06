@@ -1,18 +1,62 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(wandb_model_trainer.py:3319362): Gdk-CRITICAL **: 14:29:13.068: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+(wandb_model_trainer.py:47163): Gdk-CRITICAL **: 18:06:23.367: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+Files already downloaded and verified
+Files already downloaded and verified
 CIFAR10 is Loaded
-Create sweep with ID: rknbi25u
-Sweep URL: https://wandb.ai/naddeok/DimahNet%20CIFAR10/sweeps/rknbi25u
-2021-05-07 15:14:42.099321: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-05-07 15:14:42.102511: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-06-06 18:06:26.562093: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-06-06 18:06:26.596056: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
 wandb: W&B syncing is set to `offline` in this directory.  Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
-{1: Conv2d(3, 32, kernel_size=(5, 5), stride=(1, 1)), 2: Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 3: Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 4: Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 5: Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 6: Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 7: Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 8: Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 9: Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)), 10: Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))}
-wandb: Waiting for W&B process to finish, PID 3333775
-wandb: Program ended successfully.
-wandb: Find user logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210507_151440-1wnvb07g/logs/debug.log
-wandb: Find internal logs for this run at: /home/naddeok5/FIM/wandb/offline-run-20210507_151440-1wnvb07g/logs/debug-internal.log
-wandb: You can sync this run to the cloud by running:
-wandb: wandb sync /home/naddeok5/FIM/wandb/offline-run-20210507_151440-1wnvb07g
-
+Using cache found in /home/naddeok5/.cache/torch/hub/chenyaofo_pytorch-cifar-models_master
+Traceback (most recent call last):
+  File "wandb_model_trainer.py", line 301, in <module>
+    print(test(net, data, config))
+  File "wandb_model_trainer.py", line 242, in test
+    for i, batch_data in enumerate(data.test_loader, 0):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 355, in __iter__
+    return self._get_iterator()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 301, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 929, in __init__
+    pin_memory_thread.start()
+  File "/usr/lib/python3.8/threading.py", line 857, in start
+    self._started.wait()
+  File "/usr/lib/python3.8/threading.py", line 558, in wait
+    signaled = self._cond.wait(timeout)
+  File "/usr/lib/python3.8/threading.py", line 302, in wait
+    waiter.acquire()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "wandb_model_trainer.py", line 301, in <module>
+    print(test(net, data, config))
+  File "wandb_model_trainer.py", line 242, in test
+    for i, batch_data in enumerate(data.test_loader, 0):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 355, in __iter__
+    return self._get_iterator()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 301, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 929, in __init__
+    pin_memory_thread.start()
+  File "/usr/lib/python3.8/threading.py", line 857, in start
+    self._started.wait()
+  File "/usr/lib/python3.8/threading.py", line 558, in wait
+    signaled = self._cond.wait(timeout)
+  File "/usr/lib/python3.8/threading.py", line 302, in wait
+    waiter.acquire()
+KeyboardInterrupt
+Process wandb_internal:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal.py", line 154, in wandb_internal
+    thread.join()
+  File "/usr/lib/python3.8/threading.py", line 1011, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib/python3.8/threading.py", line 1027, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+KeyboardInterrupt
+/usr/lib/python3.8/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

@@ -529,7 +529,7 @@ class Attacker:
                                     ncols=10,
                                     sharex=True, sharey=True)
 
-        plt.suptitle(attack + " on " self.data.set_name, fontsize=20)
+        plt.suptitle(attack + " on " + self.data.set_name, fontsize=20)
         fig.text(0.02, 0.5, 'SNR', va='center', ha='center', rotation='vertical', fontsize=20)
 
         for i, row in enumerate(axes2d):

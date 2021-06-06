@@ -12,14 +12,14 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 save_to_excel = True
 gpu = True
 set_name = "CIFAR10"
-attack_type = "FGSM"
+attack_type = "OSSA"
 epsilons = np.linspace(0, 0.15, num=31)
 
 # Declare which GPU PCI number to use
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 
 # Initialize table
 table = PrettyTable()
@@ -64,6 +64,8 @@ Unet_acc = 0.78
 # Create an attacker
 attacker = Attacker(attacker_net, data, gpu)
 
+print(attack_type + " attacks being performed...")
+
 # Get regular attack accuracies on attacker network
 print("Working on White Box Attacks...")
 ossa_accs  = attacker.get_attack_accuracy(attack = attack_type, epsilons = epsilons)                                          
@@ -73,24 +75,24 @@ results.append(ossa_fool_ratio)
 names.append("White Box Attack")
 
 # Reg net 
-# print("Working on Black Box Attacks...")
-# reg_net_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type
-#                                                       epsilons = epsilons,
-#                                                      transfer_network = reg_net)                                              
-# reg_net_ossa_fool_ratio = attacker.get_fool_ratio(reg_net_acc, reg_net_ossa_accs)
-# table.add_column("RegNet OSSA Fool Ratio", reg_net_ossa_fool_ratio)
-# results.append(reg_net_ossa_fool_ratio)
-# names.append("RegNet")
+print("Working on Black Box Attacks...")
+reg_net_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
+                                                    epsilons = epsilons,
+                                                    transfer_network = reg_net)                                              
+reg_net_ossa_fool_ratio = attacker.get_fool_ratio(reg_net_acc, reg_net_ossa_accs)
+table.add_column("RegNet OSSA Fool Ratio", reg_net_ossa_fool_ratio)
+results.append(reg_net_ossa_fool_ratio)
+names.append("RegNet")
 
-# # Unet 
-# print("Working on UnetAttacks...")
-# Unet_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type
-#                                                      epsilons = epsilons,
-#                                                      transfer_network = Unet)                                              
-# Unet_ossa_fool_ratio = attacker.get_fool_ratio(Unet_acc, Unet_ossa_accs)
-# table.add_column("Unet OSSA Fool Ratio", Unet_ossa_fool_ratio)
-# results.append(Unet_ossa_fool_ratio)
-# names.append("Unet")
+# Unet 
+print("Working on UnetAttacks...")
+Unet_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
+                                                epsilons = epsilons,
+                                                transfer_network = Unet)                                              
+Unet_ossa_fool_ratio = attacker.get_fool_ratio(Unet_acc, Unet_ossa_accs)
+table.add_column("Unet OSSA Fool Ratio", Unet_ossa_fool_ratio)
+results.append(Unet_ossa_fool_ratio)
+names.append("Unet")
 
 
 # Display
