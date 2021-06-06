@@ -225,6 +225,84 @@ class Attacker:
         print("Lanczos did not converge...")
         exit()
 
+    def get_attack_accuracy(self,   attack = "OSSA",
+                                    epsilons = [1],
+                                    transfer_network = None,
+                                    return_attacks_only = False,
+                                    attack_images = None,
+                                    attack_labels  = None):
+        # Push transfer_network to GPU
+        if self.gpu and transfer_network is not None:
+            transfer_network = transfer_network.cuda()
+
+        # Test images in test loader
+        attack_accuracies = np.zeros(len(epsilons))
+        for inputs, labels in tqdm (self.data.test_loader, desc="Batches Done..."):
+
+            # Optionally use custom images
+            if attack_images is not None:
+                inputs = attack_images
+                labels = attack_labels
+
+            # Get Batch Size
+            batch_size = np.shape(inputs)[0]
+
+            # Push to gpu
+            if self.gpu:
+                inputs, labels = inputs.cuda(), labels.cuda()
+
+            if attack == "OSSA":
+                # Highest Eigenvalue and vector
+                eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
+                normed_attacks = self.normalize(eig_vec_max, p = None, dim = 2)
+            
+            if attack == "FGSM":
+                # Calculate Gradients
+                gradients, batch_size, losses, predicted = self.get_gradients(inputs, labels)
+                normed_attacks = self.normalize(torch.sign(gradients), p = None, dim = 2)
+
+
+            # Cycle over all espiplons
+            for i, epsilon in enumerate(epsilons):
+                
+                # Set the unit norm of the highest eigenvector to epsilon
+                input_norms = torch.linalg.norm(inputs.view(batch_size, 1, -1), ord=None, dim=2).view(-1, 1, 1)
+                perturbations = (epsilon * input_norms) * normed_attacks
+
+                # Declare attacks as the perturbation added to the image                    
+                attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
+
+                # Check if loss has increased
+                adv_outputs = self.net(attacks)
+                adv_losses  = self.indv_criterion(adv_outputs, labels)
+
+                # If losses has not increased flip direction
+                signs = (losses < adv_losses).type(torch.float) 
+                signs[signs == 0] = -1
+                perturbations = signs.view(-1, 1, 1) * perturbations
+            
+                # Compute attack and models prediction of it
+                attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
+
+                if return_attacks_only:
+                    return attacks
+
+                if transfer_network == None:
+                    adv_outputs = self.net(attacks)
+                else:
+                    adv_outputs = transfer_network(attacks)
+
+                _, adv_predicted = torch.max(adv_outputs.data, 1)     
+
+                # Save Attack Accuracy
+                attack_accuracies[i] = torch.sum(adv_predicted == labels).item() + attack_accuracies[i]
+                
+        # Divide by total
+        attack_accuracies = attack_accuracies / (len(self.data.test_loader.dataset))
+                                                        
+        return attack_accuracies
+
+
     def get_OSSA_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None,
                                        return_attacks_only = False,
@@ -326,20 +404,18 @@ class Attacker:
 
         #Forward pass
         outputs = self.net(images)
-        soft_max_output = self.soft_max(outputs)
         loss = self.criterion(outputs, labels)
         losses = self.indv_criterion(outputs, labels)
         _, predicted = torch.max(outputs.data, 1)
         
         # Find size parameters
         batch_size  = outputs.size(0)
-        num_classes = outputs.size(1)
 
         # Find gradients
         loss.cpu().backward(retain_graph = True)
-        gradients = images.grad.data.view(batch_size, 28*28, 1)      
+        gradients = images.grad.data  .view(batch_size, 1, -1)    
        
-        return gradients, batch_size, num_classes, losses, predicted
+        return gradients, batch_size, losses, predicted
 
     def get_FGSM_attack_accuracy(self, epsilons = [1],
                                        transfer_network = None,
@@ -371,14 +447,17 @@ class Attacker:
             if self.gpu:
                 inputs, labels = inputs.cuda(), labels.cuda()
 
-            # Calculate FIM
-            gradients, batch_size, num_classes, losses, predicted = self.get_gradients(inputs, labels)
+            # Calculate Gradients
+            gradients, batch_size, losses, predicted = self.get_gradients(inputs, labels)
+            normed_gradients = self.normalize(torch.sign(gradients), p = None, dim = 2)
 
             for i, epsilon in enumerate(epsilons):
-                perturbations = (epsilon * self.normalize(torch.sign(gradients), p = np.inf, dim = 1)).view(batch_size, 1, 28*28)
+                # Set the unit norm of the highest eigenvector to epsilon
+                input_norms = torch.linalg.norm(inputs.view(batch_size, 1, -1), ord=None, dim=2).view(-1, 1, 1)
+                perturbations = (epsilon * input_norms) * normed_gradients
 
                 # Declare attacks as the perturbation added to the image
-                attacks = (inputs.view(batch_size, 1, 28*28) + perturbations).view(batch_size, 1, 28, 28)
+                attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.num_channels, self.image_size, self.image_size)
 
                 # Check if loss has increased
                 adv_outputs = self.net(attacks)
@@ -422,7 +501,7 @@ class Attacker:
         """
         return [round(100*((test_acc - attack_acc) / test_acc), 2) for attack_acc in attack_accs]
         
-    def check_attack_perception(self, epsilons = [1]):
+    def check_attack_perception(self, attack, epsilons = [1]):
 
         # Initalize images and labels for one of each number
         images = torch.zeros((self.data.num_classes, self.data.num_channels, self.data.image_size, self.data.image_size))
@@ -450,14 +529,15 @@ class Attacker:
                                     ncols=10,
                                     sharex=True, sharey=True)
 
-        plt.suptitle(self.data.set_name, fontsize=20)
+        plt.suptitle(attack + " on " self.data.set_name, fontsize=20)
         fig.text(0.02, 0.5, 'SNR', va='center', ha='center', rotation='vertical', fontsize=20)
 
         for i, row in enumerate(axes2d):
-            attacks = self. get_OSSA_attack_accuracy(attack_images = images,
-                                                            attack_labels = labels,
-                                                            epsilons = [epsilons[i]],
-                                                            return_attacks_only = True)
+            attacks = self. get_attack_accuracy(attack = attack,
+                                                attack_images = images,
+                                                attack_labels = labels,
+                                                epsilons = [epsilons[i]],
+                                                return_attacks_only = True)
             # attacks = self. get_FGSM_attack_accuracy(attack_images = images,
             #                                                 attack_labels = labels,
             #                                                 epsilons = [epsilons[i]],
