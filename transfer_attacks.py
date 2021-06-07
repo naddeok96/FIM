@@ -12,14 +12,15 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 save_to_excel = True
 gpu = True
 set_name = "CIFAR10"
-attack_type = "OSSA"
+attack_type = "CW"
+batch_size = 256
 epsilons = np.linspace(0, 0.15, num=31)
 
 # Declare which GPU PCI number to use
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 # Initialize table
 table = PrettyTable()
@@ -28,7 +29,7 @@ results = [epsilons]
 names   = ["Epsilons"]
 
 # Initialize data
-data = Data(gpu = gpu, set_name = set_name)
+data = Data(gpu = gpu, set_name = set_name, maxmin = True, test_batch_size = batch_size)
 
 # Load Networks
 #-------------------------------------------------------------------------------------------------------------------------------------___#
