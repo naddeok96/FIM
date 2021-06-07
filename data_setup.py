@@ -13,14 +13,14 @@ import torchvision.datasets as datasets
 import os
 from unorm import UnNormalize
 import matplotlib.pyplot as plt
-from PIL.Image import BICUBIC
 
 class Data:
     def __init__(self,set_name = "MNIST",
                       gpu = False,
                       test_batch_size = 256,
                       desired_image_size = None,
-                      data_augment = False):
+                      data_augment = False,
+                      maxmin = False):
 
         super(Data,self).__init__()
 
@@ -116,20 +116,23 @@ class Data:
         else:
             print("Please enter vaild dataset.")
             exit()
-        
 
         #Test and validation loaders have constant batch sizes, so we can define them 
-        if self.gpu == False:
-            self.test_loader = torch.utils.data.DataLoader(self.test_set,
-                                                           batch_size = self.test_batch_size,
-                                                           shuffle = False)
-
-        else:
+        if self.gpu:
             self.test_loader = torch.utils.data.DataLoader(self.test_set,
                                                            batch_size = self.test_batch_size,
                                                            shuffle = False,
                                                            num_workers = 8,
                                                            pin_memory = True)
+        else:
+            self.test_loader = torch.utils.data.DataLoader(self.test_set,
+                                                           batch_size = self.test_batch_size,
+                                                           shuffle = False)
+
+        # Determine test sets min/max pixel values
+        if maxmin:
+           self.set_testset_min_max()
+            
     def get_trainset(self):
         if self.data_augment:
             self.train_transform = transforms.Compose([ transforms.Resize((self.image_size, self.image_size)),
@@ -174,6 +177,22 @@ class Data:
                                                         pin_memory=True)
         return train_loader
 
+    def set_testset_min_max(self):
+        set_min = 1e6
+        set_max = 1e-6
+        for images, _ in self.test_loader:
+            batch_min = torch.min(images.view(-1))
+            batch_max = torch.max(images.view(-1))
+
+            if batch_min < set_min:
+                set_min = batch_min
+
+            if batch_max > set_max:
+                set_max = batch_max
+
+        self.test_pixel_min = set_min
+        self.test_pixel_max = set_max
+
     def unload(self, image_size):
         '''
         Change dimensions of image from [1,1,pixel_size,pixel_size] to [pixel_size, pixel_size]
@@ -197,7 +216,7 @@ class Data:
         label = torch.tensor([label])
 
         # Display
-        if show == True:
+        if show:
             fig, ax = plt.subplots()
             fig.suptitle('Label: ' + str(label.item()), fontsize=16)
             plt.xlabel("Index " + str(index))
@@ -206,45 +225,5 @@ class Data:
 
         return image, label, index
 
-    def plot_attack(self, image, predicted, attack, adv_predicted, model_name=""):
-        '''
-        Plots the image, perturbation and attack
-        '''
-        # Decalre figure size, figure and title
-        figsize = [8, 4]
-        fig= plt.figure(figsize = figsize)
-        fig.suptitle(model_name + ' OSSA Attack Summary', fontsize=16)
 
-        # Reshape image and attack
-        image  = self.inverse_transform(self.unload(image.detach().numpy())).view(28,28)
-        attack = self.inverse_transform(self.unload(attack.detach().numpy())).view(28,28)
-
-        # Set bounds of images
-        vmin = torch.min(image)
-        vmax = torch.max(image)
-
-        # Plot orginal image
-        ax1 = fig.add_subplot(131)
-        ax1.imshow(image, cmap='gray', vmin=vmin, vmax=vmax)
-        ax1.set_xlabel("Prediction: " + str(predicted.item()))
-        ax1.set_title("Orginal Image")
-        
-        # Plot perturbation
-        ax2 = fig.add_subplot(232)
-        ax2.imshow(attack - image , cmap='gray', vmin=vmin, vmax=vmax)
-        ax2.set_title("Attack Perturbation")
-
-        # Plot perturbation unscaled
-        ax3 = fig.add_subplot(235)
-        ax3.imshow(attack - image, cmap='gray')
-        ax3.set_xlabel("Attack Perturbation Unscaled")
-        
-        # Plot attack
-        ax4 = fig.add_subplot(133)
-        ax4.imshow(attack, cmap='gray', vmin=vmin, vmax=vmax)
-        ax4.set_xlabel("Prediction: " + str(adv_predicted.item()))
-        ax4.set_title("Attack")
-
-        # Display figure
-        plt.show()
 
