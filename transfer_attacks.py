@@ -13,7 +13,7 @@ save_to_excel = True
 gpu = True
 set_name = "CIFAR10"
 attack_type = "CW"
-batch_size = 256
+batch_size = 1
 epsilons = np.linspace(0, 0.15, num=31)
 
 # Declare which GPU PCI number to use

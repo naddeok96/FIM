@@ -192,6 +192,7 @@ class Attacker:
                 
                 # Norm the attack
                 normed_attacks = self.normalize(attacks, p = None, dim = 2)
+                exit()
 
 
             # Cycle over all espiplons
