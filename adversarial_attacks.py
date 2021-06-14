@@ -184,23 +184,22 @@ class Attacker:
                 attacks = self.cw_attack(self.net, inputs, labels, to_numpy=False)
                 attacks = attacks.cuda() if self.gpu else attacks
 
+                # Get losses
+                outputs = self.net(inputs)
+                losses = self.indv_criterion(outputs, labels)
+                
                 # Reduce the attacks to only the perturbations
                 attacks = attacks - inputs
 
-                # Add orginal SNR to epsilon sweep
-                epsilons = np.sort(np.append(epsilons, (torch.linalg.norm(attacks.view(batch_size, 1, -1), ord=None, dim=2)/torch.linalg.norm(inputs.view(batch_size, 1, -1), ord=None, dim=2)).cpu()))
-                
                 # Norm the attack
-                normed_attacks = self.normalize(attacks, p = None, dim = 2)
-                exit()
-
+                normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
 
             # Cycle over all espiplons
-            for i, epsilon in enumerate(epsilons):
+            for i in range(len(epsilons)):
                 
                 # Set the unit norm of the highest eigenvector to epsilon
                 input_norms = torch.linalg.norm(inputs.view(batch_size, 1, -1), ord=None, dim=2).view(-1, 1, 1)
-                perturbations = (epsilon * input_norms) * normed_attacks
+                perturbations = float(epsilons[i]) * input_norms * normed_attacks
 
                 # Declare attacks as the perturbation added to the image                    
                 attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
@@ -217,14 +216,12 @@ class Attacker:
                 # Compute attack and models prediction of it
                 attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
 
+                # Return Only Attacks
                 if return_attacks_only:
                     return attacks
 
-                if transfer_network == None:
-                    adv_outputs = self.net(attacks)
-                else:
-                    adv_outputs = transfer_network(attacks)
-
+                # Calculate Adverstial output
+                adv_outputs = self.net(attacks) if transfer_network is None else transfer_network(attacks)
                 _, adv_predicted = torch.max(adv_outputs.data, 1)     
 
                 # Save Attack Accuracy
