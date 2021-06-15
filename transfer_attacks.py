@@ -20,7 +20,7 @@ epsilons = np.linspace(0, 0.15, num=61)
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # Initialize table
 table = PrettyTable()
@@ -68,22 +68,22 @@ attacker = Attacker(attacker_net, data, gpu)
 print(attack_type + " attacks being performed...")
 
 # Get regular attack accuracies on attacker network
-# print("Working on White Box Attacks...")
-# ossa_accs  = attacker.get_attack_accuracy(attack = attack_type, epsilons = epsilons)                                          
-# ossa_fool_ratio = attacker.get_fool_ratio(attacker_net_acc, ossa_accs)
-# table.add_column("OSSA Fool Ratio", ossa_fool_ratio)
-# results.append(ossa_fool_ratio)
-# names.append("White Box Attack")
+print("Working on White Box Attacks...")
+ossa_accs  = attacker.get_attack_accuracy(attack = attack_type, epsilons = epsilons)                                          
+ossa_fool_ratio = attacker.get_fool_ratio(attacker_net_acc, ossa_accs)
+table.add_column("OSSA Fool Ratio", ossa_fool_ratio)
+results.append(ossa_fool_ratio)
+names.append("White Box Attack")
 
 # Reg net 
-# print("Working on Black Box Attacks...")
-# reg_net_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
-#                                                     epsilons = epsilons,
-#                                                     transfer_network = reg_net)                                              
-# reg_net_ossa_fool_ratio = attacker.get_fool_ratio(reg_net_acc, reg_net_ossa_accs)
-# table.add_column("RegNet OSSA Fool Ratio", reg_net_ossa_fool_ratio)
-# results.append(reg_net_ossa_fool_ratio)
-# names.append("RegNet")
+print("Working on Black Box Attacks...")
+reg_net_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
+                                                    epsilons = epsilons,
+                                                    transfer_network = reg_net)                                              
+reg_net_ossa_fool_ratio = attacker.get_fool_ratio(reg_net_acc, reg_net_ossa_accs)
+table.add_column("RegNet OSSA Fool Ratio", reg_net_ossa_fool_ratio)
+results.append(reg_net_ossa_fool_ratio)
+names.append("RegNet")
 
 # # Unet 
 print("Working on Unet Attacks...")
