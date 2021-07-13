@@ -49,6 +49,9 @@ class Data:
                                                       transforms.Normalize(self.mean, 
                                                                            self.std)]) #  Normalize
 
+            self.inverse_transform = UnNormalize(mean=self.mean,
+                                                 std=self.std)
+
             self.test_set = torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', #
                                                     train=False,
                                                     download=True,

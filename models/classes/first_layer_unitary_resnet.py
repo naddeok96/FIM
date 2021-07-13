@@ -43,7 +43,7 @@ class FstLayUniResNet(nn.Module):
         # Load EffNet
         self.model_name = model_name
 
-        self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained)
+        self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained, verbose = False)
 
     def display_pretrained_models(self):
         from pprint import pprint

@@ -12,7 +12,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 from tqdm import tqdm
-from pytorch_cw2.cw import L2Adversary
 
 # Class
 class Attacker: 
@@ -148,10 +147,39 @@ class Attacker:
 
         # Load CW
         if attack == "CW":
+            from pytorch_cw2.cw import L2Adversary
+
             self.cw_attack = L2Adversary(targeted=False, confidence=0.0, c_range=(1e-3, 1e10),
                                         search_steps=5, max_steps=1000, abort_early=True,
                                         box=(self.data.test_pixel_min, self.data.test_pixel_max), 
                                         optimizer_lr=1e-2)
+
+        # Load EOT
+        elif attack == "EOT":
+            from art.estimators.classification import PyTorchClassifier
+            from models.classes.EoT_Unitary import UniEoT
+            from art.attacks.evasion import ProjectedGradientDescent
+
+            eot_unitary_rotation = UniEoT(    data = self.data,
+                                        gpu = self.gpu,
+                                        nb_samples = int(1e3),
+                                        clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
+                                        apply_predict = True)
+
+            classifier = PyTorchClassifier(model=self.net,
+                                            nb_classes=10,
+                                            loss=self.criterion,
+                                            preprocessing_defences=[eot_unitary_rotation],
+                                            clip_values=(float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
+                                            input_shape=(3, 32, 32))
+
+            attack_eot = ProjectedGradientDescent(estimator=classifier,
+                                        norm = 2,
+                                        eps = 8.0 / 255.0,  # Max perturbation Size
+                                        max_iter = 30,
+                                        eps_step = 2.0 / 255.0, # Step size for PGD,
+                                        targeted=True, 
+                                        verbose = True)       
 
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
@@ -178,6 +206,42 @@ class Attacker:
                 # Calculate Gradients
                 gradients, batch_size, losses, predicted = self.get_gradients(inputs, labels)
                 normed_attacks = self.normalize(torch.sign(gradients), p = None, dim = 2)
+
+            elif attack == "EOT":
+                # Get random targets
+                import random
+                targets = torch.empty_like(labels)
+                for i, label in enumerate(labels):
+                    possible_targets = list(range(10))
+                    del possible_targets[label]
+
+                    targets[i] = random.choice(possible_targets)
+
+                # Generate adversarial examples
+                x_adv = torch.from_numpy(attack_eot.generate(x=inputs, y=targets))
+
+                attacks = x_adv - inputs
+                print("Attacks: ", attacks)
+                img = tv.utils.make_grid((inputs[0]))
+                img = self.data.inverse_transform(img)
+                plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
+                plt.savefig("outputs/input.png")
+
+                img = tv.utils.make_grid((x_adv[0]))
+                img = self.data.inverse_transform(img)
+                plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
+                plt.savefig("outputs/attack.png")
+
+                img = tv.utils.make_grid((attacks[0]))
+                img = self.data.inverse_transform(img)
+                plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
+                plt.savefig("outputs/pert.png")
+                exit()
+
+
+                # Generate transformations
+                print(self.eot_attck._transform(inputs, None))
+                exit()
 
             elif attack == "CW":
                 # Use other labs code to produce full attack images

@@ -42,7 +42,7 @@ class FstLayUniNet(nn.Module):
         # Load EffNet
         self.model_name = model_name
 
-        self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained)
+        self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained, verbose = False)
 
     def load_U_from_Ufilename(self):
         # Decode filename for stats
@@ -123,7 +123,6 @@ class FstLayUniNet(nn.Module):
         batch_means = self.U_means.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
         batch_stds  = self.U_stds.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
         return UA.sub_(batch_means).div_(batch_stds).view(UA.size(0), UA.size(1), 32, 32)
-
 
     def forward(self, x):
         

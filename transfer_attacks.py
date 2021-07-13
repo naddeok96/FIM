@@ -8,12 +8,13 @@ from prettytable import PrettyTable
 from adversarial_attacks import Attacker
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 
+
 # Hyperparameters
-save_to_excel = True
-gpu = True
+save_to_excel = False
+gpu = False
 set_name = "CIFAR10"
-attack_type = "CW"
-batch_size = 256
+attack_type = "EOT"
+batch_size = 1
 epsilons = np.linspace(0, 0.15, num=61)
 
 # Declare which GPU PCI number to use
