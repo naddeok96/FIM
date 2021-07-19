@@ -156,13 +156,16 @@ class Attacker:
 
         # Load EOT
         elif attack == "EOT":
-            from art.estimators.classification import PyTorchClassifier
+            # Imports
+            import sys
+            sys.path.insert(1, '../adversarial-robustness-toolbox/')
             from models.classes.EoT_Unitary import UniEoT
+            from art.estimators.classification import PyTorchClassifier
             from art.attacks.evasion import ProjectedGradientDescent
 
             eot_unitary_rotation = UniEoT(    data = self.data,
                                         gpu = self.gpu,
-                                        nb_samples = int(1e3),
+                                        nb_samples = int(1e2),
                                         clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
                                         apply_predict = True)
 
@@ -171,12 +174,13 @@ class Attacker:
                                             loss=self.criterion,
                                             preprocessing_defences=[eot_unitary_rotation],
                                             clip_values=(float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
-                                            input_shape=(3, 32, 32))
+                                            input_shape=(3, 32, 32),
+                                            device_type="gpu" if self.gpu else "cpu") 
 
             attack_eot = ProjectedGradientDescent(estimator=classifier,
                                         norm = 2,
                                         eps = 8.0 / 255.0,  # Max perturbation Size
-                                        max_iter = 30,
+                                        max_iter = 10,
                                         eps_step = 2.0 / 255.0, # Step size for PGD,
                                         targeted=True, 
                                         verbose = True)       
@@ -218,7 +222,13 @@ class Attacker:
                     targets[i] = random.choice(possible_targets)
 
                 # Generate adversarial examples
-                x_adv = torch.from_numpy(attack_eot.generate(x=inputs, y=targets))
+                print("Generating Attacks")
+                x_adv = attack_eot.generate(x=inputs.detach().cpu().numpy(), 
+                                            y=targets.detach().cpu().numpy())
+                x_adv = torch.from_numpy(x_adv)
+
+                if self.gpu:
+                    x_adv = x_adv.cuda()
 
                 attacks = x_adv - inputs
                 print("Attacks: ", attacks)

@@ -1,5 +1,5 @@
 from art.preprocessing.expectation_over_transformation.pytorch import EoTPyTorch
-from models.classes.first_layer_unitary_resnet import  FstLayUniResNet
+from models.classes.first_layer_unitary_net import  FstLayUniNet
 from typing import Optional, Tuple, TYPE_CHECKING, List
 
 class UniEoT(EoTPyTorch):
@@ -23,7 +23,6 @@ class UniEoT(EoTPyTorch):
 
         self.data = data
         self.gpu  = gpu
-
         self._device = "gpu" if self.gpu else "cpu"
             
         self.nb_samples = nb_samples
@@ -45,26 +44,32 @@ class UniEoT(EoTPyTorch):
         height     = x.size(1)
         width      = x.size(2)
 
-        # Load temporary network
-        ortho_net = FstLayUniResNet(gpu = self.gpu, set_name = self.data.set_name,
-                            model_name = 'cifar10_mobilenetv2_x1_0',
-                            pretrained = False)
+        # Load temporary network   
+        ortho_net = FstLayUniNet(set_name = self.data.set_name,
+                                gpu = self.gpu, 
+                                model_name = 'cifar10_mobilenetv2_x1_0',
+                                pretrained = False)
 
         # Set a random orthogonal matrix
         ortho_net.set_orthogonal_matrix()
 
         # Collect Stats for normalizing from entire dataset
-        for images, labels in self.data.get_train_loader(int(30)):
-            # Rotate Images
-            train_ortho_images = ortho_net.orthogonal_operation(images)
+        images, labels = next(iter(self.data.get_train_loader(int(30 * self.data.num_classes))))
 
-            # Resize
-            train_ortho_images = train_ortho_images.view(train_ortho_images.size(0), train_ortho_images.size(1), -1)
-            
-            # Calulate Stats
-            means = train_ortho_images.mean(2).mean(0)
-            stds  = train_ortho_images.std(2).mean(0)
-            break
+        # Move to GPU
+        if self.data.gpu:
+            images, labels = images.cuda(), labels.cuda()
+
+        # Rotate Images
+        train_ortho_images = ortho_net.orthogonal_operation(images)
+
+        # Resize
+        train_ortho_images = train_ortho_images.view(train_ortho_images.size(0), train_ortho_images.size(1), -1)
+        
+        # Calulate Stats
+        means = train_ortho_images.mean(2).mean(0)
+        stds  = train_ortho_images.std(2).mean(0)
+        
 
         # Perform orthogonal transformation to given images
         x = x.view(batch_size, channels, height, width)

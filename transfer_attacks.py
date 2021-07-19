@@ -11,7 +11,7 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 
 # Hyperparameters
 save_to_excel = False
-gpu = False
+gpu = True
 set_name = "CIFAR10"
 attack_type = "EOT"
 batch_size = 1
@@ -21,7 +21,7 @@ epsilons = np.linspace(0, 0.15, num=61)
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 # Initialize table
 table = PrettyTable()

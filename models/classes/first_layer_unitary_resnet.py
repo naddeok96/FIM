@@ -45,6 +45,8 @@ class FstLayUniResNet(nn.Module):
 
         self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained, verbose = False)
 
+        self.net = self.net.cuda() 
+
     def display_pretrained_models(self):
         from pprint import pprint
         pprint(torch.hub.list("chenyaofo/pytorch-cifar-models", force_reload=True)) 
