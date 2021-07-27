@@ -470,10 +470,6 @@ class Attacker:
                                                 attack_labels = labels,
                                                 epsilons = [epsilons[i]],
                                                 return_attacks_only = True)
-            # attacks = self. get_FGSM_attack_accuracy(attack_images = images,
-            #                                                 attack_labels = labels,
-            #                                                 epsilons = [epsilons[i]],
-            #                                                 return_attacks_only = True)
 
             # UNnormalize
             attacks = attacks.view(attacks.size(0), attacks.size(1), -1)
@@ -494,9 +490,6 @@ class Attacker:
                 if j == 0:
                     cell.set_ylabel(epsilons[i])
 
-        # horz_padding = -0.5
-        # vert_padding = -1
-        # plt.tight_layout(h_pad=horz_padding, w_pad=vert_padding)
         fig.subplots_adjust(hspace = 0, wspace=0)
             
         
