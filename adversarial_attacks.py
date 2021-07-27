@@ -140,7 +140,8 @@ class Attacker:
                                     transfer_network = None,
                                     return_attacks_only = False,
                                     attack_images = None,
-                                    attack_labels  = None):
+                                    attack_labels  = None,
+                                    prog_bar = True):
         # Push transfer_network to GPU
         if self.gpu and transfer_network is not None:
             transfer_network = transfer_network.cuda()
@@ -188,7 +189,7 @@ class Attacker:
 
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
-        for inputs, labels in tqdm (self.data.test_loader, desc="Batches Done..."):
+        for inputs, labels in tqdm (self.data.test_loader, desc="Batches Done...", disable=not prog_bar):
 
             # Optionally use custom images
             if attack_images is not None:
@@ -463,7 +464,8 @@ class Attacker:
         plt.suptitle(attack + " on " + self.data.set_name, fontsize=20)
         fig.text(0.02, 0.5, 'SNR', va='center', ha='center', rotation='vertical', fontsize=20)
 
-        for i, row in enumerate(axes2d):
+        for i, row in enumerate(tqdm(axes2d, desc="Epsilons Done...")):
+
             if self.gpu:
                 images = images.cuda()
                 labels = labels.cuda()
@@ -472,7 +474,8 @@ class Attacker:
                                                 attack_images = images,
                                                 attack_labels = labels,
                                                 epsilons = [epsilons[i]],
-                                                return_attacks_only = True)
+                                                return_attacks_only = True,
+                                                prog_bar = False)
 
             # UNnormalize
             attacks = attacks.view(attacks.size(0), attacks.size(1), -1)
@@ -496,11 +499,7 @@ class Attacker:
                     cell.set_title(j)
                 if j == 0:
                     cell.set_ylabel(epsilons[i])
-<<<<<<< HEAD
                     
-=======
-
->>>>>>> 7ffb5da87d3e8b723eeed0b15eefdcdbad0c7a08
         fig.subplots_adjust(hspace = 0, wspace=0)
             
         if save_only:
