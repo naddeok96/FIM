@@ -496,7 +496,11 @@ class Attacker:
                     cell.set_title(j)
                 if j == 0:
                     cell.set_ylabel(epsilons[i])
+<<<<<<< HEAD
                     
+=======
+
+>>>>>>> 7ffb5da87d3e8b723eeed0b15eefdcdbad0c7a08
         fig.subplots_adjust(hspace = 0, wspace=0)
             
         if save_only:

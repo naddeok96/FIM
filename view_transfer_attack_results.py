@@ -2,11 +2,11 @@ import xlrd
 import matplotlib.pyplot as plt
 
 set_name = "CIFAR10"
-attack_type = ["FGSM"]
+attack_type = ["EoT"]
 
 
 for attack in attack_type:
-    wb = xlrd.open_workbook("results/" + set_name + "/" + attack_type + "_attack_results.xls")
+    wb = xlrd.open_workbook("results/" + set_name + "/" + attack + "_attack_results.xls")
     ws = wb.sheet_by_name("Results")
 
     results = {}
@@ -22,8 +22,8 @@ for attack in attack_type:
 
         plt.plot(results["Epsilons"], value, '.-', label=key)
 
-    plt.title(attack_type + " attacks on " + set_name)
-    plt.xlabel("SNR")
+    plt.title(attack + " attacks on " + set_name)
+    plt.xlabel("Noise to Signal Ratio")
     plt.ylabel("Fooling Ratio")
     plt.legend()
 plt.show()
