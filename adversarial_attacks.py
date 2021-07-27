@@ -241,7 +241,6 @@ class Attacker:
                 # Norm the attack
                 normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
 
-
             elif attack == "CW":
                 # Use other labs code to produce full attack images
                 attacks = self.cw_attack(self.net, inputs, labels, to_numpy=False)
@@ -433,7 +432,7 @@ class Attacker:
         """
         return [round(100*((test_acc - attack_acc) / test_acc), 2) for attack_acc in attack_accs]
         
-    def check_attack_perception(self, attack, epsilons = [1]):
+    def check_attack_perception(self, attack, epsilons = [1], save_only = False):
 
         # Initalize images and labels for one of each number
         images = torch.zeros((self.data.num_classes, self.data.num_channels, self.data.image_size, self.data.image_size))
@@ -465,27 +464,31 @@ class Attacker:
         fig.text(0.02, 0.5, 'SNR', va='center', ha='center', rotation='vertical', fontsize=20)
 
         for i, row in enumerate(axes2d):
+            if self.gpu:
+                images = images.cuda()
+                labels = labels.cuda()
+
             attacks = self. get_attack_accuracy(attack = attack,
                                                 attack_images = images,
                                                 attack_labels = labels,
                                                 epsilons = [epsilons[i]],
                                                 return_attacks_only = True)
-            # attacks = self. get_FGSM_attack_accuracy(attack_images = images,
-            #                                                 attack_labels = labels,
-            #                                                 epsilons = [epsilons[i]],
-            #                                                 return_attacks_only = True)
 
             # UNnormalize
             attacks = attacks.view(attacks.size(0), attacks.size(1), -1)
             batch_means = torch.tensor(self.data.mean).repeat(attacks.size(0), 1).view(attacks.size(0), attacks.size(1), 1)
             batch_stds  = torch.tensor(self.data.std).repeat(attacks.size(0), 1).view(attacks.size(0), attacks.size(1), 1)
+            if self.gpu:
+                batch_means = batch_means.cuda()
+                batch_stds  = batch_stds.cuda()
+
             attacks = attacks.mul_(batch_stds).add_(batch_means)
             attacks = attacks.sub_(torch.min(attacks)).div_(torch.max(attacks) - torch.min(attacks)).view(attacks.size(0), attacks.size(1), self.data.image_size, self.data.image_size)
 
             for j, cell in enumerate(row):
                 # Plot in cell
                 img = tv.utils.make_grid(attacks[j,:,:,:])
-                cell.imshow(np.transpose(img.detach().numpy(), (1, 2, 0)))
+                cell.imshow(np.transpose(img.detach().cpu().numpy(), (1, 2, 0)))
                 cell.set_xticks([])
                 cell.set_yticks([])
 
@@ -493,13 +496,11 @@ class Attacker:
                     cell.set_title(j)
                 if j == 0:
                     cell.set_ylabel(epsilons[i])
-
-        # horz_padding = -0.5
-        # vert_padding = -1
-        # plt.tight_layout(h_pad=horz_padding, w_pad=vert_padding)
+                    
         fig.subplots_adjust(hspace = 0, wspace=0)
             
-        
-        plt.show()
-        exit()
+        if save_only:
+            plt.savefig('results/' + self.data.set_name + "/" + attack + '_attacks.png')
+        else:
+            plt.show()
         
