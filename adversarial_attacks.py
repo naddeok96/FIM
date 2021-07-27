@@ -182,8 +182,9 @@ class Attacker:
                                         eps = 8.0 / 255.0,  # Max perturbation Size
                                         max_iter = 10,
                                         eps_step = 2.0 / 255.0, # Step size for PGD,
+                                        batch_size = self.data.test_batch_size,
                                         targeted=True, 
-                                        verbose = True)       
+                                        verbose = False)       
 
         # Test images in test loader
         attack_accuracies = np.zeros(len(epsilons))
@@ -222,36 +223,24 @@ class Attacker:
                     targets[i] = random.choice(possible_targets)
 
                 # Generate adversarial examples
-                print("Generating Attacks")
-                x_adv = attack_eot.generate(x=inputs.detach().cpu().numpy(), 
+                # print("Generating Attacks")
+                attacks = attack_eot.generate(x=inputs.detach().cpu().numpy(), 
                                             y=targets.detach().cpu().numpy())
-                x_adv = torch.from_numpy(x_adv)
+                attacks = torch.from_numpy(attacks)
 
                 if self.gpu:
-                    x_adv = x_adv.cuda()
+                    attacks = attacks.cuda()
 
-                attacks = x_adv - inputs
-                print("Attacks: ", attacks)
-                img = tv.utils.make_grid((inputs[0]))
-                img = self.data.inverse_transform(img)
-                plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
-                plt.savefig("outputs/input.png")
+                # Get losses
+                outputs = self.net(inputs)
+                losses  = self.indv_criterion(outputs, labels)
+                
+                # Reduce the attacks to only the perturbations
+                attacks = attacks - inputs
 
-                img = tv.utils.make_grid((x_adv[0]))
-                img = self.data.inverse_transform(img)
-                plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
-                plt.savefig("outputs/attack.png")
+                # Norm the attack
+                normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
 
-                img = tv.utils.make_grid((attacks[0]))
-                img = self.data.inverse_transform(img)
-                plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
-                plt.savefig("outputs/pert.png")
-                exit()
-
-
-                # Generate transformations
-                print(self.eot_attck._transform(inputs, None))
-                exit()
 
             elif attack == "CW":
                 # Use other labs code to produce full attack images

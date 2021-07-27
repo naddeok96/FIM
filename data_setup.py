@@ -164,20 +164,21 @@ class Data:
                                                     transform=self.train_transform)
 
     # Fucntion to break training set into batches
-    def get_train_loader(self, batch_size):
+    def get_train_loader(self, batch_size, num_workers = 8):
         '''
         Load the train loader given batch_size
         '''
-        if self.gpu ==False:
-            train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                        batch_size = batch_size,
-                                                        shuffle = True)
-        else:
+        if self.gpu:
             train_loader = torch.utils.data.DataLoader(self.train_set,
                                                         batch_size = batch_size,
                                                         shuffle = True,
-                                                        num_workers = 8,
+                                                        num_workers = num_workers,
                                                         pin_memory=True)
+        else:
+            train_loader = torch.utils.data.DataLoader(self.train_set,
+                                                        batch_size = batch_size,
+                                                        shuffle = True)
+
         return train_loader
 
     def set_testset_min_max(self):

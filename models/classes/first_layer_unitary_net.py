@@ -145,6 +145,7 @@ class FstLayUniNet(nn.Module):
                        input_tensor.view(channel_num * batch_size, A_side_size, A_side_size)
         ).view(batch_size, channel_num, A_side_size, A_side_size)
 
+        
         # Normalize
         if self.normalize_U:
             UA = UA.view(UA.size(0), UA.size(1), -1)

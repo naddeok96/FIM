@@ -10,11 +10,11 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 
 
 # Hyperparameters
-save_to_excel = False
+save_to_excel = True
 gpu = True
 set_name = "CIFAR10"
 attack_type = "EOT"
-batch_size = 1
+batch_size = 10
 epsilons = np.linspace(0, 0.15, num=61)
 
 # Declare which GPU PCI number to use
@@ -77,24 +77,24 @@ results.append(ossa_fool_ratio)
 names.append("White Box Attack")
 
 # Reg net 
-print("Working on Black Box Attacks...")
-reg_net_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
-                                                    epsilons = epsilons,
-                                                    transfer_network = reg_net)                                              
-reg_net_ossa_fool_ratio = attacker.get_fool_ratio(reg_net_acc, reg_net_ossa_accs)
-table.add_column("RegNet OSSA Fool Ratio", reg_net_ossa_fool_ratio)
-results.append(reg_net_ossa_fool_ratio)
-names.append("RegNet")
+# print("Working on Black Box Attacks...")
+# reg_net_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
+#                                                     epsilons = epsilons,
+#                                                     transfer_network = reg_net)                                              
+# reg_net_ossa_fool_ratio = attacker.get_fool_ratio(reg_net_acc, reg_net_ossa_accs)
+# table.add_column("RegNet OSSA Fool Ratio", reg_net_ossa_fool_ratio)
+# results.append(reg_net_ossa_fool_ratio)
+# names.append("RegNet")
 
-# # Unet 
-print("Working on Unet Attacks...")
-Unet_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
-                                                epsilons = epsilons,
-                                                transfer_network = Unet)                                              
-Unet_ossa_fool_ratio = attacker.get_fool_ratio(Unet_acc, Unet_ossa_accs)
-table.add_column("Unet OSSA Fool Ratio", Unet_ossa_fool_ratio)
-results.append(Unet_ossa_fool_ratio)
-names.append("Unet")
+# # # Unet 
+# print("Working on Unet Attacks...")
+# Unet_ossa_accs  = attacker.get_attack_accuracy(attack = attack_type,
+#                                                 epsilons = epsilons,
+#                                                 transfer_network = Unet)                                              
+# Unet_ossa_fool_ratio = attacker.get_fool_ratio(Unet_acc, Unet_ossa_accs)
+# table.add_column("Unet OSSA Fool Ratio", Unet_ossa_fool_ratio)
+# results.append(Unet_ossa_fool_ratio)
+# names.append("Unet")
 
 # Display
 print(table)
@@ -115,4 +115,4 @@ if save_to_excel:
         for j, value in enumerate(result):
             sheet.write(j + 1, i, value)
 
-    wb.save('results/CIFAR10/' + attack_type + '_attack_results.xls') 
+    wb.save('results/CIFAR10/W' + attack_type + '_attack_results.xls') 
