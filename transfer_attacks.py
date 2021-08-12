@@ -10,9 +10,9 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 
 
 # Hyperparameters
-save_to_excel = True
-gpu = True
-set_name = "CIFAR10"
+save_to_excel = False
+gpu = False
+set_name = "MNIST"
 attack_type = "EOT"
 batch_size = 10
 epsilons = np.linspace(0, 0.15, num=61)
