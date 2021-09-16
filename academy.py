@@ -7,7 +7,8 @@ import torch.nn.functional as F
 import torchvision.transforms as transforms
 import math
 import operator
-from sam import SAM
+from sam.sam import SAM
+from adversarial_attacks import Attacker
 
 
 class Academy:
@@ -53,7 +54,9 @@ class Academy:
                     learning_rate = 0.001, 
                     momentum = 0.9, 
                     weight_decay = 0.0001,
-                    frozen_layers = None):
+                    frozen_layers = None,
+                    attack_type = None,
+                    epsilon     = 0.3):
         """Train model on data
 
         Args:
@@ -87,18 +90,31 @@ class Academy:
                 inputs, labels = data
 
                 # Push to gpu
-                if self.gpu == True:
+                if self.gpu:
                     inputs, labels = inputs.cuda(), labels.cuda()
+
+                # Adversarial Training
+                if attack_type is not None:
+                    # Initalize Attacker with current model parameters
+                    attacker = Attacker(net = self.net, data = self.data, gpu = self.gpu)
+
+                    # Generate attacks and replace them with orginal images
+                    inputs = attacker.get_attack_accuracy(attack = attack_type,
+                                                            attack_images = inputs,
+                                                            attack_labels = labels,
+                                                            epsilons = [epsilon],
+                                                            return_attacks_only = True,
+                                                            prog_bar = False)
 
                 #Set the parameter gradients to zero
                 optimizer.zero_grad()   
 
                 #Forward pass
-                outputs = self.net(inputs)        # Forward pass
+                outputs = self.net(inputs)         # Forward pass
                 loss = criterion (outputs, labels) # Calculate loss
 
                 # Freeze layers
-                if frozen_layers != None:
+                if frozen_layers is not None:
                     self.freeze(frozen_layers) 
 
                 # Backward pass and optimize

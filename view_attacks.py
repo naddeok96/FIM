@@ -6,9 +6,9 @@ import torch
 
 
 set_name = "CIFAR10"
-attack_type = "EOT"
+attack_type = "FGSM"
 gpu = True
-epsilons = [round(x, 2) for x in np.linspace(0, 0.5, 7)]
+epsilons = [round(x, 2) for x in np.linspace(0, 0.2, 5)]
 print("Epsilons: ", epsilons)
 
 # Declare which GPU PCI number to use

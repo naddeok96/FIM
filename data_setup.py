@@ -13,6 +13,7 @@ import torchvision.datasets as datasets
 import os
 from unorm import UnNormalize
 import matplotlib.pyplot as plt
+from torch.utils.data.distributed import DistributedSampler
 
 class Data:
     def __init__(self,set_name = "MNIST",
@@ -52,7 +53,7 @@ class Data:
             self.inverse_transform = UnNormalize(mean=self.mean,
                                                  std=self.std)
 
-            self.test_set = torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', #
+            self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10', #'../data', # 
                                                     train=False,
                                                     download=True,
                                                     transform=self.test_transform)
@@ -75,12 +76,12 @@ class Data:
             self.inverse_transform = transforms.Compose([transforms.ToTensor(), 
                                                          transforms.Normalize((-self.mean * self.std,), (1/self.std,))])
 
-            self.train_set = datasets.MNIST(root='../data/',
+            self.train_set = datasets.MNIST(root='../../../data/pytorch/MNIST', # '../data/',
                                             train = True,
                                             download = True,
                                             transform = self.train_transform) 
 
-            self.test_set = torchvision.datasets.MNIST(root='../data/',
+            self.test_set = torchvision.datasets.MNIST(root='../../../data/pytorch/MNIST', #'../data/',
                                                     train=False,
                                                     download=True,
                                                     transform=self.test_transform)
@@ -121,16 +122,30 @@ class Data:
             exit()
 
         #Test and validation loaders have constant batch sizes, so we can define them 
-        if self.gpu:
-            self.test_loader = torch.utils.data.DataLoader(self.test_set,
-                                                           batch_size = self.test_batch_size,
-                                                           shuffle = False,
-                                                           num_workers = 8,
-                                                           pin_memory = True)
-        else:
-            self.test_loader = torch.utils.data.DataLoader(self.test_set,
+        if isinstance(self.gpu, bool):
+
+            if self.gpu:
+                self.test_loader = torch.utils.data.DataLoader(self.test_set,
+                                                            batch_size = self.test_batch_size,
+                                                            shuffle = False,
+                                                            num_workers = 8,
+                                                            pin_memory = True)
+            else:
+                self.test_loader = torch.utils.data.DataLoader(self.test_set,
                                                            batch_size = self.test_batch_size,
                                                            shuffle = False)
+        else:
+            test_sampler = torch.utils.data.distributed.DistributedSampler(self.test_set,
+                                                                                num_replicas=torch.cuda.device_count(), 
+                                                                                rank=gpu, 
+                                                                                shuffle=False)
+
+            self.test_loader = torch.utils.data.DataLoader(self.test_set,
+                                                            batch_size = self.test_batch_size,
+                                                            num_workers = 8,
+                                                            pin_memory = True,
+                                                            sampler = test_sampler)
+            
 
         # Determine test sets min/max pixel values
         if maxmin:
@@ -168,16 +183,29 @@ class Data:
         '''
         Load the train loader given batch_size
         '''
-        if self.gpu:
-            train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                        batch_size = batch_size,
-                                                        shuffle = True,
-                                                        num_workers = num_workers,
-                                                        pin_memory=True)
+        if isinstance(self.gpu, bool):
+
+            if self.gpu:
+                train_loader = torch.utils.data.DataLoader(self.train_set,
+                                                            batch_size = batch_size,
+                                                            shuffle = True,
+                                                            num_workers = num_workers,
+                                                            pin_memory = True)
+            else:
+                train_loader = torch.utils.data.DataLoader(self.train_set,
+                                                           batch_size = batch_size,
+                                                           shuffle = True)
         else:
+            train_sampler = torch.utils.data.distributed.DistributedSampler(self.train_set,
+                                                                                num_replicas=torch.cuda.device_count(), 
+                                                                                rank=self.gpu, 
+                                                                                shuffle=True)
+
             train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                        batch_size = batch_size,
-                                                        shuffle = True)
+                                                            batch_size = batch_size,
+                                                            num_workers = 8,
+                                                            pin_memory = True,
+                                                            sampler = train_sampler)
 
         return train_loader
 

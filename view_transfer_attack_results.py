@@ -2,7 +2,7 @@ import xlrd
 import matplotlib.pyplot as plt
 
 set_name = "CIFAR10"
-attack_type = ["EoT"]
+attack_type = ["FGSM"]
 
 
 for attack in attack_type:

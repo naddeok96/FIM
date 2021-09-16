@@ -10,10 +10,11 @@ import pickle
 import random
 from sam.sam import SAM
 from data_setup import Data
-from cifar10_sweep_config import sweep_config
+import torch.multiprocessing as mp
+from mnist_sweep_config import sweep_config
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 
-# Functions
+# WandB Functions
 #-------------------------------------------------------------------------------------#
 def initalize_config_defaults(sweep_config):
     config_defaults = {}
@@ -25,22 +26,20 @@ def initalize_config_defaults(sweep_config):
         else:
             config_defaults.update({key : sweep_config['parameters'][key]["min"]})
 
+    wandb.init(config = config_defaults, group="DDP")
 
-    wandb.init(config = config_defaults)
-    config = wandb.config
+    return wandb.config
 
-    return config
-
-def initalize_net(set_name, gpu, config):
+def initalize_net(set_name, rank, config):
     # Network 
-    net = FstLayUniNet(set_name, gpu =gpu,
+    net = FstLayUniNet(set_name, gpu = rank,
                        U_filename = config.transformation,
                        model_name = config.model_name,
                        pretrained = config.pretrained)
     # net.load_state_dict(torch.load('models/pretrained/CIFAR10/Ucifar10_mobilenetv2_x1_4_w_acc_78.pt', map_location=torch.device('cpu')))
 
     # Return network
-    return net.cuda() if gpu == True else net
+    return net.to(rank)
 
 def initalize_optimizer(data, net, config):
     if config.optimizer=='sgd':
@@ -98,17 +97,31 @@ def initalize_criterion(config):
         
     return criterion
 
-def train(data, save_model):
+def train(rank, world_size):
+    save_model   = False
+    data_augment = False
+    set_name     = "MNIST"
+
+    # Set ports
+    os.environ['MASTER_ADDR'] = 'localhost'
+    os.environ['MASTER_PORT'] = '12355'
+
+    # Initialize the process group
+    torch.distributed.init_process_group("nccl", rank=rank, world_size=world_size)
+    
     # Weights and Biases Setup
     config = initalize_config_defaults(sweep_config)
+    wandb.log({ "Data Augmentation" : data_augment})
 
-
-    #Get training data
+    # Get training data
+    data = Data(gpu = rank, 
+                set_name = set_name, 
+                data_augment = data_augment)
+                
     train_loader = data.get_train_loader(config.batch_size)
-    wandb.log({ "Data Augmentation" : data.data_augment})
 
     # Initialize Network
-    net = initalize_net(data.set_name, data.gpu, config)
+    net = initalize_net(data.set_name, rank, config)
     net.train(True)
 
     # Setup Optimzier and Criterion
@@ -131,9 +144,8 @@ def train(data, save_model):
             labels = torch.eq(labels.view(labels.size(0), 1), torch.arange(10).reshape(1, 10).repeat(labels.size(0), 1)).float()
                 
             # Push to gpu
-            if data.gpu:
-                orginal_labels = orginal_labels.cuda()
-                inputs, labels = inputs.cuda(), labels.cuda()
+            orginal_labels = orginal_labels.to(rank)
+            inputs, labels = inputs.to(rank), labels.to(rank)
 
             #Set the parameter gradients to zero
             optimizer.zero_grad()   
@@ -187,46 +199,53 @@ def train(data, save_model):
             scheduler.step()
 
         # Display 
-        if epoch % 2 == 0:
-            val_loss, val_acc = test(net, data, config)
+        if (epoch % 2 == 0) and (rank == 0):
+            # val_loss, val_acc = test(net, data, config)
 
-            if ((val_loss > epoch_loss/len(data.train_set)) and (epoch > 10)) or (epoch > 0.9*config.epochs):
-                data.data_augment = True
-                data.train_set = data.get_trainset()
-                train_loader = data.get_train_loader(config.batch_size)
-                wandb.log({ "Data Augmentation" : data.data_augment})
+            # if ((val_loss > epoch_loss/len(data.train_set)) and (epoch > 10)) or (epoch > 0.9*config.epochs):
+            #     data.data_augment = True
+            #     data.train_set = data.get_trainset()
+            #     train_loader = data.get_train_loader(config.batch_size)
+            #     wandb.log({ "Data Augmentation" : data.data_augment})
 
-            net.train(True)
-            print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(data.train_set), "\tVal Loss: ", val_loss)
+            # net.train(True)
+            # print("Epoch: ", epoch + 1, "\tTrain Loss: ", epoch_loss/len(data.train_set), "\tVal Loss: ", val_loss)
+
+            # wandb.log({ "epoch"      : epoch, 
+            #             "Train Loss" : epoch_loss/len(data.train_set),
+            #             "Train Acc"  : correct/total_tested,
+            #             "Val Loss"   : val_loss,
+            #             "Val Acc"    : val_acc})
 
             wandb.log({ "epoch"      : epoch, 
                         "Train Loss" : epoch_loss/len(data.train_set),
-                        "Train Acc"  : correct/total_tested,
-                        "Val Loss"   : val_loss,
-                        "Val Acc"    : val_acc})
+                        "Train Acc"  : correct/total_tested})
 
-    # Test
-    val_loss, val_acc = test(net, data, config)
-    wandb.log({"epoch"        : epoch, 
-                "Train Loss"  : epoch_loss/len(data.train_set),
-                "Train Acc"   : correct/total_tested,
-                "Val Loss"    : val_loss,
-                "Val Acc"     : val_acc})
+    # # Test
+    # val_loss, val_acc = test(net, data, config)
+    # wandb.log({"epoch"        : epoch, 
+    #             "Train Loss"  : epoch_loss/len(data.train_set),
+    #             "Train Acc"   : correct/total_tested,
+    #             "Val Loss"    : val_loss,
+    #             "Val Acc"     : val_acc})
 
-    # Save Model
-    if save_model:
-        # Define File Names
-        if net.U is not None:
-            filename  = "U" + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
-        else:
-            filename  = "U" + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+    # # Save Model
+    # if save_model:
+    #     # Define File Names
+    #     if net.U is not None:
+    #         filename  = "U" + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+    #     else:
+    #         filename  = "U" + str(config.model_name) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
         
-        # Save Models
-        torch.save(net.state_dict(), "models/pretrained/" + set_name  + "/" + filename)
+    #     # Save Models
+    #     torch.save(net.state_dict(), "models/pretrained/" + set_name  + "/" + filename)
 
-        # Save U
-        if net.U is not None:
-            torch.save(net.U, "models/pretrained/" + set_name  + "/" + str(config.transformation) + "_for_" + set_name + filename)
+    #     # Save U
+    #     if net.U is not None:
+    #         torch.save(net.U, "models/pretrained/" + set_name  + "/" + str(config.transformation) + "_for_" + set_name + filename)
+
+    # Shut down all groups
+    torch.distributed.destroy_process_group()
     
 def test(net, data, config):
     # Set to test mode
@@ -272,35 +291,32 @@ def test(net, data, config):
 
     return test_loss, test_acc
 #-------------------------------------------------------------------------------------#
+   
+def ddp_sweep():
+    # Setup DDP WandB Sweep
+    n_gpus = torch.cuda.device_count()
+    assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
+    mp.spawn(train,
+            args=(n_gpus,),
+            nprocs=n_gpus,
+            join=True)
+    
 # Main
 if __name__ == "__main__":
-
     # Hyperparameters
-    gpu          = True 
-    save_model   = True
-    project_name = "CIFAR10"
-    set_name     = "CIFAR10"
-    # seed         = 100
+    gpu_ids      = "4, 5"
+    project_name = "DDP MNIST"
     os.environ['WANDB_MODE'] = 'dryrun'
 
-    # Push to GPU if necessary
-    if gpu:
-        os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-        os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+    # Set GPUs to Use
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = gpu_ids
 
-    # Declare seed and initalize network
-    # torch.manual_seed(seed) 
+    # WandB Sweep
+    sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
+    wandb.agent(sweep_id, function=ddp_sweep)
 
-    # Load data
-    data = Data(gpu = gpu, set_name = set_name, data_augment = False) #, desired_image_size = 224, test_batch_size = 32)
-    print(set_name + " is Loaded")
-
-    # Run the sweep
-    config = initalize_config_defaults(sweep_config)
-    net = initalize_net(data.set_name, data.gpu, config)
-    print(test(net, data, config))
-    # sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
-    # wandb.agent(sweep_id, function=lambda: train(data, save_model))
-
+    
+    
 

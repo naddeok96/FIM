@@ -5,6 +5,9 @@ This class builds a NN an optional Unitary Operator on the image
 import torch
 from torch import nn
 from copy import copy
+import sys
+sys.path.append(".")
+from .adjustable_lenet import AdjLeNet
 
 class FstLayUniNet(nn.Module):
 
@@ -47,9 +50,27 @@ class FstLayUniNet(nn.Module):
             self.normalize_U = True
             
         # Load Net
-        self.model_name = model_name
+        if self.set_name == "MNIST":
+            if model_name == "lenet":
+                self.model_name = model_name
+                
+                self.net =  AdjLeNet(set_name   = self.set_name, 
+                                    num_classes = self.num_classes,
+                                    pretrained_weights_filename= "models/pretrained/MNIST/LeNet_Attacker_w_acc_98.pt" if pretrained else None)
 
-        self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained, verbose = False)
+                self.accuracy = 98 if pretrained else None
+            else:
+                print("Only lenet is available for MNIST")
+                exit()
+
+        elif self.set_name == "CIFAR10":
+            self.model_name = model_name
+
+            self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained, verbose = False)
+
+        else:
+            print("Please enter vaild dataset. (Options: MNIST, CIFAR10)")
+            exit()
 
         self.net = self.net.cuda() if self.gpu else self.net
 
@@ -126,19 +147,25 @@ class FstLayUniNet(nn.Module):
         A_side_size = int(input_tensor.size(2))
 
         # Determine if U is available
-        if self.U == None:
+        if self.U is None:
             return input_tensor
 
         else:
             U = copy(self.U)
 
-        # Push to GPU if True
-        U = copy(U.cuda() if self.gpu else U)
+        # If gpu is not bool the DDP is being used
+        if isinstance(gpu, bool):
+            # Push to GPU if True
+            U = U.cuda() if self.gpu else U
+            input_tensor = input_tensor.cuda() if self.gpu else input_tensor
 
+        else:
+            # Push to rank of gpu
+            U = U.to(gpu)
+            input_tensor = input_tensor.to(gpu)
+            
         # Repeat U and U transpose for all batches
-        input_tensor = input_tensor.cuda() if self.gpu else input_tensor
-
-        U = copy(U.view((1, A_side_size, A_side_size)).repeat(channel_num * batch_size, 1, 1))
+        U = U.view((1, A_side_size, A_side_size)).repeat(channel_num * batch_size, 1, 1)
         
         # Batch muiltply UA
         UA = torch.bmm(U, 
@@ -151,7 +178,8 @@ class FstLayUniNet(nn.Module):
             UA = UA.view(UA.size(0), UA.size(1), -1)
             batch_means = self.U_means.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
             batch_stds  = self.U_stds.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
-            return UA.sub_(batch_means).div_(batch_stds).view(UA.size(0), UA.size(1), 32, 32)
+
+            return UA.sub_(batch_means).div_(batch_stds).view(UA.size(0), UA.size(1), self.image_size, self.image_size)
 
         else:
             return UA

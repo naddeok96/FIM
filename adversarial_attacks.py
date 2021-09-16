@@ -164,7 +164,7 @@ class Attacker:
             from art.estimators.classification import PyTorchClassifier
             from art.attacks.evasion import ProjectedGradientDescent
 
-            eot_unitary_rotation = UniEoT(    data = self.data,
+            eot_unitary_rotation = UniEoT(data = self.data,
                                         gpu = self.gpu,
                                         nb_samples = int(1e2),
                                         clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
@@ -470,7 +470,7 @@ class Attacker:
                 images = images.cuda()
                 labels = labels.cuda()
 
-            attacks = self. get_attack_accuracy(attack = attack,
+            attacks = self.get_attack_accuracy(attack = attack,
                                                 attack_images = images,
                                                 attack_labels = labels,
                                                 epsilons = [epsilons[i]],

@@ -11,17 +11,18 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 
 # Hyperparameters
 save_to_excel = False
-gpu = False
-set_name = "MNIST"
-attack_type = "EOT"
-batch_size = 10
+gpu           = True
+set_name      = "MNIST"
+model_name    = "lenet" # "cifar10_mobilenetv2_x1_0" #
+attack_type   = "FGSM"
+batch_size    = 10
 epsilons = np.linspace(0, 0.15, num=61)
 
 # Declare which GPU PCI number to use
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
 # Initialize table
 table = PrettyTable()
@@ -37,11 +38,18 @@ data = Data(gpu = gpu, set_name = set_name, maxmin = True, test_batch_size = bat
 # # Load Attacker Net
 attacker_net = FstLayUniNet(set_name, gpu =gpu,
                        U_filename = None,
-                       model_name = "cifar10_mobilenetv2_x1_0",
+                       model_name = model_name,
                        pretrained = False)
-attacker_net.load_state_dict(torch.load('models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt', map_location=torch.device('cpu')))
+
+if set_name == "MNIST":
+    attacker_net_acc = attacker_net.accuracy
+    
+if set_name == "CIFAR10":
+    attacker_net.load_state_dict(torch.load('models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt', map_location=torch.device('cpu')))
+    attacker_net_acc = 0.91
+
 attacker_net.eval()
-attacker_net_acc = 0.91
+
 
 # # Load Regular Net
 reg_net = FstLayUniNet(set_name, gpu =gpu,
