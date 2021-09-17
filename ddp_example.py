@@ -22,17 +22,16 @@ def setup(rank, world_size):
     # Initalize WandB logging on rank 0
     if rank == 0:
         run = wandb.init(
-                entity="naddeok",
-                project="DDP MNIST")
+                entity  = "naddeok",
+                project = "DDP MNIST")
     else:
         run = None
 
     # Initialize the process group
-    dist.init_process_group(backend = "nccl",
-                           init_method="env://", 
-                           rank=rank, 
-                           world_size=world_size)
-
+    dist.init_process_group(backend    = "nccl",
+                        #    init_method = "env://", 
+                           rank        = rank, 
+                           world_size  = world_size)
     return run
 
 def cleanup():
@@ -40,7 +39,6 @@ def cleanup():
     dist.destroy_process_group()
 
 def train(rank, world_size, epochs, batch_size):
-
     # Initialize WandB and Process Group
     print(f"Training on rank {rank}.")
     run = setup(rank, world_size)
@@ -110,6 +108,10 @@ def train(rank, world_size, epochs, batch_size):
     # Shut down gpu processes
     cleanup()
     print("Done Training on Rank ", rank)
+
+    if rank == 0:
+        dist.barrier()
+        wandb.finish()
     
 
 def run_ddp(func, world_size, epochs, batch_size):
@@ -129,10 +131,10 @@ def run_ddp(func, world_size, epochs, batch_size):
 
 if __name__ == "__main__":
     # Hyperparameters
-    gpu_ids      = "4, 5, 6"
+    gpu_ids      = "4, 5"
     project_name = "DDP MNIST"
     epochs       = 2
-    batch_size   = int(2**10)
+    batch_size   = int(2**9)
 
     # Set GPUs to Use
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
