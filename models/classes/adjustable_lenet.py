@@ -104,7 +104,7 @@ class AdjLeNet(nn.Module):
         if self.return_scores_only:
             return x
         else:
-            return F.log_softmax(x/self.distillation_temp, -1)
+            return -F.log_softmax(x/self.distillation_temp, -1)
 
     
 

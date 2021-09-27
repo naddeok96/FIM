@@ -18,7 +18,7 @@ from models.classes.first_layer_unitary_net  import FstLayUniNet
 #------------------------------#
 # Machine parameters
 seed = 3
-gpu  = False
+gpu  = True
 
 # Training parameters
 n_epochs          = 25
@@ -27,7 +27,7 @@ learning_rate     = 0.1
 momentum          = 0.9
 weight_decay      = 0.0001
 distill           = True
-distillation_temp = 20
+distillation_temp = 1
 use_SAM           = False
 
 # Model parameters
@@ -151,8 +151,9 @@ def train(net, data, gpu, n_epochs, batch_size, use_SAM, attack_type, epsilon, t
                 # label_onehot = torch.FloatTensor(batch_size, data.num_classes)
                 # label_onehot.zero_()
                 # label_onehot.scatter_(1, labels.view(-1, 1), 1)
+                # print("One Hot", label_onehot[0])
                 # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
-                # print(criterion(outputs, labels))
+                
 
                 soft_labels = teacher_net(inputs)
                 loss = torch.sum(-soft_labels * F.log_softmax(outputs, -1), -1).mean()
