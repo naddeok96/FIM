@@ -21,7 +21,8 @@ class Data:
                       test_batch_size = 256,
                       desired_image_size = None,
                       data_augment = False,
-                      maxmin = False):
+                      maxmin = False,
+                      root   = None):
 
         super(Data,self).__init__()
 
@@ -34,6 +35,9 @@ class Data:
 
         # Pull in data
         if self.set_name == "CIFAR10":
+            # Set Root
+            self.root = '../../../data/pytorch/CIFAR10' if root is None else root
+
             # Images are of size (3,32,32)
             self.num_classes = 10
             self.num_channels = 3
@@ -44,7 +48,7 @@ class Data:
 
             # Train Set
             self.set_train_transform()
-            self.train_set =  torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', # 
+            self.train_set =  torchvision.datasets.CIFAR10(root=self.root, 
                                                     train=True,
                                                     download=True,
                                                     transform=self.train_transform)
@@ -58,12 +62,15 @@ class Data:
             self.inverse_transform = UnNormalize(mean=self.mean,
                                                  std=self.std)
 
-            self.test_set = torchvision.datasets.CIFAR10(root='../../../data/pytorch/CIFAR10', #'../data', # 
+            self.test_set = torchvision.datasets.CIFAR10(root=self.root,
                                                     train=False,
                                                     download=True,
                                                     transform=self.test_transform)
                                                     
         elif self.set_name == "MNIST":
+            # Set Root
+            self.root = '../../../data/pytorch/MNIST' if root is None else root
+
             # Image size
             self.num_classes = 10
             self.num_channels = 1
@@ -83,12 +90,12 @@ class Data:
                                                  std=self.std)
 
             # Generate Datasets
-            self.train_set = datasets.MNIST(root='../../../data/pytorch/MNIST', # '../data/',
+            self.train_set = datasets.MNIST(root=self.root,
                                             train = True,
                                             download = True,
                                             transform = self.train_transform) 
 
-            self.test_set = torchvision.datasets.MNIST(root='../../../data/pytorch/MNIST', #'../data/',
+            self.test_set = torchvision.datasets.MNIST(root=self.root,
                                                     train=False,
                                                     download=True,
                                                     transform=self.test_transform)

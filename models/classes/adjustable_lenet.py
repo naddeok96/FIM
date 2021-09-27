@@ -15,6 +15,8 @@ class AdjLeNet(nn.Module):
                        num_kernels_layer2 = 16, 
                        num_kernels_layer3 = 120,
                        num_nodes_fc_layer = 84,
+                       return_scores_only = True,
+                       distillation_temp  = 1,
                        pretrained_weights_filename = None,
                        pretrained_unitary_matrix_filename = None):
 
@@ -28,6 +30,9 @@ class AdjLeNet(nn.Module):
         self.num_kernels_layer2 = num_kernels_layer2
         self.num_kernels_layer3 = num_kernels_layer3
         self.num_nodes_fc_layer = num_nodes_fc_layer
+
+        self.return_scores_only = return_scores_only
+        self.distillation_temp  = distillation_temp
 
         if self.set_name == "CIFAR10":
             # Input (3,32,32)
@@ -96,7 +101,10 @@ class AdjLeNet(nn.Module):
         x = torch.tanh(self.fc1(x))
         x = self.fc2(x)
 
-        return (x)
+        if self.return_scores_only:
+            return x
+        else:
+            return F.log_softmax(x/self.distillation_temp, -1)
 
     
 

@@ -119,6 +119,7 @@ def train(rank, world_size, config, project_name):
     if config["sched"] is not None:
         scheduler = initalize_scheduler(config["sched"], optimizer, config["epochs"])
 
+    # Begin Training
     correct = 0
     total_tested = 0
     total_step = len(train_loader)
@@ -150,8 +151,7 @@ def train(rank, world_size, config, project_name):
 
             #Forward pass
             with torch.set_grad_enabled(True):
-                # SAM optimizer needs closure function to 
-                #  reevaluate the loss function many times
+                # SAM optimizer needs closure function to reevaluate the loss function many times
                 def closure():
                     #Set the parameter gradients to zero
                     optimizer.zero_grad()   

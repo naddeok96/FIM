@@ -10,12 +10,15 @@ sys.path.append(".")
 from .adjustable_lenet import AdjLeNet
 
 class FstLayUniNet(nn.Module):
-
+    # Initialize
     def __init__(self, set_name,
                        gpu        = False,
                        U_filename = None,
-                       model_name = None,
-                       pretrained = None):
+                       model_name = None, 
+                       pretrained_accuracy = 100,
+                       pretrained_weights_filename = None,
+                       return_scores_only = False,
+                       distillation_temp  = 1):
 
         super(FstLayUniNet,self).__init__()
 
@@ -58,9 +61,12 @@ class FstLayUniNet(nn.Module):
                 
                 self.net =  AdjLeNet(set_name   = self.set_name, 
                                     num_classes = self.num_classes,
-                                    pretrained_weights_filename= "models/pretrained/MNIST/LeNet_Attacker_w_acc_98.pt" if pretrained else None)
+                                    pretrained_weights_filename = pretrained_weights_filename,
+                                    return_scores_only = return_scores_only,
+                                    distillation_temp = distillation_temp)
 
-                self.accuracy = 98 if pretrained else None
+                self.accuracy = pretrained_accuracy
+            
             else:
                 print("Only lenet is available for MNIST")
                 exit()
@@ -104,6 +110,7 @@ class FstLayUniNet(nn.Module):
             # Push to rank of gpu
             self.U = self.U.to(gpu)
         
+    # Load unitary matrix from file
     def load_U_from_Ufilename(self):
         # Decode filename for stats
         stats = [""] * (2 * self.num_channels) # Initalize a spot for mean and std on each channel
@@ -172,6 +179,7 @@ class FstLayUniNet(nn.Module):
 
         print(self.U_filename, " is Loaded.")
 
+    # Display summary
     def display_pretrained_models(self):
         from pprint import pprint
         pprint(torch.hub.list("chenyaofo/pytorch-cifar-models", force_reload=True)) 
@@ -227,6 +235,7 @@ class FstLayUniNet(nn.Module):
         else:
             return UA
 
+    # Forward pass
     def forward(self, x):
         
         # Unitary transformation
