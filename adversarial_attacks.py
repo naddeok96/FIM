@@ -2,15 +2,11 @@
 This class implements adversarial attacks
 '''
 # Imports
-from typing import Counter
 import torch
-import torch.nn.functional as F
-import operator
 from torch.autograd import Variable
 import torchvision as tv
 import numpy as np
 import matplotlib.pyplot as plt
-import copy
 from tqdm import tqdm
 
 # Class
@@ -30,7 +26,11 @@ class Attacker:
 
         # Move inputs to CPU or GPU
         self.gpu = gpu
-        self.net = net if self.gpu == False else net.cuda()
+        if isinstance(self.gpu, bool):
+            self.net = net if self.gpu == False else net.cuda()
+        else:
+            self.net = net.to(self.gpu)
+
         self.data = data
 
         # Evaluation Tools 
@@ -69,10 +69,14 @@ class Attacker:
         Returns:
             FIM, Loss for each Image, Predicted Class for each image
         """
-        
         # Push to gpu
-        images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
-        labels = labels if self.gpu == False else labels.cuda()
+        if isinstance(self.gpu, bool):
+            images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
+            labels = labels if self.gpu == False else labels.cuda()
+        else:
+            images = Variable(images.to(self.gpu), requires_grad = True)
+            labels = labels.to(self.gpu)
+        
 
         # Make images require gradients
         images.requires_grad_(True)
@@ -96,7 +100,11 @@ class Attacker:
 
             # Cycle through lables (y)
             temp_labels = torch.tensor([i]).repeat(batch_size) 
-            temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
+            if isinstance(self.gpu, bool):
+                 temp_labels= temp_labels if self.gpu == False else temp_labels.cuda()
+            else:
+                temp_labels= temp_labels.to(self.gpu)
+            
 
             # Calculate losses
             temp_loss = self.criterion(outputs, temp_labels)
@@ -124,8 +132,13 @@ class Attacker:
         tensor = tensor.cpu()
         eig_values, eig_vectors = torch.symeig(tensor, eigenvectors = True, upper = True)   
 
-        if self.gpu:
-            eig_values, eig_vectors = eig_values.cuda(), eig_vectors.cuda()
+        
+        if isinstance(self.gpu, bool):
+            if self.gpu:
+              eig_values, eig_vectors = eig_values.cuda(), eig_vectors.cuda()
+        else:
+            eig_values  = eig_values.to(self.gpu)
+            eig_vectors = eig_vectors.to(self.gpu)
 
         if max_only == True:     
             eig_val_max =  eig_values[:, :, -1]
@@ -143,9 +156,13 @@ class Attacker:
                                     attack_labels  = None,
                                     prog_bar = True):
         # Push transfer_network to GPU
-        if self.gpu and transfer_network is not None:
-            transfer_network = transfer_network.cuda()
-
+        if isinstance(self.gpu, bool):
+            if self.gpu and transfer_network is not None:
+                transfer_network = transfer_network.cuda()
+        else:
+            if transfer_network is not None:
+                transfer_network = transfer_network.to(self.gpu)
+        
         # Load CW
         if attack == "CW":
             from pytorch_cw2.cw import L2Adversary
@@ -154,6 +171,59 @@ class Attacker:
                                         search_steps=5, max_steps=1000, abort_early=True,
                                         box=(self.data.test_pixel_min, self.data.test_pixel_max), 
                                         optimizer_lr=1e-2)
+
+        # Load EOT
+        elif attack == "PGD":
+            # Imports
+            import sys
+            sys.path.insert(1, '../adversarial-robustness-toolbox/')
+            from art.estimators.classification import PyTorchClassifier
+            from art.attacks.evasion import ProjectedGradientDescent
+
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    device_num  = "cuda:0" 
+                    device_type = "gpu"
+                else:
+                    device_num  = "cpu"
+                    device_type = "cpu"
+                
+            else:
+                device_num  = "cuda:" + str(self.gpu)
+                device_type = "gpu"
+
+            classifier = PyTorchClassifier( model       = self.net,
+                                            nb_classes  = self.data.num_classes,
+                                            loss        = self.criterion,
+                                            clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
+                                            input_shape = (self.data.num_channels, self.data.image_size, self.data.image_size),
+                                            device_type = device_type,
+                                            device_num  = device_num)
+
+            # Hyperparameters from "Towards Deep Learning Models Resistant to Adversarial Attacks"
+            if self.data.set_name == "MNIST":
+                norm     = "inf"
+                eps      = 0.3
+                max_iter = 40
+                eps_step = 0.01
+
+            elif self.data.set_name == "CIFAR10":
+                norm     = "inf"
+                eps      = 8
+                max_iter = 20
+                eps_step = 2
+
+            else:
+                print("Eneter a valid data_set name for PGD")
+                exit()
+            attack_pgd = ProjectedGradientDescent(estimator=classifier,
+                                        norm       = norm,
+                                        eps        = eps,      # Max perturbation Size
+                                        max_iter   = max_iter,
+                                        eps_step   = eps_step, # Step size for PGD,
+                                        batch_size = self.data.test_batch_size,
+                                        targeted   = True, 
+                                        verbose    = False)       
 
         # Load EOT
         elif attack == "EOT":
@@ -169,14 +239,17 @@ class Attacker:
                                         nb_samples = int(1e2),
                                         clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
                                         apply_predict = True)
-
+            if isinstance(self.gpu, bool):
+                device_type = "gpu" if self.gpu else "Cpu"
+            else:
+                device_type = "gpu"
             classifier = PyTorchClassifier(model=self.net,
                                             nb_classes=10,
                                             loss=self.criterion,
                                             preprocessing_defences=[eot_unitary_rotation],
                                             clip_values=(float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
                                             input_shape=(3, 32, 32),
-                                            device_type="gpu" if self.gpu else "cpu") 
+                                            device_type=device_type) 
 
             attack_eot = ProjectedGradientDescent(estimator=classifier,
                                         norm = 2,
@@ -200,10 +273,13 @@ class Attacker:
             batch_size = np.shape(inputs)[0]
 
             # Push to gpu
-            if self.gpu:
-                inputs, labels = inputs.cuda(), labels.cuda()
-
-            if attack == "OSSA":
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    inputs, labels = inputs.cuda(), labels.cuda()
+            else:
+                inputs, labels = inputs.to(self.gpu), labels.to(self.gpu)
+            
+            if attack   == "OSSA":
                 # Highest Eigenvalue and vector
                 eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
                 normed_attacks = self.normalize(eig_vec_max, p = None, dim = 2)
@@ -212,6 +288,38 @@ class Attacker:
                 # Calculate Gradients
                 gradients, batch_size, losses, predicted = self.get_gradients(inputs, labels)
                 normed_attacks = self.normalize(torch.sign(gradients), p = None, dim = 2)
+
+            elif attack == "PGD":
+                # Get random targets
+                import random
+                targets = torch.empty_like(labels)
+                for i, label in enumerate(labels):
+                    possible_targets = list(range(10))
+                    del possible_targets[label]
+
+                    targets[i] = random.choice(possible_targets)
+
+                # Generate adversarial examples
+                # print("Generating Attacks")
+                attacks = attack_pgd.generate(x=inputs.detach().cpu().numpy(), 
+                                            y=targets.detach().cpu().numpy())
+                attacks = torch.from_numpy(attacks)
+
+                if isinstance(self.gpu, bool):
+                    if self.gpu:
+                        attacks = attacks.cuda()
+                else:
+                    attacks = attacks.to(self.gpu)
+                
+                # Get losses
+                outputs = self.net(inputs)
+                losses  = self.indv_criterion(outputs, labels)
+                
+                # Reduce the attacks to only the perturbations
+                attacks = attacks - inputs
+
+                # Norm the attack
+                normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
 
             elif attack == "EOT":
                 # Get random targets
@@ -229,8 +337,12 @@ class Attacker:
                                             y=targets.detach().cpu().numpy())
                 attacks = torch.from_numpy(attacks)
 
-                if self.gpu:
-                    attacks = attacks.cuda()
+                if isinstance(self.gpu, bool):
+                    if self.gpu:
+                        attacks = attacks.cuda()
+                else:
+                    attacks = attacks.to(self.gpu)
+                
 
                 # Get losses
                 outputs = self.net(inputs)
@@ -245,7 +357,12 @@ class Attacker:
             elif attack == "CW":
                 # Use other labs code to produce full attack images
                 attacks = self.cw_attack(self.net, inputs, labels, to_numpy=False)
-                attacks = attacks.cuda() if self.gpu else attacks
+
+                if isinstance(self.gpu, bool):
+                    attacks = attacks.cuda() if self.gpu else attacks
+                else:
+                    attacks = attacks.to(self.gpu)
+                
 
                 # Get losses
                 outputs = self.net(inputs)
@@ -328,9 +445,14 @@ class Attacker:
             eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1)
 
             # Push to gpus
-            if self.gpu:
-                eigenvector0 = eigenvector0.cuda()
-                eigenvector = eigenvector.cuda()
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    eigenvector0 = eigenvector0.cuda()
+                    eigenvector = eigenvector.cuda()
+            else:
+                eigenvector0 = eigenvector0.to(self.gpu)
+                eigenvector = eigenvector.to(self.gpu)
+            
 
             # Normalize eigenvector
             norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
@@ -348,7 +470,11 @@ class Attacker:
 
                     # Cycle through lables (y)
                     temp_labels = torch.tensor([i]).repeat(batch_size)
-                    temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
+                    if isinstance(self.gpu, bool):
+                        temp_labels = temp_labels if self.gpu == False else temp_labels.cuda()
+                    else:
+                        temp_labels = temp_labels.to(self.gpu)
+                    
 
                     # Calculate losses
                     temp_loss = self.criterion(outputs, temp_labels)
@@ -379,8 +505,13 @@ class Attacker:
                     eigenvector0 = eigenvector
                     eigenvector = torch.zeros(batch_size, channel_num * image_size**2, 1)
 
-                    if self.gpu:
-                        eigenvector = eigenvector.cuda()
+                    
+
+                    if isinstance(self.gpu, bool):
+                        if self.gpu:
+                            eigenvector = eigenvector.cuda()    
+                    else:
+                        eigenvector = eigenvector.to(self.gpu)
 
         print("Lanczos did not converge...")
         exit()
@@ -396,8 +527,13 @@ class Attacker:
             gradients, batch_size, num_classes, losses, predicted
         """
         # Push to gpu
-        images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
-        labels = labels if self.gpu == False else labels.cuda()
+        if isinstance(self.gpu, bool):
+            images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
+            labels = labels if self.gpu == False else labels.cuda()   
+        else:
+            images = Variable(images.to(self.gpu), requires_grad = True)
+            labels = labels.to(self.gpu)   
+        
 
         # Make images require gradients
         images.requires_grad_(True)
@@ -465,10 +601,14 @@ class Attacker:
         fig.text(0.02, 0.5, 'SNR', va='center', ha='center', rotation='vertical', fontsize=20)
 
         for i, row in enumerate(tqdm(axes2d, desc="Epsilons Done...")):
-
-            if self.gpu:
-                images = images.cuda()
-                labels = labels.cuda()
+            # Push to gpus
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    images = images.cuda()
+                    labels = labels.cuda()
+            else:
+                images = images.to(self.gpu)
+                labels = labels.to(self.gpu)   
 
             attacks = self.get_attack_accuracy(attack = attack,
                                                 attack_images = images,
@@ -481,9 +621,14 @@ class Attacker:
             attacks = attacks.view(attacks.size(0), attacks.size(1), -1)
             batch_means = torch.tensor(self.data.mean).repeat(attacks.size(0), 1).view(attacks.size(0), attacks.size(1), 1)
             batch_stds  = torch.tensor(self.data.std).repeat(attacks.size(0), 1).view(attacks.size(0), attacks.size(1), 1)
-            if self.gpu:
-                batch_means = batch_means.cuda()
-                batch_stds  = batch_stds.cuda()
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    batch_means = batch_means.cuda()
+                    batch_stds  = batch_stds.cuda()
+            else:
+                batch_means = batch_means.to(self.gpu)
+                batch_stds  = batch_stds.to(self.gpu)   
+            
 
             attacks = attacks.mul_(batch_stds).add_(batch_means)
             attacks = attacks.sub_(torch.min(attacks)).div_(torch.max(attacks) - torch.min(attacks)).view(attacks.size(0), attacks.size(1), self.data.image_size, self.data.image_size)

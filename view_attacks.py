@@ -5,10 +5,10 @@ import numpy as np
 import torch
 
 
-set_name = "CIFAR10"
-attack_type = "FGSM"
+set_name = "MNIST"
+attack_type = "PGD"
 gpu = True
-epsilons = [round(x, 2) for x in np.linspace(0, 0.2, 5)]
+epsilons = [round(x, 2) for x in np.linspace(0, 0.5, 5)]
 print("Epsilons: ", epsilons)
 
 # Declare which GPU PCI number to use
@@ -23,9 +23,12 @@ data = Data(set_name = set_name, gpu = gpu, maxmin = True)
 # # Load Attacker Net
 attacker_net = FstLayUniNet(set_name, gpu = gpu,
                        U_filename = None,
-                       model_name = "cifar10_mobilenetv2_x1_0",
+                       model_name = "lenet",
                        pretrained = False)
-attacker_net.load_state_dict(torch.load('models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt', map_location=torch.device('cpu')))
+state_dict = torch.load('models/pretrained/MNIST/lenet_w_acc_98.pt', map_location=torch.device('cpu'))
+
+torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.") # Remove prefixes if from DDP
+attacker_net.load_state_dict(state_dict)
 attacker_net.eval()
 
 # Create an attacker

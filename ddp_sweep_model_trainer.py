@@ -10,13 +10,47 @@ import pickle
 import random
 from sam.sam import SAM
 from data_setup import Data
+import torch.distributed as dist
 import torch.multiprocessing as mp
-from mnist_sweep_config import sweep_config
+from models.sweep_config.mnist import sweep_config
+from torch.nn.parallel import DistributedDataParallel as DDP
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 
 # WandB Functions
 #-------------------------------------------------------------------------------------#
-def initalize_config_defaults(sweep_config):
+def setup(rank, world_size):
+    # Setup rendezvous
+    os.environ['MASTER_ADDR'] = 'localhost'
+    os.environ['MASTER_PORT'] = '12355'
+
+    # Initialize the process group
+    dist.init_process_group(backend    = "nccl",
+                           init_method = "env://", 
+                           rank        = rank, 
+                           world_size  = world_size)
+
+    # Initalize config_defualts (sweep agent will set the actual config)
+    # config_defaults = {}
+    # for key in sweep_config['parameters']:
+
+    #     if list(sweep_config['parameters'][key].keys())[0] == 'values':
+    #         config_defaults.update({key : sweep_config['parameters'][key]["values"][0]})
+
+    #     else:
+    #         config_defaults.update({key : sweep_config['parameters'][key]["min"]})
+
+    # # Initalize WandB logging on rank 0
+    # wandb.init( config = config_defaults,
+    #                 entity  = "naddeok",
+    #                 project = "DDP MNIST")
+
+        
+
+    # # Return Configuration 
+    # return wandb.config
+
+def initialize_config(rank, sweep_config):
+    # Initalize config_defualts (sweep agent will set the actual config)
     config_defaults = {}
     for key in sweep_config['parameters']:
 
@@ -26,20 +60,43 @@ def initalize_config_defaults(sweep_config):
         else:
             config_defaults.update({key : sweep_config['parameters'][key]["min"]})
 
-    wandb.init(config = config_defaults, group="DDP")
+    # Initalize WandB logging
+    if rank == 0:
+        wandb.init(config = config_defaults)
+        print("333333333333333333333333333")
+        config = wandb.config
+        print(type(config))
+        print("444444444444444444")
+        with open('filename.pickle', 'wb') as handle:
+            pickle.dump(a, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    return wandb.config
+        print("66666666666666666666666")
+
+    dist.barrier()
+    with open('filename.pickle', 'rb') as handle:
+        config = pickle.load(handle)
+    
+    return config
 
 def initalize_net(set_name, rank, config):
-    # Network 
-    net = FstLayUniNet(set_name, gpu = rank,
-                       U_filename = config.transformation,
-                       model_name = config.model_name,
-                       pretrained = config.pretrained)
-    # net.load_state_dict(torch.load('models/pretrained/CIFAR10/Ucifar10_mobilenetv2_x1_4_w_acc_78.pt', map_location=torch.device('cpu')))
+    # Create model and move it to GPU with id rank
+    model = FstLayUniNet(   set_name = "MNIST", 
+                            gpu = rank,
+                            U_filename = config.transformation,
+                            model_name = config.model_name,
+                            pretrained = config.pretrained).to(rank)
 
-    # Return network
-    return net.to(rank)
+    return DDP(model, device_ids=[rank])
+    
+    # # Network 
+    # net = FstLayUniNet(set_name, gpu = rank,
+    #                    U_filename = config.transformation,
+    #                    model_name = config.model_name,
+    #                    pretrained = config.pretrained)
+    # # net.load_state_dict(torch.load('models/pretrained/CIFAR10/Ucifar10_mobilenetv2_x1_4_w_acc_78.pt', map_location=torch.device('cpu')))
+
+    # # Return network
+    # return net.to(rank)
 
 def initalize_optimizer(data, net, config):
     if config.optimizer=='sgd':
@@ -97,31 +154,26 @@ def initalize_criterion(config):
         
     return criterion
 
-def train(rank, world_size):
-    save_model   = False
-    data_augment = False
-    set_name     = "MNIST"
+def train(rank, world_size, set_name, config, save_model):
+    # Initalize DDP
+    setup(rank, world_size)
 
-    # Set ports
-    os.environ['MASTER_ADDR'] = 'localhost'
-    os.environ['MASTER_PORT'] = '12355'
+    # Get sweep configuration
+    config = initialize_config(rank, sweep_config)
 
-    # Initialize the process group
-    torch.distributed.init_process_group("nccl", rank=rank, world_size=world_size)
-    
-    # Weights and Biases Setup
-    config = initalize_config_defaults(sweep_config)
-    wandb.log({ "Data Augmentation" : data_augment})
+    print("Code currently does not work as current config cannot be shared across machines")
+    exit()
 
+    # Get data
     # Get training data
     data = Data(gpu = rank, 
                 set_name = set_name, 
-                data_augment = data_augment)
-                
+                data_augment = config.data_augment)
+    
     train_loader = data.get_train_loader(config.batch_size)
 
     # Initialize Network
-    net = initalize_net(data.set_name, rank, config)
+    net = initalize_net(set_name, rank, config)
     net.train(True)
 
     # Setup Optimzier and Criterion
@@ -244,8 +296,12 @@ def train(rank, world_size):
     #     if net.U is not None:
     #         torch.save(net.U, "models/pretrained/" + set_name  + "/" + str(config.transformation) + "_for_" + set_name + filename)
 
-    # Shut down all groups
-    torch.distributed.destroy_process_group()
+    # End of training
+    print("Done Training on Rank ", rank)
+
+    # Wait till all processes are done thrn shut down
+    dist.barrier()
+    dist.destroy_process_group()
     
 def test(net, data, config):
     # Set to test mode
@@ -291,31 +347,44 @@ def test(net, data, config):
 
     return test_loss, test_acc
 #-------------------------------------------------------------------------------------#
-   
-def ddp_sweep():
-    # Setup DDP WandB Sweep
-    n_gpus = torch.cuda.device_count()
-    assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
-    mp.spawn(train,
-            args=(n_gpus,),
-            nprocs=n_gpus,
-            join=True)
+def run_ddp(func, world_size, set_name, save_model):
+    
+    # Spawn processes on gpus
+    mp.spawn(func,
+             args=(world_size, set_name, sweep_config, save_model),
+             nprocs=world_size,
+             join=True)
+
+    # Display
+    print("Run Complete")
     
 # Main
 if __name__ == "__main__":
     # Hyperparameters
-    gpu_ids      = "4, 5"
+    set_name     = "MNIST"
+    gpu_ids      = "2, 6"
     project_name = "DDP MNIST"
-    os.environ['WANDB_MODE'] = 'dryrun'
+    use_wandb    = True
+    save_model   = False
+
+    # Set to not log
+    if not use_wandb:
+        os.environ['WANDB_MODE'] = 'dryrun'
 
     # Set GPUs to Use
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = gpu_ids
 
-    # WandB Sweep
+    n_gpus = torch.cuda.device_count()
+    assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
+
+    # Run training using DDP
+    # run_ddp(train, n_gpus, epochs, batch_size, use_wandb)
+
     sweep_id = wandb.sweep(sweep_config, entity="naddeok", project=project_name)
-    wandb.agent(sweep_id, function=ddp_sweep)
+    wandb.agent(sweep_id, function=lambda: run_ddp(train, n_gpus, set_name, save_model))
+
 
     
     

@@ -39,12 +39,17 @@ class Data:
             self.num_channels = 3
             self.image_size = 32 if self.desired_image_size is None else self.desired_image_size
 
-            # Train Set
-            self.train_set = self.get_trainset()
-
-            # Test Set
             self.mean = (0.4914, 0.4822, 0.4465)
             self.std  = (0.2023, 0.1994, 0.2010)
+
+            # Train Set
+            self.set_train_transform()
+            self.train_set =  torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', # 
+                                                    train=True,
+                                                    download=True,
+                                                    transform=self.train_transform)
+
+            # Test Set
             self.test_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
                                                       transforms.ToTensor(), # Convert the images into tensors
                                                       transforms.Normalize(self.mean, 
@@ -60,22 +65,24 @@ class Data:
                                                     
         elif self.set_name == "MNIST":
             # Image size
+            self.num_classes = 10
             self.num_channels = 1
             self.image_size = 28
 
             # Images are of size (1, 28, 28)
-            self.mean = 0.1307
-            self.std = 0.3081
-            self.train_transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
-                                                #  transforms.Normalize((self.mean,), (self.std,))
-                                                 ]) # Normalize 
+            self.mean = (0.1307,)
+            self.std  = (0.3081,)
+
+            # Declare Transforms
+            self.set_train_transform()
 
             self.test_transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
                                                  transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
 
-            self.inverse_transform = transforms.Compose([transforms.ToTensor(), 
-                                                         transforms.Normalize((-self.mean * self.std,), (1/self.std,))])
+            self.inverse_transform = UnNormalize(mean=self.mean,
+                                                 std=self.std)
 
+            # Generate Datasets
             self.train_set = datasets.MNIST(root='../../../data/pytorch/MNIST', # '../data/',
                                             train = True,
                                             download = True,
@@ -146,37 +153,33 @@ class Data:
                                                             pin_memory = True,
                                                             sampler = test_sampler)
             
-
         # Determine test sets min/max pixel values
         if maxmin:
            self.set_testset_min_max()
             
-    def get_trainset(self):
+    def set_train_transform(self):
         if self.data_augment:
+            if isinstance(self.gpu, bool):
+                print("Augmenting Training Data")
+            else:
+                print("Augmenting Training Data on Rank ", self.gpu)
             self.train_transform = transforms.Compose([ transforms.Resize((self.image_size, self.image_size)),
                                                         transforms.RandomRotation(10),
                                                         transforms.RandomAffine(degrees=2, 
                                                                                 translate=(0.02, 0.02), 
                                                                                 scale=(0.98, 1.02), 
-                                                                                shear=2, 
-                                                                                fillcolor=(124,117,104)),
+                                                                                shear=2),
                                                         transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
                                                         transforms.RandomHorizontalFlip(),
-                                                        transforms.ToTensor(), # Convert the images into tensors
-                                                        transforms.Normalize((0.4914, 0.4822, 0.4465), 
-                                                                             (0.2023, 0.1994, 0.2010))]) #  Normalize
+                                                        transforms.ToTensor(),           # Convert the images into tensors
+                                                        transforms.Normalize(self.mean, 
+                                                                             self.std)]) #  Normalize
 
         else:
             self.train_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
-                                                      transforms.ToTensor(), # Convert the images into tensors
-                                                      transforms.Normalize((0.4914, 0.4822, 0.4465), 
-                                                                           (0.2023, 0.1994, 0.2010))
-                                                                           ]) #  Normalize
-
-        return torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', # 
-                                                    train=True,
-                                                    download=True,
-                                                    transform=self.train_transform)
+                                                      transforms.ToTensor(),           # Convert the images into tensors
+                                                      transforms.Normalize(self.mean,  #  Normalize
+                                                                           self.std)]) 
 
     # Fucntion to break training set into batches
     def get_train_loader(self, batch_size, num_workers = 8):

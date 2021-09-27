@@ -1,5 +1,5 @@
 sweep_config = {
-                'method': 'bayes',
+                'method': 'random',
                 'metric': {
                     'name': 'loss',
                     'goal': 'minimize' 
@@ -10,7 +10,6 @@ sweep_config = {
                     "eta": 3,
                     "max_iter": 27
                 },
-  
                 'parameters': {
                     'epochs': {
                         'values': [0,2]
@@ -32,7 +31,7 @@ sweep_config = {
                         # 'max' : 1e-1
                     },
                     'optimizer': {
-                        'values': ['nesterov']
+                        'values': ['SGD']
                     },
                     'scheduler': {
                         'values': [None] # "Cosine Annealing"]
@@ -51,6 +50,9 @@ sweep_config = {
                     },
                     'model_name':{
                         'values' : ["lenet"]
+                    },
+                    'data_augment':{
+                        'values' : [False]
                     }
                 }
             }

@@ -2,8 +2,9 @@ from data_setup import Data
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from models.classes.first_layer_unitary_resnet    import FstLayUniResNet
+from models.classes.first_layer_unitary_net    import FstLayUniNet
 import torchvision
+from data_setup import Data
 import torchvision.transforms as transforms
 
 def imshow(img):
@@ -19,29 +20,22 @@ def imshow(img):
     return img
 
 # Hypers
-set_name = 'CIFAR10'
+set_name = 'MNIST'
 batch_size = int(5e4)
 
 # Load Network
-net = FstLayUniResNet(gpu = False, set_name = set_name,
-                       model_name = 'cifar10_mobilenetv2_x1_0',
-                       pretrained = False)
+net = FstLayUniNet(set_name = set_name,
+                    model_name="lenet")
+
 # Set a random orthogonal matrix
 net.set_orthogonal_matrix()
 
-# Load Standard CIFAR10
-transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
-                                  transforms.Normalize((0.4914, 0.4822, 0.4465), 
-                                                       (0.2023, 0.1994, 0.2010))
-                                                        ]) #  Normalize
-dataset = torchvision.datasets.CIFAR10(root='../data', # '../../../data/pytorch/CIFAR10', # 
-                                        train=True,
-                                        download=True,
-                                        transform=transform)
-dataloader = torch.utils.data.DataLoader(dataset, batch_size = batch_size)
+# Load Data
+data = Data(set_name        = set_name,
+            test_batch_size = batch_size)
 
 # Collect Stats
-for images, labels in dataloader:
+for images, labels in data.test_loader:
     # Rotate Images
     ortho_images = net.orthogonal_operation(images)
 
@@ -87,7 +81,7 @@ for std in stds:
     filename += "_"
 filename += ".pt"
 print(filename)
-torch.save(net.U, "models/pretrained/" + filename)
+torch.save(net.U, "models/pretrained/" + set_name + "/" + filename)
 
 
 # # Decode filename

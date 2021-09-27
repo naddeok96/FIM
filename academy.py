@@ -69,7 +69,6 @@ class Academy:
         """
         #Get training data
         train_loader = self.data.get_train_loader(batch_size)
-        n_batches = len(train_loader)
 
         #Create optimizer and loss functions
         optimizer = torch.optim.SGD(self.net.parameters(), 
@@ -84,10 +83,7 @@ class Academy:
 
         #Loop for n_epochs
         for epoch in range(n_epochs):      
-            for i, data in enumerate(train_loader, 0):
-                
-                # Get inputs and labels from train_loader
-                inputs, labels = data
+            for inputs, labels in train_loader:
 
                 # Push to gpu
                 if self.gpu:

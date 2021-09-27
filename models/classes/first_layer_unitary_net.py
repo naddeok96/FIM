@@ -12,10 +12,10 @@ from .adjustable_lenet import AdjLeNet
 class FstLayUniNet(nn.Module):
 
     def __init__(self, set_name,
-                       gpu = False,
+                       gpu        = False,
                        U_filename = None,
-                       model_name = "cifar10_resnet56",
-                       pretrained = True):
+                       model_name = None,
+                       pretrained = None):
 
         super(FstLayUniNet,self).__init__()
 
@@ -23,12 +23,14 @@ class FstLayUniNet(nn.Module):
         self.set_name = set_name
 
         if self.set_name == "CIFAR10":
-            self.image_size = 32
-            self.num_classes = 10
+            self.num_channels = 3
+            self.image_size   = 32
+            self.num_classes  = 10
 
         elif self.set_name == "MNIST":
-            self.image_size = 28
-            self.num_classes = 10
+            self.num_channels = 1
+            self.image_size   = 28
+            self.num_classes  = 10
 
         else:
             print("Please enter a valid set_name for EffNet.")
@@ -72,8 +74,15 @@ class FstLayUniNet(nn.Module):
             print("Please enter vaild dataset. (Options: MNIST, CIFAR10)")
             exit()
 
-        self.net = self.net.cuda() if self.gpu else self.net
+        # Organize GPUs
+        if isinstance(self.gpu, bool):
+            # Push to GPU if True
+            self.net = self.net.cuda() if self.gpu else self.net
 
+        else:
+            # Push to rank of gpu
+            self.net = self.net.to(gpu)
+        
     # Generate orthoganal matrix with no Mean or STD Stats
     def get_orthogonal_matrix(self, size):
         '''
@@ -86,48 +95,82 @@ class FstLayUniNet(nn.Module):
     def set_orthogonal_matrix(self):
         self.U = self.get_orthogonal_matrix(self.image_size)
 
-        self.U = self.U.cuda() if self.gpu else self.U
+        # Organize GPUs
+        if isinstance(self.gpu, bool):
+            # Push to GPU if True
+            self.U = self.U.cuda() if self.gpu else self.U
 
+        else:
+            # Push to rank of gpu
+            self.U = self.U.to(gpu)
+        
     def load_U_from_Ufilename(self):
         # Decode filename for stats
-        stats = ["", "", "", "", "", ""]
-        state = 0
-        sofar = ""
-        for c in self.U_filename:        
+        stats = [""] * (2 * self.num_channels) # Initalize a spot for mean and std on each channel
+        state = 0                              # Declare initial state
+        middle_state = self.num_channels + 1   # Declare state between means and stds
+        sofar = ""                             # Declare charcters seen so far in title
+
+        # Iterate through each character in title
+        for c in self.U_filename:   
+            # Add Character
             sofar += c
-            if sofar == "models/pretrained/U_w_means_":
+
+            # If the intro is finished begin on first channel mean
+            if sofar == "models/pretrained/" + self.set_name + "/U_w_means_":
                 state = 1
                 continue
             
-            if state == 4 and "and_stds_" not in sofar:
+            # If the middle state is reached do nothing untill "and_stds_" is read
+            if state == middle_state and "and_stds_" not in sofar:
                 continue
 
-            if state == 4 and len(stats[state - 1]) == 0 and c == "_":
+            # If the current state is middle ignore the first "_" without increasing the state
+            if state == middle_state and len(stats[state - 1]) == 0 and c == "_":
                 continue
 
-            if 0 < state and state < 7:
+            # Decode
+            if 0 < state and state < len(stats) + 1:
+                # "n" represents a minus symbol
                 if c == "n":
                     stats[state - 1] += "-"
+
+                # "-" represents a "." symbol
                 elif c == "-":
                     stats[state - 1] += "."
+
+                # "_" represents the end of the current stat
                 elif c == "_":
                     stats[state - 1] = float(stats[state-1])
                     state += 1
+
+                # Otherwise the character should be stored with no decoding
                 else: 
                     stats[state - 1] += c
 
         # Seperate Stats
-        self.U_means = torch.tensor(stats[0:3])
-        self.U_stds  = torch.tensor(stats[3:])
+        self.U_means = torch.tensor(stats[0:self.num_channels])
+        self.U_stds  = torch.tensor(stats[self.num_channels:])
 
         # Load U 
         self.U = torch.load(self.U_filename)
 
         # Push to GPU
-        if self.gpu:
-            self.U       = self.U.cuda()
-            self.U_means = self.U_means.cuda()
-            self.U_stds  = self.U_stds.cuda()
+        # Organize GPUs
+        if isinstance(self.gpu, bool):
+            # Push to GPU if True
+            if self.gpu:
+                self.U       = self.U.cuda()
+                self.U_means = self.U_means.cuda()
+                self.U_stds  = self.U_stds.cuda()
+
+        else:
+            # Push to rank of gpu
+            self.U       = self.U.to(self.gpu)
+            self.U_means = self.U_means.to(self.gpu)
+            self.U_stds  = self.U_stds.to(self.gpu)
+
+        print(self.U_filename, " is Loaded.")
 
     def display_pretrained_models(self):
         from pprint import pprint
@@ -142,7 +185,7 @@ class FstLayUniNet(nn.Module):
         Returns UA
         '''
         # Find batch size and feature map size
-        batch_size = input_tensor.size(0)
+        batch_size  = input_tensor.size(0)
         channel_num = int(input_tensor.size(1))
         A_side_size = int(input_tensor.size(2))
 
@@ -154,23 +197,23 @@ class FstLayUniNet(nn.Module):
             U = copy(self.U)
 
         # If gpu is not bool the DDP is being used
-        if isinstance(gpu, bool):
+        if isinstance(self.gpu, bool):
             # Push to GPU if True
             U = U.cuda() if self.gpu else U
             input_tensor = input_tensor.cuda() if self.gpu else input_tensor
 
         else:
             # Push to rank of gpu
-            U = U.to(gpu)
-            input_tensor = input_tensor.to(gpu)
+            U = U.to(self.gpu)
+            input_tensor = input_tensor.to(self.gpu)
             
         # Repeat U and U transpose for all batches
         U = U.view((1, A_side_size, A_side_size)).repeat(channel_num * batch_size, 1, 1)
         
         # Batch muiltply UA
-        UA = torch.bmm(U, 
-                       input_tensor.view(channel_num * batch_size, A_side_size, A_side_size)
-        ).view(batch_size, channel_num, A_side_size, A_side_size)
+        UA = torch.bmm( U, 
+                        input_tensor.view(channel_num * batch_size, A_side_size, A_side_size)
+                        ).view(batch_size, channel_num, A_side_size, A_side_size)
 
         
         # Normalize

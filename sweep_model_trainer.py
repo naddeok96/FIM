@@ -102,7 +102,6 @@ def train(data, save_model):
     # Weights and Biases Setup
     config = initalize_config_defaults(sweep_config)
 
-
     #Get training data
     train_loader = data.get_train_loader(config.batch_size)
     wandb.log({ "Data Augmentation" : data.data_augment})
