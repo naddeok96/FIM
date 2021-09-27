@@ -16,9 +16,7 @@ class FstLayUniNet(nn.Module):
                        U_filename = None,
                        model_name = None, 
                        pretrained_accuracy = 100,
-                       pretrained_weights_filename = None,
-                       return_scores_only = False,
-                       distillation_temp  = 1):
+                       pretrained_weights_filename = None):
 
         super(FstLayUniNet,self).__init__()
 
@@ -61,9 +59,7 @@ class FstLayUniNet(nn.Module):
                 
                 self.net =  AdjLeNet(set_name   = self.set_name, 
                                     num_classes = self.num_classes,
-                                    pretrained_weights_filename = pretrained_weights_filename,
-                                    return_scores_only = return_scores_only,
-                                    distillation_temp = distillation_temp)
+                                    pretrained_weights_filename = pretrained_weights_filename)
 
                 self.accuracy = pretrained_accuracy
             

@@ -21,13 +21,13 @@ seed = 3
 gpu  = True
 
 # Training parameters
-n_epochs          = 25
+n_epochs          = 100
 batch_size        = 256
-learning_rate     = 0.1
+learning_rate     = 0.01
 momentum          = 0.9
 weight_decay      = 0.0001
 distill           = True
-distillation_temp = 1
+distillation_temp = 20
 use_SAM           = False
 
 # Model parameters
@@ -78,16 +78,13 @@ if from_ddp:  # Remove prefixes if from DDP
 net = FstLayUniNet( set_name = set_name,
                     gpu = gpu,
                     U_filename = None,
-                    model_name = model_name,
-                    return_scores_only = True)
+                    model_name = model_name)
 
 if distill: # Load teacher net
     teacher_net = FstLayUniNet( set_name = set_name,
                                 gpu = gpu,
                                 U_filename = None,
-                                model_name = model_name,
-                                return_scores_only = False,
-                                distillation_temp = distillation_temp)
+                                model_name = model_name)
     teacher_net.load_state_dict(state_dict)
     teacher_net.eval()
 
@@ -96,7 +93,6 @@ if distill: # Load teacher net
 else:
     net.load_state_dict(state_dict)
 
-net.load_state_dict(state_dict) ### DO NOT LEAVE HERE
 net.eval()
 summary(net, (data.num_channels, data.image_size, data.image_size))
 
@@ -154,8 +150,7 @@ def train(net, data, gpu, n_epochs, batch_size, use_SAM, attack_type, epsilon, t
                 # print("One Hot", label_onehot[0])
                 # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
                 
-
-                soft_labels = teacher_net(inputs)
+                soft_labels = F.log_softmax(teacher_net(inputs), -1)
                 loss = torch.sum(-soft_labels * F.log_softmax(outputs, -1), -1).mean()
 
             else:
@@ -165,8 +160,8 @@ def train(net, data, gpu, n_epochs, batch_size, use_SAM, attack_type, epsilon, t
             loss.backward()                   # Find the gradient for each parameter
             optimizer.step()                  # Parameter update
         
-        if epoch % 10 == 0:
-            print("Epoch: ", epoch, "\tLoss: ", loss.item())    
+        if epoch % 2 == 0:
+            print("Epoch: ", epoch + 1 , "\tLoss: ", loss.item())    
 
     return net 
 
