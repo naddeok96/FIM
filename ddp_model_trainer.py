@@ -7,6 +7,7 @@ import torch.distributed as dist
 import torch.multiprocessing as mp
 from adversarial_attacks import Attacker
 from data_setup import Data
+import torch.nn.functional as F
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 from torch.nn.parallel import DistributedDataParallel as DDP
 
@@ -97,11 +98,29 @@ def train(rank, world_size, config, project_name):
     run = setup(rank, world_size, config, project_name)
 
     # Create model and move it to GPU with id rank
+    if config["pretrained_weights_filename"] is not None:
+        state_dict = torch.load(config["pretrained_weights_filename"], map_location=torch.device('cpu'))
+
+        if config["from_ddp"]:  # Remove prefixes if from DDP
+            torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.")
+
     net = FstLayUniNet( set_name   = config["set_name"], 
                         gpu        = rank,
                         U_filename = config["U_filename"],
-                        model_name = config["model_name"],
-                        pretrained = config["pretrained"]).to(rank)
+                        model_name = config["model_name"]).to(rank)
+    
+
+    if config["distill"]: # Load teacher net
+        teacher_net = FstLayUniNet( set_name   = config["set_name"], 
+                                    gpu        = rank,
+                                    U_filename = config["U_filename"],
+                                    model_name = config["model_name"]).to(rank)
+        teacher_net.load_state_dict(state_dict)
+        teacher_net = DDP(teacher_net, device_ids=[rank])
+        teacher_net.eval()
+
+    else:
+        net.load_state_dict(state_dict)
 
     net = DDP(net, device_ids=[rank])
 
@@ -125,9 +144,9 @@ def train(rank, world_size, config, project_name):
     total_step = len(train_loader)
     for epoch in range(int(config["epochs"])):    
         epoch_loss = 0.0
-        for i, (images, labels) in enumerate(train_loader):
+        for i, (inputs, labels) in enumerate(train_loader):
             # Push to gpu
-            images = images.to(rank, non_blocking=True)
+            inputs = inputs.to(rank, non_blocking=True)
             labels = labels.to(rank, non_blocking=True)
 
             # Adversarial Training
@@ -135,9 +154,9 @@ def train(rank, world_size, config, project_name):
                 # Initalize Attacker with current model parameters
                 attacker = Attacker(net = net, data =  data, gpu = rank)
 
-                # Generate attacks and replace them with orginal images
-                images = attacker.get_attack_accuracy(attack = config["attack_type"] ,
-                                                        attack_images = images,
+                # Generate attacks and replace them with orginal inputs
+                inputs = attacker.get_attack_accuracy(attack = config["attack_type"] ,
+                                                        attack_images = inputs,
                                                         attack_labels = labels,
                                                         epsilons = [config["epsilon"]],
                                                         return_attacks_only = True,
@@ -157,7 +176,7 @@ def train(rank, world_size, config, project_name):
                     optimizer.zero_grad()   
 
                     # Forward pass
-                    outputs = net(images) 
+                    outputs = net(inputs) 
                     
                     # Calculate loss
                     loss = criterion(outputs, orginal_labels)   
@@ -169,10 +188,23 @@ def train(rank, world_size, config, project_name):
 
                 # Rerun forward pass and loss once SAM is done
                 # Forward pass
-                outputs = net(images) 
+                outputs = net(inputs) 
 
-                # Calculate loss
-                loss = criterion(outputs, labels) 
+                # Get loss
+                if config["distill"]:
+                    # Proof that this method is equivalent to oringal criterion
+                    # batch_size = labels.size(0)
+                    # label_onehot = torch.FloatTensor(batch_size, data.num_classes)
+                    # label_onehot.zero_()
+                    # label_onehot.scatter_(1, labels.view(-1, 1), 1)
+                    # print("One Hot", label_onehot[0])
+                    # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
+                    
+                    soft_labels = F.softmax(teacher_net(inputs) / config["distill_temp"], -1)
+                    loss = torch.sum(-soft_labels * F.log_softmax(outputs, -1), -1).mean()
+
+                else:
+                    loss = criterion(outputs, labels)
 
                 _, predictions = torch.max(outputs, 1)
                 correct += (predictions == labels).sum()
@@ -224,8 +256,6 @@ def train(rank, world_size, config, project_name):
                         "Val Loss"   : val_loss,
                         "Val Acc"    : val_acc})
         dist.barrier()
-
-    # End of training
     print("Done Training on Rank ", rank)
 
     # Test
@@ -249,12 +279,14 @@ def train(rank, world_size, config, project_name):
             
             if config["attack_type"] is not None:
                 filename = config["attack_type"] + "_" + str(int(config["epsilon"]*100)) + "_" + filename
+
+            if config["distill"]:
+                filename = "distilled_" + str(config["distill_temp"]) + "_" + filename
                 
             
             # Save Models
             torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + filename)
-
-            
+   
     # Wait till all processes are done thrn shut down
     dist.barrier()
     dist.destroy_process_group()
@@ -276,12 +308,12 @@ def test(rank, net, data, crit):
     correct = 0
     total_tested = 0
     # Test data in test loader
-    for images, labels in data.test_loader:
+    for inputs, labels in data.test_loader:
         # Push to gpu
-        images, labels = images.to(rank, non_blocking=True), labels.to(rank, non_blocking=True)
+        inputs, labels = inputs.to(rank, non_blocking=True), labels.to(rank, non_blocking=True)
 
         #Forward pass
-        outputs = net(images)
+        outputs = net(inputs)
         loss = criterion(outputs, labels) # Calculate loss 
 
         # Update runnin sum
@@ -294,7 +326,60 @@ def test(rank, net, data, crit):
     test_loss = (total_loss/len(data.test_set))
     test_acc  = correct / total_tested
 
+    print("Total Tested", total_tested)
+    exit()
     return test_loss, test_acc
+
+def test_robustness(rank, net, data, config):
+     # Set to test mode
+    net.eval()
+
+    # Load Attacker 
+    attacker_net = FstLayUniNet( set_name  = config["set_name"], 
+                                gpu        = rank,
+                                model_name = config["model_name"]).to(rank)
+    attacker_state_dict = torch.load(config["attacker_pretrained_weights_filename"], map_location=torch.device('cpu'))
+
+    if config["from_ddp"]:  # Remove prefixes if from DDP
+        torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(attacker_state_dict, "module.")
+    attacker_net.load_state_dict(attacker_state_dict)
+    attacker_net = DDP(attacker_net, device_ids=[rank])
+    attacker_net.eval()
+
+    # Initalize Attacker with current model parameters
+    attacker = Attacker(net = attacker_net, data = data, gpu = rank)
+
+    # Initialize
+    correct = 0
+    total_tested = 0
+    # Test data in test loader
+    for inputs, labels in data.test_loader:
+        # Push to gpu
+        inputs, labels = inputs.to(rank, non_blocking=True), labels.to(rank, non_blocking=True)
+
+        # Generate attacks and replace them with orginal inputs
+        attacks = attacker.get_attack_accuracy(attack = config["attacker attack type"] ,
+                                                attack_images = inputs,
+                                                attack_labels = labels,
+                                                epsilons = [config["attacker epsilon"]],
+                                                return_attacks_only = True,
+                                                prog_bar = False)
+        
+        # Feedforward
+        adv_outputs = net(attacks)
+        
+        # Update running sum
+        _, adv_predictions = torch.max(adv_outputs, 1) 
+        correct += (adv_predictions == labels).sum()
+        total_tested += labels.size(0)
+        total_loss   += loss.item()
+    
+    # Test Loss
+    adv_acc  = correct / total_tested
+
+    print(total_tested, " tested on rank ", rank)
+
+    return adv_acc
 
 def run_ddp(func, world_size, config, project_name):
 
@@ -313,7 +398,7 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids      = "0,1,2,3,4,5,6,7"
+    gpu_ids = "2, 6, 7"
 
     # WandB
     project_name = "DDP MNIST"
@@ -322,8 +407,14 @@ if __name__ == "__main__":
     config = {  
                 # Network
                 "model_name": "lenet",
-                "pretrained": False,
+                "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt",
+                "from_ddp"  : True,
                 "save_model": True,
+
+                # Attacker Network
+                "attacker_pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt",
+                "attacker attack type" : "FGSM",
+                "attacker epsilon"     : 0.15,
 
                 # Data
                 "set_name"      : "MNIST",
@@ -332,7 +423,7 @@ if __name__ == "__main__":
                 
                 # Optimizer
                 "optim"         : "sgd",
-                "epochs"        : 25,
+                "epochs"        : 0,
                 "lr"            : 5e-1,
                 "sched"         : "Cosine Annealing",
                 "weight_decay"  : 1e-4,
@@ -343,14 +434,18 @@ if __name__ == "__main__":
                 "crit"          : "cross_entropy",
 
                 # Hardening
-                ### U Defense ###
+                ### Unitary ###
                 "U_filename"    : None, # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
 
                 ### Adv Train ###
-                "attack_type"   : "PGD",
+                "attack_type"   : None,
                 "epsilon"       : 0.15,
-                "epoch_delay"   : 5
-                }
+                "epoch_delay"   : 5,
+
+                ### Distill ###
+                "distill"       : True,
+                "distill_temp"  : 50,
+               }
     #-------------------------------------#
     
     # Set GPUs to Use

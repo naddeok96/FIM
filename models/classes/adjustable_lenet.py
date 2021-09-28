@@ -80,8 +80,10 @@ class AdjLeNet(nn.Module):
         # Load pretrained parameters
         if pretrained_unitary_matrix_filename is not None:
             self.U = torch.load(pretrained_unitary_matrix_filename, map_location=torch.device('cpu'))
+
         if pretrained_weights_filename is not None:
             self.load_state_dict(torch.load(pretrained_weights_filename, map_location=torch.device('cpu')))
+            
         if (pretrained_unitary_matrix_filename or pretrained_weights_filename) is not None:
             self.eval()
 

@@ -36,7 +36,7 @@ class Data:
         # Pull in data
         if self.set_name == "CIFAR10":
             # Set Root
-            self.root = '../../../data/pytorch/CIFAR10' if root is None else root
+            self.root = '../../../data/pytorch/' if root is None else root
 
             # Images are of size (3,32,32)
             self.num_classes = 10
@@ -69,7 +69,7 @@ class Data:
                                                     
         elif self.set_name == "MNIST":
             # Set Root
-            self.root = '../../../data/pytorch/MNIST' if root is None else root
+            self.root = '../../../data/pytorch/' if root is None else root
 
             # Image size
             self.num_classes = 10
