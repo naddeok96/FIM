@@ -148,13 +148,14 @@ class Attacker:
         else:
             return eig_values, eig_vectors
 
-    def get_attack_accuracy(self,   attack = "OSSA",
-                                    epsilons = [1],
-                                    transfer_network = None,
-                                    return_attacks_only = False,
-                                    attack_images = None,
-                                    attack_labels  = None,
-                                    prog_bar = True):
+    def get_attack_accuracy(self,   attack                    = "OSSA",
+                                    epsilons                  = [1],
+                                    transfer_network          = None,
+                                    return_attacks_only       = False,
+                                    return_perturbations_only = False,
+                                    attack_images             = None,
+                                    attack_labels             = None,
+                                    prog_bar                  = True):
         # Push transfer_network to GPU
         if isinstance(self.gpu, bool):
             if self.gpu and transfer_network is not None:
@@ -171,6 +172,51 @@ class Attacker:
                                         search_steps=5, max_steps=1000, abort_early=True,
                                         box=(self.data.test_pixel_min, self.data.test_pixel_max), 
                                         optimizer_lr=1e-2)
+
+        elif attack == "CW2":
+            # Imports
+            import sys
+            sys.path.insert(1, '../adversarial-robustness-toolbox/')
+            from art.estimators.classification import PyTorchClassifier
+            from art.attacks.evasion import CarliniL2Method
+
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    device_num  = "cuda:0" 
+                    device_type = "gpu"
+                else:
+                    device_num  = "cpu"
+                    device_type = "cpu"
+                
+            else:
+                device_num  = "cuda:" + str(self.gpu)
+                device_type = "gpu"
+
+            classifier = PyTorchClassifier( model       = self.net,
+                                            nb_classes  = self.data.num_classes,
+                                            loss        = self.criterion,
+                                            clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
+                                            input_shape = (self.data.num_channels, self.data.image_size, self.data.image_size),
+                                            device_type = device_type,
+                                            device_num  = device_num)
+
+            # Hyperparameters from "Towards Deep Learning Models Resistant to Adversarial Attacks"
+            if self.data.set_name == "MNIST":
+                max_iter = 40
+
+            elif self.data.set_name == "CIFAR10":
+                max_iter = 20
+
+            else:
+                print("Eneter a valid data_set name for PGD")
+                exit()
+            attack_cw2 = CarliniL2Method(classifier=classifier,
+                                        confidence    = 0.0, 
+                                        learning_rate = 0.01,
+                                        max_iter = max_iter, 
+                                        batch_size = self.data.test_batch_size, 
+                                        verbose = False)
+
 
         # Load EOT
         elif attack == "PGD":
@@ -308,7 +354,6 @@ class Attacker:
                     targets[i] = random.choice(possible_targets)
 
                 # Generate adversarial examples
-                # print("Generating Attacks")
                 attacks = attack_pgd.generate(x=inputs.detach().cpu().numpy(), 
                                             y=targets.detach().cpu().numpy())
                 attacks = torch.from_numpy(attacks)
@@ -362,6 +407,28 @@ class Attacker:
                 # Norm the attack
                 normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
 
+            elif attack == "CW2":
+                # Generate adversarial examples
+                attacks = attack_cw2.generate(x=inputs.detach().cpu().numpy())
+                attacks = torch.from_numpy(attacks)
+
+                if isinstance(self.gpu, bool):
+                    if self.gpu:
+                        attacks = attacks.cuda()
+                else:
+                    attacks = attacks.to(self.gpu)
+                
+                # Get losses
+                outputs = self.net(inputs)
+                losses  = self.indv_criterion(outputs, labels)
+                
+                # Reduce the attacks to only the perturbations
+                print("A\n",attacks.size(),"\nI\n", inputs.size(),"\nF\n", attacks[0] - inputs[0])
+                attacks = attacks - inputs
+
+                # Norm the attack
+                normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
+
             elif attack == "CW":
                 # Use other labs code to produce full attack images
                 attacks = self.cw_attack(self.net, inputs, labels, to_numpy=False)
@@ -381,6 +448,14 @@ class Attacker:
 
                 # Norm the attack
                 normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
+
+            else:
+                print("Invalid Attack Type")
+                exit()
+
+            # Return just perturbation
+            if return_perturbations_only:
+                return normed_attacks
 
             # Cycle over all espiplons
             for i in range(len(epsilons)):

@@ -1,8 +1,11 @@
 import xlrd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+
 set_name = "MNIST"
-attack_type = ["FGSM"]
+attack_type = ["FGSM", "Gaussian Noise", "CW2", "PGD"]
 
 
 for attack in attack_type:
@@ -17,12 +20,12 @@ for attack in attack_type:
             results[ws.cell(0, col).value].append(ws.cell(row, col).value)
             
     for key, value in results.items():
-        if key == "Epsilons":
+        if key == "NSR":
             continue
 
-        plt.plot(results["Epsilons"], value, '.-', label=key)
+        plt.plot(results["NSR"], value, '.-', label=attack)
 
-    plt.title(attack + " attacks on " + set_name)
+    plt.title("Attacks on " + set_name)
     plt.xlabel("Noise to Signal Ratio")
     plt.ylabel("Fooling Ratio")
     plt.legend()

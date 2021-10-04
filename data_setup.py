@@ -161,7 +161,7 @@ class Data:
                                                             sampler = test_sampler)
             
         # Determine test sets min/max pixel values
-        if maxmin:
+        if maxmin or True:
            self.set_testset_min_max()
             
     def set_train_transform(self):

@@ -3,6 +3,8 @@ import wandb
 import torch
 import matplotlib
 matplotlib.use('Agg')
+from copy import copy
+import numpy as np
 import torch.distributed as dist
 import torch.multiprocessing as mp
 from adversarial_attacks import Attacker
@@ -163,6 +165,10 @@ def train(rank, world_size, config, project_name):
     if config["sched"] is not None:
         scheduler = initalize_scheduler(config["sched"], optimizer, config["epochs"])
 
+    # Disable adversarial robustness test while trinaing
+    test_robustness = copy(config["test_robustness"])
+    config["test_robustness"] = False
+
     # Begin Training
     if config["epochs"] != 0:
         print("Trainning on Rank", rank)
@@ -281,8 +287,8 @@ def train(rank, world_size, config, project_name):
    
     # Test
     print("Testing on Rank", rank)
+    config["test_robustness"] = copy(test_robustness)
     val_correct, val_total_tested, val_total_loss, val_adv_correct = test(rank, net, data, config)
-    print("VAL ADV", val_adv_correct)
     
     # Gather values from all machines (ranks)
     print("Evaluating Results", rank)
@@ -292,37 +298,45 @@ def train(rank, world_size, config, project_name):
     # Get adversarial accuracy 
     if config["test_robustness"]:
 
-        print("Calculating Fooling Ratio on Rank", rank)
         fool_ratio = [None for _ in range(len(val_adv_correct))]
         for i, (epsilon, adv_correct) in enumerate(zip(config["attacker epsilons"], val_adv_correct)):
             adv_acc, _    = gather_acc_and_loss(rank,  world_size,   adv_correct,   val_total_tested,   torch.tensor(0).to(rank))
-            print("Gathered ", i, " on Rank ", rank)
             if rank == 0:
-                print("ACC", val_acc)
-                print("Adv ACC", adv_acc)
-                print("Fool", fool_ratio)
-                # fool_ratio[i] = round(100*((val_acc - adv_acc) / val_acc), 2)
+                fool_ratio[i] = torch.round(100*((val_acc - adv_acc) / val_acc))
+
             dist.barrier()
-            print("Break", rank)
-            break
     else:
         fool_ratio = None
 
     # Log and save model
     if rank == 0:
-        print("Building Table")
-        print([str(ep) for ep in config["attack_epsilons"]],
-              [[str(fool)] for fool in fool_ratio])
-        # fool_ratio_table = wandb.Table( columns = [str(ep) for ep in config["attack_epsilons"]],
-        #                                 data    = [[str(fool)] for fool in fool_ratio])
+        fool_ratio_table = wandb.Table( columns = ["NSR", "Fool Ratio"],
+                                        data    = [[eps, int(fool.item())] for eps, fool in zip(config["attacker epsilons"], fool_ratio)])
 
-        print("Logging")                          
-        # run.log({"epoch"      : epoch + 1, 
-        #         "Train Loss"  : epoch_loss,
-        #         "Train Acc"   : epoch_acc,
-        #         "Val Loss"    : val_loss,
-        #         "Val Acc"     : val_acc,
-        #         "Fool Ratios" : fool_ratio_table})
+        print("Logging")     
+        run.log({"Epoch"      : epoch + 1 if config["epochs"] != 0 else None, 
+                "Train Loss"  : epoch_loss,
+                "Train Acc"   : epoch_acc,
+                "Val Loss"    : val_loss,
+                "Val Acc"     : val_acc,
+                "Fool Ratios" : fool_ratio_table})
+
+        if config["save_attack_results"]:
+            print("Saving Attack Results to Excel")
+            from xlwt import Workbook  
+
+            # Open Workbook
+            wb = Workbook() 
+            
+            # Create sheet
+            sheet = wb.add_sheet('Results') 
+            
+            sheet.write(0, 0, "NSR")
+            sheet.write(0, 1, "Fool Ratio")
+            for i, (eps, fool) in enumerate(zip(config["attacker epsilons"], fool_ratio)):
+                    sheet.write(i + 1, 0, eps)
+                    sheet.write(i + 1, 1, int(fool.item()))
+            wb.save('results/' + data.set_name + '/Test_' + config["attacker_attack_type"] + '_attack_results.xls') 
 
         if config["save_model"]:
             print("Saving Model")
@@ -344,7 +358,6 @@ def train(rank, world_size, config, project_name):
     # Close all processes
     dist.barrier()
     dist.destroy_process_group()
-    print("closed")
 
     # Close WandB
     if rank == 0 and run is not None:
@@ -373,6 +386,7 @@ def test(rank, net, data, config):
 
     #Create loss functions
     criterion = initalize_criterion(config)
+    indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
 
     # Initialize
     correct, total_tested, total_loss   = [torch.tensor(0).float().to(rank) for _ in range(3)]
@@ -382,16 +396,43 @@ def test(rank, net, data, config):
         # Push to gpu
         inputs, labels = inputs.to(rank, non_blocking=True), labels.to(rank, non_blocking=True)
 
+        #Forward pass
+        outputs = net(inputs)
+
+        # Test on adversarial attacks
         if config["test_robustness"]:
+            # Declare indivdual cirterion to ensure attack increases loss
+            losses  = indv_criterion(outputs, labels)
+
+            # Generate attacks and replace them with orginal inputs
+            normed_perturbations = attacker.get_attack_accuracy(attack                    = config["attacker_attack_type"] ,
+                                                                attack_images             = inputs,
+                                                                attack_labels             = labels,
+                                                                return_perturbations_only = True,
+                                                                prog_bar                  = False)
+
+            # Cycle over all espiplons
             for i, epsilon in enumerate(config["attacker epsilons"]):
-                # Generate attacks and replace them with orginal inputs
-                attacks = attacker.get_attack_accuracy(attack = config["attacker attack type"] ,
-                                                        attack_images = inputs,
-                                                        attack_labels = labels,
-                                                        epsilons = [epsilon],
-                                                        return_attacks_only = True,
-                                                        prog_bar = False)
                 
+                # Set the unit norm of the highest eigenvector to epsilon
+                input_norms = torch.linalg.norm(inputs.view(inputs.size(0), 1, -1), ord=None, dim=2).view(-1, 1, 1)
+                perturbations = float(epsilon) * input_norms * normed_perturbations
+
+                # Declare attacks as the perturbation added to the image                    
+                attacks = (inputs.view(inputs.size(0), 1, -1) + perturbations).view(inputs.size(0), data.num_channels, data.image_size, data.image_size)
+
+                # Check if loss has increased
+                adv_outputs = net(attacks)
+                adv_losses  = indv_criterion(adv_outputs, labels)
+
+                # If losses has not increased flip direction
+                signs = (losses < adv_losses).type(torch.float) 
+                signs[signs == 0] = -1
+                perturbations = signs.view(-1, 1, 1) * perturbations
+            
+                # Compute attack and models prediction of it
+                attacks = (inputs.view(inputs.size(0), 1, -1) + perturbations).view(inputs.size(0), data.num_channels, data.image_size, data.image_size)
+
                 # Feedforward
                 adv_outputs = net(attacks)
 
@@ -399,17 +440,17 @@ def test(rank, net, data, config):
                 _, adv_predictions = torch.max(adv_outputs, 1)
                 adv_correct[i] += (adv_predictions == labels).sum()
 
-        #Forward pass
-        outputs = net(inputs)
-        
         # Examine output
         loss           = criterion(outputs, labels) 
         _, predictions = torch.max(outputs, 1)
 
         # Update running sum
-        correct += (predictions == labels).sum()
+        correct      += (predictions == labels).sum()
         total_tested += labels.size(0)
         total_loss   += loss.item()
+
+        print("BREAKING ON FIRST TEST BATCH")
+        break
 
     dist.barrier()
     return correct, total_tested, total_loss, adv_correct
@@ -431,7 +472,7 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "0, 1, 2, 3, 4, 5, 6, 7"
+    gpu_ids = "2, 6, 7"
 
     # WandB
     project_name = "DDP MNIST"
@@ -446,13 +487,14 @@ if __name__ == "__main__":
 
                 # Attacker Network
                 "test_robustness"                       : True,
+                "save_attack_results"                   : True,
                 "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_98.pt",
-                "attacker attack type"                  : "FGSM",
-                "attacker epsilons"                     : [0.05, 0.15],
+                "attacker_attack_type"                  : "PGD", # "CW2", # "Gaussian Noise", # "FGSM", # 
+                "attacker epsilons"                     : np.linspace(0, 0.15, num=31),
 
                 # Data
                 "set_name"      : "MNIST",
-                "batch_size"    : 512,
+                "batch_size"    : 124,
                 "data_augment"  : False,
                 
                 # Optimizer
