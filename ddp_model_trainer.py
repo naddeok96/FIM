@@ -80,9 +80,9 @@ def initalize_scheduler(sched, optimizer, epochs):
     
     return scheduler
 
-def initalize_criterion(criterion):
+def initalize_criterion(config):
     # Setup Criterion
-    if criterion=="cross_entropy":
+    if config["crit"] == "cross_entropy":
         criterion = torch.nn.CrossEntropyLoss()
 
     else: 
@@ -91,10 +91,36 @@ def initalize_criterion(criterion):
         
     return criterion
 
+def gather_variable(rank, world_size, variable):
+                # Initialize lists
+                variable_list = [variable.clone() for _ in range(world_size)]
+
+                # Gather all variables
+                dist.all_gather(variable_list, variable)
+                
+                # Convert from list to single tensor
+                return torch.stack(variable_list)
+
+def gather_acc_and_loss(rank,  world_size, correct, total_tested, total_loss):    
+    # Gather values from all machines (ranks)
+    correct_list            = gather_variable(rank, world_size, correct)
+    total_tested_list       = gather_variable(rank, world_size, total_tested)
+    total_loss_list         = gather_variable(rank, world_size, total_loss)
+    dist.barrier()
+    
+    # Calculate final metrics
+    if rank == 0:
+        acc = correct_list.sum() / total_tested_list.sum()
+        loss = (total_tested_list * total_loss_list).sum() / total_tested_list.sum()
+
+        return acc, loss
+
+    else:
+        return None, None
+
 def train(rank, world_size, config, project_name):
 
     # Initialize WandB and Process Group
-    print(f"Training on rank {rank}.")
     run = setup(rank, world_size, config, project_name)
 
     # Create model and move it to GPU with id rank
@@ -124,26 +150,24 @@ def train(rank, world_size, config, project_name):
 
     net = DDP(net, device_ids=[rank])
 
-    # Data loading code
+    # Load Data
     data = Data(gpu          = rank, 
                 set_name     = config["set_name"], 
                 data_augment = config["data_augment"],
                 maxmin       = True if config["attack_type"] is not None else False)
-
     train_loader = data.get_train_loader(config["batch_size"])
 
     # Setup Optimzier and Criterion
     optimizer = initalize_optimizer(net, config)
-    criterion = initalize_criterion(config["crit"])
+    criterion = initalize_criterion(config)
     if config["sched"] is not None:
         scheduler = initalize_scheduler(config["sched"], optimizer, config["epochs"])
 
     # Begin Training
-    correct = 0
-    total_tested = 0
-    total_step = len(train_loader)
-    for epoch in range(int(config["epochs"])):    
-        epoch_loss = 0.0
+    if config["epochs"] != 0:
+        print("Trainning on Rank", rank)
+    for epoch in range(int(config["epochs"])):   
+        epoch_correct, epoch_total_tested, epoch_total_loss = [torch.tensor(0).float().to(rank) for _ in range(3)]
         for i, (inputs, labels) in enumerate(train_loader):
             # Push to gpu
             inputs = inputs.to(rank, non_blocking=True)
@@ -192,7 +216,7 @@ def train(rank, world_size, config, project_name):
 
                 # Get loss
                 if config["distill"]:
-                    # Proof that this method is equivalent to oringal criterion
+                    ## Sanity check that this method is equivalent to oringal criterion
                     # batch_size = labels.size(0)
                     # label_onehot = torch.FloatTensor(batch_size, data.num_classes)
                     # label_onehot.zero_()
@@ -206,11 +230,10 @@ def train(rank, world_size, config, project_name):
                 else:
                     loss = criterion(outputs, labels)
 
-                _, predictions = torch.max(outputs, 1)
-                correct += (predictions == labels).sum()
-                total_tested += labels.size(0)
-                
-                epoch_loss += loss.item()
+                _, predictions      = torch.max(outputs, 1)
+                epoch_correct      += (predictions == labels).sum()
+                epoch_total_tested += labels.size(0)
+                epoch_total_loss   += loss.item()
                 
                 # Update weights
                 loss.backward() 
@@ -219,14 +242,6 @@ def train(rank, world_size, config, project_name):
                 else:
                     optimizer.step()
 
-            # Display
-            if (i + 1) % max(int(total_step/10), 2) == 0 and rank == 0:
-                print("Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}".format(
-                        epoch + 1, config["epochs"], i + 1, total_step, loss.item()))
-
-                # Log
-                if run is not None:
-                    run.log({"batch_loss": loss.item()})
 
         # Scheduler step
         if config["sched"] is not None:
@@ -237,38 +252,78 @@ def train(rank, world_size, config, project_name):
             dist.barrier()
 
         # Display 
-        if (epoch % 2 == 0) and (rank == 0):
-            val_loss, val_acc = test(rank, net, data, config["crit"])
-
-            # Late data augmentation
-            # if ((val_loss > epoch_loss/len(data.trainset)) and (epoch > 10)) or (epoch > 0.9*config.epochs):
-            #     data.data_augment = True
-            #     data.train_set = data.get_trainset()
-            #     train_loader = data.get_train_loader(config.batch_size)
-            #     wandb.log({ "Data Augmentation" : data.data_augment})
-
+        if (epoch % 2 == 0):
+            # Test
+            val_correct, val_total_tested, val_total_loss, _ = test(rank, net, data, config)
             net.train(True)
-            print("Epoch: ", epoch + 1, "\tTrain Loss: ", round(epoch_loss/len(data.train_set),5), "\tVal Loss: ", round(val_loss,5))
 
-            run.log({   "epoch"      : epoch + 1, 
-                        "Train Loss" : epoch_loss/len(data.train_set),
-                        "Train Acc"  : correct/total_tested,
+            epoch_acc, epoch_loss = gather_acc_and_loss(rank,  world_size, epoch_correct, epoch_total_tested, epoch_total_loss)
+            val_acc, val_loss     = gather_acc_and_loss(rank,  world_size,   val_correct,   val_total_tested,   val_total_loss)
+            
+            if rank == 0:
+                # Late data augmentation
+                # if ((val_loss > epoch_loss/len(data.trainset)) and (epoch > 10)) or (epoch > 0.9*config.epochs):
+                #     data.data_augment = True
+                #     data.train_set = data.get_trainset()
+                #     train_loader = data.get_train_loader(config.batch_size)
+                #     wandb.log({ "Data Augmentation" : data.data_augment})
+
+                
+                print("Epoch: ", epoch + 1, "\tTrain Loss: ", round(epoch_loss/len(data.train_set),5), "\tVal Loss: ", round(val_loss,5))
+
+                run.log({   "epoch"  : epoch + 1, 
+                        "Train Loss" : epoch_loss,
+                        "Train Acc"  : epoch_acc,
                         "Val Loss"   : val_loss,
                         "Val Acc"    : val_acc})
-        dist.barrier()
-    print("Done Training on Rank ", rank)
 
+            dist.barrier()
+   
     # Test
+    print("Testing on Rank", rank)
+    val_correct, val_total_tested, val_total_loss, val_adv_correct = test(rank, net, data, config)
+    print("VAL ADV", val_adv_correct)
+    
+    # Gather values from all machines (ranks)
+    print("Evaluating Results", rank)
+    epoch_acc, epoch_loss = gather_acc_and_loss(rank,  world_size, epoch_correct, epoch_total_tested, epoch_total_loss) if config["epochs"] != 0 else None, None
+    val_acc, val_loss     = gather_acc_and_loss(rank,  world_size,   val_correct,   val_total_tested,   val_total_loss)
+
+    # Get adversarial accuracy 
+    if config["test_robustness"]:
+
+        print("Calculating Fooling Ratio on Rank", rank)
+        fool_ratio = [None for _ in range(len(val_adv_correct))]
+        for i, (epsilon, adv_correct) in enumerate(zip(config["attacker epsilons"], val_adv_correct)):
+            adv_acc, _    = gather_acc_and_loss(rank,  world_size,   adv_correct,   val_total_tested,   torch.tensor(0).to(rank))
+            print("Gathered ", i, " on Rank ", rank)
+            if rank == 0:
+                print("ACC", val_acc)
+                print("Adv ACC", adv_acc)
+                print("Fool", fool_ratio)
+                # fool_ratio[i] = round(100*((val_acc - adv_acc) / val_acc), 2)
+            dist.barrier()
+            print("Break", rank)
+            break
+    else:
+        fool_ratio = None
+
+    # Log and save model
     if rank == 0:
-        print("Final Evaluation")
-        val_loss, val_acc = test(rank, net, data, config["crit"])
-        run.log({"epoch"      : epoch + 1, 
-                "Train Loss"  : epoch_loss/len(data.train_set),
-                "Train Acc"   : correct/total_tested,
-                "Val Loss"    : val_loss,
-                "Val Acc"     : val_acc})
-        
-        # Save Model
+        print("Building Table")
+        print([str(ep) for ep in config["attack_epsilons"]],
+              [[str(fool)] for fool in fool_ratio])
+        # fool_ratio_table = wandb.Table( columns = [str(ep) for ep in config["attack_epsilons"]],
+        #                                 data    = [[str(fool)] for fool in fool_ratio])
+
+        print("Logging")                          
+        # run.log({"epoch"      : epoch + 1, 
+        #         "Train Loss"  : epoch_loss,
+        #         "Train Acc"   : epoch_acc,
+        #         "Val Loss"    : val_loss,
+        #         "Val Acc"     : val_acc,
+        #         "Fool Ratios" : fool_ratio_table})
+
         if config["save_model"]:
             print("Saving Model")
 
@@ -283,103 +338,81 @@ def train(rank, world_size, config, project_name):
             if config["distill"]:
                 filename = "distilled_" + str(config["distill_temp"]) + "_" + filename
                 
-            
             # Save Models
             torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + filename)
    
-    # Wait till all processes are done thrn shut down
+    # Close all processes
     dist.barrier()
     dist.destroy_process_group()
+    print("closed")
 
     # Close WandB
     if rank == 0 and run is not None:
         wandb.finish()
         print("WandB Finished")
 
-def test(rank, net, data, crit):
+def test(rank, net, data, config):
     # Set to test mode
     net.eval()
 
+    # Load Attacker 
+    if config["test_robustness"]:
+        attacker_net = FstLayUniNet( set_name  = config["set_name"], 
+                                    gpu        = rank,
+                                    model_name = config["model_name"]).to(rank)
+        attacker_state_dict = torch.load(config["attacker_pretrained_weights_filename"], map_location=torch.device('cpu'))
+
+        if config["from_ddp"]:  # Remove prefixes if from DDP
+            torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(attacker_state_dict, "module.")
+        attacker_net.load_state_dict(attacker_state_dict)
+        attacker_net = DDP(attacker_net, device_ids=[rank])
+        attacker_net.eval()
+
+        # Initalize Attacker with current model parameters
+        attacker = Attacker(net = attacker_net, data = data, gpu = rank)
+
     #Create loss functions
-    criterion = initalize_criterion(crit)
+    criterion = initalize_criterion(config)
 
     # Initialize
-    total_loss = 0
-    correct = 0
-    total_tested = 0
+    correct, total_tested, total_loss   = [torch.tensor(0).float().to(rank) for _ in range(3)]
+    adv_correct  = [torch.tensor(0).float().to(rank) if config["test_robustness"] else None for _ in range(len(config["attacker epsilons"]))]
     # Test data in test loader
     for inputs, labels in data.test_loader:
         # Push to gpu
         inputs, labels = inputs.to(rank, non_blocking=True), labels.to(rank, non_blocking=True)
+
+        if config["test_robustness"]:
+            for i, epsilon in enumerate(config["attacker epsilons"]):
+                # Generate attacks and replace them with orginal inputs
+                attacks = attacker.get_attack_accuracy(attack = config["attacker attack type"] ,
+                                                        attack_images = inputs,
+                                                        attack_labels = labels,
+                                                        epsilons = [epsilon],
+                                                        return_attacks_only = True,
+                                                        prog_bar = False)
+                
+                # Feedforward
+                adv_outputs = net(attacks)
+
+                # Update running sum
+                _, adv_predictions = torch.max(adv_outputs, 1)
+                adv_correct[i] += (adv_predictions == labels).sum()
 
         #Forward pass
         outputs = net(inputs)
-        loss = criterion(outputs, labels) # Calculate loss 
-
-        # Update runnin sum
+        
+        # Examine output
+        loss           = criterion(outputs, labels) 
         _, predictions = torch.max(outputs, 1)
+
+        # Update running sum
         correct += (predictions == labels).sum()
         total_tested += labels.size(0)
         total_loss   += loss.item()
-    
-    # Test Loss
-    test_loss = (total_loss/len(data.test_set))
-    test_acc  = correct / total_tested
 
-    print("Total Tested", total_tested)
-    exit()
-    return test_loss, test_acc
-
-def test_robustness(rank, net, data, config):
-     # Set to test mode
-    net.eval()
-
-    # Load Attacker 
-    attacker_net = FstLayUniNet( set_name  = config["set_name"], 
-                                gpu        = rank,
-                                model_name = config["model_name"]).to(rank)
-    attacker_state_dict = torch.load(config["attacker_pretrained_weights_filename"], map_location=torch.device('cpu'))
-
-    if config["from_ddp"]:  # Remove prefixes if from DDP
-        torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(attacker_state_dict, "module.")
-    attacker_net.load_state_dict(attacker_state_dict)
-    attacker_net = DDP(attacker_net, device_ids=[rank])
-    attacker_net.eval()
-
-    # Initalize Attacker with current model parameters
-    attacker = Attacker(net = attacker_net, data = data, gpu = rank)
-
-    # Initialize
-    correct = 0
-    total_tested = 0
-    # Test data in test loader
-    for inputs, labels in data.test_loader:
-        # Push to gpu
-        inputs, labels = inputs.to(rank, non_blocking=True), labels.to(rank, non_blocking=True)
-
-        # Generate attacks and replace them with orginal inputs
-        attacks = attacker.get_attack_accuracy(attack = config["attacker attack type"] ,
-                                                attack_images = inputs,
-                                                attack_labels = labels,
-                                                epsilons = [config["attacker epsilon"]],
-                                                return_attacks_only = True,
-                                                prog_bar = False)
-        
-        # Feedforward
-        adv_outputs = net(attacks)
-        
-        # Update running sum
-        _, adv_predictions = torch.max(adv_outputs, 1) 
-        correct += (adv_predictions == labels).sum()
-        total_tested += labels.size(0)
-        total_loss   += loss.item()
-    
-    # Test Loss
-    adv_acc  = correct / total_tested
-
-    print(total_tested, " tested on rank ", rank)
-
-    return adv_acc
+    dist.barrier()
+    return correct, total_tested, total_loss, adv_correct
 
 def run_ddp(func, world_size, config, project_name):
 
@@ -398,7 +431,7 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "2, 6, 7"
+    gpu_ids = "0, 1, 2, 3, 4, 5, 6, 7"
 
     # WandB
     project_name = "DDP MNIST"
@@ -409,17 +442,18 @@ if __name__ == "__main__":
                 "model_name": "lenet",
                 "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt",
                 "from_ddp"  : True,
-                "save_model": True,
+                "save_model": False,
 
                 # Attacker Network
-                "attacker_pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt",
-                "attacker attack type" : "FGSM",
-                "attacker epsilon"     : 0.15,
+                "test_robustness"                       : True,
+                "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_98.pt",
+                "attacker attack type"                  : "FGSM",
+                "attacker epsilons"                     : [0.05, 0.15],
 
                 # Data
                 "set_name"      : "MNIST",
                 "batch_size"    : 512,
-                "data_augment"  : True,
+                "data_augment"  : False,
                 
                 # Optimizer
                 "optim"         : "sgd",
@@ -443,8 +477,8 @@ if __name__ == "__main__":
                 "epoch_delay"   : 5,
 
                 ### Distill ###
-                "distill"       : True,
-                "distill_temp"  : 50,
+                "distill"       : False,
+                "distill_temp"  : 20,
                }
     #-------------------------------------#
     

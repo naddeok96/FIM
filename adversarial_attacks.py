@@ -284,6 +284,14 @@ class Attacker:
                 eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
                 normed_attacks = self.normalize(eig_vec_max, p = None, dim = 2)
             
+            elif attack == "Gaussian Noise":
+                # Get losses
+                outputs = self.net(inputs)
+                losses  = self.indv_criterion(outputs, labels)
+
+                # Generate attack
+                normed_attacks = self.normalize(torch.rand_like(inputs.view(inputs.size(0), inputs.size(1), -1)), p = None, dim = 2)
+
             elif attack == "FGSM":
                 # Calculate Gradients
                 gradients, batch_size, losses, predicted = self.get_gradients(inputs, labels)
