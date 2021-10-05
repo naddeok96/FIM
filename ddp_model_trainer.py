@@ -156,7 +156,8 @@ def train(rank, world_size, config, project_name):
     data = Data(gpu          = rank, 
                 set_name     = config["set_name"], 
                 data_augment = config["data_augment"],
-                maxmin       = True if config["attack_type"] is not None else False)
+                maxmin       = True,
+                test_batch_size = config["batch_size"])
     train_loader = data.get_train_loader(config["batch_size"])
 
     # Setup Optimzier and Criterion
@@ -449,7 +450,7 @@ def test(rank, net, data, config):
         total_tested += labels.size(0)
         total_loss   += loss.item()
 
-        print("BREAKING ON FIRST TEST BATCH")
+        print("BREAKING ON FIRST TEST BATCH ON RANK", rank)
         break
 
     dist.barrier()
@@ -489,12 +490,12 @@ if __name__ == "__main__":
                 "test_robustness"                       : True,
                 "save_attack_results"                   : True,
                 "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_98.pt",
-                "attacker_attack_type"                  : "PGD", # "CW2", # "Gaussian Noise", # "FGSM", # 
-                "attacker epsilons"                     : np.linspace(0, 0.15, num=31),
+                "attacker_attack_type"                  : "OSSA", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
+                "attacker epsilons"                     : np.linspace(0, 0.15, num=91),
 
                 # Data
                 "set_name"      : "MNIST",
-                "batch_size"    : 124,
+                "batch_size"    : 100,
                 "data_augment"  : False,
                 
                 # Optimizer
@@ -532,5 +533,9 @@ if __name__ == "__main__":
     assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
     # Run training using DDP
-    run_ddp(train, n_gpus, config, project_name)
+    attacker_attack_types = ["CW2"] # ["OSSA", "CW2", "PGD", "Gaussian Noise", "FGSM"]
+    for attacker_attack_type in attacker_attack_types:
+        print("Working on", attacker_attack_type)
+        config["attacker_attack_type"] = attacker_attack_type
+        run_ddp(train, n_gpus, config, project_name)
 

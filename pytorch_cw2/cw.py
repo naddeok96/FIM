@@ -112,7 +112,7 @@ class L2Adversary(object):
 
     def __init__(self, targeted=True, confidence=0.0, c_range=(1e-3, 1e10),
                  search_steps=5, max_steps=1000, abort_early=True,
-                 box=(-1., 1.), optimizer_lr=1e-2, init_rand=False):
+                 box=(-1., 1.), optimizer_lr=1e-2, init_rand=False, device_num="cpu"):
         """
         :param targeted: ``True`` to perform targeted attack in ``self.run``
                method
@@ -178,6 +178,7 @@ class L2Adversary(object):
         self.ae_tol = 1e-4  # tolerance of early abort
         self.box = tuple(map(float, box))  # type: Tuple[float, float]
         self.optimizer_lr = optimizer_lr
+        self.device_num = device_num
 
         # `self.init_rand` is not in Carlini's code, it's an attempt in the
         # referencing pytorch implementation to improve the quality of attacks.
@@ -225,8 +226,8 @@ class L2Adversary(object):
         # the type annotations here are used only for type hinting and do
         # not indicate the actual type (cuda or cpu); same applies to all codes
         # below
-        inputs = runutils.make_cuda_consistent(model, inputs)[0]  # type: torch.FloatTensor
-        targets = runutils.make_cuda_consistent(model, targets)[0]  # type: torch.FloatTensor
+        inputs  = inputs.to(self.device_num)  # type: torch.FloatTensor
+        targets = targets.to(self.device_num)  # type: torch.FloatTensor
 
         # run the model a little bit to get the `num_classes`
         num_classes = model(Variable(inputs[0][None, :], requires_grad=False)).size(1)  # type: int
@@ -256,7 +257,7 @@ class L2Adversary(object):
 
         # the one-hot encoding of `targets`
         targets_oh = torch.zeros(targets.size() + (num_classes,))  # type: torch.FloatTensor
-        targets_oh = runutils.make_cuda_consistent(model, targets_oh)[0]
+        targets_oh = targets_oh.to(self.device_num)
         targets_oh.scatter_(1, targets.unsqueeze(1), 1.0)
         targets_oh_var = Variable(targets_oh, requires_grad=False)
 
@@ -266,7 +267,7 @@ class L2Adversary(object):
         pert_tanh = torch.zeros(inputs.size())  # type: torch.FloatTensor
         if self.init_rand:
             nn.init.normal(pert_tanh, mean=0, std=1e-3)
-        pert_tanh = runutils.make_cuda_consistent(model, pert_tanh)[0]
+        pert_tanh = pert_tanh.to(self.device_num)
         pert_tanh_var = Variable(pert_tanh, requires_grad=True)
 
         optimizer = optim.Adam([pert_tanh_var], lr=self.optimizer_lr)
@@ -274,7 +275,7 @@ class L2Adversary(object):
             if self.repeat and sstep == self.binary_search_steps - 1:
                 scale_consts_np = upper_bounds_np
             scale_consts = torch.from_numpy(np.copy(scale_consts_np)).float()  # type: torch.FloatTensor
-            scale_consts = runutils.make_cuda_consistent(model, scale_consts)[0]
+            scale_consts = scale_consts.to(self.device_num)
             scale_consts_var = Variable(scale_consts, requires_grad=False)
             # print 'Using scale consts:', list(scale_consts_np)  # FIXME
 

@@ -55,6 +55,7 @@ class Attacker:
 
         # Find norm of vectors
         norms = torch.linalg.norm(input_tensor, ord=p, dim=dim).view(-1, 1, 1)
+        print(norms)
 
         # Divide all elements in vector by norm
         return torch.bmm(1 / norms, input_tensor.view(-1, 1, max(dim1_size, dim2_size))).view(-1, dim1_size, dim2_size)
@@ -168,10 +169,22 @@ class Attacker:
         if attack == "CW":
             from pytorch_cw2.cw import L2Adversary
 
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    device_num  = "cuda:0" 
+                    device_type = "gpu"
+                else:
+                    device_num  = "cpu"
+                    device_type = "cpu"
+                
+            else:
+                device_num  = "cuda:" + str(self.gpu)
+                device_type = "gpu"
+
             self.cw_attack = L2Adversary(targeted=False, confidence=0.0, c_range=(1e-3, 1e10),
                                         search_steps=5, max_steps=1000, abort_early=True,
                                         box=(self.data.test_pixel_min, self.data.test_pixel_max), 
-                                        optimizer_lr=1e-2)
+                                        optimizer_lr=1e-2, device_num=device_num)
 
         elif attack == "CW2":
             # Imports
@@ -202,21 +215,22 @@ class Attacker:
 
             # Hyperparameters from "Towards Deep Learning Models Resistant to Adversarial Attacks"
             if self.data.set_name == "MNIST":
-                max_iter = 40
-
+                max_iter = 25
             elif self.data.set_name == "CIFAR10":
                 max_iter = 20
-
             else:
                 print("Eneter a valid data_set name for PGD")
                 exit()
+            
             attack_cw2 = CarliniL2Method(classifier=classifier,
                                         confidence    = 0.0, 
                                         learning_rate = 0.01,
+                                        binary_search_steps = 25,
+                                        max_halving = 10, 
+                                        max_doubling = 10,
                                         max_iter = max_iter, 
                                         batch_size = self.data.test_batch_size, 
                                         verbose = False)
-
 
         # Load EOT
         elif attack == "PGD":
@@ -423,7 +437,6 @@ class Attacker:
                 losses  = self.indv_criterion(outputs, labels)
                 
                 # Reduce the attacks to only the perturbations
-                print("A\n",attacks.size(),"\nI\n", inputs.size(),"\nF\n", attacks[0] - inputs[0])
                 attacks = attacks - inputs
 
                 # Norm the attack
@@ -431,20 +444,25 @@ class Attacker:
 
             elif attack == "CW":
                 # Use other labs code to produce full attack images
-                attacks = self.cw_attack(self.net, inputs, labels, to_numpy=False)
+                print("Starting Attacks on Rank", self.gpu)
+                import torch.distributed as dist
+                attacks = self.cw_attack(self.net.to(self.gpu), inputs.to(self.gpu), labels.to(self.gpu), to_numpy=False)
+                print("Attacks on Rank", self.gpu)
+                dist.barrier()
 
                 if isinstance(self.gpu, bool):
                     attacks = attacks.cuda() if self.gpu else attacks
                 else:
                     attacks = attacks.to(self.gpu)
                 
-
                 # Get losses
                 outputs = self.net(inputs)
                 losses = self.indv_criterion(outputs, labels)
                 
                 # Reduce the attacks to only the perturbations
                 attacks = attacks - inputs
+
+                
 
                 # Norm the attack
                 normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
@@ -536,12 +554,10 @@ class Attacker:
                 eigenvector0 = eigenvector0.to(self.gpu)
                 eigenvector = eigenvector.to(self.gpu)
             
-
             # Normalize eigenvector
             norms = torch.linalg.norm(eigenvector0, ord=2, dim=1).view(-1, 1, 1)
             eigenvector0 = torch.bmm(1 / norms, eigenvector0.view(batch_size, 1, -1)).view(-1, channel_num * image_size**2, 1)
             
-
             # If it does not converge in max_iter tries try again with new random vector
             for k in range(max_iter):
 

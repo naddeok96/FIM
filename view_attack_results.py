@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 set_name = "MNIST"
-attack_type = ["FGSM", "Gaussian Noise", "CW2", "PGD"]
+attack_type = ["FGSM", "Gaussian Noise", "CW2", "PGD", "OSSA"]
 
 
 for attack in attack_type:
@@ -17,6 +17,8 @@ for attack in attack_type:
         results.update({ws.cell(0, col).value: []})
 
         for row in range(1, len(ws.col(col))):
+            # if row > 16:
+            #     continue
             results[ws.cell(0, col).value].append(ws.cell(row, col).value)
             
     for key, value in results.items():

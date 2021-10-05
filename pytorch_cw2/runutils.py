@@ -47,7 +47,7 @@ def is_cuda_consistent(*args):
         result['cuda'] = cur_cuda_state
     return True
 
-def make_cuda_consistent(refobj, *args):
+def make_cuda_consistent(refobj, *args, device_num = "cpu"):
     """
     Attempt to make the cuda states of args consistent with that of ``refobj``.
     If any element of args is a Variable and the cuda state of the element is
@@ -64,19 +64,20 @@ def make_cuda_consistent(refobj, *args):
     if ref_cuda_state is None:
         raise ValueError('cannot determine the cuda state of `refobj` ({})'
                 .format(refobj))
-    move_to_device = methodcaller('cuda' if ref_cuda_state else 'cpu')
+    move_to_device = methodcaller(device_num)
 
     result_args = list()
     for v in args:
-        cuda_state = get_cuda_state(v)
-        if cuda_state != ref_cuda_state:
-            if isinstance(v, Variable):
-                if ref_cuda_state:
-                    v = v.cuda()
-            elif isinstance(v, nn.Module):
-                move_to_device(v)
-            else:
-                v = move_to_device(v)
+        v = v.to(device_num)
+        # cuda_state = get_cuda_state(v)
+        # if cuda_state != ref_cuda_state:
+        #     if isinstance(v, Variable):
+        #         if ref_cuda_state:
+        #             v = v.to(device_num)
+        #     elif isinstance(v, nn.Module):
+        #         move_to_device(v)
+        #     else:
+        #         v = move_to_device(v)
         result_args.append(v)
     return tuple(result_args)
 
