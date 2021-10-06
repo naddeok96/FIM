@@ -55,7 +55,6 @@ class Attacker:
 
         # Find norm of vectors
         norms = torch.linalg.norm(input_tensor, ord=p, dim=dim).view(-1, 1, 1)
-        print(norms)
 
         # Divide all elements in vector by norm
         return torch.bmm(1 / norms, input_tensor.view(-1, 1, max(dim1_size, dim2_size))).view(-1, dim1_size, dim2_size)
@@ -344,7 +343,7 @@ class Attacker:
                 eig_vec_max, losses = self.get_max_eigenpair(inputs, labels)
                 normed_attacks = self.normalize(eig_vec_max, p = None, dim = 2)
             
-            elif attack == "Gaussian Noise":
+            elif attack == "Gaussian_Noise":
                 # Get losses
                 outputs = self.net(inputs)
                 losses  = self.indv_criterion(outputs, labels)
@@ -444,10 +443,8 @@ class Attacker:
 
             elif attack == "CW":
                 # Use other labs code to produce full attack images
-                print("Starting Attacks on Rank", self.gpu)
                 import torch.distributed as dist
                 attacks = self.cw_attack(self.net.to(self.gpu), inputs.to(self.gpu), labels.to(self.gpu), to_numpy=False)
-                print("Attacks on Rank", self.gpu)
                 dist.barrier()
 
                 if isinstance(self.gpu, bool):

@@ -70,7 +70,7 @@ class FstLayUniNet(nn.Module):
         elif self.set_name == "CIFAR10":
             self.model_name = model_name
 
-            self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=pretrained, verbose = False)
+            self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=False, verbose = False)
 
         else:
             print("Please enter vaild dataset. (Options: MNIST, CIFAR10)")

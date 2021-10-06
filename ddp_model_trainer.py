@@ -13,6 +13,16 @@ import torch.nn.functional as F
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 from torch.nn.parallel import DistributedDataParallel as DDP
 
+def get_name_from_filename(filename):
+    name = ""
+    for c in reversed(list(filename[:-3])):
+        if c == "/":
+            break
+
+        name = c + name
+        
+    return name
+
 def setup(rank, world_size, config, project_name):
     # Setup rendezvous
     os.environ['MASTER_ADDR'] = 'localhost'
@@ -73,9 +83,15 @@ def initalize_optimizer(net, config):
 
     return optimizer
 
-def initalize_scheduler(sched, optimizer, epochs):
-    if sched == "Cosine Annealing":
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = int(epochs))
+def initalize_scheduler(optimizer, config, steps_per_epoch = None):
+    if config["sched"] == "Cosine Annealing":
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = int(config["epochs"]))
+
+    elif config["sched"] == "One Cycle LR":
+        scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, 
+                                                        max_lr = config["lr"], 
+                                                        epochs = config["epochs"],
+                                                        steps_per_epoch = steps_per_epoch)
     else:
         print("Unknown Scheduler entered, please add to initalize_scheduler func.")
         exit()
@@ -132,6 +148,9 @@ def train(rank, world_size, config, project_name):
         if config["from_ddp"]:  # Remove prefixes if from DDP
             torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.")
 
+
+    torch.cuda.set_device(rank)
+    torch.cuda.empty_cache()
     net = FstLayUniNet( set_name   = config["set_name"], 
                         gpu        = rank,
                         U_filename = config["U_filename"],
@@ -148,7 +167,8 @@ def train(rank, world_size, config, project_name):
         teacher_net.eval()
 
     else:
-        net.load_state_dict(state_dict)
+        if config["pretrained_weights_filename"] is not None:
+            net.load_state_dict(state_dict)
 
     net = DDP(net, device_ids=[rank])
 
@@ -164,7 +184,7 @@ def train(rank, world_size, config, project_name):
     optimizer = initalize_optimizer(net, config)
     criterion = initalize_criterion(config)
     if config["sched"] is not None:
-        scheduler = initalize_scheduler(config["sched"], optimizer, config["epochs"])
+        scheduler = initalize_scheduler(optimizer, config, steps_per_epoch = len(train_loader))
 
     # Disable adversarial robustness test while trinaing
     test_robustness = copy(config["test_robustness"])
@@ -174,6 +194,7 @@ def train(rank, world_size, config, project_name):
     if config["epochs"] != 0:
         print("Trainning on Rank", rank)
     for epoch in range(int(config["epochs"])):   
+        train_loader.sampler.set_epoch(epoch)
         epoch_correct, epoch_total_tested, epoch_total_loss = [torch.tensor(0).float().to(rank) for _ in range(3)]
         for i, (inputs, labels) in enumerate(train_loader):
             # Push to gpu
@@ -249,9 +270,12 @@ def train(rank, world_size, config, project_name):
                 else:
                     optimizer.step()
 
+            # Scheduler step
+            if config["sched"] == "One Cycle LR":
+                scheduler.step()
 
         # Scheduler step
-        if config["sched"] is not None:
+        if config["sched"] == "Cosine Annealing":
             scheduler.step()
 
             if rank == 0:
@@ -259,7 +283,7 @@ def train(rank, world_size, config, project_name):
             dist.barrier()
 
         # Display 
-        if (epoch % 2 == 0):
+        if ((epoch + 1) % 10 == 0):
             # Test
             val_correct, val_total_tested, val_total_loss, _ = test(rank, net, data, config)
             net.train(True)
@@ -276,7 +300,9 @@ def train(rank, world_size, config, project_name):
                 #     wandb.log({ "Data Augmentation" : data.data_augment})
 
                 
-                print("Epoch: ", epoch + 1, "\tTrain Loss: ", round(epoch_loss/len(data.train_set),5), "\tVal Loss: ", round(val_loss,5))
+                print(  "Epoch: ",        epoch + 1, 
+                        "\tTrain Loss: ", round(epoch_loss.item(),5), 
+                        "\tVal Loss: ",   round(val_loss.item(),5))
 
                 run.log({   "epoch"  : epoch + 1, 
                         "Train Loss" : epoch_loss,
@@ -295,6 +321,7 @@ def train(rank, world_size, config, project_name):
     print("Evaluating Results", rank)
     epoch_acc, epoch_loss = gather_acc_and_loss(rank,  world_size, epoch_correct, epoch_total_tested, epoch_total_loss) if config["epochs"] != 0 else None, None
     val_acc, val_loss     = gather_acc_and_loss(rank,  world_size,   val_correct,   val_total_tested,   val_total_loss)
+    print("Val Gathered", rank)
 
     # Get adversarial accuracy 
     if config["test_robustness"]:
@@ -308,21 +335,26 @@ def train(rank, world_size, config, project_name):
             dist.barrier()
     else:
         fool_ratio = None
-
-    # Log and save model
+    print("Adv Gathered", rank)
+    # Log/Save data, results and model
     if rank == 0:
-        fool_ratio_table = wandb.Table( columns = ["NSR", "Fool Ratio"],
-                                        data    = [[eps, int(fool.item())] for eps, fool in zip(config["attacker epsilons"], fool_ratio)])
-
+        
         print("Logging")     
         run.log({"Epoch"      : epoch + 1 if config["epochs"] != 0 else None, 
                 "Train Loss"  : epoch_loss,
                 "Train Acc"   : epoch_acc,
                 "Val Loss"    : val_loss,
-                "Val Acc"     : val_acc,
-                "Fool Ratios" : fool_ratio_table})
+                "Val Acc"     : val_acc})
 
-        if config["save_attack_results"]:
+        print("Log")
+        if config["test_robustness"]:
+            fool_ratio_table = wandb.Table( columns = ["NSR", "Fool Ratio"],
+                                        data    = [[eps, int(fool.item())] for eps, fool in zip(config["attacker epsilons"], fool_ratio)])
+            
+            run.log({"Fool Ratios" : fool_ratio_table})
+            print("Table")
+
+        if config["save_attack_results"] and config["test_robustness"]:
             print("Saving Attack Results to Excel")
             from xlwt import Workbook  
 
@@ -337,8 +369,13 @@ def train(rank, world_size, config, project_name):
             for i, (eps, fool) in enumerate(zip(config["attacker epsilons"], fool_ratio)):
                     sheet.write(i + 1, 0, eps)
                     sheet.write(i + 1, 1, int(fool.item()))
-            wb.save('results/' + data.set_name + '/Test_' + config["attacker_attack_type"] + '_attack_results.xls') 
+            
+            attacker_name = get_name_from_filename(config["attacker_pretrained_weights_filename"])
+            target_name   = get_name_from_filename(config["pretrained_weights_filename"])
 
+            filename = config["attacker_attack_type"] + "_from_" + attacker_name + '_on_' + target_name + '_attack_results.xls'
+            wb.save('results/' + data.set_name + '/' + filename) 
+        print("Save Attack Results")
         if config["save_model"]:
             print("Saving Model")
 
@@ -355,7 +392,7 @@ def train(rank, world_size, config, project_name):
                 
             # Save Models
             torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + filename)
-   
+        print("Model Saved")
     # Close all processes
     dist.barrier()
     dist.destroy_process_group()
@@ -450,9 +487,6 @@ def test(rank, net, data, config):
         total_tested += labels.size(0)
         total_loss   += loss.item()
 
-        print("BREAKING ON FIRST TEST BATCH ON RANK", rank)
-        break
-
     dist.barrier()
     return correct, total_tested, total_loss, adv_correct
 
@@ -473,36 +507,36 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "2, 6, 7"
+    gpu_ids = "0, 1, 2, 3, 4, 5, 6, 7"
 
     # WandB
-    project_name = "DDP MNIST"
+    project_name = "DDP CIFAR10"
 
     # Network
     config = {  
                 # Network
-                "model_name": "lenet",
-                "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt",
-                "from_ddp"  : True,
-                "save_model": False,
+                "model_name"                  : "cifar10_mobilenetv2_x1_4",
+                "pretrained_weights_filename" : None, # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_4_w_acc_91.pt",
+                "from_ddp"                    : False,
+                "save_model"                  : True,
 
                 # Attacker Network
-                "test_robustness"                       : True,
-                "save_attack_results"                   : True,
+                "test_robustness"                       : False,
+                "save_attack_results"                   : False,
                 "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_98.pt",
                 "attacker_attack_type"                  : "OSSA", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
-                "attacker epsilons"                     : np.linspace(0, 0.15, num=91),
+                "attacker epsilons"                     : np.linspace(0, 1.0, num=101),
 
                 # Data
-                "set_name"      : "MNIST",
-                "batch_size"    : 100,
-                "data_augment"  : False,
+                "set_name"      : "CIFAR10",
+                "batch_size"    : 20,
+                "data_augment"  : True,
                 
                 # Optimizer
-                "optim"         : "sgd",
-                "epochs"        : 0,
-                "lr"            : 5e-1,
-                "sched"         : "Cosine Annealing",
+                "optim"         : "nesterov",
+                "epochs"        : 500,
+                "lr"            : 0.014,
+                "sched"         : "One Cycle LR", #"Cosine Annealing", # 
                 "weight_decay"  : 1e-4,
                 "momentum"      : 0.9,
                 "use_SAM"       : False, 
@@ -512,7 +546,7 @@ if __name__ == "__main__":
 
                 # Hardening
                 ### Unitary ###
-                "U_filename"    : None, # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
+                "U_filename"    : "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt", # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
 
                 ### Adv Train ###
                 "attack_type"   : None,
@@ -524,7 +558,7 @@ if __name__ == "__main__":
                 "distill_temp"  : 20,
                }
     #-------------------------------------#
-    
+
     # Set GPUs to Use
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = gpu_ids
@@ -533,9 +567,24 @@ if __name__ == "__main__":
     assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
     # Run training using DDP
-    attacker_attack_types = ["CW2"] # ["OSSA", "CW2", "PGD", "Gaussian Noise", "FGSM"]
-    for attacker_attack_type in attacker_attack_types:
-        print("Working on", attacker_attack_type)
-        config["attacker_attack_type"] = attacker_attack_type
-        run_ddp(train, n_gpus, config, project_name)
+    run_ddp(train, n_gpus, config, project_name)
+
+    # target_networks = [ "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt",
+    #                     "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",
+    #                     "models/pretrained/MNIST/U_lenet_w_acc_94.pt",
+    #                     "models/pretrained/MNIST/lenet_w_acc_98.pt"]
+    # attacker_attack_types = ["Gaussian_Noise", "FGSM", "PGD",  "CW2", "OSSA"]
+    # for attacker_attack_type in attacker_attack_types:
+        # print("Working on", attacker_attack_type)
+        # config["attacker_attack_type"] = attacker_attack_type
+
+        # for target_network in target_networks:
+        #     print("\tWorking on", get_name_from_filename(target_network))
+        #     config["pretrained_weights_filename"] = target_network
+
+        #     if target_network == "models/pretrained/MNIST/U_lenet_w_acc_94.pt":
+        #         config["U_filename"] = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
+        #     else:
+        #         config["U_filename"] = None
+        #     run_ddp(train, n_gpus, config, project_name)
 

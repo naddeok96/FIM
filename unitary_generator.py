@@ -20,12 +20,12 @@ def imshow(img):
     return img
 
 # Hypers
-set_name = 'MNIST'
+set_name = 'CIFAR10'
 batch_size = int(5e4)
 
 # Load Network
 net = FstLayUniNet(set_name = set_name,
-                    model_name="lenet")
+                    model_name="cifar10_mobilenetv2_x1_0")
 
 # Set a random orthogonal matrix
 net.set_orthogonal_matrix()
