@@ -142,7 +142,7 @@ def train(rank, world_size, config, project_name):
     run = setup(rank, world_size, config, project_name)
 
     # Create model and move it to GPU with id rank
-    if config["pretrained_weights_filename"] is not None:
+    if config["pretrained_weights_filename"] or config["distill"]:
         state_dict = torch.load(config["pretrained_weights_filename"], map_location=torch.device('cpu'))
 
         if config["from_ddp"]:  # Remove prefixes if from DDP
@@ -156,7 +156,6 @@ def train(rank, world_size, config, project_name):
                         U_filename = config["U_filename"],
                         model_name = config["model_name"]).to(rank)
     
-
     if config["distill"]: # Load teacher net
         teacher_net = FstLayUniNet( set_name   = config["set_name"], 
                                     gpu        = rank,
@@ -215,7 +214,6 @@ def train(rank, world_size, config, project_name):
                                                         prog_bar = False)
 
                 dist.barrier()
-                print("Attacks Generated on Rank ", rank)
 
             # Set the parameter gradients to zero
             optimizer.zero_grad()   
@@ -235,6 +233,9 @@ def train(rank, world_size, config, project_name):
 
                     # Backward pass and optimize
                     loss.backward() 
+
+                    if config["gradient clip"]:
+                        torch.nn.utils.clip_grad_value_(net.parameters(), config["gradient clip"])
 
                     return loss
 
@@ -257,6 +258,9 @@ def train(rank, world_size, config, project_name):
 
                 else:
                     loss = criterion(outputs, labels)
+
+                    if config["gradient clip"]:
+                        torch.nn.utils.clip_grad_value_(net.parameters(), config["gradient clip"])
 
                 _, predictions      = torch.max(outputs, 1)
                 epoch_correct      += (predictions == labels).sum()
@@ -515,8 +519,8 @@ if __name__ == "__main__":
     # Network
     config = {  
                 # Network
-                "model_name"                  : "cifar10_mobilenetv2_x1_4",
-                "pretrained_weights_filename" : None, # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_4_w_acc_91.pt",
+                "model_name"                  : "cifar10_mobilenetv2_x1_0",
+                "pretrained_weights_filename" : "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt",
                 "from_ddp"                    : False,
                 "save_model"                  : True,
 
@@ -529,14 +533,15 @@ if __name__ == "__main__":
 
                 # Data
                 "set_name"      : "CIFAR10",
-                "batch_size"    : 20,
+                "batch_size"    : 400,
                 "data_augment"  : True,
                 
                 # Optimizer
-                "optim"         : "nesterov",
+                "optim"         : "adam",
                 "epochs"        : 500,
-                "lr"            : 0.014,
+                "lr"            : 0.01,
                 "sched"         : "One Cycle LR", #"Cosine Annealing", # 
+                "gradient clip" : 0.1,
                 "weight_decay"  : 1e-4,
                 "momentum"      : 0.9,
                 "use_SAM"       : False, 
@@ -546,12 +551,12 @@ if __name__ == "__main__":
 
                 # Hardening
                 ### Unitary ###
-                "U_filename"    : "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt", # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
+                "U_filename"    : None, # "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt", # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
 
                 ### Adv Train ###
-                "attack_type"   : None,
+                "attack_type"   : "PGD",
                 "epsilon"       : 0.15,
-                "epoch_delay"   : 5,
+                "epoch_delay"   : 0,
 
                 ### Distill ###
                 "distill"       : False,
