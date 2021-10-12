@@ -268,21 +268,21 @@ class Attacker:
 
             elif self.data.set_name == "CIFAR10":
                 norm     = "inf"
-                eps      = 8
-                max_iter = 20
-                eps_step = 2
+                eps      = 0.3 * 1.6
+                max_iter = 40
+                eps_step = 0.01 * 1.6
 
             else:
                 print("Eneter a valid data_set name for PGD")
                 exit()
-            attack_pgd = ProjectedGradientDescent(estimator=classifier,
-                                        norm       = norm,
-                                        eps        = eps,      # Max perturbation Size
-                                        max_iter   = max_iter,
-                                        eps_step   = eps_step, # Step size for PGD,
-                                        batch_size = self.data.test_batch_size,
-                                        targeted   = True, 
-                                        verbose    = False)       
+            attack_pgd = ProjectedGradientDescent(  estimator  = classifier,
+                                                    norm       = norm,
+                                                    eps        = eps,     
+                                                    max_iter   = max_iter,
+                                                    eps_step   = eps_step, 
+                                                    batch_size = self.data.test_batch_size,
+                                                    targeted   = True, 
+                                                    verbose    = False)       
 
         # Load EOT
         elif attack == "EOT":

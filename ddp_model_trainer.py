@@ -110,14 +110,14 @@ def initalize_criterion(config):
     return criterion
 
 def gather_variable(rank, world_size, variable):
-                # Initialize lists
-                variable_list = [variable.clone() for _ in range(world_size)]
+    # Initialize lists
+    variable_list = [variable.clone() for _ in range(world_size)]
 
-                # Gather all variables
-                dist.all_gather(variable_list, variable)
-                
-                # Convert from list to single tensor
-                return torch.stack(variable_list)
+    # Gather all variables
+    dist.all_gather(variable_list, variable)
+    
+    # Convert from list to single tensor
+    return torch.stack(variable_list)
 
 def gather_acc_and_loss(rank,  world_size, correct, total_tested, total_loss):    
     # Gather values from all machines (ranks)
@@ -278,6 +278,11 @@ def train(rank, world_size, config, project_name):
             if config["sched"] == "One Cycle LR":
                 scheduler.step()
 
+                if rank == 0:
+                    run.log({"sched lr": scheduler.get_last_lr()[0]})
+                dist.barrier()
+
+
         # Scheduler step
         if config["sched"] == "Cosine Annealing":
             scheduler.step()
@@ -287,7 +292,7 @@ def train(rank, world_size, config, project_name):
             dist.barrier()
 
         # Display 
-        if ((epoch + 1) % 10 == 0):
+        if ((epoch + 1) % 10 == 0) or True:
             # Test
             val_correct, val_total_tested, val_total_loss, _ = test(rank, net, data, config)
             net.train(True)
@@ -304,9 +309,9 @@ def train(rank, world_size, config, project_name):
                 #     wandb.log({ "Data Augmentation" : data.data_augment})
 
                 
-                print(  "Epoch: ",        epoch + 1, 
-                        "\tTrain Loss: ", round(epoch_loss.item(),5), 
-                        "\tVal Loss: ",   round(val_loss.item(),5))
+                print(  "Epoch: "           , epoch + 1, 
+                        "\tTrain/Val Loss: ", round(epoch_loss.item(),5), "/", round(val_loss.item(),5),
+                        "\tTrain/Val Acc: " , round(epoch_acc.item()*100,2), "/", round(val_acc.item()*100,2))
 
                 run.log({   "epoch"  : epoch + 1, 
                         "Train Loss" : epoch_loss,
@@ -511,7 +516,7 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "0, 1, 2, 3, 4, 5, 6, 7"
+    gpu_ids = "0, 1, 2, 3"
 
     # WandB
     project_name = "DDP CIFAR10"
@@ -520,16 +525,9 @@ if __name__ == "__main__":
     config = {  
                 # Network
                 "model_name"                  : "cifar10_mobilenetv2_x1_0",
-                "pretrained_weights_filename" : "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt",
+                "pretrained_weights_filename" : None, # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt",
                 "from_ddp"                    : False,
                 "save_model"                  : True,
-
-                # Attacker Network
-                "test_robustness"                       : False,
-                "save_attack_results"                   : False,
-                "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_98.pt",
-                "attacker_attack_type"                  : "OSSA", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
-                "attacker epsilons"                     : np.linspace(0, 1.0, num=101),
 
                 # Data
                 "set_name"      : "CIFAR10",
@@ -540,8 +538,8 @@ if __name__ == "__main__":
                 "optim"         : "adam",
                 "epochs"        : 500,
                 "lr"            : 0.01,
-                "sched"         : "One Cycle LR", #"Cosine Annealing", # 
-                "gradient clip" : 0.1,
+                "sched"         : "One Cycle LR", # "Cosine Annealing", # 
+                "gradient clip" : 0.1, # None, #   
                 "weight_decay"  : 1e-4,
                 "momentum"      : 0.9,
                 "use_SAM"       : False, 
@@ -561,6 +559,13 @@ if __name__ == "__main__":
                 ### Distill ###
                 "distill"       : False,
                 "distill_temp"  : 20,
+
+                # Test Robustness
+                "test_robustness"                       : False,
+                "save_attack_results"                   : False,
+                "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_98.pt",
+                "attacker_attack_type"                  : "OSSA", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
+                "attacker epsilons"                     : np.linspace(0, 1.0, num=101)
                }
     #-------------------------------------#
 

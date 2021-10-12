@@ -1,15 +1,16 @@
 wandb: Currently logged in as: naddeok (use `wandb login --relogin` to force relogin)
 wandb: wandb version 0.12.4 is available!  To upgrade, please run:
 wandb:  $ pip install wandb --upgrade
-2021-10-07 19:15:46.600030: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
-2021-10-07 19:15:46.601770: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-10-11 17:21:40.698311: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-10-11 17:21:40.700371: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
 wandb: Tracking run with wandb version 0.10.30
-wandb: Syncing run worldly-wildflower-29
+wandb: Syncing run serene-rain-42
 wandb: ⭐️ View project at https://wandb.ai/naddeok/DDP%20CIFAR10
-wandb: 🚀 View run at https://wandb.ai/naddeok/DDP%20CIFAR10/runs/bz0z60g7
-wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20211007_191545-bz0z60g7
+wandb: 🚀 View run at https://wandb.ai/naddeok/DDP%20CIFAR10/runs/23c308aa
+wandb: Run data is saved locally in /home/naddeok5/FIM/wandb/run-20211011_172139-23c308aa
 wandb: Run `wandb offline` to turn off syncing.
-Augmenting Training Data on Rank  6
+
+Augmenting Training Data on Rank  0
 Files already downloaded and verified
 Files already downloaded and verified
 Augmenting Training Data on Rank  1
@@ -18,307 +19,244 @@ Files already downloaded and verified
 Augmenting Training Data on Rank  3
 Files already downloaded and verified
 Files already downloaded and verified
-Augmenting Training Data on Rank  4
-Files already downloaded and verified
-Files already downloaded and verified
-Augmenting Training Data on Rank  5
-Files already downloaded and verified
-Files already downloaded and verified
-Augmenting Training Data on Rank  7
-Files already downloaded and verified
-Files already downloaded and verified
 Augmenting Training Data on Rank  2
 Files already downloaded and verified
 Files already downloaded and verified
-
-Augmenting Training Data on Rank  0
-Files already downloaded and verified
-Files already downloaded and verified
-Trainning on Rank 7
-Trainning on Rank 5
 Trainning on Rank 0
-Trainning on Rank 2
-Trainning on Rank 4
 Trainning on Rank 1
-Trainning on Rank 6
 Trainning on Rank 3
-Attacks Generated on Rank  5
-Attacks Generated on Rank  4
-Attacks Generated on Rank  3
-Attacks Generated on Rank  7
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  6
-Attacks Generated on Rank  5
-Attacks Generated on Rank  1
-Attacks Generated on Rank  4
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  5
-Attacks Generated on Rank  1
-Attacks Generated on Rank  3
-Attacks Generated on Rank  7
-Attacks Generated on Rank  0
-Attacks Generated on Rank  4
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  6
-Attacks Generated on Rank  1
-Attacks Generated on Rank  0
-Attacks Generated on Rank  6
-Attacks Generated on Rank  4
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  5
-Attacks Generated on Rank  7
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  7
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  4
-Attacks Generated on Rank  5
-Attacks Generated on Rank  7
-Attacks Generated on Rank  3
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  5
-Attacks Generated on Rank  7
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  6
-Attacks Generated on Rank  2
-Attacks Generated on Rank  4
-Attacks Generated on Rank  3
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  1
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  4
-Attacks Generated on Rank  5
-Attacks Generated on Rank  1
-Attacks Generated on Rank  3
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  6
-Attacks Generated on Rank  2
-Attacks Generated on Rank  3
-Attacks Generated on Rank  4
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  0
-Attacks Generated on Rank  6
-Attacks Generated on Rank  4
-Attacks Generated on Rank  7
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  3
-Attacks Generated on Rank  5
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  3
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  4
-Attacks Generated on Rank  1
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  3
-Attacks Generated on Rank  7
-Attacks Generated on Rank  1
-Attacks Generated on Rank  5
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  6
-Attacks Generated on Rank  1
-Attacks Generated on Rank  4
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  6
-Attacks Generated on Rank  4
-Attacks Generated on Rank  7
-Attacks Generated on Rank  2
-Attacks Generated on Rank  5
-Attacks Generated on Rank  2
-Attacks Generated on Rank  5
-Attacks Generated on Rank  7
-Attacks Generated on Rank  4
-Attacks Generated on Rank  1
-Attacks Generated on Rank  6
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  1
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  1
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  3
-Attacks Generated on Rank  5
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  4
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  3
-Attacks Generated on Rank  4
-Attacks Generated on Rank  7
-Attacks Generated on Rank  6
-Attacks Generated on Rank  5
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  3
-Attacks Generated on Rank  4
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  6
-Attacks Generated on Rank  7
-Attacks Generated on Rank  4
-Attacks Generated on Rank  3
-Attacks Generated on Rank  5
-Attacks Generated on Rank  2
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  6
-Attacks Generated on Rank  5
-Attacks Generated on Rank  4
-Attacks Generated on Rank  3
-Attacks Generated on Rank  1
-Attacks Generated on Rank  0
-Attacks Generated on Rank  5
-Attacks Generated on Rank  7
-Attacks Generated on Rank  4
-Attacks Generated on Rank  1
-Attacks Generated on Rank  3
-Attacks Generated on Rank  6
-Attacks Generated on Rank  2
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  3
-Attacks Generated on Rank  5
-Attacks Generated on Rank  7
-Attacks Generated on Rank  1
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  1
-Attacks Generated on Rank  7
-Attacks Generated on Rank  6
-Attacks Generated on Rank  5
-Attacks Generated on Rank  4
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  6
-Attacks Generated on Rank  2
-Attacks Generated on Rank  4
-Attacks Generated on Rank  5
-Attacks Generated on Rank  1
-Attacks Generated on Rank  3
-Attacks Generated on Rank  7
-Attacks Generated on Rank  0
-Attacks Generated on Rank  6
-Attacks Generated on Rank  4
-Attacks Generated on Rank  1
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  6
-Attacks Generated on Rank  1
-Attacks Generated on Rank  5
-Attacks Generated on Rank  4
-Attacks Generated on Rank  3
-Attacks Generated on Rank  0
-Attacks Generated on Rank  7
-Attacks Generated on Rank  2
-Attacks Generated on Rank  5
-Attacks Generated on Rank  6
-Attacks Generated on Rank  3
-Attacks Generated on Rank  4
-Attacks Generated on Rank  1
-Attacks Generated on Rank  0
-Attacks Generated on Rank  0
-Attacks Generated on Rank  1
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  3
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  1
-Attacks Generated on Rank  7
-Attacks Generated on Rank  6
-Attacks Generated on Rank  2
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  4
-Attacks Generated on Rank  0
-Attacks Generated on Rank  6
-Attacks Generated on Rank  4
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  3
-Attacks Generated on Rank  1
-Attacks Generated on Rank  0
-Attacks Generated on Rank  4
-Attacks Generated on Rank  6
-Attacks Generated on Rank  3
-Attacks Generated on Rank  2
-Attacks Generated on Rank  7
-Attacks Generated on Rank  5
-Attacks Generated on Rank  1
-Attacks Generated on Rank  0
+Trainning on Rank 2
+Epoch:  1 	Train/Val Loss:  73.68392 / 16.11803 	Train/Val Acc:  tensor(0.0991, device='cuda:0') / tensor(0.1000, device='cuda:0')
+Epoch:  2 	Train/Val Loss:  73.68318 / 16.11807 	Train/Val Acc:  tensor(0.0985, device='cuda:0') / tensor(0.1000, device='cuda:0')
+Epoch:  3 	Train/Val Loss:  73.68311 / 16.11813 	Train/Val Acc:  tensor(0.0981, device='cuda:0') / tensor(0.1000, device='cuda:0')
+Epoch:  4 	Train/Val Loss:  73.68298 / 16.11814 	Train/Val Acc:  tensor(0.1004, device='cuda:0') / tensor(0.1000, device='cuda:0')
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+Traceback (most recent call last):
+  File "ddp_model_trainer.py", line 580, in <module>
+    run_ddp(train, n_gpus, config, project_name)
+  File "ddp_model_trainer.py", line 505, in run_ddp
+    mp.spawn(func,
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/multiprocessing/spawn.py", line 230, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method='spawn')
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/multiprocessing/spawn.py", line 188, in start_processes
+    while not context.join():
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/multiprocessing/spawn.py", line 99, in join
+    ready = multiprocessing.connection.wait(
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 931, in wait
+    ready = selector.select(timeout)
+  File "/usr/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 234, in prepare
+    _fixup_main_from_name(data['init_main_from_name'])
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 258, in _fixup_main_from_name
+    main_content = runpy.run_module(mod_name,
+  File "/usr/lib/python3.8/runpy.py", line 203, in run_module
+    mod_name, mod_spec, code = _get_module_details(mod_name)
+  File "/usr/lib/python3.8/runpy.py", line 111, in _get_module_details
+    __import__(pkg_name)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/__init__.py", line 38, in <module>
+    from wandb import sdk as wandb_sdk
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/__init__.py", line 7, in <module>
+    from . import wandb_helper as helper  # noqa: F401
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/wandb_helper.py", line 8, in <module>
+    from .lib import config_util
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/lib/config_util.py", line 8, in <module>
+    from wandb.util import load_yaml
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/util.py", line 27, in <module>
+    import shortuuid
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/shortuuid/__init__.py", line 2, in <module>
+    from shortuuid.main import decode
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/shortuuid/main.py", line 5, in <module>
+    import uuid as _uu
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 914, in _find_spec
+  File "<frozen importlib._bootstrap_external>", line 1342, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1313, in _get_spec
+KeyboardInterrupt
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7fe5489b1e50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1301, in _shutdown_workers
+    w.join(timeout=_utils.MP_STATUS_CHECK_INTERVAL)
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 44, in wait
+    if not wait([self.sentinel], timeout):
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 931, in wait
+    ready = selector.select(timeout)
+  File "/usr/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt: 
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7f58ebad5e50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1301, in _shutdown_workers
+    w.join(timeout=_utils.MP_STATUS_CHECK_INTERVAL)
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 44, in wait
+    if not wait([self.sentinel], timeout):
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 931, in wait
+    ready = selector.select(timeout)
+  File "/usr/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt: 
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7ff3ff157e50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1301, in _shutdown_workers
+    w.join(timeout=_utils.MP_STATUS_CHECK_INTERVAL)
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 44, in wait
+    if not wait([self.sentinel], timeout):
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 931, in wait
+    ready = selector.select(timeout)
+  File "/usr/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt: 
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7efc8a27ee50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1301, in _shutdown_workers
+    w.join(timeout=_utils.MP_STATUS_CHECK_INTERVAL)
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 44, in wait
+    if not wait([self.sentinel], timeout):
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 931, in wait
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7ff3ff157e50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1295, in _shutdown_workers
+    if self._persistent_workers or self._workers_status[worker_id]:
+AttributeError: '_MultiProcessingDataLoaderIter' object has no attribute '_workers_status'
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7fe5489b1e50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1295, in _shutdown_workers
+    if self._persistent_workers or self._workers_status[worker_id]:
+AttributeError: '_MultiProcessingDataLoaderIter' object has no attribute '_workers_status'
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+KeyboardInterrupt
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7f58ebad5e50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1295, in _shutdown_workers
+    if self._persistent_workers or self._workers_status[worker_id]:
+AttributeError: '_MultiProcessingDataLoaderIter' object has no attribute '_workers_status'
+    ready = selector.select(timeout)
+  File "/usr/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt: 
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x7efc8a27ee50>
+Traceback (most recent call last):
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1295, in _shutdown_workers
+    if self._persistent_workers or self._workers_status[worker_id]:
+AttributeError: '_MultiProcessingDataLoaderIter' object has no attribute '_workers_status'
+Process SpawnProcess-4:
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 318, in _bootstrap
+    util._exit_function()
+  File "/usr/lib/python3.8/multiprocessing/util.py", line 357, in _exit_function
+    p.join()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 47, in wait
+    return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 318, in _bootstrap
+    util._exit_function()
+  File "/usr/lib/python3.8/multiprocessing/util.py", line 357, in _exit_function
+    p.join()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 47, in wait
+    return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/usr/lib/python3.8/multiprocessing/spawn.py", line 129, in _main
+    return self._bootstrap(parent_sentinel)
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 331, in _bootstrap
+    traceback.print_exc()
+  File "/usr/lib/python3.8/traceback.py", line 163, in print_exc
+    print_exception(*sys.exc_info(), limit=limit, file=file, chain=chain)
+  File "/usr/lib/python3.8/traceback.py", line 103, in print_exception
+    for line in TracebackException(
+  File "/usr/lib/python3.8/traceback.py", line 509, in __init__
+    self.stack = StackSummary.extract(
+  File "/usr/lib/python3.8/traceback.py", line 353, in extract
+    linecache.lazycache(filename, f.f_globals)
+  File "/usr/lib/python3.8/linecache.py", line 171, in lazycache
+    get_source = getattr(loader, 'get_source', None)
+KeyboardInterrupt
+Process SpawnProcess-3:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 318, in _bootstrap
+    util._exit_function()
+  File "/usr/lib/python3.8/multiprocessing/util.py", line 357, in _exit_function
+    p.join()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 47, in wait
+    return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+KeyboardInterrupt
+[0mProcess SpawnProcess-2:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 318, in _bootstrap
+    util._exit_function()
+  File "/usr/lib/python3.8/multiprocessing/util.py", line 357, in _exit_function
+    p.join()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 47, in wait
+    return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+  File "/usr/lib/python3.8/multiprocessing/popen_fork.py", line 27, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+KeyboardInterrupt
+Process wandb_internal:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/naddeok5/.local/lib/python3.8/site-packages/wandb/sdk/internal/internal.py", line 154, in wandb_internal
+    thread.join()
+  File "/usr/lib/python3.8/threading.py", line 1011, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib/python3.8/threading.py", line 1027, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+KeyboardInterrupt
