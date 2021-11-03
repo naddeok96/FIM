@@ -22,6 +22,10 @@ class FstLayUniNet(nn.Module):
 
         # Declare Setname 
         self.set_name = set_name
+        if self.set_name == "TinyImageNet":
+            self.num_channels = 3
+            self.image_size   = 64
+            self.num_classes  = 200
 
         if self.set_name == "CIFAR10":
             self.num_channels = 3
@@ -34,7 +38,7 @@ class FstLayUniNet(nn.Module):
             self.num_classes  = 10
 
         else:
-            print("Please enter a valid set_name for EffNet.")
+            print("Please enter a valid set_name (MNIST, CIFAR10 and TinyImageNet).")
             exit()
 
         # Decalre gpu usage
@@ -53,6 +57,7 @@ class FstLayUniNet(nn.Module):
             self.normalize_U = True
             
         # Load Net
+        self.model_name = model_name
         if self.set_name == "MNIST":
             if model_name == "lenet":
                 self.model_name = model_name
@@ -68,12 +73,19 @@ class FstLayUniNet(nn.Module):
                 exit()
 
         elif self.set_name == "CIFAR10":
-            self.model_name = model_name
 
             self.net = torch.hub.load("chenyaofo/pytorch-cifar-models", self.model_name, pretrained=False, verbose = False)
 
+        elif self.set_name == "TinyImageNet":
+            from efficientnet_pytorch import EfficientNet
+
+            if pretrained_weights_filename:
+                self.net = EfficientNet.from_pretrained('efficientnet-b7', num_classes = self.num_classes)
+            else:
+                self.net = EfficientNet.from_name('efficientnet-b7', num_classes = self.num_classes)
+
         else:
-            print("Please enter vaild dataset. (Options: MNIST, CIFAR10)")
+            print("Please enter vaild dataset. (Options: MNIST, CIFAR10, TinyImageNet)")
             exit()
 
         # Organize GPUs

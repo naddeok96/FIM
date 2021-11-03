@@ -4,16 +4,11 @@ This class loads the data data and splits it into training and testing sets
 
 # Imports
 import torch
-from torch import nn
 import torchvision
-import numpy as np
-import torch.nn.functional as F
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-import os
 from unorm import UnNormalize
 import matplotlib.pyplot as plt
-from torch.utils.data.distributed import DistributedSampler
 
 class Data:
     def __init__(self,set_name = "MNIST",
@@ -100,6 +95,35 @@ class Data:
                                                     download=True,
                                                     transform=self.test_transform)
 
+        elif self.set_name == "TinyImageNet":
+            # Set Root
+            self.root = '../../../data/tiny-imagenet-200/' if root is None else root
+
+            self.mean = (0.4802, 0.4481, 0.3975)
+            self.std  = (0.2762, 0.2686, 0.2813)
+
+            # Image size
+            self.num_classes  = 200
+            self.num_channels = 3
+            self.image_size   = 64
+
+            # Declare Transforms
+            self.set_train_transform()
+
+            self.test_transform = transforms.Compose([  transforms.ToTensor(), # Convert the images into tensors
+                                                        transforms.Normalize(self.mean, self.std)]) # Normalize 
+
+            self.inverse_transform = UnNormalize(mean = self.mean,
+                                                 std  = self.std)
+
+            # Generate Datasets
+            self.train_set = datasets.ImageFolder(root      = '../../../data/tiny-imagenet-200/' + 'train',
+                                                  transform = self.train_transform)
+
+            self.test_set = datasets.ImageFolder(root      = '../../../data/tiny-imagenet-200/' + 'train',
+                                                  transform = self.train_transform)
+
+
         elif self.set_name == "ImageNet":
             self.train_transform = transforms.Compose([transforms.Resize(256),
                                                 transforms.CenterCrop(224),
@@ -170,6 +194,7 @@ class Data:
                 print("Augmenting Training Data")
             else:
                 print("Augmenting Training Data on Rank ", self.gpu)
+
             self.train_transform = transforms.Compose([ transforms.Resize((self.image_size, self.image_size)),
                                                         transforms.RandomRotation(10),
                                                         transforms.RandomAffine(degrees=2, 
@@ -188,7 +213,6 @@ class Data:
                                                       transforms.Normalize(self.mean,  #  Normalize
                                                                            self.std)]) 
 
-    # Fucntion to break training set into batches
     def get_train_loader(self, batch_size, num_workers = 8):
         '''
         Load the train loader given batch_size

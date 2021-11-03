@@ -182,7 +182,7 @@ def train(rank, world_size, config, project_name):
     # Setup Optimzier and Criterion
     optimizer = initalize_optimizer(net, config)
     criterion = initalize_criterion(config)
-    if config["sched"] is not None:
+    if config["sched"] is not None and config["epochs"] != 0:
         scheduler = initalize_scheduler(optimizer, config, steps_per_epoch = len(train_loader))
 
     # Disable adversarial robustness test while trinaing
@@ -192,6 +192,9 @@ def train(rank, world_size, config, project_name):
     # Begin Training
     if config["epochs"] != 0:
         print("Trainning on Rank", rank)
+        if rank == 0:
+            best_epoch_acc = 0
+
     for epoch in range(int(config["epochs"])):   
         train_loader.sampler.set_epoch(epoch)
         epoch_correct, epoch_total_tested, epoch_total_loss = [torch.tensor(0).float().to(rank) for _ in range(3)]
@@ -282,7 +285,6 @@ def train(rank, world_size, config, project_name):
                     run.log({"sched lr": scheduler.get_last_lr()[0]})
                 dist.barrier()
 
-
         # Scheduler step
         if config["sched"] == "Cosine Annealing":
             scheduler.step()
@@ -318,6 +320,26 @@ def train(rank, world_size, config, project_name):
                         "Train Acc"  : epoch_acc,
                         "Val Loss"   : val_loss,
                         "Val Acc"    : val_acc})
+
+
+                if config["save_model"] and val_acc > best_epoch_acc and epoch > config["epoch_delay"]:
+                    best_epoch_acc == val_acc
+                    print("Saving Model")
+
+                    # Define File Names
+                    filename  = str(config["model_name"]) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+                    if config["U_filename"] is not None:
+                        filename  = "U_" + filename
+                    
+                    if config["attack_type"] is not None:
+                        filename = config["attack_type"] + "_" + str(int(config["epsilon"]*100)) + "_" + filename
+
+                    if config["distill"]:
+                        filename = "distilled_" + str(config["distill_temp"]) + "_" + filename
+                        
+                    # Save Models
+                    torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + "TEMP_" + filename)
+                print("Model Saved")
 
             dist.barrier()
    
@@ -432,7 +454,7 @@ def test(rank, net, data, config):
         attacker = Attacker(net = attacker_net, data = data, gpu = rank)
 
     #Create loss functions
-    criterion = initalize_criterion(config)
+    criterion      = initalize_criterion(config)
     indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
 
     # Initialize
@@ -516,8 +538,8 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "0, 1, 2, 3"
-
+    gpu_ids = "1, 3, 7"
+    
     # WandB
     project_name = "DDP CIFAR10"
 
@@ -525,19 +547,19 @@ if __name__ == "__main__":
     config = {  
                 # Network
                 "model_name"                  : "cifar10_mobilenetv2_x1_0",
-                "pretrained_weights_filename" : None, # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt",
+                "pretrained_weights_filename" : None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
                 "from_ddp"                    : False,
                 "save_model"                  : True,
 
                 # Data
                 "set_name"      : "CIFAR10",
-                "batch_size"    : 400,
+                "batch_size"    : 124,
                 "data_augment"  : True,
                 
                 # Optimizer
                 "optim"         : "adam",
                 "epochs"        : 500,
-                "lr"            : 0.01,
+                "lr"            : 0.001,
                 "sched"         : "One Cycle LR", # "Cosine Annealing", # 
                 "gradient clip" : 0.1, # None, #   
                 "weight_decay"  : 1e-4,
@@ -554,7 +576,7 @@ if __name__ == "__main__":
                 ### Adv Train ###
                 "attack_type"   : "PGD",
                 "epsilon"       : 0.15,
-                "epoch_delay"   : 0,
+                "epoch_delay"   : 20,
 
                 ### Distill ###
                 "distill"       : False,

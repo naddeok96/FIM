@@ -17,7 +17,7 @@ print("Epsilons: ", epsilons)
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # Initialize data
 data = Data(set_name = set_name, gpu = gpu, maxmin = True)
