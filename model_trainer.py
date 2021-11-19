@@ -9,33 +9,33 @@ from academy import Academy
 import torch.nn.functional as F
 from torchsummary import summary
 from adversarial_attacks import Attacker
-from models.classes.first_layer_unitary_lenet   import FstLayUniLeNet
-from models.classes.first_layer_unitary_effnet  import FstLayUniEffNet
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 
 
 # Hyperparameters
 #------------------------------#
 # Machine parameters
-seed = 3
-gpu  = True
+seed       = 3
+gpu        = True
+gpu_number = "2"
 
 # Training parameters
-n_epochs          = 100
-batch_size        = 256
-learning_rate     = 0.01
+n_epochs          = 25
+batch_size        = 512
+learning_rate     = 0.25
 momentum          = 0.9
 weight_decay      = 0.0001
-distill           = True
+distill           = False
 distillation_temp = 20
 use_SAM           = False
 
 # Model parameters
 model_name                  = 'lenet'
-pretrained_weights_filename = "models/pretrained/MNIST/lenet_w_acc_98.pt"
+U_filename                  = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
+pretrained_weights_filename = None # "models/pretrained/MNIST/lenet_w_acc_98.pt"
 pretrained_accuracy         = 100
-from_ddp                    = True
-save_model                  = False
+from_ddp                    = False
+save_model                  = True
 
 # Data parameters
 set_name  = "MNIST"
@@ -51,6 +51,7 @@ print("Epochs: ", n_epochs)
 print("Pretrained: ", pretrained_weights_filename)
 print("SAM: ", use_SAM)
 print("Adversarial Training Type: ", attack_type)
+print("U" , U_filename)
 if attack_type is not None:
     print("Epsilon: ", epsilon)
 
@@ -58,7 +59,7 @@ if attack_type is not None:
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = gpu_number
 
 # Declare seed and initalize network
 torch.manual_seed(seed)
@@ -70,14 +71,15 @@ data = Data(gpu = gpu,
 print(set_name, "Data Loaded")
 
 # Load Network
-state_dict = torch.load(pretrained_weights_filename, map_location=torch.device('cpu'))
+if pretrained_weights_filename:
+    state_dict = torch.load(pretrained_weights_filename, map_location=torch.device('cpu'))
 
 if from_ddp:  # Remove prefixes if from DDP
     torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.")
 
 net = FstLayUniNet( set_name = set_name,
                     gpu = gpu,
-                    U_filename = None,
+                    U_filename = U_filename,
                     model_name = model_name)
 
 if distill: # Load teacher net
@@ -91,7 +93,9 @@ if distill: # Load teacher net
     summary(teacher_net, (data.num_channels, data.image_size, data.image_size))
 
 else:
-    net.load_state_dict(state_dict)
+    teacher_net = None
+    if pretrained_weights_filename:
+        net.load_state_dict(state_dict)
 
 net.eval()
 summary(net, (data.num_channels, data.image_size, data.image_size))
@@ -122,7 +126,7 @@ def train(net, data, gpu, n_epochs, batch_size, use_SAM, attack_type, epsilon, t
                 inputs, labels = inputs.cuda(), labels.cuda()
 
             # Adversarial Training
-            if attack_type is not None:
+            if attack_type:
                 # Initalize Attacker with current model parameters
                 attacker = Attacker(net = net, data = data, gpu = gpu)
 
@@ -161,7 +165,8 @@ def train(net, data, gpu, n_epochs, batch_size, use_SAM, attack_type, epsilon, t
             optimizer.step()                  # Parameter update
         
         if epoch % 2 == 0:
-            print("Epoch: ", epoch + 1 , "\tLoss: ", loss.item())    
+            accuracy = test(net, data, gpu)
+            print("Epoch: ", epoch + 1 , "\tLoss: ", loss.item(), "\tAcc:", accuracy)    
 
     return net 
 
@@ -201,10 +206,10 @@ print("Accuarcy: ", accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = model_name + "_adv_" + str(attack_type) + "_" + "_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "Control_" + model_name + "_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
-    torch.save(academy.net.state_dict(), "models/pretrained/" + set_name + "/" + filename)
+    torch.save(net.state_dict(), "models/pretrained/" + set_name + "/" + filename)
 
     # Save U
     if net.U is not None:

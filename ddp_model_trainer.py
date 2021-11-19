@@ -26,7 +26,7 @@ def get_name_from_filename(filename):
 def setup(rank, world_size, config, project_name):
     # Setup rendezvous
     os.environ['MASTER_ADDR'] = 'localhost'
-    os.environ['MASTER_PORT'] = '12355'
+    os.environ['MASTER_PORT'] = '12356'
 
     # Initalize WandB logging on rank 0
     if rank == 0 and project_name is not None:
@@ -36,12 +36,13 @@ def setup(rank, world_size, config, project_name):
                 project = project_name)
     else:
         run = None
-
+        
     # Initialize the process group
     dist.init_process_group(backend    = "nccl",
-                           init_method = "env://", 
-                           rank        = rank, 
-                           world_size  = world_size)
+                            init_method = "env://", 
+                            rank        = rank, 
+                            world_size  = world_size)
+    
     return run
 
 def initalize_optimizer(net, config):
@@ -140,17 +141,18 @@ def train(rank, world_size, config, project_name):
 
     # Initialize WandB and Process Group
     run = setup(rank, world_size, config, project_name)
-
+    
     # Create model and move it to GPU with id rank
     if config["pretrained_weights_filename"] or config["distill"]:
         state_dict = torch.load(config["pretrained_weights_filename"], map_location=torch.device('cpu'))
 
         if config["from_ddp"]:  # Remove prefixes if from DDP
             torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.")
-
-
+    
+    torch.backends.cudnn.benchmark = True
     torch.cuda.set_device(rank)
     torch.cuda.empty_cache()
+    
     net = FstLayUniNet( set_name   = config["set_name"], 
                         gpu        = rank,
                         U_filename = config["U_filename"],
@@ -182,7 +184,7 @@ def train(rank, world_size, config, project_name):
     # Setup Optimzier and Criterion
     optimizer = initalize_optimizer(net, config)
     criterion = initalize_criterion(config)
-    if config["sched"] is not None and config["epochs"] != 0:
+    if config["sched"] and config["epochs"] != 0:
         scheduler = initalize_scheduler(optimizer, config, steps_per_epoch = len(train_loader))
 
     # Disable adversarial robustness test while trinaing
@@ -204,7 +206,7 @@ def train(rank, world_size, config, project_name):
             labels = labels.to(rank, non_blocking=True)
 
             # Adversarial Training
-            if config["attack_type"] is not None and config["epoch_delay"] <= epoch:
+            if config["attack_type"] and config["epoch_delay"] <= epoch:
                 # Initalize Attacker with current model parameters
                 attacker = Attacker(net = net, data =  data, gpu = rank)
 
@@ -214,7 +216,7 @@ def train(rank, world_size, config, project_name):
                                                         attack_labels = labels,
                                                         epsilons = [config["epsilon"]],
                                                         return_attacks_only = True,
-                                                        prog_bar = False)
+                                                        prog_bar = False).to(rank)
 
                 dist.barrier()
 
@@ -294,7 +296,7 @@ def train(rank, world_size, config, project_name):
             dist.barrier()
 
         # Display 
-        if ((epoch + 1) % 10 == 0) or True:
+        if ((epoch + 1) % config["logging_period"] == 0):
             # Test
             val_correct, val_total_tested, val_total_loss, _ = test(rank, net, data, config)
             net.train(True)
@@ -322,8 +324,8 @@ def train(rank, world_size, config, project_name):
                         "Val Acc"    : val_acc})
 
 
-                if config["save_model"] and val_acc > best_epoch_acc and epoch > config["epoch_delay"]:
-                    best_epoch_acc == val_acc
+                if config["save_model"] and val_acc > best_epoch_acc and epoch > config["epoch_delay"] and config["checkpoint_at_logging"]:
+                    best_epoch_acc = val_acc
                     print("Saving Model")
 
                     # Define File Names
@@ -339,7 +341,7 @@ def train(rank, world_size, config, project_name):
                         
                     # Save Models
                     torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + "TEMP_" + filename)
-                print("Model Saved")
+                    print("Model Saved")
 
             dist.barrier()
    
@@ -369,21 +371,21 @@ def train(rank, world_size, config, project_name):
     print("Adv Gathered", rank)
     # Log/Save data, results and model
     if rank == 0:
-        
-        print("Logging")     
-        run.log({"Epoch"      : epoch + 1 if config["epochs"] != 0 else None, 
+        if run:
+            print("Logging")     
+            run.log({"Epoch"      : epoch + 1 if config["epochs"] != 0 else None, 
                 "Train Loss"  : epoch_loss,
                 "Train Acc"   : epoch_acc,
                 "Val Loss"    : val_loss,
                 "Val Acc"     : val_acc})
 
-        print("Log")
-        if config["test_robustness"]:
-            fool_ratio_table = wandb.Table( columns = ["NSR", "Fool Ratio"],
-                                        data    = [[eps, int(fool.item())] for eps, fool in zip(config["attacker epsilons"], fool_ratio)])
-            
-            run.log({"Fool Ratios" : fool_ratio_table})
-            print("Table")
+            print("Log")
+            if config["test_robustness"]:
+                fool_ratio_table = wandb.Table( columns = ["NSR", "Fool Ratio"],
+                                            data    = [[eps, int(fool.item())] for eps, fool in zip(config["attacker epsilons"], fool_ratio)])
+                
+                run.log({"Fool Ratios" : fool_ratio_table})
+                print("Table")
 
         if config["save_attack_results"] and config["test_robustness"]:
             print("Saving Attack Results to Excel")
@@ -404,8 +406,8 @@ def train(rank, world_size, config, project_name):
             attacker_name = get_name_from_filename(config["attacker_pretrained_weights_filename"])
             target_name   = get_name_from_filename(config["pretrained_weights_filename"])
 
-            filename = config["attacker_attack_type"] + "_from_" + attacker_name + '_on_' + target_name + '_attack_results.xls'
-            wb.save('results/' + data.set_name + '/' + filename) 
+            filename = attacker_name + '_on_' + target_name + '_attack_results.xls'
+            wb.save('results/' + data.set_name + '/' + config["attacker_attack_type"] + '/' + filename) 
         print("Save Attack Results")
         if config["save_model"]:
             print("Saving Model")
@@ -423,13 +425,14 @@ def train(rank, world_size, config, project_name):
                 
             # Save Models
             torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + filename)
-        print("Model Saved")
+            print("Model Saved")
+
     # Close all processes
     dist.barrier()
     dist.destroy_process_group()
 
     # Close WandB
-    if rank == 0 and run is not None:
+    if rank == 0 and run:
         wandb.finish()
         print("WandB Finished")
 
@@ -522,13 +525,13 @@ def test(rank, net, data, config):
     return correct, total_tested, total_loss, adv_correct
 
 def run_ddp(func, world_size, config, project_name):
-
+    
     # Spawn processes on gpus
     mp.spawn(func,
              args=(world_size, 
                     config,
                     project_name,),
-             nprocs=world_size,
+             nprocs = world_size,
              join=True)
 
     # Display
@@ -538,30 +541,32 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "1, 3, 7"
+    gpu_ids = "2,3"
     
     # WandB
-    project_name = "DDP CIFAR10"
+    project_name = None # "DDP MNIST"
 
     # Network
     config = {  
                 # Network
-                "model_name"                  : "cifar10_mobilenetv2_x1_0",
-                "pretrained_weights_filename" : None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
-                "from_ddp"                    : False,
-                "save_model"                  : True,
+                "model_name"                  : "lenet", # "cifar10_mobilenetv2_x1_0",
+                "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
+                "from_ddp"                    : True,
+                "save_model"                  : False,
+                "logging_period"              : 1,   # Epochs between logging
+                "checkpoint_at_logging"       : False,
 
                 # Data
-                "set_name"      : "CIFAR10",
-                "batch_size"    : 124,
-                "data_augment"  : True,
+                "set_name"      : "MNIST",
+                "batch_size"    : 512,
+                "data_augment"  : False,
                 
                 # Optimizer
-                "optim"         : "adam",
-                "epochs"        : 500,
-                "lr"            : 0.001,
-                "sched"         : "One Cycle LR", # "Cosine Annealing", # 
-                "gradient clip" : 0.1, # None, #   
+                "optim"         : "sgd",
+                "epochs"        : 0,
+                "lr"            : 0.5,
+                "sched"         : "Cosine Annealing", # "One Cycle LR", # "Cosine Annealing", # 
+                "gradient clip" : None, # 0.1, # None, #   
                 "weight_decay"  : 1e-4,
                 "momentum"      : 0.9,
                 "use_SAM"       : False, 
@@ -571,22 +576,22 @@ if __name__ == "__main__":
 
                 # Hardening
                 ### Unitary ###
-                "U_filename"    : None, # "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt", # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
+                "U_filename"    : None, # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt", # "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt", # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
 
                 ### Adv Train ###
-                "attack_type"   : "PGD",
-                "epsilon"       : 0.15,
-                "epoch_delay"   : 20,
+                "attack_type"   : None, # "PGD",
+                "epsilon"       : None,
+                "epoch_delay"   : 0,
 
                 ### Distill ###
-                "distill"       : False,
-                "distill_temp"  : 20,
+                "distill"       : False, # True,
+                "distill_temp"  : None,
 
                 # Test Robustness
-                "test_robustness"                       : False,
-                "save_attack_results"                   : False,
-                "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_98.pt",
-                "attacker_attack_type"                  : "OSSA", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
+                "test_robustness"                       : True,
+                "save_attack_results"                   : True,
+                "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_97.pt",
+                "attacker_attack_type"                  : "EoT", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
                 "attacker epsilons"                     : np.linspace(0, 1.0, num=101)
                }
     #-------------------------------------#
@@ -599,24 +604,39 @@ if __name__ == "__main__":
     assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
     # Run training using DDP
-    run_ddp(train, n_gpus, config, project_name)
+    # run_ddp(train, n_gpus, config, project_name)
+    # exit()
 
-    # target_networks = [ "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt",
-    #                     "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",
-    #                     "models/pretrained/MNIST/U_lenet_w_acc_94.pt",
-    #                     "models/pretrained/MNIST/lenet_w_acc_98.pt"]
-    # attacker_attack_types = ["Gaussian_Noise", "FGSM", "PGD",  "CW2", "OSSA"]
-    # for attacker_attack_type in attacker_attack_types:
-        # print("Working on", attacker_attack_type)
-        # config["attacker_attack_type"] = attacker_attack_type
+    # Attack Results
+    target_networks = [ 
 
-        # for target_network in target_networks:
-        #     print("\tWorking on", get_name_from_filename(target_network))
-        #     config["pretrained_weights_filename"] = target_network
+                        # "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt", # Distilled
+                        # "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",       # Adv Train
+                        "models/pretrained/MNIST/U_lenet_w_acc_94.pt",            # Unitary
+                        "models/pretrained/MNIST/lenet_w_acc_98.pt",              # No Defense
+                        # "models/pretrained/MNIST/lenet_w_acc_97.pt"               # White Box
+                        
+                        ]
 
-        #     if target_network == "models/pretrained/MNIST/U_lenet_w_acc_94.pt":
-        #         config["U_filename"] = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
-        #     else:
-        #         config["U_filename"] = None
-        #     run_ddp(train, n_gpus, config, project_name)
+    attacker_attack_types = ["FGSM", "PGD", "CW2", "OSSA", "EoT"]
+
+    # Cyle through attack types
+    for attacker_attack_type in attacker_attack_types:
+        print("Working on", attacker_attack_type)
+        config["attacker_attack_type"] = attacker_attack_type
+
+        # Cycle through target networks              
+        for target_network in target_networks:
+            print("\tWorking on", get_name_from_filename(target_network))
+
+            # Set target network
+            config["pretrained_weights_filename"] = target_network
+
+            # Add U
+            if "U" in target_network:
+                config["U_filename"] = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
+            else:
+                config["U_filename"] = None
+
+            run_ddp(train, n_gpus, config, project_name)
 

@@ -355,6 +355,7 @@ class Attacker:
                 # Calculate Gradients
                 gradients, batch_size, losses, predicted = self.get_gradients(inputs, labels)
                 normed_attacks = self.normalize(torch.sign(gradients), p = None, dim = 2)
+                # normed_attacks = torch.sign(gradients).view(batch_size, 1, -1)
 
             elif attack == "PGD":
                 # Get random targets
@@ -386,6 +387,7 @@ class Attacker:
 
                 # Norm the attack
                 normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
+                
 
             elif attack == "EOT":
                 # Get random targets
@@ -474,10 +476,10 @@ class Attacker:
 
             # Cycle over all espiplons
             for i in range(len(epsilons)):
-                
                 # Set the unit norm of the highest eigenvector to epsilon
                 input_norms = torch.linalg.norm(inputs.view(batch_size, 1, -1), ord=None, dim=2).view(-1, 1, 1)
                 perturbations = float(epsilons[i]) * input_norms * normed_attacks
+                # perturbations = float(epsilons[i]) * normed_attacks
 
                 # Declare attacks as the perturbation added to the image                    
                 attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
@@ -744,7 +746,7 @@ class Attacker:
         fig.subplots_adjust(hspace = 0, wspace=0)
             
         if save_only:
-            plt.savefig('results/' + self.data.set_name + "/" + attack + '_attacks.png')
+            plt.savefig('results/' + self.data.set_name + "/attacks/" + attack + '_attacks.png')
         else:
             plt.show()
         

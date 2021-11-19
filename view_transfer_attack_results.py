@@ -2,11 +2,13 @@ import xlrd
 import matplotlib.pyplot as plt
 
 set_name = "MNIST"
-attack_type = ["FGSM"]
+attack_type = ["PGD"]
 
 
 for attack in attack_type:
-    wb = xlrd.open_workbook("results/" + set_name + "/Test_" + attack + "_attack_results.xls")
+    
+    wb = xlrd.open_workbook("/home/naddeok5/FIM/results/MNIST/" + attack + "/UvsNoU_attack_results.xls")
+    # wb = xlrd.open_workbook("results/" + set_name + "/Test_" + attack + "_attack_results.xls")
     ws = wb.sheet_by_name("Results")
 
     results = {}
