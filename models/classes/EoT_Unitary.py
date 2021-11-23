@@ -7,6 +7,7 @@ class UniEoT(EoTPyTorch):
 
     def __init__(self,
                     data,
+                    model_name,
                     nb_samples: int,
                     clip_values: Tuple[float, float],
                     apply_fit: bool = False,
@@ -23,6 +24,7 @@ class UniEoT(EoTPyTorch):
         super().__init__(nb_samples=nb_samples, clip_values=clip_values, apply_fit=apply_fit, apply_predict=apply_predict)
 
         self.data = data
+        self.model_name = model_name
         self.gpu  = gpu
         self._device = "gpu" if self.gpu else "cpu"
             
@@ -48,8 +50,7 @@ class UniEoT(EoTPyTorch):
         # Load temporary network 
         ortho_net = FstLayUniNet(set_name = self.data.set_name,
                                 gpu = self.gpu, 
-                                model_name = 'cifar10_mobilenetv2_x1_0',
-                                pretrained = False)
+                                model_name = self.model_name)
 
         # Set a random orthogonal matrix
         ortho_net.set_orthogonal_matrix()

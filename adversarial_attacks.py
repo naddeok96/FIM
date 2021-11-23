@@ -207,7 +207,7 @@ class Attacker:
             classifier = PyTorchClassifier( model       = self.net,
                                             nb_classes  = self.data.num_classes,
                                             loss        = self.criterion,
-                                            clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
+                                            # clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
                                             input_shape = (self.data.num_channels, self.data.image_size, self.data.image_size),
                                             device_type = device_type,
                                             device_num  = device_num)
@@ -222,16 +222,11 @@ class Attacker:
                 exit()
             
             attack_cw2 = CarliniL2Method(classifier=classifier,
-                                        confidence    = 0.0, 
-                                        learning_rate = 0.01,
-                                        binary_search_steps = 25,
-                                        max_halving = 10, 
-                                        max_doubling = 10,
                                         max_iter = max_iter, 
                                         batch_size = self.data.test_batch_size, 
                                         verbose = False)
 
-        # Load EOT
+        # Load PGD
         elif attack == "PGD":
             # Imports
             import sys
@@ -295,6 +290,7 @@ class Attacker:
 
             eot_unitary_rotation = UniEoT(data = self.data,
                                         gpu = self.gpu,
+                                        model_name = self.net.model_name,
                                         nb_samples = int(1e2),
                                         clip_values = (float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
                                         apply_predict = True)
@@ -349,13 +345,12 @@ class Attacker:
                 losses  = self.indv_criterion(outputs, labels)
 
                 # Generate attack
-                normed_attacks = self.normalize(torch.rand_like(inputs.view(inputs.size(0), inputs.size(1), -1)), p = None, dim = 2)
+                normed_attacks = self.normalize(torch.rand_like(inputs.view(inputs.size(0), 1, -1)), p = None, dim = 2)
 
             elif attack == "FGSM":
                 # Calculate Gradients
                 gradients, batch_size, losses, predicted = self.get_gradients(inputs, labels)
                 normed_attacks = self.normalize(torch.sign(gradients), p = None, dim = 2)
-                # normed_attacks = torch.sign(gradients).view(batch_size, 1, -1)
 
             elif attack == "PGD":
                 # Get random targets
@@ -481,7 +476,7 @@ class Attacker:
                 perturbations = float(epsilons[i]) * input_norms * normed_attacks
                 # perturbations = float(epsilons[i]) * normed_attacks
 
-                # Declare attacks as the perturbation added to the image                    
+                # Declare attacks as the perturbation added to the image    
                 attacks = (inputs.view(batch_size, 1, -1) + perturbations).view(batch_size, self.data.num_channels, self.data.image_size, self.data.image_size)
 
                 # Check if loss has increased
@@ -580,7 +575,7 @@ class Attacker:
 
                     # Accumulate expectation
                     p = soft_max_output[:,i].view(batch_size, 1, 1)
-                    grad = images.grad.data.view(batch_size, channel_num * image_size**2, 1)
+                    grad = images.grad.data.view(batch_size, channel_num * (image_size**2), 1)
                     
                     # p * (gT * eta) * g
                     eigenvector += p * (torch.bmm(torch.transpose(grad, 1, 2), eigenvector0) * grad)
@@ -611,7 +606,7 @@ class Attacker:
                     else:
                         eigenvector = eigenvector.to(self.gpu)
 
-        print("Lanczos did not converge...")
+        print("Lanczos did not converge, final similarity is", similarity)
         exit()
 
     def get_gradients(self, images, labels):

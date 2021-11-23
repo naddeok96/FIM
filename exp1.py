@@ -8,30 +8,50 @@ from prettytable import PrettyTable
 from adversarial_attacks import Attacker
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 
+print("Experiment 1: U vs No U")
 
 # Hyperparameters
 save_to_excel = True
 gpu           = True
-gpu_number    = "2"
-set_name      = "MNIST"
-model_name    = "lenet" # "cifar10_mobilenetv2_x1_0" #
-attack_type   = "CW2"
-batch_size    = 512
-# epsilons      = [0.0, 0.3] 
+gpu_number    = "1"
+set_name      = "CIFAR10" # "MNIST"
+attack_type   = "EOT" # "OSSA" # "Gaussian_Noise"
+batch_size    = 1
+# epsilons      = [0.0, 0.15] 
 epsilons      = np.linspace(0, 1.0, num=61)
 
-attack_net_filename = "models/pretrained/MNIST/lenet_w_acc_97.pt"
-attack_net_from_ddp = True
-attacker_net_acc    = 0.98
+if set_name == "CIFAR10":
+    attack_model_name   = "cifar10_mobilenetv2_x1_0"
+    attack_net_filename = "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt" # "models/pretrained/MNIST/lenet_w_acc_97.pt"
+    attack_net_from_ddp = False
+    attacker_net_acc    = 0.91
 
-reg_net_filename    = "models/pretrained/MNIST/lenet_w_acc_98.pt" 
-reg_net_from_ddp    = True
-reg_net_acc         = 0.94
+    reg_model_name      = "cifar10_mobilenetv2_x1_0"
+    reg_net_filename    = "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
+    reg_net_from_ddp    = True
+    reg_net_acc         = 0.93
 
-U_net_filename      = "models/pretrained/MNIST/Control_lenet_w_acc_97.pt" 
-U_filename          = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
-U_net_from_ddp      = False
-U_net_acc           = 0.97
+    U_model_name        = "cifar10_mobilenetv2_x1_4"
+    U_net_filename      = "models/pretrained/CIFAR10/U_cifar10_mobilenetv2_x1_4_w_acc_76.pt" # "models/pretrained/MNIST/Control_lenet_w_acc_97.pt" 
+    U_filename          = "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt" # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
+    U_net_from_ddp      = True
+    U_net_acc           = 0.76
+else:
+    attack_model_name   = "lenet"
+    attack_net_filename = "models/pretrained/MNIST/lenet_w_acc_97.pt"
+    attack_net_from_ddp = True
+    attacker_net_acc    = 0.97
+
+    reg_model_name      = "lenet"
+    reg_net_filename    = "models/pretrained/MNIST/lenet_w_acc_98.pt" 
+    reg_net_from_ddp    = True
+    reg_net_acc         = 0.98
+
+    U_model_name        = "lenet"
+    U_net_filename      = "models/pretrained/MNIST/Control_lenet_w_acc_97.pt" 
+    U_filename          = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
+    U_net_from_ddp      = True
+    U_net_acc           = 0.97
 
 # Declare which GPU PCI number to use
 if gpu:
@@ -53,7 +73,7 @@ data = Data(gpu = gpu, set_name = set_name, maxmin = True, test_batch_size = bat
 # # Load Attacker Net
 attacker_net = FstLayUniNet(set_name, gpu =gpu,
                        U_filename = None,
-                       model_name = model_name)
+                       model_name = attack_model_name)
 attack_net_state_dict = torch.load(attack_net_filename, map_location=torch.device('cpu'))
 if attack_net_from_ddp:  # Remove prefixes if from DDP
     torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(attack_net_state_dict, "module.")
@@ -64,7 +84,7 @@ attacker_net.eval()
 # Load Regular Net
 reg_net = FstLayUniNet(set_name, gpu =gpu,
                        U_filename = None,
-                       model_name = model_name)
+                       model_name = reg_model_name)
 reg_net_state_dict = torch.load(reg_net_filename, map_location=torch.device('cpu'))
 if reg_net_from_ddp:  # Remove prefixes if from DDP
     torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(reg_net_state_dict, "module.")
@@ -75,7 +95,7 @@ reg_net.eval()
 # Load UNet
 U_net = FstLayUniNet(set_name, gpu =gpu,
                        U_filename = U_filename,
-                       model_name = model_name)
+                       model_name = U_model_name)
 U_net_state_dict = torch.load(U_net_filename, map_location=torch.device('cpu'))
 if U_net_from_ddp:  # Remove prefixes if from DDP
     torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(U_net_state_dict, "module.")

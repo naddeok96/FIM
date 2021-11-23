@@ -1,13 +1,19 @@
 import xlrd
 import matplotlib.pyplot as plt
 
-set_name = "MNIST"
-attack_type = ["PGD"]
+set_name =  "CIFAR10" #  "CIFAR10" # 
+attack_type = ["CW2"]
+experiment_type = "defense comparison" # "UvsNoU"
 
 
 for attack in attack_type:
-    
-    wb = xlrd.open_workbook("/home/naddeok5/FIM/results/MNIST/" + attack + "/UvsNoU_attack_results.xls")
+    if experiment_type == "defense comparison":
+        wb = xlrd.open_workbook("/home/naddeok5/FIM/results/" + set_name + "/" + attack + "/defense_comparison.xls")
+    elif experiment_type == "UvsNoU":
+        wb = xlrd.open_workbook("/home/naddeok5/FIM/results/" + set_name + "/" + attack + "/UvsNoU_attack_results.xls")
+    else:
+        print("Invalid experiment type.")
+        exit()
     # wb = xlrd.open_workbook("results/" + set_name + "/Test_" + attack + "_attack_results.xls")
     ws = wb.sheet_by_name("Results")
 
@@ -30,5 +36,8 @@ for attack in attack_type:
     plt.legend()
 
 
-# plt.show()
-plt.savefig('TEMP.png')
+    # plt.show()
+    if experiment_type == "defense comparison":
+        plt.savefig("results/" + set_name + "/" + attack + "/defense_comparison_plot.png")
+    else:
+        plt.savefig("results/" + set_name + "/" + attack + "/fooling_ratio_plot.png")
