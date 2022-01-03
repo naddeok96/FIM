@@ -302,15 +302,32 @@ class Attacker:
                                             nb_classes=10,
                                             loss=self.criterion,
                                             preprocessing_defences=[eot_unitary_rotation],
-                                            clip_values=(float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
+                                            # clip_values=(float(self.data.test_pixel_min), float(self.data.test_pixel_max)),
                                             input_shape=(3, 32, 32),
                                             device_type=device_type) 
 
+                        # Hyperparameters from "Towards Deep Learning Models Resistant to Adversarial Attacks"
+           
+            if self.data.set_name == "MNIST":
+                norm     = "inf"
+                eps      = 0.3
+                max_iter = 40
+                eps_step = 0.01
+
+            elif self.data.set_name == "CIFAR10":
+                norm     = "inf"
+                eps      = 0.3 * 1.6
+                max_iter = 40
+                eps_step = 0.01 * 1.6
+
+            else:
+                print("Eneter a valid data_set name for PGD")
+                exit()
             attack_eot = ProjectedGradientDescent(estimator=classifier,
-                                        norm = 2,
-                                        eps = 8.0 / 255.0,  # Max perturbation Size
-                                        max_iter = 10,
-                                        eps_step = 2.0 / 255.0, # Step size for PGD,
+                                        norm = norm,
+                                        eps = eps,  # Max perturbation Size
+                                        max_iter = max_iter,
+                                        eps_step = eps_step, # Step size for PGD,
                                         batch_size = self.data.test_batch_size,
                                         targeted=True, 
                                         verbose = False)       
@@ -383,7 +400,6 @@ class Attacker:
                 # Norm the attack
                 normed_attacks = self.normalize(attacks.view(batch_size, 1, -1), p = None, dim = 2)
                 
-
             elif attack == "EOT":
                 # Get random targets
                 import random
@@ -589,7 +605,7 @@ class Attacker:
                                         eigenvector.view(-1, 1))).item()
                 # print("Iteration: ", j*max_iter + k ,"\tSimilarity: ", similarity)
 
-                if similarity > 0.99:
+                if similarity > 0.94:
                     # Return vector
                     return eigenvector.view(batch_size, 1, -1), losses
 
@@ -667,6 +683,11 @@ class Attacker:
         # Initalize images and labels for one of each number
         images = torch.zeros((self.data.num_classes, self.data.num_channels, self.data.image_size, self.data.image_size))
         labels = torch.zeros((self.data.num_classes)).type(torch.LongTensor)
+
+        if self.data.set_name == "MNIST":
+            label_names = list(range(10))
+        else:
+            label_names = ["Plane", "Car", "Bird", "Cat", "Deer", "Dog", "Frog", "Horse", "Ship", "Truck"]
         
         # Find one of each number
         found = False
@@ -690,8 +711,8 @@ class Attacker:
                                     ncols=10,
                                     sharex=True, sharey=True)
 
-        plt.suptitle(attack + " on " + self.data.set_name, fontsize=20)
-        fig.text(0.02, 0.5, 'SNR', va='center', ha='center', rotation='vertical', fontsize=20)
+        # plt.suptitle(attack + " on " + self.data.set_name, fontsize=20)
+        # fig.text(0.03, 0.5, 'Noise to Signal L2 Norm Ratio', va='center', ha='center', rotation='vertical', fontsize=18)
 
         for i, row in enumerate(tqdm(axes2d, desc="Epsilons Done...")):
             # Push to gpus
@@ -734,11 +755,12 @@ class Attacker:
                 cell.set_yticks([])
 
                 if i == 0:
-                    cell.set_title(j)
+                    cell.set_title(label_names[j])
+                        
                 if j == 0:
                     cell.set_ylabel(epsilons[i])
                     
-        fig.subplots_adjust(hspace = 0, wspace=0)
+        fig.subplots_adjust(hspace = -0.4, wspace=0)
             
         if save_only:
             plt.savefig('results/' + self.data.set_name + "/attacks/" + attack + '_attacks.png')

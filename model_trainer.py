@@ -20,8 +20,8 @@ gpu        = True
 gpu_number = "2"
 
 # Training parameters
-n_epochs          = 25
-batch_size        = 512
+n_epochs          = 5
+batch_size        = 124
 learning_rate     = 0.25
 momentum          = 0.9
 weight_decay      = 0.0001
@@ -30,15 +30,15 @@ distillation_temp = 20
 use_SAM           = False
 
 # Model parameters
-model_name                  = 'lenet'
-U_filename                  = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
+model_name                  = "lenet" # "cifar10_mobilenetv2_x1_0"
+U_filename                  = "models/pretrained/MNIST/weak_U_w_means_0-005893729627132416_and_stds_0-9862208962440491_.pt" # "models/pretrained/CIFAR10/weak_U_w_means_0-013919433578848839_0-014711719006299973_0-01946287229657173_and_stds_0-9984912872314453_0-9985936284065247_1-0006623268127441_.pt"
 pretrained_weights_filename = None # "models/pretrained/MNIST/lenet_w_acc_98.pt"
 pretrained_accuracy         = 100
 from_ddp                    = False
 save_model                  = True
 
 # Data parameters
-set_name  = "MNIST"
+set_name  = "CIFAR10"
 data_root = '../data/' + set_name
 
 # Adversarial Training parameters
@@ -206,7 +206,7 @@ print("Accuarcy: ", accuracy)
 # Save Model
 if save_model:
     # Define File Names
-    filename  = "Control_" + model_name + "_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
+    filename  = "weak_U_" + model_name + "_w_acc_" + str(int(round(accuracy * 100, 3))) + ".pt"
     
     # Save Models
     torch.save(net.state_dict(), "models/pretrained/" + set_name + "/" + filename)

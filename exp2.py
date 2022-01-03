@@ -8,7 +8,10 @@ from prettytable import PrettyTable
 from adversarial_attacks import Attacker
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 
+<<<<<<< HEAD
+=======
 print("Experiment 2: Multiple Defenses")
+>>>>>>> 35b62168acdf7bea07dd3aa8e4edf5b5b7026825
 
 # Hyperparameters
 save_to_excel = True

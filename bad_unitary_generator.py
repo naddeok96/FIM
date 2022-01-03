@@ -2,6 +2,8 @@
 import torch
 import numpy as np
 import pickle
+from data_setup import Data
+from models.classes.first_layer_unitary_net    import FstLayUniNet
 
 def get_rotation_matrix(angle, degrees = True):
     '''
@@ -23,41 +25,101 @@ def embed_rotation_matrix(rotation, unitary, start_coords = [0, 0]):
     
     return unitary
 
+# Set name
+set_name = "MNIST"
+
+# Set size of unitary matrix
+if set_name == "MNIST":
+    unitary_size = 28
+    batch_size = int(5e4)
+elif set_name == "CIFAR10":
+    unitary_size = 32
+    batch_size = int(5e4)
+
+# Load Network
+net = FstLayUniNet(set_name = set_name,
+                    model_name="cifar10_mobilenetv2_x1_0" if set_name == "CIFAR10" else "lenet")
+
+# Load Data
+data = Data(set_name        = set_name,
+            test_batch_size = batch_size)
+
+# Generate weak U
 R = get_rotation_matrix(1, degrees = True)
-I = torch.eye(28)
+I = torch.eye(unitary_size)
 
-U = embed_rotation_matrix(R, I, [0, 0])
-cos_sim = torch.nn.CosineSimilarity()
-rotation_angle = cos_sim(U.view(1, -1), I.view(1, -1))
+net.U = embed_rotation_matrix(R, I, [0, 0])
 
-# # Save 
-# with open("models/pretrained/high_R.pkl", 'wb') as output:
-#     pickle.dump(rotation_angle, output, pickle.HIGHEST_PROTOCOL)
+# Collect Stats
+images, labels = next(iter(data.test_loader))
 
-with open("models/pretrained//MNIST/weak_U" + '.pkl', 'wb') as output:
-    pickle.dump(U, output, pickle.HIGHEST_PROTOCOL)
+# Rotate Images
+ortho_images = net.orthogonal_operation(images)
+
+# Resize
+ortho_images = ortho_images.view(ortho_images.size(0), ortho_images.size(1), -1)
+
+# Calulate Stats
+means = ortho_images.mean(2).mean(0)
+stds  = ortho_images.std(2).mean(0)
+
+# Generate Saving name with stats encoded
+filename = "weak_U_w_means_"
+for mean in means:
+    strmean = str(mean.item())
+    # print(strmean)
+    for c in strmean:
+        if c == "-":
+            filename += "n"
+        elif c == ".":
+            filename += "-"
+        else:
+            filename += c
+    filename += "_"
+
+filename += "and_stds_"
+for std in stds:
+    strstd = str(std.item())
+    for c in strstd:
+        if c == "-":
+            filename += "n"
+        elif c == ".":
+            filename += "-"
+        else:
+            filename += c
+    filename += "_"
+filename += ".pt"
+print(filename)
+
+torch.save(net.U, "models/pretrained/" + set_name + "/" + filename)
 
 
+# # Decode filename
+# stats = ["", "", "", "", "", ""]
+# state = 0
+# sofar = ""
+# for c in filename:        
+#     sofar += c
+#     if sofar == "U_w_means_":
+#         state = 1
+#         continue
+    
+#     if state == 4 and "and_stds_" not in sofar:
+#         continue
 
+#     if state == 4 and len(stats[state - 1]) == 0 and c == "_":
+#         continue
 
+#     if 0 < state and state < 7:
+#         if c == "n":
+#             stats[state - 1] += "-"
+#         elif c == "-":
+#             stats[state - 1] += "."
+#         elif c == "_":
+#             stats[state - 1] = float(stats[state-1])
+#             state += 1
+#         else: 
+#             stats[state - 1] += c
 
-
-
-
-
-
-
-
-
-
-
-
-
-# I = torch.eye(2)
-
-# RI = torch.mm(R, I)
-
-# cos_sim = torch.nn.CosineSimilarity()
-
-# print(I, RI, type(I), type(RI))
-# print(cos_sim(I.view(1, -1), RI.view(1, -1)).item())
+# means = torch.tensor(stats[0:3])
+# stds  = torch.tensor(stats[3:])

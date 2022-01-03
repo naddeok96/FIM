@@ -132,7 +132,7 @@ class FstLayUniNet(nn.Module):
             sofar += c
 
             # If the intro is finished begin on first channel mean
-            if sofar == "models/pretrained/" + self.set_name + "/U_w_means_":
+            if sofar == "models/pretrained/" + self.set_name + "/U_w_means_" or sofar == "models/pretrained/" + self.set_name + "/weak_U_w_means_":
                 state = 1
                 continue
             
