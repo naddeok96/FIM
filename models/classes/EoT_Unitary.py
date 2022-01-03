@@ -48,8 +48,7 @@ class UniEoT(EoTPyTorch):
         # Load temporary network 
         ortho_net = FstLayUniNet(set_name = self.data.set_name,
                                 gpu = self.gpu, 
-                                model_name = 'cifar10_mobilenetv2_x1_0',
-                                pretrained = False)
+                                model_name = 'cifar10_mobilenetv2_x1_0' if self.data.set_name == "CIFAR10" else "lenet")
 
         # Set a random orthogonal matrix
         ortho_net.set_orthogonal_matrix()

@@ -14,26 +14,25 @@ save_to_excel = True
 gpu           = True
 gpu_number    = "2"
 set_name      = "MNIST" # "CIFAR10" # 
-attack_type   = "EOT"
+attack_type   = "FGSM"
 batch_size    = 512
-# epsilons      = [0.0, 0.3] 
 epsilons      = np.linspace(0, 1.0, num=61)
 
-attack_model_name   = "lenet" # "cifar10_mobilenetv2_x1_0"
-attack_net_filename = "models/pretrained/MNIST/lenet_w_acc_97.pt" # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt" # "models/pretrained/MNIST/lenet_w_acc_97.pt"
+attack_model_name   = "lenet" 
+attack_net_filename = "models/pretrained/MNIST/lenet_w_acc_97.pt" 
 attack_net_from_ddp = True
 attacker_net_acc    = 0.97
 
-reg_model_name      = "lenet" # "cifar10_mobilenetv2_x1_0"
-reg_net_filename    = "models/pretrained/MNIST/lenet_w_acc_98.pt"  # "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
+reg_model_name      = "lenet" 
+reg_net_filename    = "models/pretrained/MNIST/lenet_w_acc_98.pt"
 reg_net_from_ddp    = True
-reg_net_acc         = 0.93
+reg_net_acc         = 0.98
 
-U_model_name        = "lenet" # "cifar10_mobilenetv2_x1_4"
-U_net_filename      =  "models/pretrained/MNIST/U_lenet_w_acc_94.pt"  # "models/pretrained/CIFAR10/U_cifar10_mobilenetv2_x1_4_w_acc_76.pt" # "models/pretrained/MNIST/Control_lenet_w_acc_97.pt" 
-U_filename          = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt" # "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt" # 
+U_model_name        = "lenet" 
+U_net_filename      = "models/pretrained/MNIST/weak_U_lenet_w_acc_98.pt"
+U_filename          = "models/pretrained/MNIST/weak_U_w_means_0-005893729627132416_and_stds_0-9862208962440491_.pt" 
 U_net_from_ddp      = True
-U_net_acc           = 0.94
+U_net_acc           = 0.98
 
 # Declare which GPU PCI number to use
 if gpu:
@@ -83,8 +82,6 @@ if U_net_from_ddp:  # Remove prefixes if from DDP
     torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(U_net_state_dict, "module.")
 U_net.load_state_dict(U_net_state_dict)
 U_net.eval()
-U_net.eval()
-
 
 # Attack Networks
 #-----------------------------------------------------------------------------------------------------------------------#
@@ -92,14 +89,6 @@ U_net.eval()
 attacker = Attacker(attacker_net, data, gpu)
 
 print(attack_type + " attacks being performed...")
-
-# Get regular attack accuracies on attacker network
-# print("Working on White Box Attacks...")
-# white_box_accs  = attacker.get_attack_accuracy(attack = attack_type, epsilons = epsilons)                                          
-# ossa_fool_ratio = attacker.get_fool_ratio(attacker_net_acc, ossa_accs)
-# table.add_column("OSSA Fool Ratio", ossa_fool_ratio)
-# results.append(ossa_fool_ratio)
-# names.append("White Box Attack")
 
 # Reg net 
 print("Working on Black Box Attacks...")
@@ -140,4 +129,4 @@ if save_to_excel:
         for j, value in enumerate(result):
             sheet.write(j + 1, i, value)
 
-    wb.save('results/' + set_name + '/' + attack_type + '/' + 'UvsNoU_attack_results.xls') 
+    wb.save('results/' + set_name + '/' + attack_type + '/' + 'weakUvsNoU_attack_results.xls') 
