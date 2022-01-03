@@ -6,10 +6,19 @@ import torch
 
 
 set_name    = "CIFAR10"
+<<<<<<< HEAD
 from_ddp    = True
 attack_type = "FGSM" 
 gpu         = False
 epsilons    = [0.0, 0.15, 0.3, 0.5, 0.7, 0.85, 1.0] # [round(x, 2) for x in np.linspace(0, 1, 7)]
+=======
+model_name  = "cifar10_mobilenetv2_x1_0" # "lenet" # "cifar10_mobilenetv2_x1_0"
+filename    = "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" # 
+from_ddp    = True
+attack_type = "FGSM" # "Gaussian_Noise" # "PGD"
+gpu         = True
+epsilons    = [round(x, 2) for x in np.linspace(0, 0.2, 5)]
+>>>>>>> 35b62168acdf7bea07dd3aa8e4edf5b5b7026825
 print("Epsilons: ", epsilons)
 
 if set_name == "MNIST":
@@ -25,7 +34,7 @@ else:
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "4"
 
 # Initialize data
 data = Data(set_name = set_name, gpu = gpu, maxmin = True)

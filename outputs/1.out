@@ -1,2444 +1,84 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(model_trainer.py:431847): Gdk-CRITICAL **: 17:54:58.957: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-Epochs:  100000
-Pretrained:  False
-SAM:  False
-Adversarial Training Type:  FGSM
-Epsilon:  0.15
+(exp2.py:996918): Gdk-CRITICAL **: 19:42:35.709: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+Experiment 2
 Files already downloaded and verified
 Files already downloaded and verified
-CIFAR10 Data Loaded
-----------------------------------------------------------------
-        Layer (type)               Output Shape         Param #
-================================================================
-            Conv2d-1           [-1, 48, 32, 32]           1,296
-       BatchNorm2d-2           [-1, 48, 32, 32]              96
-             ReLU6-3           [-1, 48, 32, 32]               0
-            Conv2d-4           [-1, 48, 32, 32]             432
-       BatchNorm2d-5           [-1, 48, 32, 32]              96
-             ReLU6-6           [-1, 48, 32, 32]               0
-            Conv2d-7           [-1, 24, 32, 32]           1,152
-       BatchNorm2d-8           [-1, 24, 32, 32]              48
-  InvertedResidual-9           [-1, 24, 32, 32]               0
-           Conv2d-10          [-1, 144, 32, 32]           3,456
-      BatchNorm2d-11          [-1, 144, 32, 32]             288
-            ReLU6-12          [-1, 144, 32, 32]               0
-           Conv2d-13          [-1, 144, 32, 32]           1,296
-      BatchNorm2d-14          [-1, 144, 32, 32]             288
-            ReLU6-15          [-1, 144, 32, 32]               0
-           Conv2d-16           [-1, 32, 32, 32]           4,608
-      BatchNorm2d-17           [-1, 32, 32, 32]              64
- InvertedResidual-18           [-1, 32, 32, 32]               0
-           Conv2d-19          [-1, 192, 32, 32]           6,144
-      BatchNorm2d-20          [-1, 192, 32, 32]             384
-            ReLU6-21          [-1, 192, 32, 32]               0
-           Conv2d-22          [-1, 192, 32, 32]           1,728
-      BatchNorm2d-23          [-1, 192, 32, 32]             384
-            ReLU6-24          [-1, 192, 32, 32]               0
-           Conv2d-25           [-1, 32, 32, 32]           6,144
-      BatchNorm2d-26           [-1, 32, 32, 32]              64
- InvertedResidual-27           [-1, 32, 32, 32]               0
-           Conv2d-28          [-1, 192, 32, 32]           6,144
-      BatchNorm2d-29          [-1, 192, 32, 32]             384
-            ReLU6-30          [-1, 192, 32, 32]               0
-           Conv2d-31          [-1, 192, 16, 16]           1,728
-      BatchNorm2d-32          [-1, 192, 16, 16]             384
-            ReLU6-33          [-1, 192, 16, 16]               0
-           Conv2d-34           [-1, 48, 16, 16]           9,216
-      BatchNorm2d-35           [-1, 48, 16, 16]              96
- InvertedResidual-36           [-1, 48, 16, 16]               0
-           Conv2d-37          [-1, 288, 16, 16]          13,824
-      BatchNorm2d-38          [-1, 288, 16, 16]             576
-            ReLU6-39          [-1, 288, 16, 16]               0
-           Conv2d-40          [-1, 288, 16, 16]           2,592
-      BatchNorm2d-41          [-1, 288, 16, 16]             576
-            ReLU6-42          [-1, 288, 16, 16]               0
-           Conv2d-43           [-1, 48, 16, 16]          13,824
-      BatchNorm2d-44           [-1, 48, 16, 16]              96
- InvertedResidual-45           [-1, 48, 16, 16]               0
-           Conv2d-46          [-1, 288, 16, 16]          13,824
-      BatchNorm2d-47          [-1, 288, 16, 16]             576
-            ReLU6-48          [-1, 288, 16, 16]               0
-           Conv2d-49          [-1, 288, 16, 16]           2,592
-      BatchNorm2d-50          [-1, 288, 16, 16]             576
-            ReLU6-51          [-1, 288, 16, 16]               0
-           Conv2d-52           [-1, 48, 16, 16]          13,824
-      BatchNorm2d-53           [-1, 48, 16, 16]              96
- InvertedResidual-54           [-1, 48, 16, 16]               0
-           Conv2d-55          [-1, 288, 16, 16]          13,824
-      BatchNorm2d-56          [-1, 288, 16, 16]             576
-            ReLU6-57          [-1, 288, 16, 16]               0
-           Conv2d-58            [-1, 288, 8, 8]           2,592
-      BatchNorm2d-59            [-1, 288, 8, 8]             576
-            ReLU6-60            [-1, 288, 8, 8]               0
-           Conv2d-61             [-1, 88, 8, 8]          25,344
-      BatchNorm2d-62             [-1, 88, 8, 8]             176
- InvertedResidual-63             [-1, 88, 8, 8]               0
-           Conv2d-64            [-1, 528, 8, 8]          46,464
-      BatchNorm2d-65            [-1, 528, 8, 8]           1,056
-            ReLU6-66            [-1, 528, 8, 8]               0
-           Conv2d-67            [-1, 528, 8, 8]           4,752
-      BatchNorm2d-68            [-1, 528, 8, 8]           1,056
-            ReLU6-69            [-1, 528, 8, 8]               0
-           Conv2d-70             [-1, 88, 8, 8]          46,464
-      BatchNorm2d-71             [-1, 88, 8, 8]             176
- InvertedResidual-72             [-1, 88, 8, 8]               0
-           Conv2d-73            [-1, 528, 8, 8]          46,464
-      BatchNorm2d-74            [-1, 528, 8, 8]           1,056
-            ReLU6-75            [-1, 528, 8, 8]               0
-           Conv2d-76            [-1, 528, 8, 8]           4,752
-      BatchNorm2d-77            [-1, 528, 8, 8]           1,056
-            ReLU6-78            [-1, 528, 8, 8]               0
-           Conv2d-79             [-1, 88, 8, 8]          46,464
-      BatchNorm2d-80             [-1, 88, 8, 8]             176
- InvertedResidual-81             [-1, 88, 8, 8]               0
-           Conv2d-82            [-1, 528, 8, 8]          46,464
-      BatchNorm2d-83            [-1, 528, 8, 8]           1,056
-            ReLU6-84            [-1, 528, 8, 8]               0
-           Conv2d-85            [-1, 528, 8, 8]           4,752
-      BatchNorm2d-86            [-1, 528, 8, 8]           1,056
-            ReLU6-87            [-1, 528, 8, 8]               0
-           Conv2d-88             [-1, 88, 8, 8]          46,464
-      BatchNorm2d-89             [-1, 88, 8, 8]             176
- InvertedResidual-90             [-1, 88, 8, 8]               0
-           Conv2d-91            [-1, 528, 8, 8]          46,464
-      BatchNorm2d-92            [-1, 528, 8, 8]           1,056
-            ReLU6-93            [-1, 528, 8, 8]               0
-           Conv2d-94            [-1, 528, 8, 8]           4,752
-      BatchNorm2d-95            [-1, 528, 8, 8]           1,056
-            ReLU6-96            [-1, 528, 8, 8]               0
-           Conv2d-97            [-1, 136, 8, 8]          71,808
-      BatchNorm2d-98            [-1, 136, 8, 8]             272
- InvertedResidual-99            [-1, 136, 8, 8]               0
-          Conv2d-100            [-1, 816, 8, 8]         110,976
-     BatchNorm2d-101            [-1, 816, 8, 8]           1,632
-           ReLU6-102            [-1, 816, 8, 8]               0
-          Conv2d-103            [-1, 816, 8, 8]           7,344
-     BatchNorm2d-104            [-1, 816, 8, 8]           1,632
-           ReLU6-105            [-1, 816, 8, 8]               0
-          Conv2d-106            [-1, 136, 8, 8]         110,976
-     BatchNorm2d-107            [-1, 136, 8, 8]             272
-InvertedResidual-108            [-1, 136, 8, 8]               0
-          Conv2d-109            [-1, 816, 8, 8]         110,976
-     BatchNorm2d-110            [-1, 816, 8, 8]           1,632
-           ReLU6-111            [-1, 816, 8, 8]               0
-          Conv2d-112            [-1, 816, 8, 8]           7,344
-     BatchNorm2d-113            [-1, 816, 8, 8]           1,632
-           ReLU6-114            [-1, 816, 8, 8]               0
-          Conv2d-115            [-1, 136, 8, 8]         110,976
-     BatchNorm2d-116            [-1, 136, 8, 8]             272
-InvertedResidual-117            [-1, 136, 8, 8]               0
-          Conv2d-118            [-1, 816, 8, 8]         110,976
-     BatchNorm2d-119            [-1, 816, 8, 8]           1,632
-           ReLU6-120            [-1, 816, 8, 8]               0
-          Conv2d-121            [-1, 816, 4, 4]           7,344
-     BatchNorm2d-122            [-1, 816, 4, 4]           1,632
-           ReLU6-123            [-1, 816, 4, 4]               0
-          Conv2d-124            [-1, 224, 4, 4]         182,784
-     BatchNorm2d-125            [-1, 224, 4, 4]             448
-InvertedResidual-126            [-1, 224, 4, 4]               0
-          Conv2d-127           [-1, 1344, 4, 4]         301,056
-     BatchNorm2d-128           [-1, 1344, 4, 4]           2,688
-           ReLU6-129           [-1, 1344, 4, 4]               0
-          Conv2d-130           [-1, 1344, 4, 4]          12,096
-     BatchNorm2d-131           [-1, 1344, 4, 4]           2,688
-           ReLU6-132           [-1, 1344, 4, 4]               0
-          Conv2d-133            [-1, 224, 4, 4]         301,056
-     BatchNorm2d-134            [-1, 224, 4, 4]             448
-InvertedResidual-135            [-1, 224, 4, 4]               0
-          Conv2d-136           [-1, 1344, 4, 4]         301,056
-     BatchNorm2d-137           [-1, 1344, 4, 4]           2,688
-           ReLU6-138           [-1, 1344, 4, 4]               0
-          Conv2d-139           [-1, 1344, 4, 4]          12,096
-     BatchNorm2d-140           [-1, 1344, 4, 4]           2,688
-           ReLU6-141           [-1, 1344, 4, 4]               0
-          Conv2d-142            [-1, 224, 4, 4]         301,056
-     BatchNorm2d-143            [-1, 224, 4, 4]             448
-InvertedResidual-144            [-1, 224, 4, 4]               0
-          Conv2d-145           [-1, 1344, 4, 4]         301,056
-     BatchNorm2d-146           [-1, 1344, 4, 4]           2,688
-           ReLU6-147           [-1, 1344, 4, 4]               0
-          Conv2d-148           [-1, 1344, 4, 4]          12,096
-     BatchNorm2d-149           [-1, 1344, 4, 4]           2,688
-           ReLU6-150           [-1, 1344, 4, 4]               0
-          Conv2d-151            [-1, 448, 4, 4]         602,112
-     BatchNorm2d-152            [-1, 448, 4, 4]             896
-InvertedResidual-153            [-1, 448, 4, 4]               0
-          Conv2d-154           [-1, 1792, 4, 4]         802,816
-     BatchNorm2d-155           [-1, 1792, 4, 4]           3,584
-           ReLU6-156           [-1, 1792, 4, 4]               0
-         Dropout-157                 [-1, 1792]               0
-          Linear-158                   [-1, 10]          17,930
-     MobileNetV2-159                   [-1, 10]               0
-================================================================
-Total params: 4,333,706
-Trainable params: 4,333,706
-Non-trainable params: 0
-----------------------------------------------------------------
-Input size (MB): 0.01
-Forward/backward pass size (MB): 53.00
-Params size (MB): 16.53
-Estimated Total Size (MB): 69.54
-----------------------------------------------------------------
-cifar10_mobilenetv2_x1_4 Network Loaded
-Academy Set Up
-Training
-Epoch:  0 	Loss:  2.3026623725891113
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  10 	Loss:  2.3026304244995117
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  20 	Loss:  2.3026695251464844
-Epoch:  30 	Loss:  2.30263090133667
-Epoch:  40 	Loss:  2.30258846282959
-Epoch:  50 	Loss:  2.302586078643799
-Epoch:  60 	Loss:  2.3025403022766113
-Epoch:  70 	Loss:  2.302654266357422
-Epoch:  80 	Loss:  2.302577495574951
-Epoch:  90 	Loss:  2.302520275115967
-Epoch:  100 	Loss:  2.3026838302612305
-Epoch:  110 	Loss:  2.3025896549224854
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  120 	Loss:  2.3025760650634766
-Epoch:  130 	Loss:  2.302687168121338
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  140 	Loss:  2.302563190460205
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  150 	Loss:  2.3026134967803955
-Epoch:  160 	Loss:  2.302626848220825
-Epoch:  170 	Loss:  2.30261492729187
-Epoch:  180 	Loss:  2.302644729614258
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  190 	Loss:  2.3026299476623535
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  200 	Loss:  2.3026351928710938
-Epoch:  210 	Loss:  2.302572011947632
-Epoch:  220 	Loss:  2.3026280403137207
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  230 	Loss:  2.302586078643799
-Epoch:  240 	Loss:  2.3026835918426514
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  250 	Loss:  2.302588701248169
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  260 	Loss:  2.302680492401123
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  270 	Loss:  2.302637815475464
-Epoch:  280 	Loss:  2.3026137351989746
-Epoch:  290 	Loss:  2.3028650283813477
-Epoch:  300 	Loss:  2.302659034729004
-Epoch:  310 	Loss:  2.3025200366973877
-Epoch:  320 	Loss:  2.3025927543640137
-Epoch:  330 	Loss:  2.3026654720306396
-Epoch:  340 	Loss:  2.3026890754699707
-Epoch:  350 	Loss:  2.302550792694092
-Epoch:  360 	Loss:  2.3026325702667236
-Epoch:  370 	Loss:  2.3025710582733154
-Epoch:  380 	Loss:  2.3026955127716064
-Epoch:  390 	Loss:  2.3025248050689697
-Epoch:  400 	Loss:  2.3025879859924316
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  410 	Loss:  2.3026320934295654
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  420 	Loss:  2.302614688873291
-Epoch:  430 	Loss:  2.302572727203369
-Epoch:  440 	Loss:  2.302654504776001
-Epoch:  450 	Loss:  2.3026907444000244
-Epoch:  460 	Loss:  2.3025972843170166
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  470 	Loss:  2.3027024269104004
-Epoch:  480 	Loss:  2.3025927543640137
-Epoch:  490 	Loss:  2.3026368618011475
-Epoch:  500 	Loss:  2.302678346633911
-Epoch:  510 	Loss:  2.3026199340820312
-Epoch:  520 	Loss:  2.3025803565979004
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  530 	Loss:  2.3026719093322754
-Epoch:  540 	Loss:  2.302623748779297
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  550 	Loss:  2.302563428878784
-Epoch:  560 	Loss:  2.302652597427368
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  570 	Loss:  2.302572727203369
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  580 	Loss:  2.302661180496216
-Epoch:  590 	Loss:  2.3025152683258057
-Epoch:  600 	Loss:  2.3025362491607666
-Epoch:  610 	Loss:  2.302565097808838
-Epoch:  620 	Loss:  2.302549362182617
-Epoch:  630 	Loss:  2.302619218826294
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  640 	Loss:  2.3026747703552246
-Epoch:  650 	Loss:  2.3026204109191895
-Epoch:  660 	Loss:  2.3027093410491943
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  670 	Loss:  2.3026480674743652
-Epoch:  680 	Loss:  2.302685260772705
-Epoch:  690 	Loss:  2.30268931388855
-Epoch:  700 	Loss:  2.3026294708251953
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  710 	Loss:  2.3026280403137207
-Epoch:  720 	Loss:  2.302560329437256
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  730 	Loss:  2.3026421070098877
-Epoch:  740 	Loss:  2.3026680946350098
-Epoch:  750 	Loss:  2.302673816680908
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  760 	Loss:  2.3026814460754395
-Epoch:  770 	Loss:  2.302643060684204
-Epoch:  780 	Loss:  2.302560329437256
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  790 	Loss:  2.3025898933410645
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  800 	Loss:  2.3026373386383057
-Epoch:  810 	Loss:  2.3025481700897217
-Epoch:  820 	Loss:  2.302469491958618
-Epoch:  830 	Loss:  2.3025383949279785
-Epoch:  840 	Loss:  2.3025386333465576
-Epoch:  850 	Loss:  2.3026211261749268
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  860 	Loss:  2.3026654720306396
-Epoch:  870 	Loss:  2.302622079849243
-Epoch:  880 	Loss:  2.30268931388855
-Epoch:  890 	Loss:  2.3025736808776855
-Epoch:  900 	Loss:  2.302687406539917
-Epoch:  910 	Loss:  2.302635669708252
-Epoch:  920 	Loss:  2.30257511138916
-Epoch:  930 	Loss:  2.3026440143585205
-Epoch:  940 	Loss:  2.3025479316711426
-Epoch:  950 	Loss:  2.3025927543640137
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  960 	Loss:  2.3026208877563477
-Epoch:  970 	Loss:  2.3025920391082764
-Epoch:  980 	Loss:  2.3026509284973145
-Epoch:  990 	Loss:  2.302600622177124
-Epoch:  1000 	Loss:  2.3025968074798584
-Epoch:  1010 	Loss:  2.302588939666748
-Epoch:  1020 	Loss:  2.3026928901672363
-Epoch:  1030 	Loss:  2.302666187286377
-Epoch:  1040 	Loss:  2.3025217056274414
-Epoch:  1050 	Loss:  2.3025994300842285
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1060 	Loss:  2.302574634552002
-Epoch:  1070 	Loss:  2.30257511138916
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1080 	Loss:  2.3027091026306152
-Epoch:  1090 	Loss:  2.3027215003967285
-Epoch:  1100 	Loss:  2.302600860595703
-Epoch:  1110 	Loss:  2.302542209625244
-Epoch:  1120 	Loss:  2.3026957511901855
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1130 	Loss:  2.3026680946350098
-Epoch:  1140 	Loss:  2.3024725914001465
-Epoch:  1150 	Loss:  2.3026108741760254
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1160 	Loss:  2.3026411533355713
-Epoch:  1170 	Loss:  2.3025550842285156
-Epoch:  1180 	Loss:  2.3024742603302
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1190 	Loss:  2.3026950359344482
-Epoch:  1200 	Loss:  2.3025588989257812
-Epoch:  1210 	Loss:  2.3026111125946045
-Epoch:  1220 	Loss:  2.302595615386963
-Epoch:  1230 	Loss:  2.302617311477661
-Epoch:  1240 	Loss:  2.3024609088897705
-Epoch:  1250 	Loss:  2.3025927543640137
-Epoch:  1260 	Loss:  2.3026185035705566
-Epoch:  1270 	Loss:  2.3025856018066406
-Epoch:  1280 	Loss:  2.302640438079834
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1290 	Loss:  2.3025450706481934
-Epoch:  1300 	Loss:  2.3027713298797607
-Epoch:  1310 	Loss:  2.302555561065674
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1320 	Loss:  2.302600860595703
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1330 	Loss:  2.3025543689727783
-Epoch:  1340 	Loss:  2.3026394844055176
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1350 	Loss:  2.302682876586914
-Epoch:  1360 	Loss:  2.302579164505005
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1370 	Loss:  2.302687406539917
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1380 	Loss:  2.3026397228240967
-Epoch:  1390 	Loss:  2.302670955657959
-Epoch:  1400 	Loss:  2.30252742767334
-Epoch:  1410 	Loss:  2.30257248878479
-Epoch:  1420 	Loss:  2.302711009979248
-Epoch:  1430 	Loss:  2.3025519847869873
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1440 	Loss:  2.3025848865509033
-Epoch:  1450 	Loss:  2.302659511566162
-Epoch:  1460 	Loss:  2.302511692047119
-Epoch:  1470 	Loss:  2.302589178085327
-Epoch:  1480 	Loss:  2.302546739578247
-Epoch:  1490 	Loss:  2.3026914596557617
-Epoch:  1500 	Loss:  2.3026516437530518
-Epoch:  1510 	Loss:  2.3027195930480957
-Epoch:  1520 	Loss:  2.302595376968384
-Epoch:  1530 	Loss:  2.302626371383667
-Epoch:  1540 	Loss:  2.3025803565979004
-Epoch:  1550 	Loss:  2.3025622367858887
-Epoch:  1560 	Loss:  2.3025553226470947
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1570 	Loss:  2.30268931388855
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1580 	Loss:  2.3025050163269043
-Epoch:  1590 	Loss:  2.3026108741760254
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1600 	Loss:  2.302610158920288
-Epoch:  1610 	Loss:  2.3026576042175293
-Epoch:  1620 	Loss:  2.3025641441345215
-Epoch:  1630 	Loss:  2.302816867828369
-Epoch:  1640 	Loss:  2.302586793899536
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1650 	Loss:  2.302645206451416
-Epoch:  1660 	Loss:  2.302560806274414
-Epoch:  1670 	Loss:  2.3026933670043945
-Epoch:  1680 	Loss:  2.3024957180023193
-Epoch:  1690 	Loss:  2.3026511669158936
-Epoch:  1700 	Loss:  2.3025786876678467
-Epoch:  1710 	Loss:  2.30251145362854
-Epoch:  1720 	Loss:  2.30256986618042
-Epoch:  1730 	Loss:  2.302579402923584
-Epoch:  1740 	Loss:  2.3025786876678467
-Epoch:  1750 	Loss:  2.30260968208313
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1760 	Loss:  2.3026719093322754
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1770 	Loss:  2.302584171295166
-Epoch:  1780 	Loss:  2.3025877475738525
-Epoch:  1790 	Loss:  2.302626848220825
-Epoch:  1800 	Loss:  2.3024818897247314
-Epoch:  1810 	Loss:  2.3026418685913086
-Epoch:  1820 	Loss:  2.3025405406951904
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1830 	Loss:  2.3026490211486816
-Epoch:  1840 	Loss:  2.302666425704956
-Epoch:  1850 	Loss:  2.3025364875793457
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1860 	Loss:  2.3026211261749268
-Epoch:  1870 	Loss:  2.302550792694092
-Epoch:  1880 	Loss:  2.302579879760742
-Epoch:  1890 	Loss:  2.3026559352874756
-Epoch:  1900 	Loss:  2.3025879859924316
-Epoch:  1910 	Loss:  2.3026123046875
-Epoch:  1920 	Loss:  2.302596092224121
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1930 	Loss:  2.3026211261749268
-Epoch:  1940 	Loss:  2.302577257156372
-Epoch:  1950 	Loss:  2.3026158809661865
-Epoch:  1960 	Loss:  2.3025715351104736
-Epoch:  1970 	Loss:  2.302586317062378
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1980 	Loss:  2.302584171295166
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  1990 	Loss:  2.302671194076538
-Epoch:  2000 	Loss:  2.3025717735290527
-Epoch:  2010 	Loss:  2.3026678562164307
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2020 	Loss:  2.302630662918091
-Epoch:  2030 	Loss:  2.302551031112671
-Epoch:  2040 	Loss:  2.3025753498077393
-Epoch:  2050 	Loss:  2.302598476409912
-Epoch:  2060 	Loss:  2.3025832176208496
-Epoch:  2070 	Loss:  2.3025736808776855
-Epoch:  2080 	Loss:  2.302628993988037
-Epoch:  2090 	Loss:  2.3026795387268066
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2100 	Loss:  2.3026516437530518
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2110 	Loss:  2.3026890754699707
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2120 	Loss:  2.302629232406616
-Epoch:  2130 	Loss:  2.302672863006592
-Epoch:  2140 	Loss:  2.302722454071045
-Epoch:  2150 	Loss:  2.3026483058929443
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2160 	Loss:  2.3026270866394043
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2170 	Loss:  2.302548885345459
-Epoch:  2180 	Loss:  2.3027119636535645
-Epoch:  2190 	Loss:  2.302670955657959
-Epoch:  2200 	Loss:  2.302584648132324
-Epoch:  2210 	Loss:  2.302574634552002
-Epoch:  2220 	Loss:  2.3026795387268066
-Epoch:  2230 	Loss:  2.3025825023651123
-Epoch:  2240 	Loss:  2.3026037216186523
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2250 	Loss:  2.302518367767334
-Epoch:  2260 	Loss:  2.302517890930176
-Epoch:  2270 	Loss:  2.3026254177093506
-Epoch:  2280 	Loss:  2.3025269508361816
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2290 	Loss:  2.3025882244110107
-Epoch:  2300 	Loss:  2.302565574645996
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2310 	Loss:  2.302525520324707
-Epoch:  2320 	Loss:  2.302705764770508
-Epoch:  2330 	Loss:  2.3026037216186523
-Epoch:  2340 	Loss:  2.3025708198547363
-Epoch:  2350 	Loss:  2.302582263946533
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2360 	Loss:  2.3025763034820557
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2370 	Loss:  2.302614688873291
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2380 	Loss:  2.3025848865509033
-Epoch:  2390 	Loss:  2.3026294708251953
-Epoch:  2400 	Loss:  2.302669048309326
-Epoch:  2410 	Loss:  2.3025920391082764
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2420 	Loss:  2.302645683288574
-Epoch:  2430 	Loss:  2.3026905059814453
-Epoch:  2440 	Loss:  2.3025357723236084
-Epoch:  2450 	Loss:  2.3025906085968018
-Epoch:  2460 	Loss:  2.3026394844055176
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2470 	Loss:  2.302656650543213
-Epoch:  2480 	Loss:  2.3026204109191895
-Epoch:  2490 	Loss:  2.302539110183716
-Epoch:  2500 	Loss:  2.3025121688842773
-Epoch:  2510 	Loss:  2.302616834640503
-Epoch:  2520 	Loss:  2.3026347160339355
-Epoch:  2530 	Loss:  2.302565097808838
-Epoch:  2540 	Loss:  2.3025574684143066
-Epoch:  2550 	Loss:  2.30264949798584
-Epoch:  2560 	Loss:  2.3026585578918457
-Epoch:  2570 	Loss:  2.3027195930480957
-Epoch:  2580 	Loss:  2.3025548458099365
-Epoch:  2590 	Loss:  2.3026881217956543
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2600 	Loss:  2.3027236461639404
-Epoch:  2610 	Loss:  2.3025805950164795
-Epoch:  2620 	Loss:  2.302642345428467
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2630 	Loss:  2.3025693893432617
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2640 	Loss:  2.3025362491607666
-Epoch:  2650 	Loss:  2.3026580810546875
-Epoch:  2660 	Loss:  2.302603006362915
-Epoch:  2670 	Loss:  2.302539348602295
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2680 	Loss:  2.3025879859924316
-Epoch:  2690 	Loss:  2.302696704864502
-Epoch:  2700 	Loss:  2.3026123046875
-Epoch:  2710 	Loss:  2.302611827850342
-Epoch:  2720 	Loss:  2.3026177883148193
-Epoch:  2730 	Loss:  2.302565097808838
-Epoch:  2740 	Loss:  2.3026533126831055
-Epoch:  2750 	Loss:  2.302534341812134
-Epoch:  2760 	Loss:  2.3026061058044434
-Epoch:  2770 	Loss:  2.302638053894043
-Epoch:  2780 	Loss:  2.3025851249694824
-Epoch:  2790 	Loss:  2.302597999572754
-Epoch:  2800 	Loss:  2.3025455474853516
-Epoch:  2810 	Loss:  2.302694082260132
-Epoch:  2820 	Loss:  2.302607297897339
-Epoch:  2830 	Loss:  2.3026368618011475
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2840 	Loss:  2.302649974822998
-Epoch:  2850 	Loss:  2.3026130199432373
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2860 	Loss:  2.302675485610962
-Epoch:  2870 	Loss:  2.3025894165039062
-Epoch:  2880 	Loss:  2.3025922775268555
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2890 	Loss:  2.3026206493377686
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2900 	Loss:  2.302647829055786
-Epoch:  2910 	Loss:  2.3026070594787598
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2920 	Loss:  2.302677869796753
-Epoch:  2930 	Loss:  2.3026161193847656
-Epoch:  2940 	Loss:  2.3025808334350586
-Epoch:  2950 	Loss:  2.3026022911071777
-Epoch:  2960 	Loss:  2.3026435375213623
-Epoch:  2970 	Loss:  2.3026323318481445
-Epoch:  2980 	Loss:  2.3025612831115723
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  2990 	Loss:  2.30256986618042
-Epoch:  3000 	Loss:  2.3026299476623535
-Epoch:  3010 	Loss:  2.3025927543640137
-Epoch:  3020 	Loss:  2.3025872707366943
-Epoch:  3030 	Loss:  2.3026483058929443
-Epoch:  3040 	Loss:  2.3025646209716797
-Epoch:  3050 	Loss:  2.3025898933410645
-Epoch:  3060 	Loss:  2.3025577068328857
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3070 	Loss:  2.3026700019836426
-Epoch:  3080 	Loss:  2.302635431289673
-Epoch:  3090 	Loss:  2.3025736808776855
-Epoch:  3100 	Loss:  2.302598237991333
-Epoch:  3110 	Loss:  2.302529811859131
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3120 	Loss:  2.302640914916992
-Epoch:  3130 	Loss:  2.302560329437256
-Epoch:  3140 	Loss:  2.3026373386383057
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3150 	Loss:  2.3026070594787598
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3160 	Loss:  2.3026461601257324
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3170 	Loss:  2.3026463985443115
-Epoch:  3180 	Loss:  2.302645206451416
-Epoch:  3190 	Loss:  2.3026626110076904
-Epoch:  3200 	Loss:  2.3025975227355957
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3210 	Loss:  2.3025174140930176
-Epoch:  3220 	Loss:  2.30277943611145
-Epoch:  3230 	Loss:  2.302588701248169
-Epoch:  3240 	Loss:  2.302649974822998
-Epoch:  3250 	Loss:  2.3025598526000977
-Epoch:  3260 	Loss:  2.3026814460754395
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3270 	Loss:  2.3026418685913086
-Epoch:  3280 	Loss:  2.302614212036133
-Epoch:  3290 	Loss:  2.3025734424591064
-Epoch:  3300 	Loss:  2.3025741577148438
-Epoch:  3310 	Loss:  2.3025410175323486
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3320 	Loss:  2.3026418685913086
-Epoch:  3330 	Loss:  2.302637815475464
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3340 	Loss:  2.3026132583618164
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3350 	Loss:  2.302630662918091
-Epoch:  3360 	Loss:  2.3025574684143066
-Epoch:  3370 	Loss:  2.302626609802246
-Epoch:  3380 	Loss:  2.302682876586914
-Epoch:  3390 	Loss:  2.3025805950164795
-Epoch:  3400 	Loss:  2.3026938438415527
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3410 	Loss:  2.302600622177124
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3420 	Loss:  2.302579402923584
-Epoch:  3430 	Loss:  2.3025906085968018
-Epoch:  3440 	Loss:  2.3025574684143066
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3450 	Loss:  2.3026633262634277
-Epoch:  3460 	Loss:  2.302629232406616
-Epoch:  3470 	Loss:  2.302600383758545
-Epoch:  3480 	Loss:  2.302597761154175
-Epoch:  3490 	Loss:  2.302643299102783
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3500 	Loss:  2.3026061058044434
-Epoch:  3510 	Loss:  2.30260968208313
-Epoch:  3520 	Loss:  2.302630662918091
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3530 	Loss:  2.302593469619751
-Epoch:  3540 	Loss:  2.302665948867798
-Epoch:  3550 	Loss:  2.3026373386383057
-Epoch:  3560 	Loss:  2.302621364593506
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3570 	Loss:  2.3026278018951416
-Epoch:  3580 	Loss:  2.302649974822998
-Epoch:  3590 	Loss:  2.302597999572754
-Epoch:  3600 	Loss:  2.3025412559509277
-Epoch:  3610 	Loss:  2.3025927543640137
-Epoch:  3620 	Loss:  2.302651882171631
-Epoch:  3630 	Loss:  2.3026208877563477
-Epoch:  3640 	Loss:  2.3024871349334717
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3650 	Loss:  2.3026375770568848
-Epoch:  3660 	Loss:  2.3026340007781982
-Epoch:  3670 	Loss:  2.302642345428467
-Epoch:  3680 	Loss:  2.3025059700012207
-Epoch:  3690 	Loss:  2.3026442527770996
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3700 	Loss:  2.302579164505005
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3710 	Loss:  2.3025708198547363
-Epoch:  3720 	Loss:  2.302631378173828
-Epoch:  3730 	Loss:  2.3025879859924316
-Epoch:  3740 	Loss:  2.302591323852539
-Epoch:  3750 	Loss:  2.3026700019836426
-Epoch:  3760 	Loss:  2.3026394844055176
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3770 	Loss:  2.3025684356689453
-Epoch:  3780 	Loss:  2.302739381790161
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3790 	Loss:  2.3025665283203125
-Epoch:  3800 	Loss:  2.3027613162994385
-Epoch:  3810 	Loss:  2.3027188777923584
-Epoch:  3820 	Loss:  2.302639961242676
-Epoch:  3830 	Loss:  2.3025753498077393
-Epoch:  3840 	Loss:  2.30271577835083
-Epoch:  3850 	Loss:  2.302614688873291
-Epoch:  3860 	Loss:  2.3026795387268066
-Epoch:  3870 	Loss:  2.3027358055114746
-Epoch:  3880 	Loss:  2.3026387691497803
-Epoch:  3890 	Loss:  2.302600860595703
-Epoch:  3900 	Loss:  2.3025481700897217
-Epoch:  3910 	Loss:  2.302572727203369
-Epoch:  3920 	Loss:  2.302713632583618
-Epoch:  3930 	Loss:  2.3025524616241455
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3940 	Loss:  2.302656650543213
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3950 	Loss:  2.302658796310425
-Epoch:  3960 	Loss:  2.3026256561279297
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  3970 	Loss:  2.3025941848754883
-Epoch:  3980 	Loss:  2.3025803565979004
-Epoch:  3990 	Loss:  2.3026225566864014
-Epoch:  4000 	Loss:  2.302647113800049
-Epoch:  4010 	Loss:  2.3026058673858643
-Epoch:  4020 	Loss:  2.302600860595703
-Epoch:  4030 	Loss:  2.3026108741760254
-Epoch:  4040 	Loss:  2.302661180496216
-Epoch:  4050 	Loss:  2.302635669708252
-Epoch:  4060 	Loss:  2.302506446838379
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4070 	Loss:  2.3025665283203125
-Epoch:  4080 	Loss:  2.302563190460205
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4090 	Loss:  2.302868604660034
-Epoch:  4100 	Loss:  2.302582025527954
-Epoch:  4110 	Loss:  2.302658796310425
-Epoch:  4120 	Loss:  2.302696704864502
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4130 	Loss:  2.3025035858154297
-Epoch:  4140 	Loss:  2.3025851249694824
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4150 	Loss:  2.302605152130127
-Epoch:  4160 	Loss:  2.3026387691497803
-Epoch:  4170 	Loss:  2.3026986122131348
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4180 	Loss:  2.3025918006896973
-Epoch:  4190 	Loss:  2.3026347160339355
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4200 	Loss:  2.302629232406616
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4210 	Loss:  2.3026137351989746
-Epoch:  4220 	Loss:  2.302582025527954
-Epoch:  4230 	Loss:  2.302656412124634
-Epoch:  4240 	Loss:  2.3025877475738525
-Epoch:  4250 	Loss:  2.302574634552002
-Epoch:  4260 	Loss:  2.3026585578918457
-Epoch:  4270 	Loss:  2.302563190460205
-Epoch:  4280 	Loss:  2.302579641342163
-Epoch:  4290 	Loss:  2.3026182651519775
-Epoch:  4300 	Loss:  2.302647829055786
-Epoch:  4310 	Loss:  2.302508592605591
-Epoch:  4320 	Loss:  2.3025600910186768
-Epoch:  4330 	Loss:  2.3026137351989746
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4340 	Loss:  2.3027474880218506
-Epoch:  4350 	Loss:  2.3026041984558105
-Epoch:  4360 	Loss:  2.3026232719421387
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4370 	Loss:  2.3025918006896973
-Epoch:  4380 	Loss:  2.302654504776001
-Epoch:  4390 	Loss:  2.302536964416504
-Epoch:  4400 	Loss:  2.3025705814361572
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4410 	Loss:  2.302624464035034
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4420 	Loss:  2.3026490211486816
-Epoch:  4430 	Loss:  2.3025870323181152
-Epoch:  4440 	Loss:  2.3025918006896973
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4450 	Loss:  2.302699565887451
-Epoch:  4460 	Loss:  2.3025693893432617
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4470 	Loss:  2.3026084899902344
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4480 	Loss:  2.3027431964874268
-Epoch:  4490 	Loss:  2.302603244781494
-Epoch:  4500 	Loss:  2.302525520324707
-Epoch:  4510 	Loss:  2.3025741577148438
-Epoch:  4520 	Loss:  2.3026671409606934
-Epoch:  4530 	Loss:  2.302600383758545
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4540 	Loss:  2.3026490211486816
-Epoch:  4550 	Loss:  2.302541971206665
-Epoch:  4560 	Loss:  2.3026885986328125
-Epoch:  4570 	Loss:  2.3026070594787598
-Epoch:  4580 	Loss:  2.3025994300842285
-Epoch:  4590 	Loss:  2.3025166988372803
-Epoch:  4600 	Loss:  2.302583932876587
-Epoch:  4610 	Loss:  2.302570104598999
-Epoch:  4620 	Loss:  2.3025336265563965
-Epoch:  4630 	Loss:  2.3025858402252197
-Epoch:  4640 	Loss:  2.302565097808838
-Epoch:  4650 	Loss:  2.302623748779297
-Epoch:  4660 	Loss:  2.30253267288208
-Epoch:  4670 	Loss:  2.302638530731201
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/multiprocessing/queues.py", line 245, in _feed
-    send_bytes(obj)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 200, in send_bytes
-    self._send_bytes(m[offset:offset + size])
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 411, in _send_bytes
-    self._send(header + buf)
-  File "/usr/lib/python3.8/multiprocessing/connection.py", line 368, in _send
-    n = write(self._handle, buf)
-BrokenPipeError: [Errno 32] Broken pipe
-Epoch:  4680 	Loss:  2.3026280403137207
-Epoch:  4690 	Loss:  2.302586078643799
-Epoch:  4700 	Loss:  2.302630662918091
-Epoch:  4710 	Loss:  2.3027379512786865
-Epoch:  4720 	Loss:  2.302656888961792
-Epoch:  4730 	Loss:  2.3025715351104736
-Epoch:  4740 	Loss:  2.302588939666748
-Epoch:  4750 	Loss:  2.302567958831787
-Epoch:  4760 	Loss:  2.3026394844055176
+Batches Done...:   0%|          | 0/81 [00:00<?, ?it/s]models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+CW2 attacks being performed...
+Working on White Box Attacks...
+Batches Done...:   1%|          | 1/81 [02:54<3:52:06, 174.08s/it]Batches Done...:   2%|▏         | 2/81 [05:48<3:49:31, 174.32s/it]Batches Done...:   4%|▎         | 3/81 [08:44<3:47:23, 174.91s/it]Batches Done...:   5%|▍         | 4/81 [11:39<3:44:40, 175.07s/it]Batches Done...:   6%|▌         | 5/81 [14:34<3:41:39, 175.00s/it]Batches Done...:   7%|▋         | 6/81 [17:30<3:39:12, 175.37s/it]Batches Done...:   9%|▊         | 7/81 [20:26<3:36:24, 175.47s/it]Batches Done...:  10%|▉         | 8/81 [23:21<3:33:29, 175.48s/it]Batches Done...:  11%|█         | 9/81 [26:19<3:31:22, 176.14s/it]Batches Done...:  12%|█▏        | 10/81 [29:14<3:28:08, 175.89s/it]Batches Done...:  14%|█▎        | 11/81 [32:10<3:25:06, 175.80s/it]Batches Done...:  15%|█▍        | 12/81 [35:05<3:22:07, 175.76s/it]Batches Done...:  16%|█▌        | 13/81 [38:01<3:19:04, 175.66s/it]Batches Done...:  17%|█▋        | 14/81 [40:57<3:16:17, 175.78s/it]Batches Done...:  19%|█▊        | 15/81 [43:53<3:13:27, 175.87s/it]Batches Done...:  20%|█▉        | 16/81 [46:49<3:10:43, 176.06s/it]Batches Done...:  21%|██        | 17/81 [49:45<3:07:38, 175.91s/it]Batches Done...:  22%|██▏       | 18/81 [52:40<3:04:23, 175.61s/it]Batches Done...:  23%|██▎       | 19/81 [55:36<3:01:36, 175.74s/it]Batches Done...:  25%|██▍       | 20/81 [58:32<2:58:38, 175.71s/it]Batches Done...:  26%|██▌       | 21/81 [1:01:27<2:55:37, 175.62s/it]Batches Done...:  27%|██▋       | 22/81 [1:04:21<2:52:22, 175.29s/it]Batches Done...:  28%|██▊       | 23/81 [1:07:17<2:49:23, 175.23s/it]Batches Done...:  30%|██▉       | 24/81 [1:10:11<2:46:22, 175.12s/it]Batches Done...:  31%|███       | 25/81 [1:13:07<2:43:36, 175.30s/it]Batches Done...:  32%|███▏      | 26/81 [1:16:03<2:40:44, 175.36s/it]Batches Done...:  33%|███▎      | 27/81 [1:18:58<2:37:44, 175.26s/it]Batches Done...:  35%|███▍      | 28/81 [1:21:53<2:34:53, 175.36s/it]Batches Done...:  36%|███▌      | 29/81 [1:24:48<2:31:55, 175.30s/it]Batches Done...:  37%|███▋      | 30/81 [1:27:44<2:29:10, 175.50s/it]Batches Done...:  38%|███▊      | 31/81 [1:30:40<2:26:23, 175.67s/it]Batches Done...:  40%|███▉      | 32/81 [1:33:36<2:23:21, 175.53s/it]Batches Done...:  41%|████      | 33/81 [1:36:31<2:20:17, 175.37s/it]Batches Done...:  42%|████▏     | 34/81 [1:39:26<2:17:25, 175.43s/it]Batches Done...:  43%|████▎     | 35/81 [1:42:21<2:14:20, 175.23s/it]Batches Done...:  44%|████▍     | 36/81 [1:45:17<2:11:31, 175.36s/it]Batches Done...:  46%|████▌     | 37/81 [1:48:12<2:08:38, 175.41s/it]Batches Done...:  47%|████▋     | 38/81 [1:51:08<2:05:44, 175.45s/it]Batches Done...:  48%|████▊     | 39/81 [1:54:03<2:02:46, 175.39s/it]Batches Done...:  49%|████▉     | 40/81 [1:56:59<1:59:58, 175.58s/it]Batches Done...:  51%|█████     | 41/81 [1:59:54<1:57:00, 175.50s/it]Batches Done...:  52%|█████▏    | 42/81 [2:02:50<1:54:01, 175.41s/it]Batches Done...:  53%|█████▎    | 43/81 [2:05:45<1:51:11, 175.57s/it]Batches Done...:  54%|█████▍    | 44/81 [2:08:41<1:48:17, 175.62s/it]Batches Done...:  56%|█████▌    | 45/81 [2:11:36<1:45:17, 175.49s/it]Batches Done...:  57%|█████▋    | 46/81 [2:14:31<1:42:17, 175.35s/it]Batches Done...:  58%|█████▊    | 47/81 [2:17:27<1:39:21, 175.33s/it]Batches Done...:  59%|█████▉    | 48/81 [2:20:22<1:36:28, 175.40s/it]Batches Done...:  60%|██████    | 49/81 [2:23:18<1:33:39, 175.60s/it]Batches Done...:  62%|██████▏   | 50/81 [2:26:14<1:30:46, 175.70s/it]Batches Done...:  63%|██████▎   | 51/81 [2:29:09<1:27:45, 175.52s/it]Batches Done...:  64%|██████▍   | 52/81 [2:32:04<1:24:44, 175.31s/it]Batches Done...:  65%|██████▌   | 53/81 [2:35:00<1:21:54, 175.53s/it]Batches Done...:  67%|██████▋   | 54/81 [2:37:56<1:19:00, 175.56s/it]Batches Done...:  68%|██████▊   | 55/81 [2:40:51<1:16:02, 175.47s/it]Batches Done...:  69%|██████▉   | 56/81 [2:43:47<1:13:08, 175.54s/it]Batches Done...:  70%|███████   | 57/81 [2:46:43<1:10:16, 175.71s/it]Batches Done...:  72%|███████▏  | 58/81 [2:49:39<1:07:20, 175.69s/it]Batches Done...:  73%|███████▎  | 59/81 [2:52:34<1:04:23, 175.61s/it]Batches Done...:  74%|███████▍  | 60/81 [2:55:29<1:01:23, 175.40s/it]Batches Done...:  75%|███████▌  | 61/81 [2:58:24<58:24, 175.25s/it]  Batches Done...:  77%|███████▋  | 62/81 [3:01:19<55:29, 175.25s/it]Batches Done...:  78%|███████▊  | 63/81 [3:04:14<52:33, 175.22s/it]Batches Done...:  79%|███████▉  | 64/81 [3:07:03<49:07, 173.41s/it]Batches Done...:  80%|████████  | 65/81 [3:09:58<46:20, 173.80s/it]Batches Done...:  81%|████████▏ | 66/81 [3:12:53<43:33, 174.27s/it]Batches Done...:  83%|████████▎ | 67/81 [3:15:47<40:38, 174.20s/it]Batches Done...:  84%|████████▍ | 68/81 [3:18:43<37:49, 174.57s/it]Batches Done...:  85%|████████▌ | 69/81 [3:21:38<34:57, 174.75s/it]Batches Done...:  86%|████████▋ | 70/81 [3:24:33<32:03, 174.87s/it]Batches Done...:  88%|████████▊ | 71/81 [3:27:28<29:08, 174.90s/it]Batches Done...:  89%|████████▉ | 72/81 [3:30:23<26:14, 174.95s/it]Batches Done...:  90%|█████████ | 73/81 [3:33:18<23:19, 174.89s/it]Batches Done...:  91%|█████████▏| 74/81 [3:36:13<20:24, 175.00s/it]Batches Done...:  93%|█████████▎| 75/81 [3:39:09<17:31, 175.31s/it]Batches Done...:  94%|█████████▍| 76/81 [3:42:04<14:36, 175.27s/it]Batches Done...:  95%|█████████▌| 77/81 [3:45:00<11:41, 175.41s/it]Batches Done...:  96%|█████████▋| 78/81 [3:47:57<08:47, 175.85s/it]Batches Done...:  98%|█████████▊| 79/81 [3:50:53<05:51, 175.83s/it]Batches Done...:  99%|█████████▉| 80/81 [3:53:48<02:55, 175.71s/it]Batches Done...: 100%|██████████| 81/81 [3:55:53<00:00, 160.46s/it]Batches Done...: 100%|██████████| 81/81 [3:55:53<00:00, 174.74s/it]
+Batches Done...:   0%|          | 0/81 [00:00<?, ?it/s]Working on Black Box Attacks...
+Batches Done...:   1%|          | 1/81 [02:55<3:54:18, 175.73s/it]Batches Done...:   2%|▏         | 2/81 [05:51<3:51:44, 176.01s/it]Batches Done...:   4%|▎         | 3/81 [08:48<3:48:58, 176.13s/it]Batches Done...:   5%|▍         | 4/81 [11:43<3:45:23, 175.63s/it]Batches Done...:   6%|▌         | 5/81 [14:37<3:41:58, 175.25s/it]Batches Done...:   7%|▋         | 6/81 [17:33<3:39:12, 175.37s/it]Batches Done...:   9%|▊         | 7/81 [20:28<3:36:04, 175.19s/it]Batches Done...:  10%|▉         | 8/81 [23:23<3:33:13, 175.25s/it]Batches Done...:  11%|█         | 9/81 [26:19<3:30:40, 175.56s/it]Batches Done...:  12%|█▏        | 10/81 [29:14<3:27:23, 175.26s/it]Batches Done...:  14%|█▎        | 11/81 [32:09<3:24:33, 175.33s/it]Batches Done...:  15%|█▍        | 12/81 [35:05<3:21:38, 175.34s/it]Batches Done...:  16%|█▌        | 13/81 [38:00<3:18:33, 175.20s/it]Batches Done...:  17%|█▋        | 14/81 [40:55<3:15:52, 175.41s/it]Batches Done...:  19%|█▊        | 15/81 [43:51<3:12:52, 175.33s/it]Batches Done...:  20%|█▉        | 16/81 [46:46<3:09:56, 175.32s/it]Batches Done...:  21%|██        | 17/81 [49:41<3:07:05, 175.40s/it]Batches Done...:  22%|██▏       | 18/81 [52:36<3:03:55, 175.16s/it]Batches Done...:  23%|██▎       | 19/81 [55:31<3:00:57, 175.12s/it]Batches Done...:  25%|██▍       | 20/81 [58:26<2:57:59, 175.08s/it]Batches Done...:  26%|██▌       | 21/81 [1:01:22<2:55:13, 175.22s/it]Batches Done...:  27%|██▋       | 22/81 [1:04:17<2:52:23, 175.31s/it]Batches Done...:  28%|██▊       | 23/81 [1:07:13<2:49:33, 175.41s/it]Batches Done...:  30%|██▉       | 24/81 [1:10:08<2:46:41, 175.47s/it]Batches Done...:  31%|███       | 25/81 [1:13:03<2:43:33, 175.24s/it]Batches Done...:  32%|███▏      | 26/81 [1:15:58<2:40:36, 175.20s/it]Batches Done...:  33%|███▎      | 27/81 [1:18:53<2:37:41, 175.21s/it]Batches Done...:  35%|███▍      | 28/81 [1:21:49<2:34:56, 175.40s/it]Batches Done...:  36%|███▌      | 29/81 [1:24:45<2:31:58, 175.36s/it]Batches Done...:  37%|███▋      | 30/81 [1:27:39<2:28:51, 175.13s/it]Batches Done...:  38%|███▊      | 31/81 [1:30:36<2:26:24, 175.68s/it]Batches Done...:  40%|███▉      | 32/81 [1:33:32<2:23:38, 175.88s/it]Batches Done...:  41%|████      | 33/81 [1:36:28<2:20:40, 175.85s/it]Batches Done...:  42%|████▏     | 34/81 [1:39:24<2:17:40, 175.76s/it]Batches Done...:  43%|████▎     | 35/81 [1:42:18<2:14:29, 175.43s/it]Batches Done...:  44%|████▍     | 36/81 [1:45:14<2:11:38, 175.52s/it]Batches Done...:  46%|████▌     | 37/81 [1:48:10<2:08:41, 175.49s/it]Batches Done...:  47%|████▋     | 38/81 [1:51:05<2:05:42, 175.41s/it]Batches Done...:  48%|████▊     | 39/81 [1:54:00<2:02:45, 175.37s/it]Batches Done...:  49%|████▉     | 40/81 [1:56:56<1:59:58, 175.56s/it]Batches Done...:  51%|█████     | 41/81 [1:59:51<1:56:54, 175.37s/it]Batches Done...:  52%|█████▏    | 42/81 [2:02:46<1:53:55, 175.27s/it]Batches Done...:  53%|█████▎    | 43/81 [2:05:42<1:51:03, 175.37s/it]Batches Done...:  54%|█████▍    | 44/81 [2:08:37<1:48:07, 175.34s/it]Batches Done...:  56%|█████▌    | 45/81 [2:11:32<1:45:06, 175.18s/it]Batches Done...:  57%|█████▋    | 46/81 [2:14:26<1:42:05, 175.00s/it]Batches Done...:  58%|█████▊    | 47/81 [2:17:22<1:39:13, 175.09s/it]Batches Done...:  59%|█████▉    | 48/81 [2:20:17<1:36:18, 175.10s/it]Batches Done...:  60%|██████    | 49/81 [2:23:12<1:33:28, 175.28s/it]Batches Done...:  62%|██████▏   | 50/81 [2:26:08<1:30:39, 175.45s/it]Batches Done...:  63%|██████▎   | 51/81 [2:29:03<1:27:40, 175.35s/it]Batches Done...:  64%|██████▍   | 52/81 [2:31:59<1:24:44, 175.33s/it]Batches Done...:  65%|██████▌   | 53/81 [2:34:54<1:21:49, 175.35s/it]Batches Done...:  67%|██████▋   | 54/81 [2:37:49<1:18:52, 175.29s/it]Batches Done...:  68%|██████▊   | 55/81 [2:40:45<1:15:57, 175.30s/it]Batches Done...:  69%|██████▉   | 56/81 [2:43:39<1:12:58, 175.16s/it]Batches Done...:  70%|███████   | 57/81 [2:46:35<1:10:05, 175.22s/it]Batches Done...:  72%|███████▏  | 58/81 [2:49:30<1:07:07, 175.10s/it]Batches Done...:  73%|███████▎  | 59/81 [2:52:24<1:04:09, 174.98s/it]Batches Done...:  74%|███████▍  | 60/81 [2:55:19<1:01:10, 174.80s/it]Batches Done...:  75%|███████▌  | 61/81 [2:58:14<58:21, 175.06s/it]  Batches Done...:  77%|███████▋  | 62/81 [3:01:09<55:26, 175.06s/it]Batches Done...:  78%|███████▊  | 63/81 [3:04:04<52:28, 174.91s/it]Batches Done...:  79%|███████▉  | 64/81 [3:06:53<49:02, 173.06s/it]Batches Done...:  80%|████████  | 65/81 [3:09:47<46:16, 173.56s/it]Batches Done...:  81%|████████▏ | 66/81 [3:12:44<43:35, 174.36s/it]Batches Done...:  83%|████████▎ | 67/81 [3:15:39<40:43, 174.54s/it]Batches Done...:  84%|████████▍ | 68/81 [3:18:34<37:50, 174.66s/it]Batches Done...:  85%|████████▌ | 69/81 [3:21:29<34:56, 174.75s/it]Batches Done...:  86%|████████▋ | 70/81 [3:24:24<32:05, 175.09s/it]Batches Done...:  88%|████████▊ | 71/81 [3:27:20<29:11, 175.13s/it]Batches Done...:  89%|████████▉ | 72/81 [3:30:15<26:16, 175.19s/it]Batches Done...:  90%|█████████ | 73/81 [3:33:10<23:21, 175.16s/it]Batches Done...:  91%|█████████▏| 74/81 [3:36:05<20:26, 175.16s/it]Batches Done...:  93%|█████████▎| 75/81 [3:39:01<17:32, 175.36s/it]Batches Done...:  94%|█████████▍| 76/81 [3:41:57<14:37, 175.50s/it]Batches Done...:  95%|█████████▌| 77/81 [3:44:53<11:42, 175.57s/it]Batches Done...:  96%|█████████▋| 78/81 [3:47:48<08:46, 175.46s/it]Batches Done...:  98%|█████████▊| 79/81 [3:50:43<05:50, 175.49s/it]Batches Done...:  99%|█████████▉| 80/81 [3:53:39<02:55, 175.48s/it]Batches Done...: 100%|██████████| 81/81 [3:55:43<00:00, 160.17s/it]Batches Done...: 100%|██████████| 81/81 [3:55:43<00:00, 174.62s/it]
+Batches Done...:   0%|          | 0/81 [00:00<?, ?it/s]Working on Unet Attacks...
+Batches Done...:   1%|          | 1/81 [02:56<3:55:22, 176.53s/it]Batches Done...:   2%|▏         | 2/81 [05:52<3:52:05, 176.28s/it]Batches Done...:   4%|▎         | 3/81 [08:47<3:48:34, 175.83s/it]Batches Done...:   5%|▍         | 4/81 [11:43<3:45:31, 175.74s/it]Batches Done...:   6%|▌         | 5/81 [14:39<3:42:37, 175.76s/it]Batches Done...:   7%|▋         | 6/81 [17:35<3:39:54, 175.93s/it]Batches Done...:   9%|▊         | 7/81 [20:31<3:36:59, 175.94s/it]Batches Done...:  10%|▉         | 8/81 [23:26<3:33:45, 175.69s/it]Batches Done...:  11%|█         | 9/81 [26:22<3:30:47, 175.66s/it]Batches Done...:  12%|█▏        | 10/81 [29:18<3:27:54, 175.70s/it]Batches Done...:  14%|█▎        | 11/81 [32:13<3:24:57, 175.68s/it]Batches Done...:  15%|█▍        | 12/81 [35:08<3:21:48, 175.49s/it]Batches Done...:  16%|█▌        | 13/81 [38:03<3:18:45, 175.38s/it]Batches Done...:  17%|█▋        | 14/81 [40:59<3:16:04, 175.58s/it]Batches Done...:  19%|█▊        | 15/81 [43:55<3:13:02, 175.49s/it]Batches Done...:  20%|█▉        | 16/81 [46:50<3:10:07, 175.50s/it]Batches Done...:  21%|██        | 17/81 [49:45<3:07:04, 175.39s/it]Batches Done...:  22%|██▏       | 18/81 [52:42<3:04:28, 175.69s/it]Batches Done...:  23%|██▎       | 19/81 [55:39<3:01:56, 176.07s/it]Batches Done...:  25%|██▍       | 20/81 [58:34<2:58:45, 175.83s/it]Batches Done...:  26%|██▌       | 21/81 [1:01:29<2:55:36, 175.61s/it]Batches Done...:  27%|██▋       | 22/81 [1:04:24<2:52:33, 175.48s/it]Batches Done...:  28%|██▊       | 23/81 [1:07:20<2:49:48, 175.66s/it]Batches Done...:  30%|██▉       | 24/81 [1:10:16<2:46:55, 175.71s/it]Batches Done...:  31%|███       | 25/81 [1:13:13<2:44:10, 175.90s/it]Batches Done...:  32%|███▏      | 26/81 [1:16:08<2:41:03, 175.69s/it]Batches Done...:  33%|███▎      | 27/81 [1:19:03<2:37:55, 175.48s/it]Batches Done...:  35%|███▍      | 28/81 [1:21:58<2:34:53, 175.34s/it]Batches Done...:  36%|███▌      | 29/81 [1:24:53<2:31:55, 175.29s/it]Batches Done...:  37%|███▋      | 30/81 [1:27:49<2:29:06, 175.43s/it]Batches Done...:  38%|███▊      | 31/81 [1:30:45<2:26:19, 175.60s/it]Batches Done...:  40%|███▉      | 32/81 [1:33:40<2:23:24, 175.61s/it]Batches Done...:  41%|████      | 33/81 [1:36:36<2:20:33, 175.70s/it]Batches Done...:  42%|████▏     | 34/81 [1:39:32<2:17:41, 175.77s/it]Batches Done...:  43%|████▎     | 35/81 [1:42:28<2:14:40, 175.66s/it]Batches Done...:  44%|████▍     | 36/81 [1:45:24<2:11:56, 175.93s/it]Batches Done...:  46%|████▌     | 37/81 [1:48:20<2:09:03, 175.98s/it]Batches Done...:  47%|████▋     | 38/81 [1:51:16<2:06:02, 175.87s/it]Batches Done...:  48%|████▊     | 39/81 [1:54:12<2:03:12, 176.01s/it]Batches Done...:  49%|████▉     | 40/81 [1:57:08<2:00:19, 176.07s/it]Batches Done...:  51%|█████     | 41/81 [2:00:04<1:57:14, 175.86s/it]Batches Done...:  52%|█████▏    | 42/81 [2:02:59<1:54:09, 175.63s/it]Batches Done...:  53%|█████▎    | 43/81 [2:05:54<1:51:11, 175.56s/it]Batches Done...:  54%|█████▍    | 44/81 [2:08:50<1:48:13, 175.49s/it]Batches Done...:  56%|█████▌    | 45/81 [2:11:46<1:45:24, 175.67s/it]Batches Done...:  57%|█████▋    | 46/81 [2:14:41<1:42:23, 175.54s/it]Batches Done...:  58%|█████▊    | 47/81 [2:17:37<1:39:33, 175.68s/it]Batches Done...:  59%|█████▉    | 48/81 [2:20:32<1:36:33, 175.56s/it]Batches Done...:  60%|██████    | 49/81 [2:23:28<1:33:39, 175.60s/it]Batches Done...:  62%|██████▏   | 50/81 [2:26:23<1:30:37, 175.39s/it]Batches Done...:  63%|██████▎   | 51/81 [2:29:19<1:27:49, 175.64s/it]Batches Done...:  64%|██████▍   | 52/81 [2:32:15<1:24:55, 175.70s/it]Batches Done...:  65%|██████▌   | 53/81 [2:35:11<1:22:06, 175.93s/it]Batches Done...:  67%|██████▋   | 54/81 [2:38:08<1:19:14, 176.08s/it]Batches Done...:  68%|██████▊   | 55/81 [2:41:03<1:16:14, 175.95s/it]Batches Done...:  69%|██████▉   | 56/81 [2:44:00<1:13:21, 176.06s/it]Batches Done...:  70%|███████   | 57/81 [2:46:57<1:10:31, 176.31s/it]Batches Done...:  72%|███████▏  | 58/81 [2:49:53<1:07:33, 176.23s/it]Batches Done...:  73%|███████▎  | 59/81 [2:52:48<1:04:32, 176.03s/it]Batches Done...:  74%|███████▍  | 60/81 [2:55:44<1:01:34, 175.94s/it]Batches Done...:  75%|███████▌  | 61/81 [2:58:39<58:35, 175.77s/it]  Batches Done...:  77%|███████▋  | 62/81 [3:01:35<55:41, 175.85s/it]Batches Done...:  78%|███████▊  | 63/81 [3:04:31<52:44, 175.83s/it]Batches Done...:  79%|███████▉  | 64/81 [3:07:20<49:15, 173.84s/it]Batches Done...:  80%|████████  | 65/81 [3:10:16<46:30, 174.40s/it]Batches Done...:  81%|████████▏ | 66/81 [3:13:11<43:40, 174.72s/it]Batches Done...:  83%|████████▎ | 67/81 [3:16:07<40:49, 175.00s/it]Batches Done...:  84%|████████▍ | 68/81 [3:19:03<37:58, 175.25s/it]Batches Done...:  85%|████████▌ | 69/81 [3:21:59<35:04, 175.37s/it]Batches Done...:  86%|████████▋ | 70/81 [3:24:55<32:11, 175.63s/it]Batches Done...:  88%|████████▊ | 71/81 [3:27:50<29:14, 175.41s/it]Batches Done...:  89%|████████▉ | 72/81 [3:30:46<26:21, 175.67s/it]Batches Done...:  90%|█████████ | 73/81 [3:33:42<23:24, 175.62s/it]Batches Done...:  91%|█████████▏| 74/81 [3:36:37<20:28, 175.45s/it]Batches Done...:  93%|█████████▎| 75/81 [3:39:33<17:34, 175.69s/it]Batches Done...:  94%|█████████▍| 76/81 [3:42:29<14:38, 175.70s/it]Batches Done...:  95%|█████████▌| 77/81 [3:45:24<11:42, 175.75s/it]Batches Done...:  96%|█████████▋| 78/81 [3:48:20<08:47, 175.67s/it]Batches Done...:  98%|█████████▊| 79/81 [3:51:15<05:51, 175.62s/it]Batches Done...:  99%|█████████▉| 80/81 [3:54:11<02:55, 175.58s/it]Batches Done...: 100%|██████████| 81/81 [3:56:16<00:00, 160.40s/it]Batches Done...: 100%|██████████| 81/81 [3:56:16<00:00, 175.02s/it]
+Batches Done...:   0%|          | 0/81 [00:00<?, ?it/s]Working on Distill Net Attacks...
+Batches Done...:   1%|          | 1/81 [02:56<3:54:41, 176.02s/it]Batches Done...:   2%|▏         | 2/81 [05:52<3:51:46, 176.03s/it]Batches Done...:   4%|▎         | 3/81 [08:46<3:48:03, 175.43s/it]Batches Done...:   5%|▍         | 4/81 [11:41<3:44:45, 175.13s/it]Batches Done...:   6%|▌         | 5/81 [14:36<3:41:34, 174.93s/it]Batches Done...:   7%|▋         | 6/81 [17:31<3:38:41, 174.96s/it]Batches Done...:   9%|▊         | 7/81 [20:26<3:36:06, 175.23s/it]Batches Done...:  10%|▉         | 8/81 [23:22<3:33:16, 175.30s/it]Batches Done...:  11%|█         | 9/81 [26:17<3:30:12, 175.18s/it]Batches Done...:  12%|█▏        | 10/81 [29:13<3:27:34, 175.41s/it]Batches Done...:  14%|█▎        | 11/81 [32:08<3:24:41, 175.44s/it]Batches Done...:  15%|█▍        | 12/81 [35:02<3:21:21, 175.10s/it]Batches Done...:  16%|█▌        | 13/81 [37:57<3:18:15, 174.93s/it]Batches Done...:  17%|█▋        | 14/81 [40:52<3:15:29, 175.06s/it]Batches Done...:  19%|█▊        | 15/81 [43:47<3:12:23, 174.90s/it]Batches Done...:  20%|█▉        | 16/81 [46:42<3:09:38, 175.05s/it]Batches Done...:  21%|██        | 17/81 [49:37<3:06:42, 175.04s/it]Batches Done...:  22%|██▏       | 18/81 [52:33<3:03:57, 175.19s/it]Batches Done...:  23%|██▎       | 19/81 [55:28<3:01:06, 175.26s/it]Batches Done...:  25%|██▍       | 20/81 [58:23<2:58:09, 175.23s/it]Batches Done...:  26%|██▌       | 21/81 [1:01:19<2:55:24, 175.41s/it]Batches Done...:  27%|██▋       | 22/81 [1:04:14<2:52:22, 175.29s/it]Batches Done...:  28%|██▊       | 23/81 [1:07:10<2:49:31, 175.38s/it]Batches Done...:  30%|██▉       | 24/81 [1:10:06<2:46:48, 175.58s/it]Batches Done...:  31%|███       | 25/81 [1:13:01<2:43:49, 175.53s/it]Batches Done...:  32%|███▏      | 26/81 [1:15:57<2:40:56, 175.57s/it]Batches Done...:  33%|███▎      | 27/81 [1:18:52<2:37:53, 175.44s/it]Batches Done...:  35%|███▍      | 28/81 [1:21:48<2:35:02, 175.51s/it]Batches Done...:  36%|███▌      | 29/81 [1:24:43<2:32:05, 175.49s/it]Batches Done...:  37%|███▋      | 30/81 [1:27:37<2:28:46, 175.03s/it]Batches Done...:  38%|███▊      | 31/81 [1:30:33<2:25:58, 175.18s/it]Batches Done...:  40%|███▉      | 32/81 [1:33:29<2:23:14, 175.39s/it]Batches Done...:  41%|████      | 33/81 [1:36:24<2:20:17, 175.36s/it]Batches Done...:  42%|████▏     | 34/81 [1:39:19<2:17:20, 175.34s/it]Batches Done...:  43%|████▎     | 35/81 [1:42:14<2:14:15, 175.12s/it]Batches Done...:  44%|████▍     | 36/81 [1:45:09<2:11:22, 175.16s/it]Batches Done...:  46%|████▌     | 37/81 [1:48:05<2:08:40, 175.47s/it]Batches Done...:  47%|████▋     | 38/81 [1:51:00<2:05:40, 175.35s/it]Batches Done...:  48%|████▊     | 39/81 [1:53:55<2:02:33, 175.09s/it]Batches Done...:  49%|████▉     | 40/81 [1:56:51<1:59:47, 175.30s/it]Batches Done...:  51%|█████     | 41/81 [1:59:46<1:56:57, 175.44s/it]Batches Done...:  52%|█████▏    | 42/81 [2:02:42<1:54:04, 175.50s/it]Batches Done...:  53%|█████▎    | 43/81 [2:05:38<1:51:10, 175.53s/it]Batches Done...:  54%|█████▍    | 44/81 [2:08:34<1:48:21, 175.71s/it]Batches Done...:  56%|█████▌    | 45/81 [2:11:29<1:45:23, 175.65s/it]Batches Done...:  57%|█████▋    | 46/81 [2:14:24<1:42:20, 175.45s/it]Batches Done...:  58%|█████▊    | 47/81 [2:17:20<1:39:28, 175.55s/it]Batches Done...:  59%|█████▉    | 48/81 [2:20:15<1:36:30, 175.47s/it]Batches Done...:  60%|██████    | 49/81 [2:23:11<1:33:37, 175.56s/it]Batches Done...:  62%|██████▏   | 50/81 [2:26:06<1:30:40, 175.50s/it]Batches Done...:  63%|██████▎   | 51/81 [2:29:01<1:27:41, 175.37s/it]Batches Done...:  64%|██████▍   | 52/81 [2:31:57<1:24:46, 175.38s/it]Batches Done...:  65%|██████▌   | 53/81 [2:34:53<1:21:56, 175.59s/it]Batches Done...:  67%|██████▋   | 54/81 [2:37:49<1:19:02, 175.64s/it]Batches Done...:  68%|██████▊   | 55/81 [2:40:43<1:15:56, 175.27s/it]Batches Done...:  69%|██████▉   | 56/81 [2:43:38<1:13:01, 175.25s/it]Batches Done...:  70%|███████   | 57/81 [2:46:34<1:10:07, 175.30s/it]Batches Done...:  72%|███████▏  | 58/81 [2:49:28<1:07:07, 175.13s/it]Batches Done...:  73%|███████▎  | 59/81 [2:52:23<1:04:10, 175.04s/it]Batches Done...:  74%|███████▍  | 60/81 [2:55:18<1:01:12, 174.89s/it]Batches Done...:  75%|███████▌  | 61/81 [2:58:12<58:14, 174.74s/it]  Batches Done...:  77%|███████▋  | 62/81 [3:01:07<55:20, 174.79s/it]Batches Done...:  78%|███████▊  | 63/81 [3:04:02<52:24, 174.71s/it]Batches Done...:  79%|███████▉  | 64/81 [3:06:50<48:58, 172.86s/it]Batches Done...:  80%|████████  | 65/81 [3:09:45<46:14, 173.43s/it]Batches Done...:  81%|████████▏ | 66/81 [3:12:40<43:29, 173.93s/it]Batches Done...:  83%|████████▎ | 67/81 [3:15:35<40:40, 174.35s/it]Batches Done...:  84%|████████▍ | 68/81 [3:18:30<37:49, 174.57s/it]Batches Done...:  85%|████████▌ | 69/81 [3:21:25<34:54, 174.56s/it]Batches Done...:  86%|████████▋ | 70/81 [3:24:20<32:01, 174.66s/it]Batches Done...:  88%|████████▊ | 71/81 [3:27:14<29:05, 174.54s/it]Batches Done...:  89%|████████▉ | 72/81 [3:30:09<26:12, 174.70s/it]Batches Done...:  90%|█████████ | 73/81 [3:33:05<23:19, 174.88s/it]Batches Done...:  91%|█████████▏| 74/81 [3:35:59<20:24, 174.88s/it]Batches Done...:  93%|█████████▎| 75/81 [3:38:56<17:31, 175.31s/it]Batches Done...:  94%|█████████▍| 76/81 [3:41:52<14:37, 175.59s/it]Batches Done...:  95%|█████████▌| 77/81 [3:44:48<11:42, 175.60s/it]Batches Done...:  96%|█████████▋| 78/81 [3:47:43<08:46, 175.57s/it]Batches Done...:  98%|█████████▊| 79/81 [3:50:39<05:51, 175.54s/it]Batches Done...:  99%|█████████▉| 80/81 [3:53:34<02:55, 175.66s/it]Batches Done...: 100%|██████████| 81/81 [3:55:39<00:00, 160.42s/it]Batches Done...: 100%|██████████| 81/81 [3:55:39<00:00, 174.57s/it]
+Batches Done...:   0%|          | 0/81 [00:00<?, ?it/s]Working on AT-PGD Net Attacks...
+Batches Done...:   1%|          | 1/81 [02:55<3:54:28, 175.86s/it]Batches Done...:   2%|▏         | 2/81 [05:51<3:51:22, 175.72s/it]Batches Done...:   4%|▎         | 3/81 [08:46<3:48:17, 175.61s/it]Batches Done...:   5%|▍         | 4/81 [11:42<3:45:05, 175.39s/it]Batches Done...:   6%|▌         | 5/81 [14:37<3:42:06, 175.35s/it]Batches Done...:   7%|▋         | 6/81 [17:33<3:39:24, 175.52s/it]Batches Done...:   9%|▊         | 7/81 [20:28<3:36:32, 175.58s/it]Batches Done...:  10%|▉         | 8/81 [23:24<3:33:34, 175.54s/it]Batches Done...:  11%|█         | 9/81 [26:20<3:30:47, 175.66s/it]Batches Done...:  12%|█▏        | 10/81 [29:15<3:27:38, 175.47s/it]Batches Done...:  14%|█▎        | 11/81 [32:10<3:24:45, 175.50s/it]Batches Done...:  15%|█▍        | 12/81 [35:06<3:22:00, 175.66s/it]Batches Done...:  16%|█▌        | 13/81 [38:02<3:18:57, 175.55s/it]Batches Done...:  17%|█▋        | 14/81 [40:57<3:15:51, 175.40s/it]Batches Done...:  19%|█▊        | 15/81 [43:52<3:12:54, 175.36s/it]Batches Done...:  20%|█▉        | 16/81 [46:47<3:09:50, 175.23s/it]Batches Done...:  21%|██        | 17/81 [49:42<3:06:55, 175.24s/it]Batches Done...:  22%|██▏       | 18/81 [52:37<3:03:59, 175.23s/it]Batches Done...:  23%|██▎       | 19/81 [55:33<3:01:03, 175.21s/it]Batches Done...:  25%|██▍       | 20/81 [58:29<2:58:32, 175.61s/it]Batches Done...:  26%|██▌       | 21/81 [1:01:25<2:55:35, 175.60s/it]Batches Done...:  27%|██▋       | 22/81 [1:04:20<2:52:32, 175.46s/it]Batches Done...:  28%|██▊       | 23/81 [1:07:15<2:49:33, 175.40s/it]Batches Done...:  30%|██▉       | 24/81 [1:10:10<2:46:33, 175.32s/it]Batches Done...:  31%|███       | 25/81 [1:13:06<2:43:39, 175.35s/it]Batches Done...:  32%|███▏      | 26/81 [1:16:01<2:40:51, 175.48s/it]Batches Done...:  33%|███▎      | 27/81 [1:18:57<2:37:58, 175.54s/it]Batches Done...:  35%|███▍      | 28/81 [1:21:52<2:35:01, 175.50s/it]Batches Done...:  36%|███▌      | 29/81 [1:24:49<2:32:23, 175.84s/it]Batches Done...:  37%|███▋      | 30/81 [1:27:44<2:29:16, 175.63s/it]Batches Done...:  38%|███▊      | 31/81 [1:30:40<2:26:23, 175.67s/it]Batches Done...:  40%|███▉      | 32/81 [1:33:35<2:23:12, 175.37s/it]Batches Done...:  41%|████      | 33/81 [1:36:30<2:20:15, 175.32s/it]Batches Done...:  42%|████▏     | 34/81 [1:39:25<2:17:17, 175.27s/it]Batches Done...:  43%|████▎     | 35/81 [1:42:21<2:14:28, 175.41s/it]Batches Done...:  44%|████▍     | 36/81 [1:45:17<2:11:40, 175.56s/it]Batches Done...:  46%|████▌     | 37/81 [1:48:12<2:08:40, 175.46s/it]Batches Done...:  47%|████▋     | 38/81 [1:51:07<2:05:36, 175.28s/it]Batches Done...:  48%|████▊     | 39/81 [1:54:02<2:02:44, 175.34s/it]Batches Done...:  49%|████▉     | 40/81 [1:56:59<2:00:00, 175.62s/it]Batches Done...:  51%|█████     | 41/81 [1:59:54<1:56:57, 175.44s/it]Batches Done...:  52%|█████▏    | 42/81 [2:02:49<1:53:57, 175.32s/it]Batches Done...:  53%|█████▎    | 43/81 [2:05:44<1:51:05, 175.40s/it]Batches Done...:  54%|█████▍    | 44/81 [2:08:39<1:48:06, 175.30s/it]Batches Done...:  56%|█████▌    | 45/81 [2:11:34<1:45:07, 175.21s/it]Batches Done...:  57%|█████▋    | 46/81 [2:14:29<1:42:08, 175.11s/it]Batches Done...:  58%|█████▊    | 47/81 [2:17:25<1:39:21, 175.33s/it]Batches Done...:  59%|█████▉    | 48/81 [2:20:20<1:36:24, 175.30s/it]Batches Done...:  60%|██████    | 49/81 [2:23:15<1:33:22, 175.08s/it]Batches Done...:  62%|██████▏   | 50/81 [2:26:10<1:30:29, 175.16s/it]Batches Done...:  63%|██████▎   | 51/81 [2:29:05<1:27:31, 175.06s/it]Batches Done...:  64%|██████▍   | 52/81 [2:32:00<1:24:39, 175.15s/it]Batches Done...:  65%|██████▌   | 53/81 [2:34:56<1:21:49, 175.33s/it]Batches Done...:  67%|██████▋   | 54/81 [2:37:51<1:18:48, 175.11s/it]Batches Done...:  68%|██████▊   | 55/81 [2:40:46<1:15:57, 175.30s/it]Batches Done...:  69%|██████▉   | 56/81 [2:43:42<1:13:04, 175.39s/it]Batches Done...:  70%|███████   | 57/81 [2:46:38<1:10:12, 175.54s/it]Batches Done...:  72%|███████▏  | 58/81 [2:49:34<1:07:19, 175.63s/it]Batches Done...:  73%|███████▎  | 59/81 [2:52:29<1:04:23, 175.60s/it]Batches Done...:  74%|███████▍  | 60/81 [2:55:24<1:01:22, 175.36s/it]Batches Done...:  75%|███████▌  | 61/81 [2:58:20<58:28, 175.43s/it]  Batches Done...:  77%|███████▋  | 62/81 [3:01:15<55:30, 175.29s/it]Batches Done...:  78%|███████▊  | 63/81 [3:04:11<52:39, 175.53s/it]Batches Done...:  79%|███████▉  | 64/81 [3:07:00<49:13, 173.76s/it]Batches Done...:  80%|████████  | 65/81 [3:09:56<46:30, 174.41s/it]Batches Done...:  81%|████████▏ | 66/81 [3:12:52<43:42, 174.81s/it]Batches Done...:  83%|████████▎ | 67/81 [3:15:48<40:52, 175.21s/it]Batches Done...:  84%|████████▍ | 68/81 [3:18:44<37:58, 175.29s/it]Batches Done...:  85%|████████▌ | 69/81 [3:21:38<35:00, 175.06s/it]Batches Done...:  86%|████████▋ | 70/81 [3:24:34<32:07, 175.22s/it]Batches Done...:  88%|████████▊ | 71/81 [3:27:28<29:09, 174.91s/it]Batches Done...:  89%|████████▉ | 72/81 [3:30:23<26:13, 174.85s/it]Batches Done...:  90%|█████████ | 73/81 [3:33:17<23:17, 174.66s/it]Batches Done...:  91%|█████████▏| 74/81 [3:36:13<20:25, 175.04s/it]Batches Done...:  93%|█████████▎| 75/81 [3:39:09<17:31, 175.27s/it]Batches Done...:  94%|█████████▍| 76/81 [3:42:04<14:36, 175.32s/it]Batches Done...:  95%|█████████▌| 77/81 [3:45:00<11:41, 175.39s/it]Batches Done...:  96%|█████████▋| 78/81 [3:47:55<08:46, 175.39s/it]Batches Done...:  98%|█████████▊| 79/81 [3:50:50<05:50, 175.30s/it]Batches Done...:  99%|█████████▉| 80/81 [3:53:46<02:55, 175.38s/it]Batches Done...: 100%|██████████| 81/81 [3:55:50<00:00, 160.18s/it]Batches Done...: 100%|██████████| 81/81 [3:55:50<00:00, 174.70s/it]+----------------------+----------------------+-------------------+-----------------+------------------------+-----------------------+
+|       Epsilons       | White Box Fool Ratio | RegNet Fool Ratio | Unet Fool Ratio | Distill Net Fool Ratio | AT-PGD Net Fool Ratio |
++----------------------+----------------------+-------------------+-----------------+------------------------+-----------------------+
+|         0.0          |        -819.2        |       -0.29       |      -1.08      |         -0.93          |         -0.93         |
+| 0.016666666666666666 |        -189.1        |       12.51       |       1.49      |         17.78          |         -0.17         |
+| 0.03333333333333333  |         73.6         |       30.92       |       5.08      |          42.3          |          0.46         |
+|         0.05         |         97.9         |       46.06       |       8.96      |         60.54          |          1.04         |
+| 0.06666666666666667  |         99.0         |       56.91       |      13.21      |         71.26          |          1.75         |
+| 0.08333333333333333  |         97.3         |       63.68       |      17.83      |         76.69          |          2.43         |
+|         0.1          |         94.4         |       68.16       |      21.66      |         79.31          |          3.33         |
+| 0.11666666666666667  |         90.8         |       70.81       |      25.63      |          80.8          |          4.11         |
+| 0.13333333333333333  |         87.9         |       72.48       |      29.74      |         81.54          |          4.99         |
+|         0.15         |         84.9         |       73.66       |      33.49      |         81.96          |          5.97         |
+| 0.16666666666666666  |         82.0         |       74.53       |      36.83      |         81.83          |          6.75         |
+| 0.18333333333333332  |         77.4         |       75.12       |      39.82      |          81.8          |          7.68         |
+|         0.2          |         72.7         |       75.45       |      42.63      |         81.96          |          8.67         |
+| 0.21666666666666667  |         68.4         |       76.06       |      45.53      |         81.78          |          9.67         |
+| 0.23333333333333334  |         65.2         |       76.44       |      47.83      |         81.63          |         10.71         |
+|         0.25         |         61.9         |       76.92       |      49.84      |         81.56          |         11.71         |
+| 0.26666666666666666  |         57.8         |       77.45       |      51.39      |         81.49          |         12.62         |
+|  0.2833333333333333  |         54.0         |       77.76       |      53.08      |         81.51          |         13.81         |
+|         0.3          |         51.4         |       78.31       |      54.22      |         81.43          |         14.67         |
+| 0.31666666666666665  |         46.6         |       79.01       |      55.74      |         81.43          |         15.69         |
+|  0.3333333333333333  |         42.1         |        79.2       |      57.07      |         81.55          |         16.92         |
+|         0.35         |         39.7         |       79.54       |      58.26      |         81.52          |         18.12         |
+| 0.36666666666666664  |         36.5         |       79.98       |      59.43      |         81.47          |         18.97         |
+|  0.3833333333333333  |         34.4         |       80.34       |      60.62      |         81.72          |         20.44         |
+|         0.4          |         32.0         |       80.35       |      61.46      |         81.84          |         21.62         |
+|  0.4166666666666667  |         30.2         |       80.89       |      62.17      |         81.82          |         22.72         |
+| 0.43333333333333335  |         27.3         |       81.59       |      62.99      |         81.83          |         23.65         |
+|         0.45         |         24.2         |        81.7       |      63.71      |         81.92          |         24.51         |
+|  0.4666666666666667  |         23.4         |       82.09       |      64.05      |         82.08          |         25.68         |
+| 0.48333333333333334  |         21.7         |       82.33       |      64.71      |         82.24          |         26.65         |
+|         0.5          |         19.8         |       82.66       |      65.41      |         82.35          |         27.61         |
+|  0.5166666666666666  |         19.0         |       82.81       |      66.07      |         82.45          |         28.56         |
+|  0.5333333333333333  |         17.9         |       83.28       |      66.51      |         82.35          |         29.31         |
+|         0.55         |         16.9         |        83.6       |      66.96      |         82.44          |         30.28         |
+|  0.5666666666666667  |         15.4         |       83.97       |      67.39      |         82.38          |         31.32         |
+|  0.5833333333333334  |         16.0         |       84.29       |       67.8      |         82.63          |         32.29         |
+|         0.6          |         15.4         |       84.42       |      68.18      |         82.61          |         32.99         |
+|  0.6166666666666667  |         14.3         |       84.77       |      68.71      |         82.74          |         33.79         |
+|  0.6333333333333333  |         13.6         |       85.04       |      69.22      |         82.64          |         34.86         |
+|         0.65         |         12.4         |       85.28       |      69.47      |         82.81          |         35.69         |
+|  0.6666666666666666  |         12.3         |       85.34       |      69.84      |         82.65          |         36.49         |
+|  0.6833333333333333  |         12.2         |       85.54       |      70.24      |         82.69          |         37.56         |
+|         0.7          |         11.7         |       85.82       |      70.54      |         82.72          |          38.4         |
+|  0.7166666666666667  |         11.6         |       85.87       |      70.79      |         82.82          |         39.04         |
+|  0.7333333333333333  |         10.9         |       85.86       |      71.16      |         82.97          |         39.81         |
+|         0.75         |         10.3         |       86.23       |      71.46      |         82.99          |         40.57         |
+|  0.7666666666666666  |         9.4          |       86.41       |       71.5      |         83.06          |         41.39         |
+|  0.7833333333333333  |         9.0          |       86.56       |      71.68      |         83.07          |         41.96         |
+|         0.8          |         8.1          |       86.66       |       72.0      |         83.15          |         42.64         |
+|  0.8166666666666667  |         7.5          |       86.87       |      72.21      |         83.18          |          43.4         |
+|  0.8333333333333334  |         7.8          |       86.92       |      72.36      |         83.18          |          44.0         |
+|         0.85         |         7.1          |       86.99       |      72.36      |         83.12          |         44.74         |
+|  0.8666666666666667  |         7.7          |       87.09       |      72.53      |         83.03          |         45.57         |
+|  0.8833333333333333  |         7.7          |       87.18       |      72.71      |         83.03          |         46.29         |
+|         0.9          |         7.6          |       87.31       |      72.74      |          83.1          |         46.96         |
+|  0.9166666666666666  |         7.6          |       87.37       |      72.96      |         83.15          |         47.54         |
+|  0.9333333333333333  |         7.1          |       87.49       |      73.12      |         83.38          |         48.26         |
+|         0.95         |         7.4          |       87.61       |      73.22      |         83.49          |         48.79         |
+|  0.9666666666666667  |         7.5          |        87.7       |      73.42      |         83.56          |         49.28         |
+|  0.9833333333333333  |         7.5          |       87.75       |      73.58      |         83.61          |         49.93         |
+|         1.0          |         7.4          |       87.74       |      73.61      |         83.61          |         50.39         |
++----------------------+----------------------+-------------------+-----------------+------------------------+-----------------------+
+
