@@ -60,7 +60,6 @@ class FstLayUniNet(nn.Module):
         self.model_name = model_name
         if self.set_name == "MNIST":
             if model_name == "lenet":
-                self.model_name = model_name
                 
                 self.net =  AdjLeNet(set_name   = self.set_name, 
                                     num_classes = self.num_classes,

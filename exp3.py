@@ -10,7 +10,7 @@ from adversarial_attacks import Attacker
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 from tqdm import tqdm
 
-print("Experimenet 3 -- ")
+print("Experimenet 3 -- Comparing Manifolds")
 
 # Hyperparameters
 gpu           = True
@@ -66,6 +66,7 @@ if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = gpu_number
+
 
 # Initialize table
 table = PrettyTable()

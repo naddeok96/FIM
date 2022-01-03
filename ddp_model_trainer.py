@@ -369,6 +369,7 @@ def train(rank, world_size, config, project_name):
     else:
         fool_ratio = None
     print("Adv Gathered", rank)
+
     # Log/Save data, results and model
     if rank == 0:
         if run:
@@ -413,7 +414,11 @@ def train(rank, world_size, config, project_name):
             print("Saving Model")
 
             # Define File Names
-            filename  = str(config["model_name"]) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+            if config["save_filename"] is None:
+                filename  = str(config["model_name"]) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
+            else:
+                filename = config["save_filename"]
+
             if config["U_filename"] is not None:
                 filename  = "U_" + filename
             
@@ -544,22 +549,23 @@ if __name__ == "__main__":
     gpu_ids = "2,3"
     
     # WandB
-    project_name = None # "DDP MNIST"
+    project_name = "DDP Variety MNIST"
 
     # Network
     config = {  
                 # Network
                 "model_name"                  : "lenet", # "cifar10_mobilenetv2_x1_0",
-                "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
-                "from_ddp"                    : True,
-                "save_model"                  : False,
+                "pretrained_weights_filename" : None, # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
+                "from_ddp"                    : False,
+                "save_model"                  : True,
+                "save_filename"               : None,
                 "logging_period"              : 1,   # Epochs between logging
                 "checkpoint_at_logging"       : False,
 
                 # Data
                 "set_name"      : "MNIST",
                 "batch_size"    : 512,
-                "data_augment"  : False,
+                "data_augment"  : True,
                 
                 # Optimizer
                 "optim"         : "sgd",
@@ -588,9 +594,9 @@ if __name__ == "__main__":
                 "distill_temp"  : None,
 
                 # Test Robustness
-                "test_robustness"                       : True,
-                "save_attack_results"                   : True,
-                "attacker_pretrained_weights_filename"  : "models/pretrained/MNIST/lenet_w_acc_97.pt",
+                "test_robustness"                       : False,
+                "save_attack_results"                   : False,
+                "attacker_pretrained_weights_filename"  : None, # "models/pretrained/MNIST/lenet_w_acc_97.pt",
                 "attacker_attack_type"                  : "EoT", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
                 "attacker epsilons"                     : np.linspace(0, 1.0, num=101)
                }
@@ -603,25 +609,26 @@ if __name__ == "__main__":
     n_gpus = torch.cuda.device_count()
     assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
-    # Run training using DDP
+    ## Training using DDP
     # run_ddp(train, n_gpus, config, project_name)
     # exit()
 
+    ## Robustness using DDP
     # Attack Results
-    target_networks = [ 
+    # target_networks = [ 
 
-                        # "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt", # Distilled
-                        # "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",       # Adv Train
-                        "models/pretrained/MNIST/U_lenet_w_acc_94.pt",            # Unitary
-                        "models/pretrained/MNIST/lenet_w_acc_98.pt",              # No Defense
-                        # "models/pretrained/MNIST/lenet_w_acc_97.pt"               # White Box
+    #                     # "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt", # Distilled
+    #                     # "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",       # Adv Train
+    #                     "models/pretrained/MNIST/U_lenet_w_acc_94.pt",            # Unitary
+    #                     "models/pretrained/MNIST/lenet_w_acc_98.pt",              # No Defense
+    #                     # "models/pretrained/MNIST/lenet_w_acc_97.pt"               # White Box
                         
-                        ]
+    #                     ]
 
-    attacker_attack_types = ["FGSM", "PGD", "CW2", "OSSA", "EoT"]
+    # attacker_attack_types = ["FGSM", "PGD", "CW2", "OSSA", "EoT"]
 
-    # Cyle through attack types
-    for attacker_attack_type in attacker_attack_types:
+    # # Cyle through attack types
+    # for attacker_attack_type in attacker_attack_types:
         print("Working on", attacker_attack_type)
         config["attacker_attack_type"] = attacker_attack_type
 
@@ -639,4 +646,32 @@ if __name__ == "__main__":
                 config["U_filename"] = None
 
             run_ddp(train, n_gpus, config, project_name)
+
+    ## Train a variety using DDP 
+    data_augment_list = [True, False]
+    optim_list        = ["sgd", 'nesterov']
+    epochs_list       = [5, 10]
+    lr_list           = [0.1, 0.01]
+    sched_list        =  ["One Cycle LR", None]
+    U_filename_list   = [None, "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"]
+
+    network_counter = 0
+    for data_augment in data_augment_list:
+        config["data_augment"] = data_augment
+        for optim in optim_list:
+            config["optim"] = optim
+            for epochs in epochs_list:
+                config["epochs"] = epochs
+                for lr in lr_list:
+                    config["lr"] = lr
+                    for sched in sched_list:
+                        config["sched"] = sched
+
+                        print("\tWorking on", network_counter)
+                        config["save_filename"] = str(network_counter) + ".pt"
+                        for U_filename in U_filename_list:
+                            config["U_filename"] = U_filename
+                            run_ddp(train, n_gpus, config, project_name)
+
+                        network_counter += 1
 
