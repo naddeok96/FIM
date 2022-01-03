@@ -19,8 +19,10 @@ for attack in attack_type:
 
     results = {}
     for col in range(len(ws.row(0))):
+        if ws.cell(0, col).value == "White Box Attack":
+            continue
+        
         results.update({ws.cell(0, col).value: []})
-
         for row in range(1, len(ws.col(col))):
             results[ws.cell(0, col).value].append(ws.cell(row, col).value)
             
@@ -28,7 +30,8 @@ for attack in attack_type:
         if key == "Epsilons":
             continue
 
-        plt.plot(results["Epsilons"], value, '.-', label=key)
+        # plt.plot(results["Epsilons"], value, '.-', label=key)
+        plt.plot(value, '.-', label=key)
 
     plt.title(attack + " attacks on " + set_name)
     plt.xlabel("Noise to Signal Ratio")

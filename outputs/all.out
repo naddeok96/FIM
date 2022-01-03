@@ -1,0 +1,798 @@
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+Adv Gathered 0
++---------------------+-----------+---------+-------+-------------+------------+
+|       Epsilons      | White Box | Reg Net | U Net | Distill Net | AT-PGD Net |
++---------------------+-----------+---------+-------+-------------+------------+
+|         0.0         |    0.0    |   0.0   |  0.0  |     0.0     |    0.0     |
+|         0.01        |    0.0    |   0.0   |  1.0  |     0.0     |    0.0     |
+|         0.02        |    0.0    |   0.0   |  1.0  |     0.0     |    1.0     |
+|         0.03        |    0.0    |   0.0   |  1.0  |     0.0     |    1.0     |
+|         0.04        |    1.0    |   0.0   |  1.0  |     1.0     |    1.0     |
+|         0.05        |    1.0    |   1.0   |  2.0  |     1.0     |    1.0     |
+|         0.06        |    1.0    |   1.0   |  2.0  |     1.0     |    1.0     |
+|         0.07        |    1.0    |   1.0   |  3.0  |     1.0     |    2.0     |
+|         0.08        |    1.0    |   1.0   |  3.0  |     1.0     |    2.0     |
+|         0.09        |    2.0    |   2.0   |  4.0  |     2.0     |    2.0     |
+|         0.1         |    2.0    |   2.0   |  4.0  |     2.0     |    2.0     |
+|         0.11        |    2.0    |   2.0   |  5.0  |     2.0     |    3.0     |
+|         0.12        |    3.0    |   3.0   |  5.0  |     3.0     |    3.0     |
+|         0.13        |    3.0    |   3.0   |  6.0  |     3.0     |    3.0     |
+|         0.14        |    4.0    |   4.0   |  7.0  |     3.0     |    3.0     |
+|         0.15        |    4.0    |   5.0   |  7.0  |     4.0     |    4.0     |
+|         0.16        |    4.0    |   6.0   |  8.0  |     5.0     |    4.0     |
+|         0.17        |    5.0    |   6.0   |  9.0  |     5.0     |    4.0     |
+|         0.18        |    5.0    |   7.0   |  10.0 |     6.0     |    4.0     |
+|         0.19        |    6.0    |   8.0   |  11.0 |     7.0     |    4.0     |
+|         0.2         |    6.0    |   9.0   |  12.0 |     7.0     |    4.0     |
+|         0.21        |    7.0    |   10.0  |  13.0 |     8.0     |    5.0     |
+|         0.22        |    8.0    |   11.0  |  15.0 |     9.0     |    5.0     |
+|         0.23        |    8.0    |   13.0  |  16.0 |     10.0    |    5.0     |
+|         0.24        |    9.0    |   14.0  |  17.0 |     11.0    |    5.0     |
+|         0.25        |    10.0   |   15.0  |  18.0 |     12.0    |    6.0     |
+|         0.26        |    11.0   |   17.0  |  19.0 |     14.0    |    6.0     |
+|         0.27        |    11.0   |   18.0  |  20.0 |     15.0    |    6.0     |
+|         0.28        |    12.0   |   20.0  |  21.0 |     16.0    |    6.0     |
+|         0.29        |    13.0   |   21.0  |  22.0 |     17.0    |    6.0     |
+|         0.3         |    14.0   |   23.0  |  24.0 |     19.0    |    7.0     |
+|         0.31        |    15.0   |   24.0  |  25.0 |     20.0    |    7.0     |
+|         0.32        |    16.0   |   26.0  |  26.0 |     21.0    |    7.0     |
+|         0.33        |    17.0   |   27.0  |  27.0 |     23.0    |    7.0     |
+|         0.34        |    18.0   |   29.0  |  28.0 |     24.0    |    8.0     |
+| 0.35000000000000003 |    19.0   |   31.0  |  29.0 |     25.0    |    8.0     |
+|         0.36        |    20.0   |   32.0  |  30.0 |     27.0    |    8.0     |
+|         0.37        |    21.0   |   34.0  |  31.0 |     28.0    |    9.0     |
+|         0.38        |    22.0   |   35.0  |  32.0 |     30.0    |    9.0     |
+|         0.39        |    23.0   |   36.0  |  33.0 |     31.0    |    9.0     |
+|         0.4         |    25.0   |   38.0  |  35.0 |     33.0    |    9.0     |
+| 0.41000000000000003 |    26.0   |   39.0  |  35.0 |     34.0    |    9.0     |
+|         0.42        |    27.0   |   40.0  |  36.0 |     36.0    |    9.0     |
+|         0.43        |    28.0   |   42.0  |  37.0 |     37.0    |    9.0     |
+|         0.44        |    30.0   |   43.0  |  38.0 |     39.0    |    10.0    |
+|         0.45        |    31.0   |   44.0  |  39.0 |     40.0    |    10.0    |
+|         0.46        |    32.0   |   46.0  |  40.0 |     42.0    |    10.0    |
+| 0.47000000000000003 |    33.0   |   47.0  |  41.0 |     43.0    |    10.0    |
+|         0.48        |    34.0   |   49.0  |  42.0 |     45.0    |    11.0    |
+|         0.49        |    36.0   |   50.0  |  43.0 |     46.0    |    11.0    |
+|         0.5         |    37.0   |   51.0  |  44.0 |     47.0    |    11.0    |
+|         0.51        |    38.0   |   52.0  |  45.0 |     49.0    |    11.0    |
+|         0.52        |    40.0   |   53.0  |  46.0 |     50.0    |    11.0    |
+|         0.53        |    41.0   |   54.0  |  46.0 |     51.0    |    11.0    |
+|         0.54        |    42.0   |   55.0  |  47.0 |     52.0    |    12.0    |
+|         0.55        |    43.0   |   56.0  |  48.0 |     53.0    |    12.0    |
+|         0.56        |    44.0   |   57.0  |  49.0 |     54.0    |    12.0    |
+|  0.5700000000000001 |    46.0   |   58.0  |  50.0 |     55.0    |    12.0    |
+|         0.58        |    47.0   |   59.0  |  50.0 |     57.0    |    12.0    |
+|         0.59        |    48.0   |   60.0  |  51.0 |     58.0    |    12.0    |
+|         0.6         |    49.0   |   60.0  |  52.0 |     59.0    |    12.0    |
+|         0.61        |    50.0   |   61.0  |  52.0 |     60.0    |    13.0    |
+|         0.62        |    51.0   |   62.0  |  53.0 |     60.0    |    13.0    |
+|         0.63        |    52.0   |   63.0  |  54.0 |     61.0    |    13.0    |
+|         0.64        |    54.0   |   63.0  |  54.0 |     62.0    |    13.0    |
+|         0.65        |    55.0   |   64.0  |  55.0 |     63.0    |    13.0    |
+|         0.66        |    56.0   |   65.0  |  55.0 |     64.0    |    13.0    |
+|         0.67        |    57.0   |   66.0  |  56.0 |     65.0    |    14.0    |
+|         0.68        |    58.0   |   66.0  |  57.0 |     65.0    |    14.0    |
+|  0.6900000000000001 |    59.0   |   67.0  |  57.0 |     66.0    |    14.0    |
+|  0.7000000000000001 |    60.0   |   67.0  |  58.0 |     67.0    |    14.0    |
+|         0.71        |    60.0   |   68.0  |  58.0 |     68.0    |    15.0    |
+|         0.72        |    61.0   |   69.0  |  59.0 |     68.0    |    15.0    |
+|         0.73        |    62.0   |   69.0  |  59.0 |     69.0    |    15.0    |
+|         0.74        |    63.0   |   70.0  |  60.0 |     70.0    |    15.0    |
+|         0.75        |    64.0   |   70.0  |  61.0 |     70.0    |    15.0    |
+|         0.76        |    64.0   |   71.0  |  61.0 |     71.0    |    16.0    |
+|         0.77        |    65.0   |   71.0  |  62.0 |     71.0    |    16.0    |
+|         0.78        |    66.0   |   72.0  |  62.0 |     72.0    |    16.0    |
+|         0.79        |    66.0   |   72.0  |  63.0 |     72.0    |    16.0    |
+|         0.8         |    67.0   |   72.0  |  63.0 |     73.0    |    17.0    |
+|         0.81        |    68.0   |   73.0  |  64.0 |     73.0    |    17.0    |
+|  0.8200000000000001 |    68.0   |   73.0  |  64.0 |     73.0    |    17.0    |
+|  0.8300000000000001 |    69.0   |   74.0  |  64.0 |     74.0    |    18.0    |
+|         0.84        |    70.0   |   74.0  |  65.0 |     74.0    |    18.0    |
+|         0.85        |    70.0   |   75.0  |  65.0 |     75.0    |    18.0    |
+|         0.86        |    71.0   |   75.0  |  65.0 |     75.0    |    18.0    |
+|         0.87        |    71.0   |   75.0  |  66.0 |     75.0    |    19.0    |
+|         0.88        |    72.0   |   76.0  |  66.0 |     76.0    |    19.0    |
+|         0.89        |    72.0   |   76.0  |  66.0 |     76.0    |    19.0    |
+|         0.9         |    73.0   |   77.0  |  67.0 |     76.0    |    19.0    |
+|         0.91        |    73.0   |   77.0  |  67.0 |     77.0    |    20.0    |
+|         0.92        |    74.0   |   77.0  |  67.0 |     77.0    |    20.0    |
+|         0.93        |    74.0   |   78.0  |  68.0 |     78.0    |    20.0    |
+|  0.9400000000000001 |    75.0   |   78.0  |  68.0 |     78.0    |    21.0    |
+|  0.9500000000000001 |    75.0   |   78.0  |  68.0 |     78.0    |    21.0    |
+|         0.96        |    76.0   |   79.0  |  68.0 |     78.0    |    21.0    |
+|         0.97        |    76.0   |   79.0  |  69.0 |     79.0    |    21.0    |
+|         0.98        |    76.0   |   79.0  |  69.0 |     79.0    |    21.0    |
+|         0.99        |    77.0   |   80.0  |  69.0 |     79.0    |    22.0    |
+|         1.0         |    77.0   |   80.0  |  70.0 |     79.0    |    22.0    |
++---------------------+-----------+---------+-------+-------------+------------+
+Saving Attack Results to Excel
+Save Attack Results
+Adv Gathered 6
+Adv Gathered 2
+Adv Gathered 3
+Adv Gathered 1
+Adv Gathered 4
+Adv Gathered 5
+Run Complete
+Runtime  2431.0735309123993
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+Adv Gathered 0
++---------------------+-----------+---------+-------+-------------+------------+
+|       Epsilons      | White Box | Reg Net | U Net | Distill Net | AT-PGD Net |
++---------------------+-----------+---------+-------+-------------+------------+
+|         0.0         |    0.0    |   0.0   |  0.0  |     0.0     |    0.0     |
+|         0.01        |    20.0   |   4.0   |  1.0  |     5.0     |    0.0     |
+|         0.02        |    41.0   |   9.0   |  2.0  |     12.0    |    1.0     |
+|         0.03        |    55.0   |   14.0  |  4.0  |     19.0    |    1.0     |
+|         0.04        |    64.0   |   20.0  |  5.0  |     27.0    |    1.0     |
+|         0.05        |    69.0   |   26.0  |  6.0  |     34.0    |    1.0     |
+|         0.06        |    73.0   |   31.0  |  7.0  |     39.0    |    2.0     |
+|         0.07        |    76.0   |   36.0  |  9.0  |     44.0    |    2.0     |
+|         0.08        |    78.0   |   41.0  |  11.0 |     48.0    |    2.0     |
+|         0.09        |    80.0   |   45.0  |  13.0 |     52.0    |    2.0     |
+|         0.1         |    81.0   |   48.0  |  15.0 |     55.0    |    3.0     |
+|         0.11        |    82.0   |   51.0  |  17.0 |     58.0    |    3.0     |
+|         0.12        |    83.0   |   55.0  |  19.0 |     60.0    |    3.0     |
+|         0.13        |    84.0   |   57.0  |  21.0 |     62.0    |    3.0     |
+|         0.14        |    84.0   |   60.0  |  23.0 |     64.0    |    4.0     |
+|         0.15        |    84.0   |   62.0  |  26.0 |     65.0    |    4.0     |
+|         0.16        |    85.0   |   64.0  |  28.0 |     67.0    |    4.0     |
+|         0.17        |    85.0   |   66.0  |  30.0 |     68.0    |    4.0     |
+|         0.18        |    85.0   |   67.0  |  32.0 |     69.0    |    5.0     |
+|         0.19        |    86.0   |   69.0  |  34.0 |     71.0    |    5.0     |
+|         0.2         |    86.0   |   71.0  |  36.0 |     72.0    |    5.0     |
+|         0.21        |    86.0   |   72.0  |  38.0 |     73.0    |    5.0     |
+|         0.22        |    86.0   |   73.0  |  39.0 |     74.0    |    6.0     |
+|         0.23        |    86.0   |   74.0  |  41.0 |     75.0    |    6.0     |
+|         0.24        |    87.0   |   75.0  |  43.0 |     75.0    |    7.0     |
+|         0.25        |    87.0   |   76.0  |  45.0 |     76.0    |    7.0     |
+|         0.26        |    87.0   |   77.0  |  46.0 |     77.0    |    8.0     |
+|         0.27        |    87.0   |   78.0  |  47.0 |     77.0    |    8.0     |
+|         0.28        |    87.0   |   78.0  |  49.0 |     78.0    |    9.0     |
+|         0.29        |    87.0   |   79.0  |  50.0 |     78.0    |    9.0     |
+|         0.3         |    87.0   |   79.0  |  52.0 |     78.0    |    10.0    |
+|         0.31        |    87.0   |   80.0  |  53.0 |     79.0    |    10.0    |
+|         0.32        |    87.0   |   80.0  |  54.0 |     79.0    |    11.0    |
+|         0.33        |    87.0   |   81.0  |  55.0 |     80.0    |    11.0    |
+|         0.34        |    87.0   |   81.0  |  56.0 |     80.0    |    12.0    |
+| 0.35000000000000003 |    87.0   |   82.0  |  57.0 |     80.0    |    12.0    |
+|         0.36        |    87.0   |   82.0  |  58.0 |     80.0    |    13.0    |
+|         0.37        |    87.0   |   83.0  |  59.0 |     81.0    |    14.0    |
+|         0.38        |    88.0   |   83.0  |  59.0 |     81.0    |    14.0    |
+|         0.39        |    88.0   |   83.0  |  60.0 |     81.0    |    15.0    |
+|         0.4         |    87.0   |   84.0  |  61.0 |     82.0    |    16.0    |
+| 0.41000000000000003 |    88.0   |   84.0  |  62.0 |     82.0    |    16.0    |
+|         0.42        |    87.0   |   85.0  |  62.0 |     82.0    |    17.0    |
+|         0.43        |    88.0   |   85.0  |  63.0 |     82.0    |    18.0    |
+|         0.44        |    88.0   |   85.0  |  64.0 |     82.0    |    18.0    |
+|         0.45        |    88.0   |   85.0  |  64.0 |     82.0    |    19.0    |
+|         0.46        |    87.0   |   86.0  |  65.0 |     83.0    |    20.0    |
+| 0.47000000000000003 |    88.0   |   86.0  |  65.0 |     83.0    |    21.0    |
+|         0.48        |    88.0   |   86.0  |  66.0 |     83.0    |    21.0    |
+|         0.49        |    88.0   |   86.0  |  66.0 |     83.0    |    22.0    |
+|         0.5         |    88.0   |   87.0  |  67.0 |     83.0    |    23.0    |
+|         0.51        |    88.0   |   87.0  |  67.0 |     83.0    |    24.0    |
+|         0.52        |    88.0   |   87.0  |  67.0 |     83.0    |    25.0    |
+|         0.53        |    88.0   |   87.0  |  68.0 |     83.0    |    26.0    |
+|         0.54        |    88.0   |   88.0  |  68.0 |     83.0    |    27.0    |
+|         0.55        |    88.0   |   88.0  |  69.0 |     83.0    |    28.0    |
+|         0.56        |    88.0   |   88.0  |  69.0 |     83.0    |    29.0    |
+|  0.5700000000000001 |    88.0   |   88.0  |  69.0 |     83.0    |    29.0    |
+|         0.58        |    88.0   |   88.0  |  70.0 |     84.0    |    30.0    |
+|         0.59        |    88.0   |   88.0  |  70.0 |     84.0    |    31.0    |
+|         0.6         |    88.0   |   88.0  |  70.0 |     84.0    |    32.0    |
+|         0.61        |    88.0   |   88.0  |  71.0 |     84.0    |    33.0    |
+|         0.62        |    88.0   |   89.0  |  71.0 |     84.0    |    34.0    |
+|         0.63        |    88.0   |   89.0  |  71.0 |     84.0    |    35.0    |
+|         0.64        |    88.0   |   89.0  |  72.0 |     84.0    |    36.0    |
+|         0.65        |    88.0   |   89.0  |  72.0 |     84.0    |    37.0    |
+|         0.66        |    88.0   |   89.0  |  72.0 |     84.0    |    37.0    |
+|         0.67        |    88.0   |   89.0  |  72.0 |     84.0    |    38.0    |
+|         0.68        |    88.0   |   89.0  |  73.0 |     84.0    |    39.0    |
+|  0.6900000000000001 |    88.0   |   89.0  |  73.0 |     84.0    |    40.0    |
+|  0.7000000000000001 |    88.0   |   89.0  |  73.0 |     84.0    |    41.0    |
+|         0.71        |    88.0   |   89.0  |  73.0 |     84.0    |    41.0    |
+|         0.72        |    88.0   |   90.0  |  73.0 |     84.0    |    42.0    |
+|         0.73        |    88.0   |   90.0  |  74.0 |     84.0    |    43.0    |
+|         0.74        |    88.0   |   90.0  |  74.0 |     84.0    |    44.0    |
+|         0.75        |    88.0   |   90.0  |  74.0 |     84.0    |    45.0    |
+|         0.76        |    88.0   |   90.0  |  74.0 |     84.0    |    46.0    |
+|         0.77        |    88.0   |   90.0  |  74.0 |     84.0    |    46.0    |
+|         0.78        |    88.0   |   90.0  |  75.0 |     85.0    |    47.0    |
+|         0.79        |    88.0   |   90.0  |  75.0 |     85.0    |    48.0    |
+|         0.8         |    88.0   |   90.0  |  75.0 |     85.0    |    48.0    |
+|         0.81        |    88.0   |   90.0  |  75.0 |     85.0    |    49.0    |
+|  0.8200000000000001 |    88.0   |   90.0  |  75.0 |     85.0    |    50.0    |
+|  0.8300000000000001 |    88.0   |   90.0  |  75.0 |     85.0    |    50.0    |
+|         0.84        |    88.0   |   90.0  |  75.0 |     85.0    |    51.0    |
+|         0.85        |    88.0   |   90.0  |  75.0 |     85.0    |    52.0    |
+|         0.86        |    88.0   |   90.0  |  76.0 |     85.0    |    52.0    |
+|         0.87        |    88.0   |   90.0  |  76.0 |     85.0    |    53.0    |
+|         0.88        |    88.0   |   90.0  |  76.0 |     85.0    |    54.0    |
+|         0.89        |    89.0   |   90.0  |  76.0 |     85.0    |    54.0    |
+|         0.9         |    89.0   |   90.0  |  76.0 |     85.0    |    55.0    |
+|         0.91        |    89.0   |   91.0  |  77.0 |     85.0    |    55.0    |
+|         0.92        |    88.0   |   91.0  |  77.0 |     85.0    |    56.0    |
+|         0.93        |    88.0   |   91.0  |  77.0 |     85.0    |    56.0    |
+|  0.9400000000000001 |    89.0   |   91.0  |  77.0 |     85.0    |    57.0    |
+|  0.9500000000000001 |    89.0   |   91.0  |  77.0 |     85.0    |    58.0    |
+|         0.96        |    89.0   |   91.0  |  77.0 |     85.0    |    58.0    |
+|         0.97        |    89.0   |   91.0  |  77.0 |     85.0    |    59.0    |
+|         0.98        |    89.0   |   91.0  |  78.0 |     85.0    |    59.0    |
+|         0.99        |    89.0   |   91.0  |  78.0 |     85.0    |    59.0    |
+|         1.0         |    89.0   |   91.0  |  78.0 |     85.0    |    60.0    |
++---------------------+-----------+---------+-------+-------------+------------+
+Saving Attack Results to Excel
+Save Attack Results
+Adv Gathered 2
+Adv Gathered 6
+Adv Gathered 4
+Adv Gathered 1
+Adv Gathered 3
+Adv Gathered 5
+Run Complete
+Runtime  2407.3089764118195
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt  is Loaded.
+Files already downloaded and verified
+Files already downloaded and verified
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 166
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 178
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 75
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 108
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 206
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 169
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 70
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 34
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 37
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 194
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 111
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 105
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 90
+[lambda02:4024013] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4184576] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 65
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 100
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 75
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 78
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 118
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 51
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 68
+[lambda02:4187266] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 188
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 245
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 197
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 139
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 254
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 121
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 71
+[lambda02:4180938] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4182881] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4181503] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4182267] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02][[54624,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[54851,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[60906,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 212
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 28
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 79
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 82
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 102
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 109
+[lambda02:4022618] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 95
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 54
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 182
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 18
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 221
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 108
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 105
+[lambda02:4023049] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4028956] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4026691] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4029029] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4027993] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 190
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 201
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 51
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 50
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 136
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 86
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 117
+[lambda02:2089408] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4025945] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 191
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 155
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 33
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 70
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 73
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 50
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 108
+[lambda02:4028344] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4029871] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4029298] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4029967] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4027373] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 26
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 32
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 29
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 226
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 160
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 71
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 110
+[lambda02:4024630] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4025802] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 75
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 20
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 124
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 23
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 201
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 50
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 104
+[lambda02:4023594] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4026767] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4025725] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02][[10538,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4026902] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4029510] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 63
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 55
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 44
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 22
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 180
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 50
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 89
+[lambda02:4026618] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4024555] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4027730] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4026408] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4025445] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4024829] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4025678] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02][[9859,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 59
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 223
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 239
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 88
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 35
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 90
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 66
+[lambda02:4024219] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02][[28046,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[28046,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[27839,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[27839,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[31621,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[31621,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[25966,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[32540,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[32540,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[31561,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[31561,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[31844,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[31844,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[29655,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[29655,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 254
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 142
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 134
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 226
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 129
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 68
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 75
+[lambda02:4014027] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02][[26522,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[28261,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[26350,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 230
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 136
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 14
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 94
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 179
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 51
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 101
+[lambda02:4014026] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 114
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 223
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 177
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 78
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 3
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 29
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 70
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 49
+[lambda02:20418] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 252
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 78
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 242
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 218
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 43
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 98
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 85
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02][[36594,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[33997,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[33997,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[36997,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 97
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 188
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 27
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 174
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 176
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 68
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 97
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02][[62625,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[58710,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[2492,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[2492,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 164
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 49
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 217
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 165
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 194
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 83
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 122
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02][[14905,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[10832,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[10832,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[9844,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[9844,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 65
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 174
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 11
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 154
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 124
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 83
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 82
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02][[22991,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[21943,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[21948,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[21948,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[31481,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[31481,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[33090,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[41373,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[44502,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 240
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 135
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 220
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 3
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 135
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 74
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 88
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 128
+[lambda02][[57201,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[61107,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[60152,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[2256,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(18) failed: Connection reset by peer (104)
+[lambda02][[1442,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[2402,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[2402,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[2901,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[1442,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[4951,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[12840,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[26953,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[23087,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[24060,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[28545,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[23102,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[28542,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[29745,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[29399,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[30468,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[30283,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[32933,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[43885,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[44249,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[44986,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[37873,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[38788,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[38556,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[39452,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[39070,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[36960,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[36960,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[36960,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[36960,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(24) failed: Connection reset by peer (104)
+[lambda02][[40225,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 100
+[lambda02][[37983,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[39060,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 58
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 58
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 100
+[lambda02][[48595,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 100
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 58
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 58
+[lambda02:4014022] tcp_peer_recv_connect_ack: invalid header type: 99
+[lambda02][[64193,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[64198,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02:4014044] tcp_peer_recv_connect_ack: invalid header type: 99
+[lambda02][[1536,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(18) failed: Connection reset by peer (104)
+[lambda02:4014033] tcp_peer_recv_connect_ack: invalid header type: 99
+[lambda02][[4103,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[580,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[21249,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[21249,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[22520,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(32) failed: Connection reset by peer (104)
+[lambda02][[22520,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[22520,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[22520,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[27218,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[27218,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[23317,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[23317,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[16779,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[16779,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[16779,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(32) failed: Connection reset by peer (104)
+[lambda02][[16779,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[22469,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[22469,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[22469,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(32) failed: Connection reset by peer (104)
+[lambda02][[22469,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[26720,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(32) failed: Connection reset by peer (104)
+[lambda02][[26720,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[26720,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[26720,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[20963,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[20963,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[24231,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02][[24231,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[24231,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[24231,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(32) failed: Connection reset by peer (104)
+[lambda02][[22327,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[22327,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[22327,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(32) failed: Connection reset by peer (104)
+[lambda02][[22327,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(33) failed: Connection reset by peer (104)
+[lambda02][[22327,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(34) failed: Connection reset by peer (104)
+[lambda02][[22327,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(35) failed: Connection reset by peer (104)
+[lambda02][[22327,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(23) failed: Connection reset by peer (104)
+[lambda02:4014040] tcp_peer_recv_connect_ack: invalid header type: 99
+[lambda02:4014032] tcp_peer_recv_connect_ack: invalid header type: 99
+[lambda02][[16635,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[24563,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[14779,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[8457,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[14781,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[9724,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[15955,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[12475,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[10056,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[13481,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[14196,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+[lambda02][[15122,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(20) failed: Connection reset by peer (104)
+Adv Gathered 0
++---------------------+-----------+---------+-------+-------------+------------+
+|       Epsilons      | White Box | Reg Net | U Net | Distill Net | AT-PGD Net |
++---------------------+-----------+---------+-------+-------------+------------+
+|         0.0         |    0.0    |   0.0   |  0.0  |     0.0     |    0.0     |
+|         0.01        |    40.0   |   7.0   |  2.0  |     9.0     |    0.0     |
+|         0.02        |    79.0   |   16.0  |  4.0  |     24.0    |    1.0     |
+|         0.03        |    95.0   |   27.0  |  6.0  |     38.0    |    1.0     |
+|         0.04        |    99.0   |   38.0  |  8.0  |     51.0    |    2.0     |
+|         0.05        |   100.0   |   46.0  |  10.0 |     61.0    |    2.0     |
+|         0.06        |   100.0   |   53.0  |  12.0 |     68.0    |    3.0     |
+|         0.07        |   100.0   |   58.0  |  14.0 |     72.0    |    3.0     |
+|         0.08        |   100.0   |   62.0  |  17.0 |     75.0    |    3.0     |
+|         0.09        |   100.0   |   65.0  |  20.0 |     78.0    |    4.0     |
+|         0.1         |    99.0   |   68.0  |  22.0 |     79.0    |    4.0     |
+|         0.11        |    99.0   |   69.0  |  24.0 |     80.0    |    5.0     |
+|         0.12        |    99.0   |   71.0  |  27.0 |     81.0    |    5.0     |
+|         0.13        |    99.0   |   72.0  |  29.0 |     81.0    |    6.0     |
+|         0.14        |    99.0   |   72.0  |  31.0 |     81.0    |    6.0     |
+|         0.15        |    98.0   |   73.0  |  33.0 |     81.0    |    6.0     |
+|         0.16        |    98.0   |   74.0  |  35.0 |     81.0    |    7.0     |
+|         0.17        |    98.0   |   74.0  |  37.0 |     81.0    |    7.0     |
+|         0.18        |    98.0   |   74.0  |  39.0 |     81.0    |    8.0     |
+|         0.19        |    97.0   |   75.0  |  40.0 |     81.0    |    8.0     |
+|         0.2         |    97.0   |   75.0  |  42.0 |     81.0    |    9.0     |
+|         0.21        |    97.0   |   75.0  |  44.0 |     81.0    |    9.0     |
+|         0.22        |    97.0   |   76.0  |  46.0 |     81.0    |    10.0    |
+|         0.23        |    96.0   |   76.0  |  47.0 |     81.0    |    11.0    |
+|         0.24        |    96.0   |   76.0  |  48.0 |     81.0    |    11.0    |
+|         0.25        |    96.0   |   76.0  |  49.0 |     81.0    |    12.0    |
+|         0.26        |    96.0   |   77.0  |  50.0 |     81.0    |    12.0    |
+|         0.27        |    95.0   |   77.0  |  52.0 |     81.0    |    13.0    |
+|         0.28        |    95.0   |   77.0  |  53.0 |     81.0    |    14.0    |
+|         0.29        |    95.0   |   77.0  |  54.0 |     81.0    |    14.0    |
+|         0.3         |    95.0   |   78.0  |  54.0 |     81.0    |    15.0    |
+|         0.31        |    94.0   |   78.0  |  55.0 |     81.0    |    15.0    |
+|         0.32        |    94.0   |   79.0  |  56.0 |     81.0    |    16.0    |
+|         0.33        |    94.0   |   79.0  |  57.0 |     81.0    |    17.0    |
+|         0.34        |    94.0   |   79.0  |  58.0 |     81.0    |    17.0    |
+| 0.35000000000000003 |    94.0   |   79.0  |  59.0 |     81.0    |    18.0    |
+|         0.36        |    93.0   |   79.0  |  59.0 |     81.0    |    18.0    |
+|         0.37        |    93.0   |   80.0  |  60.0 |     81.0    |    19.0    |
+|         0.38        |    93.0   |   80.0  |  61.0 |     81.0    |    20.0    |
+|         0.39        |    93.0   |   80.0  |  61.0 |     81.0    |    20.0    |
+|         0.4         |    93.0   |   80.0  |  62.0 |     81.0    |    21.0    |
+| 0.41000000000000003 |    93.0   |   80.0  |  62.0 |     81.0    |    22.0    |
+|         0.42        |    92.0   |   81.0  |  63.0 |     81.0    |    22.0    |
+|         0.43        |    92.0   |   81.0  |  63.0 |     81.0    |    23.0    |
+|         0.44        |    92.0   |   81.0  |  64.0 |     82.0    |    23.0    |
+|         0.45        |    92.0   |   82.0  |  64.0 |     82.0    |    24.0    |
+|         0.46        |    92.0   |   82.0  |  65.0 |     82.0    |    25.0    |
+| 0.47000000000000003 |    92.0   |   82.0  |  65.0 |     82.0    |    25.0    |
+|         0.48        |    92.0   |   82.0  |  65.0 |     82.0    |    26.0    |
+|         0.49        |    91.0   |   82.0  |  66.0 |     82.0    |    26.0    |
+|         0.5         |    91.0   |   82.0  |  66.0 |     82.0    |    27.0    |
+|         0.51        |    91.0   |   83.0  |  67.0 |     82.0    |    27.0    |
+|         0.52        |    91.0   |   83.0  |  67.0 |     82.0    |    28.0    |
+|         0.53        |    91.0   |   83.0  |  67.0 |     82.0    |    29.0    |
+|         0.54        |    91.0   |   83.0  |  68.0 |     82.0    |    29.0    |
+|         0.55        |    91.0   |   83.0  |  68.0 |     82.0    |    30.0    |
+|         0.56        |    91.0   |   84.0  |  68.0 |     82.0    |    30.0    |
+|  0.5700000000000001 |    91.0   |   84.0  |  68.0 |     82.0    |    31.0    |
+|         0.58        |    91.0   |   84.0  |  69.0 |     83.0    |    31.0    |
+|         0.59        |    91.0   |   84.0  |  69.0 |     82.0    |    32.0    |
+|         0.6         |    91.0   |   84.0  |  69.0 |     82.0    |    32.0    |
+|         0.61        |    91.0   |   84.0  |  70.0 |     83.0    |    33.0    |
+|         0.62        |    91.0   |   85.0  |  70.0 |     83.0    |    34.0    |
+|         0.63        |    91.0   |   85.0  |  70.0 |     83.0    |    34.0    |
+|         0.64        |    91.0   |   85.0  |  70.0 |     83.0    |    35.0    |
+|         0.65        |    90.0   |   85.0  |  71.0 |     83.0    |    35.0    |
+|         0.66        |    91.0   |   85.0  |  71.0 |     83.0    |    36.0    |
+|         0.67        |    90.0   |   85.0  |  71.0 |     83.0    |    36.0    |
+|         0.68        |    90.0   |   85.0  |  71.0 |     83.0    |    37.0    |
+|  0.6900000000000001 |    90.0   |   86.0  |  72.0 |     83.0    |    38.0    |
+|  0.7000000000000001 |    90.0   |   86.0  |  72.0 |     83.0    |    38.0    |
+|         0.71        |    90.0   |   86.0  |  72.0 |     83.0    |    39.0    |
+|         0.72        |    90.0   |   86.0  |  72.0 |     83.0    |    39.0    |
+|         0.73        |    90.0   |   86.0  |  72.0 |     83.0    |    39.0    |
+|         0.74        |    90.0   |   86.0  |  72.0 |     83.0    |    40.0    |
+|         0.75        |    90.0   |   86.0  |  73.0 |     83.0    |    40.0    |
+|         0.76        |    90.0   |   86.0  |  73.0 |     83.0    |    41.0    |
+|         0.77        |    90.0   |   86.0  |  73.0 |     83.0    |    41.0    |
+|         0.78        |    90.0   |   86.0  |  73.0 |     83.0    |    42.0    |
+|         0.79        |    90.0   |   86.0  |  73.0 |     83.0    |    42.0    |
+|         0.8         |    90.0   |   87.0  |  73.0 |     83.0    |    43.0    |
+|         0.81        |    90.0   |   87.0  |  73.0 |     83.0    |    43.0    |
+|  0.8200000000000001 |    90.0   |   87.0  |  74.0 |     83.0    |    43.0    |
+|  0.8300000000000001 |    90.0   |   87.0  |  74.0 |     83.0    |    44.0    |
+|         0.84        |    90.0   |   87.0  |  74.0 |     83.0    |    44.0    |
+|         0.85        |    90.0   |   87.0  |  74.0 |     83.0    |    45.0    |
+|         0.86        |    90.0   |   87.0  |  74.0 |     83.0    |    45.0    |
+|         0.87        |    90.0   |   87.0  |  74.0 |     83.0    |    46.0    |
+|         0.88        |    90.0   |   87.0  |  74.0 |     83.0    |    46.0    |
+|         0.89        |    90.0   |   87.0  |  74.0 |     83.0    |    46.0    |
+|         0.9         |    90.0   |   87.0  |  74.0 |     83.0    |    47.0    |
+|         0.91        |    90.0   |   87.0  |  74.0 |     83.0    |    47.0    |
+|         0.92        |    90.0   |   87.0  |  74.0 |     83.0    |    48.0    |
+|         0.93        |    90.0   |   88.0  |  74.0 |     83.0    |    48.0    |
+|  0.9400000000000001 |    90.0   |   88.0  |  74.0 |     83.0    |    49.0    |
+|  0.9500000000000001 |    90.0   |   88.0  |  74.0 |     84.0    |    49.0    |
+|         0.96        |    90.0   |   88.0  |  75.0 |     84.0    |    49.0    |
+|         0.97        |    90.0   |   88.0  |  75.0 |     84.0    |    50.0    |
+|         0.98        |    90.0   |   88.0  |  75.0 |     84.0    |    50.0    |
+|         0.99        |    90.0   |   88.0  |  75.0 |     84.0    |    50.0    |
+|         1.0         |    90.0   |   88.0  |  75.0 |     84.0    |    50.0    |
++---------------------+-----------+---------+-------+-------------+------------+Adv Gathered 6
+
+Saving Attack Results to Excel
+Save Attack Results
+Adv Gathered 3
+Adv Gathered 4
+Adv Gathered 1
+Adv Gathered 2
+Adv Gathered 5
+[lambda02][[14204,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(29) failed: Connection reset by peer (104)
+[lambda02][[14204,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(30) failed: Connection reset by peer (104)
+[lambda02][[14204,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(31) failed: Connection reset by peer (104)
+[lambda02][[14204,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(32) failed: Connection reset by peer (104)
+[lambda02][[14204,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[14197,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(93) failed: Connection reset by peer (104)
+[lambda02][[14197,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(94) failed: Connection reset by peer (104)
+[lambda02][[14197,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(96) failed: Connection reset by peer (104)
+[lambda02][[14197,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(21) failed: Connection reset by peer (104)
+[lambda02][[14197,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(92) failed: Connection reset by peer (104)
+[lambda02][[14200,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(92) failed: Connection reset by peer (104)
+[lambda02][[14200,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(93) failed: Connection reset by peer (104)
+[lambda02][[14200,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(94) failed: Connection reset by peer (104)
+[lambda02][[14200,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(98) failed: Connection reset by peer (104)
+[lambda02][[14200,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(21) failed: Connection reset by peer (104)
+[lambda02][[14190,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(93) failed: Connection reset by peer (104)
+[lambda02][[14190,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(94) failed: Connection reset by peer (104)
+[lambda02][[14190,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(95) failed: Connection reset by peer (104)
+[lambda02][[14190,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(101) failed: Connection reset by peer (104)
+[lambda02][[14190,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[14191,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] [lambda02][[14178,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(93) failed: Connection reset by peer (104)
+recv(22) failed: Connection reset by peer (104)
+[lambda02][[14191,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(94) failed: Connection reset by peer (104)
+[lambda02][[14191,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(95) failed: Connection reset by peer (104)
+[lambda02][[14178,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(93) failed: Connection reset by peer (104)
+[lambda02][[14178,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(94) failed: Connection reset by peer (104)
+[lambda02][[14178,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(95) failed: Connection reset by peer (104)
+[lambda02][[14191,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(104) failed: Connection reset by peer (104)
+[lambda02][[14191,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[14178,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(104) failed: Connection reset by peer (104)
+[lambda02][[14196,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(95) failed: Connection reset by peer (104)
+[lambda02][[14196,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(104) failed: Connection reset by peer (104)
+[lambda02][[14196,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(22) failed: Connection reset by peer (104)
+[lambda02][[14196,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(93) failed: Connection reset by peer (104)
+[lambda02][[14196,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(94) failed: Connection reset by peer (104)
+Run Complete
+Runtime  14206.468588352203
+[lambda02][[59718,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(56) failed: Connection reset by peer (104)
+[lambda02][[59718,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(57) failed: Connection reset by peer (104)
+[lambda02][[59718,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(58) failed: Connection reset by peer (104)
+[lambda02][[59718,1],0][btl_tcp.c:559:mca_btl_tcp_recv_blocking] recv(49) failed: Connection reset by peer (104)
