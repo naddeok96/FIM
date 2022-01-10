@@ -5,16 +5,20 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-set_name = "MNIST"
-attack_type = ["FGSM"] # ["Gaussian_Noise", "FGSM", "PGD", "CW2", "OSSA"]
-upper_bound  = 1
+set_name      = "MNIST"
+save_filename = "LSR_U_defense_comparison.png"
+attack_type   = ["FGSM", "OSSA"] # ["Gaussian_Noise", "FGSM", "PGD", "CW2", "OSSA"]
+files_to_skip = ["UvsNoU", "distill", "weak"]
+upper_bound   = 1
 
 for attack in attack_type:
+    print(attack)
     for filename in os.listdir("results/" + set_name + "/" + attack + "/"):
-        if "UvsNoU" in filename or "ratio_plot" in filename or "defense_comparison" in filename:
+        # Filter out unwanted files
+        if "attack_results" not in filename or any(file_to_skip in filename for file_to_skip in files_to_skip):
             continue
-
-        print(filename)
+        print(filename[:-19])
+        
         wb = xlrd.open_workbook("results/" + set_name + "/" + attack + "/" + filename)
         ws = wb.sheet_by_name("Results")
 
@@ -39,6 +43,10 @@ for attack in attack_type:
                 label = "Unitary Net"
                 c = "orange"
 
+            elif "LSR" in filename:
+                label = "LSR"
+                c = "orange"
+
             elif "PGD" in filename[5:]:
                 label = "AT-PGD Net"
                 c = "red"
@@ -54,7 +62,6 @@ for attack in attack_type:
                 label = "Unknown"
                 c = "black"
 
-            print(results.keys())
             if "NSR" in results.keys():
                 plt.plot(results["NSR"], value, label=label, color=c)
             else:
@@ -70,5 +77,5 @@ for attack in attack_type:
 
     # plt.show()
     # plt.savefig('results/' + set_name + "/plots/TEST_FGSM_GN_results.png")
-    plt.savefig('results/' + set_name + "/" + attack + "/defense_comparison.png")
-    # plt.cla()
+    plt.savefig('results/' + set_name + "/" + attack + "/" + save_filename)
+    plt.cla()
