@@ -1,14 +1,31 @@
-import os
-set_name = "MNIST"
-attack_type = ["FGSM"] # ["Gaussian_Noise", "FGSM", "PGD", "CW2", "OSSA"]
-files_to_skip = ["UvsNoU", "distill", "weak"]
-upper_bound  = 1
 
-sweep_config = {"lr"            : [0.01, 0.001, 0.0001, 0.00001],
-                        "optim"         : ["sgd", 'nesterov'],
-                        "sched"         : ["One Cycle LR", "Cosine Annealing"],
-                        "lsr"           : 0.1,
-                        "epochs"        : [25, 50, 100]}
+import torch
 
-for key in sorted(list(sweep_config.keys()), reverse=True):
-    print(key)
+size = 3
+
+# Generate PD Matrix
+A = torch.rand(size, size)
+A = torch.mm(A, A.t())
+A.add_(torch.eye(size))
+
+B = torch.rand(size, size)
+B = torch.mm(B, B.t())
+B.add_(torch.eye(size))
+
+d = torch.rand(1, size)
+
+print(d.size())
+print(torch.mm(d, A).size())
+
+# print(torch.linalg.eigvals(A))
+
+# C = torch.mm(torch.mm(B.t(), A), B)
+
+# print(torch.linalg.eigvals(C))
+
+# Gs = A
+# Gx = C
+# J  = B
+
+# torch.sum(torch.linalg.eigvals(Gs))
+# torch.sum()
