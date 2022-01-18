@@ -329,7 +329,7 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "1,2,3,4,5,6,7"
+    gpu_ids = "1,2,4"
     
     # WandB
     project_name = None # "DDP MNIST"
@@ -338,64 +338,64 @@ if __name__ == "__main__":
     config = {  
                 # Networks
                 # MNIST
-                # "attack_model_name"   : "lenet", # "cifar10_mobilenetv2_x1_0"
-                # "attack_net_filename" : "models/pretrained/MNIST/lenet_w_acc_97.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt" # "models/pretrained/MNIST/lenet_w_acc_97.pt"
-                # "attack_net_from_ddp" : True,
-                # "attacker_net_acc"    : 0.97,
+                "attack_model_name"   : "lenet", # "cifar10_mobilenetv2_x1_0"
+                "attack_net_filename" : "models/pretrained/MNIST/lenet_w_acc_97.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt" # "models/pretrained/MNIST/lenet_w_acc_97.pt"
+                "attack_net_from_ddp" : True,
+                "attacker_net_acc"    : 0.97,
 
-                # "reg_model_name"      : "lenet", # "cifar10_mobilenetv2_x1_0"
-                # "reg_net_filename"    : "models/pretrained/MNIST/lenet_w_acc_98.pt",  # "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
-                # "reg_net_from_ddp"    : True,
-                # "reg_net_acc"         : 0.98,
+                "reg_model_name"      : "lenet", # "cifar10_mobilenetv2_x1_0"
+                "reg_net_filename"    : "models/pretrained/MNIST/lenet_w_acc_98.pt",  # "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
+                "reg_net_from_ddp"    : True,
+                "reg_net_acc"         : 0.98,
 
-                # "U_model_name"        : "lenet", # "cifar10_mobilenetv2_x1_4"
-                # "U_net_filename"      :  "models/pretrained/MNIST/U_lenet_w_acc_94.pt",  # "models/pretrained/CIFAR10/U_cifar10_mobilenetv2_x1_4_w_acc_76.pt" # "models/pretrained/MNIST/Control_lenet_w_acc_97.pt" 
-                # "U_filename"          : "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt", # "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt" # 
-                # "U_net_from_ddp"      : True,
-                # "U_net_acc"           : 0.94,
+                "U_model_name"        : "lenet", # "cifar10_mobilenetv2_x1_4"
+                "U_net_filename"      :  "models/pretrained/MNIST/U_lenet_w_acc_94.pt",  # "models/pretrained/CIFAR10/U_cifar10_mobilenetv2_x1_4_w_acc_76.pt" # "models/pretrained/MNIST/Control_lenet_w_acc_97.pt" 
+                "U_filename"          : "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt", # "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt" # 
+                "U_net_from_ddp"      : True,
+                "U_net_acc"           : 0.94,
 
-                # "distill_model_name"   : "lenet", # "cifar10_mobilenetv2_x1_0"
-                # "distill_net_filename" : "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt",  # "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
-                # "distill_net_from_ddp" : True,
-                # "distill_net_acc"      : 0.94,
+                "distill_model_name"   : "lenet", # "cifar10_mobilenetv2_x1_0"
+                "distill_net_filename" : "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt",  # "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
+                "distill_net_from_ddp" : True,
+                "distill_net_acc"      : 0.94,
 
-                # "adv_pgd_model_name"   : "lenet", # "cifar10_mobilenetv2_x1_0"
-                # "adv_pgd_net_filename" : "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",  # "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
-                # "adv_pgd_net_from_ddp" : True,
-                # "adv_pgd_net_acc"      : 0.97,
+                "adv_pgd_model_name"   : "lenet", # "cifar10_mobilenetv2_x1_0"
+                "adv_pgd_net_filename" : "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",  # "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" # "models/pretrained/MNIST/lenet_w_acc_98.pt" 
+                "adv_pgd_net_from_ddp" : True,
+                "adv_pgd_net_acc"      : 0.97,
 
                 # CIFAR10
-                "attack_model_name"   : "cifar10_mobilenetv2_x1_0",
-                "attack_net_filename" : "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt",
-                "attack_net_from_ddp" : True,
+                # "attack_model_name"   : "cifar10_mobilenetv2_x1_0",
+                # "attack_net_filename" : "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt",
+                # "attack_net_from_ddp" : True,
 
-                "reg_model_name"      : "cifar10_mobilenetv2_x1_0",
-                "reg_net_filename"    : "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" ,
-                "reg_net_from_ddp"    : True,
+                # "reg_model_name"      : "cifar10_mobilenetv2_x1_0",
+                # "reg_net_filename"    : "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt" ,
+                # "reg_net_from_ddp"    : True,
 
-                "U_model_name"        : "cifar10_mobilenetv2_x1_4",
-                "U_net_filename"      : "models/pretrained/CIFAR10/U_cifar10_mobilenetv2_x1_4_w_acc_76.pt",
-                "U_filename"          : "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt",
-                "U_net_from_ddp"      : True,
+                # "U_model_name"        : "cifar10_mobilenetv2_x1_4",
+                # "U_net_filename"      : "models/pretrained/CIFAR10/U_cifar10_mobilenetv2_x1_4_w_acc_76.pt",
+                # "U_filename"          : "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt",
+                # "U_net_from_ddp"      : True,
 
-                "distill_model_name"   : "cifar10_mobilenetv2_x1_0",
-                "distill_net_filename" : "models/pretrained/CIFAR10/distilled_20_cifar10_mobilenetv2_x1_0_w_acc_89.pt",
-                "distill_net_from_ddp" : True,
+                # "distill_model_name"   : "cifar10_mobilenetv2_x1_0",
+                # "distill_net_filename" : "models/pretrained/CIFAR10/distilled_20_cifar10_mobilenetv2_x1_0_w_acc_89.pt",
+                # "distill_net_from_ddp" : True,
 
-                "adv_pgd_model_name"   : "cifar10_mobilenetv2_x1_0",
-                "adv_pgd_net_filename" : "models/pretrained/CIFAR10/TEMP_PGD_15_cifar10_mobilenetv2_x1_0_w_acc_72.pt",
-                "adv_pgd_net_from_ddp" : True,
+                # "adv_pgd_model_name"   : "cifar10_mobilenetv2_x1_0",
+                # "adv_pgd_net_filename" : "models/pretrained/CIFAR10/TEMP_PGD_15_cifar10_mobilenetv2_x1_0_w_acc_72.pt",
+                # "adv_pgd_net_from_ddp" : True,
 
                 # Data
-                "set_name"      : "CIFAR10",
-                "batch_size"    : 64,
+                "set_name"      : "MNIST",
+                "batch_size"    : 512,
 
                 # Criterion
                 "crit"          : "cross_entropy",
 
                 # Test Robustness
                 "attack_type"                          : "Gaussian_Noise", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", #
-                "epsilons"                             : np.linspace(0, 1.0, num=101),
+                "epsilons"                             : np.linspace(0, 1.0, num=201),
                 "save_to_excel"                        : True
                }
     #-------------------------------------#
@@ -408,7 +408,7 @@ if __name__ == "__main__":
     assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
     # Run training using DDP
-    attack_types = ["Gaussian_Noise", "FGSM", "CW2"]
+    attack_types = ["CW2"]
     for attack in attack_types:
         s = time()
         config["attack_type"] = attack

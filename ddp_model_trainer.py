@@ -1,6 +1,7 @@
 import os
 import wandb
 import torch
+import random
 import matplotlib
 matplotlib.use('Agg')
 from copy import copy
@@ -26,7 +27,7 @@ def get_name_from_filename(filename):
 def setup(rank, world_size, config, project_name):
     # Setup rendezvous
     os.environ['MASTER_ADDR'] = 'localhost'
-    os.environ['MASTER_PORT'] = '12356'
+    os.environ['MASTER_PORT'] = '123456' # str(random.randrange(12340, 12370))
 
     # Initalize WandB logging on rank 0
     if rank == 0 and project_name is not None:
@@ -43,6 +44,10 @@ def setup(rank, world_size, config, project_name):
                             rank        = rank, 
                             world_size  = world_size)
     
+    torch.backends.cudnn.benchmark = True
+    torch.cuda.set_device(rank)
+    torch.cuda.empty_cache()
+     
     return run
 
 def initalize_optimizer(net, config):
@@ -102,7 +107,7 @@ def initalize_scheduler(optimizer, config, steps_per_epoch = None):
 def initalize_criterion(config):
     # Setup Criterion
     if config["crit"] == "cross_entropy":
-        criterion = torch.nn.CrossEntropyLoss()
+        criterion = torch.nn.CrossEntropyLoss(reduction='mean')
 
     else: 
         print("Invalid criterion setting in sweep_config.py")
@@ -149,10 +154,6 @@ def train(rank, world_size, config, project_name):
         if config["from_ddp"]:  # Remove prefixes if from DDP
             torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.")
     
-    torch.backends.cudnn.benchmark = True
-    torch.cuda.set_device(rank)
-    torch.cuda.empty_cache()
-    
     net = FstLayUniNet( set_name   = config["set_name"], 
                         gpu        = rank,
                         U_filename = config["U_filename"],
@@ -171,7 +172,7 @@ def train(rank, world_size, config, project_name):
         if config["pretrained_weights_filename"] is not None:
             net.load_state_dict(state_dict)
 
-    net = DDP(net, device_ids=[rank])
+    net = DDP(net, device_ids=[rank])   
 
     # Load Data
     data = Data(gpu          = rank, 
@@ -193,11 +194,12 @@ def train(rank, world_size, config, project_name):
 
     # Begin Training
     if config["epochs"] != 0:
-        print("Trainning on Rank", rank)
+        print("Training on Rank", rank)
         if rank == 0:
             best_epoch_acc = 0
 
     for epoch in range(int(config["epochs"])):   
+
         train_loader.sampler.set_epoch(epoch)
         epoch_correct, epoch_total_tested, epoch_total_loss = [torch.tensor(0).float().to(rank) for _ in range(3)]
         for i, (inputs, labels) in enumerate(train_loader):
@@ -264,16 +266,51 @@ def train(rank, world_size, config, project_name):
                 else:
                     loss = criterion(outputs, labels)
 
-                    if config["gradient clip"]:
-                        torch.nn.utils.clip_grad_value_(net.parameters(), config["gradient clip"])
+                # Add label smoothing regularization term
+                if config["label_smooth_regularization_coeff"]:   
+                    softmax_outputs            = torch.clamp(torch.softmax(outputs, dim = 1).view(-1), min = 1e-3).view(outputs.size(0), outputs.size(1))
+                    # if rank == 0:
+                    #     for i in list(range(softmax_outputs.size(0))):
+                    #         print(list(softmax_outputs[i].detach().cpu().numpy().ravel()))
+                    # dist.barrier()
+                    # exit()
+                    label_smooth_loss          = torch.mean(torch.sum(1 / softmax_outputs, dim = 1))
+                    current_label_smooth_coeff = config["label_smooth_regularization_coeff"] # * epoch / config["epochs"]
+                    
+                    # Scale and clip
+                    label_smooth_regularization_term = current_label_smooth_coeff * label_smooth_loss
 
+                    # Update WandB
+                    if rank == 0 and run is not None:
+                        run.log({"current_label_smooth_regularization_coeff": current_label_smooth_coeff,
+                                 "Label Smooth Loss": label_smooth_regularization_term})
+                    dist.barrier()
+                    
+                    # Display
+                    # if rank == 0:
+                    #     print("L", loss, "\tLSR", current_label_smooth_coeff * label_smooth_loss)
+                    # dist.barrier()
+                    # dist.destroy_process_group()
+                    # exit()
+                    
+                    # Clip values
+                    # if torch.isnan(label_smooth_regularization_term) or 8 < label_smooth_regularization_term:
+                    #     label_smooth_regularization_term = 8 
+                        
+                    # Add LSR term to loss
+                    loss += label_smooth_regularization_term
+                    
                 _, predictions      = torch.max(outputs, 1)
                 epoch_correct      += (predictions == labels).sum()
                 epoch_total_tested += labels.size(0)
                 epoch_total_loss   += loss.item()
                 
-                # Update weights
+                # Back propagate     
                 loss.backward() 
+                if config["gradient clip"]:
+                        torch.nn.utils.clip_grad_value_(net.parameters(), config["gradient clip"])
+                        
+                # Optimizer step
                 if config["use_SAM"]:
                     optimizer.step(closure)
                 else:
@@ -312,17 +349,17 @@ def train(rank, world_size, config, project_name):
                 #     train_loader = data.get_train_loader(config.batch_size)
                 #     wandb.log({ "Data Augmentation" : data.data_augment})
 
-                
+                # Display
                 print(  "Epoch: "           , epoch + 1, 
                         "\tTrain/Val Loss: ", round(epoch_loss.item(),5), "/", round(val_loss.item(),5),
                         "\tTrain/Val Acc: " , round(epoch_acc.item()*100,2), "/", round(val_acc.item()*100,2))
 
-                run.log({   "epoch"  : epoch + 1, 
-                        "Train Loss" : epoch_loss,
-                        "Train Acc"  : epoch_acc,
-                        "Val Loss"   : val_loss,
-                        "Val Acc"    : val_acc})
-
+                if run:
+                    run.log({   "epoch"  : epoch + 1, 
+                            "Train Loss" : epoch_loss,
+                            "Train Acc"  : epoch_acc,
+                            "Val Loss"   : val_loss,
+                            "Val Acc"    : val_acc})
 
                 if config["save_model"] and val_acc > best_epoch_acc and epoch > config["epoch_delay"] and config["checkpoint_at_logging"]:
                     best_epoch_acc = val_acc
@@ -344,7 +381,7 @@ def train(rank, world_size, config, project_name):
                     print("Model Saved")
 
             dist.barrier()
-   
+            
     # Test
     print("Testing on Rank", rank)
     config["test_robustness"] = copy(test_robustness)
@@ -358,7 +395,6 @@ def train(rank, world_size, config, project_name):
 
     # Get adversarial accuracy 
     if config["test_robustness"]:
-
         fool_ratio = [None for _ in range(len(val_adv_correct))]
         for i, (epsilon, adv_correct) in enumerate(zip(config["attacker epsilons"], val_adv_correct)):
             adv_acc, _    = gather_acc_and_loss(rank,  world_size,   adv_correct,   val_total_tested,   torch.tensor(0).to(rank))
@@ -370,8 +406,9 @@ def train(rank, world_size, config, project_name):
         fool_ratio = None
     print("Adv Gathered", rank)
 
-    # Log/Save data, results and model
+    # Log and Save 
     if rank == 0:
+        # Log WanB
         if run:
             print("Logging")     
             run.log({"Epoch"      : epoch + 1 if config["epochs"] != 0 else None, 
@@ -388,6 +425,7 @@ def train(rank, world_size, config, project_name):
                 run.log({"Fool Ratios" : fool_ratio_table})
                 print("Table")
 
+        # Save robustness results as an excel
         if config["save_attack_results"] and config["test_robustness"]:
             print("Saving Attack Results to Excel")
             from xlwt import Workbook  
@@ -398,6 +436,7 @@ def train(rank, world_size, config, project_name):
             # Create sheet
             sheet = wb.add_sheet('Results') 
             
+
             sheet.write(0, 0, "NSR")
             sheet.write(0, 1, "Fool Ratio")
             for i, (eps, fool) in enumerate(zip(config["attacker epsilons"], fool_ratio)):
@@ -409,7 +448,8 @@ def train(rank, world_size, config, project_name):
 
             filename = attacker_name + '_on_' + target_name + '_attack_results.xls'
             wb.save('results/' + data.set_name + '/' + config["attacker_attack_type"] + '/' + filename) 
-        print("Save Attack Results")
+            print("Saved Attack Results")
+
         if config["save_model"]:
             print("Saving Model")
 
@@ -421,6 +461,9 @@ def train(rank, world_size, config, project_name):
 
             if config["U_filename"] is not None:
                 filename  = "U_" + filename
+
+            if config["label_smooth_regularization_coeff"] is not None:
+                filename  = "LSR_" + str(config["label_smooth_regularization_coeff"]) + "_" + filename
             
             if config["attack_type"] is not None:
                 filename = config["attack_type"] + "_" + str(int(config["epsilon"]*100)) + "_" + filename
@@ -521,6 +564,17 @@ def test(rank, net, data, config):
         loss           = criterion(outputs, labels) 
         _, predictions = torch.max(outputs, 1)
 
+        if config["label_smooth_regularization_coeff"]:    
+            softmax_outputs            = torch.clamp(torch.softmax(outputs, dim = 1).view(-1), min = 1e-3).view(outputs.size(0), outputs.size(1))
+            label_smooth_loss          = torch.mean(torch.sum(1 / softmax_outputs, dim = 1))
+            current_label_smooth_coeff = config["label_smooth_regularization_coeff"] 
+            
+            # Scale and clip
+            label_smooth_regularization_term = current_label_smooth_coeff * label_smooth_loss
+                
+            # Add LSR term to loss
+            loss += label_smooth_regularization_term
+
         # Update running sum
         correct      += (predictions == labels).sum()
         total_tested += labels.size(0)
@@ -546,17 +600,17 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "2,3"
+    gpu_ids = "6,7"
     
     # WandB
-    project_name = "DDP Variety MNIST"
+    project_name =  "DDP LSR MNIST"
 
     # Network
     config = {  
                 # Network
-                "model_name"                  : "lenet", # "cifar10_mobilenetv2_x1_0",
-                "pretrained_weights_filename" : None, # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
-                "from_ddp"                    : False,
+                "model_name"                  : "lenet", # "cifar10_mobilenetv2_x1_0", # 
+                "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #"models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
+                "from_ddp"                    : True,
                 "save_model"                  : True,
                 "save_filename"               : None,
                 "logging_period"              : 1,   # Epochs between logging
@@ -569,9 +623,9 @@ if __name__ == "__main__":
                 
                 # Optimizer
                 "optim"         : "sgd",
-                "epochs"        : 0,
-                "lr"            : 0.5,
-                "sched"         : "Cosine Annealing", # "One Cycle LR", # "Cosine Annealing", # 
+                "epochs"        : 500,
+                "lr"            : 0.1,
+                "sched"         : None, # "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
                 "gradient clip" : None, # 0.1, # None, #   
                 "weight_decay"  : 1e-4,
                 "momentum"      : 0.9,
@@ -581,25 +635,28 @@ if __name__ == "__main__":
                 "crit"          : "cross_entropy",
 
                 # Hardening
+                ### Supress Eigenvalues of FIM ###
+                "label_smooth_regularization_coeff" : 0.002,
+
                 ### Unitary ###
                 "U_filename"    : None, # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt", # "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt", # "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt",
 
                 ### Adv Train ###
-                "attack_type"   : None, # "PGD",
+                "attack_type"   : None, 
                 "epsilon"       : None,
                 "epoch_delay"   : 0,
 
                 ### Distill ###
-                "distill"       : False, # True,
+                "distill"       : False, 
                 "distill_temp"  : None,
 
                 # Test Robustness
                 "test_robustness"                       : False,
                 "save_attack_results"                   : False,
-                "attacker_pretrained_weights_filename"  : None, # "models/pretrained/MNIST/lenet_w_acc_97.pt",
-                "attacker_attack_type"                  : "EoT", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
+                "attacker_pretrained_weights_filename"  : "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt", # "models/pretrained/MNIST/lenet_w_acc_97.pt",
+                "attacker_attack_type"                  : "OSSA", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
                 "attacker epsilons"                     : np.linspace(0, 1.0, num=101)
-               }
+            }
     #-------------------------------------#
 
     # Set GPUs to Use
@@ -610,68 +667,68 @@ if __name__ == "__main__":
     assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
     ## Training using DDP
-    # run_ddp(train, n_gpus, config, project_name)
-    # exit()
+    if True:
+        run_ddp(train, n_gpus, config, project_name)
 
     ## Robustness using DDP
-    # Attack Results
-    # target_networks = [ 
+    if False:
+        # Attackers
+        attacker_attack_types = ["FGSM", "OSSA"]
 
-    #                     # "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt", # Distilled
-    #                     # "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",       # Adv Train
-    #                     "models/pretrained/MNIST/U_lenet_w_acc_94.pt",            # Unitary
-    #                     "models/pretrained/MNIST/lenet_w_acc_98.pt",              # No Defense
-    #                     # "models/pretrained/MNIST/lenet_w_acc_97.pt"               # White Box
-                        
-    #                     ]
+        # Networks
+        target_networks = [ 
 
-    # attacker_attack_types = ["FGSM", "PGD", "CW2", "OSSA", "EoT"]
+                            # "models/pretrained/MNIST/distilled_20_lenet_w_acc_94.pt", # Distilled
+                            # "models/pretrained/MNIST/PGD_15_lenet_w_acc_97.pt",       # Adv Train
+                            # "models/pretrained/MNIST/LSR_lenet_w_acc_98.pt",          # Label Smoothing 
+                            # "models/pretrained/MNIST/U_lenet_w_acc_94.pt",            # Unitary
+                            # "models/pretrained/MNIST/lenet_w_acc_98.pt",              # No Defense
+                            # "models/pretrained/MNIST/lenet_w_acc_97.pt"               # White Box
 
-    # # Cyle through attack types
-    # for attacker_attack_type in attacker_attack_types:
-        print("Working on", attacker_attack_type)
-        config["attacker_attack_type"] = attacker_attack_type
+                            "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt",           # White Box
+                            "models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # Label Smoothing
+                            "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt",       # Black Box
+                            "models/pretrained/CIFAR10/U_cifar10_mobilenetv2_x1_4_w_acc_76.pt"          # U Net
+                            ]
 
-        # Cycle through target networks              
-        for target_network in target_networks:
-            print("\tWorking on", get_name_from_filename(target_network))
+        # Cyle through attack types
+        for attacker_attack_type in attacker_attack_types:
+            print("Working on", attacker_attack_type)
+            config["attacker_attack_type"] = attacker_attack_type
 
-            # Set target network
-            config["pretrained_weights_filename"] = target_network
+            # Cycle through target networks              
+            for target_network in target_networks:
+                print("\tWorking on", get_name_from_filename(target_network))
 
-            # Add U
-            if "U" in target_network:
-                config["U_filename"] = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
-            else:
-                config["U_filename"] = None
+                # Set target network
+                config["pretrained_weights_filename"] = target_network
 
-            run_ddp(train, n_gpus, config, project_name)
+                # Add U
+                if "U" in target_network:
+                    if config["set_name"] == "MNIST":
+                        config["U_filename"] = "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"
+                    elif config["set_name"] == "CIFAR10":
+                        config["U_filename"] = "models/pretrained/CIFAR10/U_w_means_0-005174736492335796_n0-0014449692098423839_n0-0010137659264728427_and_stds_1-130435824394226_1-128873586654663_1-1922636032104492_.pt"
+                    else:
+                        print("Invalid set name...")
+                        exit()
+                else:
+                    config["U_filename"] = None
+
+                # Run attack on network
+                run_ddp(train, n_gpus, config, project_name)
 
     ## Train a variety using DDP 
-    data_augment_list = [True, False]
-    optim_list        = ["sgd", 'nesterov']
-    epochs_list       = [5, 10]
-    lr_list           = [0.1, 0.01]
-    sched_list        =  ["One Cycle LR", None]
-    U_filename_list   = [None, "models/pretrained/MNIST/U_w_means_0-10024631768465042_and_stds_0-9899614453315735_.pt"]
+    if False:
+        sweep_config = {"lr"            : [0.001, 0.00001],
+                        "optim"         : ["adam"],
+                        "sched"         : ["One Cycle LR"],
+                        "lsr"           : 0.1,
+                        "epochs"        : [500]}
 
-    network_counter = 0
-    for data_augment in data_augment_list:
-        config["data_augment"] = data_augment
-        for optim in optim_list:
-            config["optim"] = optim
-            for epochs in epochs_list:
-                config["epochs"] = epochs
-                for lr in lr_list:
-                    config["lr"] = lr
-                    for sched in sched_list:
-                        config["sched"] = sched
-
-                        print("\tWorking on", network_counter)
-                        config["save_filename"] = str(network_counter) + ".pt"
-                        for U_filename in U_filename_list:
-                            config["U_filename"] = U_filename
-                            run_ddp(train, n_gpus, config, project_name)
-
-                        network_counter += 1
+        for key in sweep_config.keys():
+            for value in sweep_config[key]:
+                config[key] = value
+                run_ddp(train, n_gpus, config, project_name)
+            
 
