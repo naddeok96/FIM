@@ -5,9 +5,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-set_name      = "MNIST"
+set_name      = "CIFAR10"
 save_filename = "LSR_U_defense_comparison.png"
-attack_type   = ["FGSM", "OSSA"] # ["Gaussian_Noise", "FGSM", "PGD", "CW2", "OSSA"]
+attack_type   = ["OSSA"] # ["Gaussian_Noise", "FGSM", "PGD", "CW2", "OSSA"]
 files_to_skip = ["UvsNoU", "distill", "weak"]
 upper_bound   = 1
 
@@ -45,7 +45,7 @@ for attack in attack_type:
 
             elif "LSR" in filename:
                 label = "LSR"
-                c = "orange"
+                c = "red"
 
             elif "PGD" in filename[5:]:
                 label = "AT-PGD Net"
@@ -54,10 +54,19 @@ for attack in attack_type:
             elif "lenet_w_acc_97_on_lenet_w_acc_98_attack_results" in filename:
                 label = "LeNet-5"
                 c = "blue"
+                
+            elif "cifar10_mobilenetv2_x1_0_w_acc_93_on_Nonecifar10_mobilenetv2_x1_0_w_acc_91_attack_results" in filename:
+                label = "Black Box"
+                c = "blue"
 
-            elif "lenet_w_acc_97_on_lenet_w_acc_97_attack_results":
+            elif "lenet_w_acc_97_on_lenet_w_acc_97_attack_results" in filename:
                 label = "White Box"
                 c = "green"
+                
+            elif "cifar10_mobilenetv2_x1_0_w_acc_93_on_cifar10_mobilenetv2_x1_0_w_acc_93_attack_results" in filename:
+                label = "White Box"
+                c = "green"
+                
             else:
                 label = "Unknown"
                 c = "black"
