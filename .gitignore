@@ -1,6 +1,8 @@
-/__pycache__/*
-/wandb/*
-/env/*
+
+
+__pycache__/*
+wandb/*
+env/*
 test.txt
 text.py
 wandb/*
