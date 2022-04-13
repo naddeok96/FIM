@@ -16,7 +16,8 @@ class FstLayUniNet(nn.Module):
                        U_filename = None,
                        model_name = None, 
                        pretrained_accuracy = 100,
-                       pretrained_weights_filename = None):
+                       pretrained_weights_filename = None,
+                       desired_image_size = None):
 
         super(FstLayUniNet,self).__init__()
 
@@ -34,7 +35,7 @@ class FstLayUniNet(nn.Module):
 
         elif self.set_name == "MNIST":
             self.num_channels = 1
-            self.image_size   = 28
+            self.image_size   = 28 if desired_image_size is None else desired_image_size
             self.num_classes  = 10
 
         else:

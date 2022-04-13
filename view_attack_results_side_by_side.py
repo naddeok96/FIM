@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 
 
 set_name      = "CIFAR10"
-save_filename = "LSR_U_defense_comparison_side_by_side.png"
+save_filename = "NoUvsU_defense_comparison_side_by_side22.png"
 attack_type   = ["FGSM", "OSSA"] # ["Gaussian_Noise", "FGSM", "PGD", "CW2", "OSSA"]
-files_to_skip = ["UvsNoU", "distill", "weak"]
+files_to_skip = ["UvsNoU", "distill", "weak","LSR","cifar10_mobilenetv2_x1_0_w_acc_93_on_cifar10_mobilenetv2_x1_0_w_acc_93_attack_results"]
 upper_bound   = 1
 num_markers   = 10
 
@@ -44,7 +44,7 @@ for i, attack in enumerate(attack_type):
                 c = "red"
 
             elif "_U_" in filename:
-                label = "Unitary Net"
+                label = "OPP Model"
                 c = "orange"
                 m = "o"
                 me = int(len(results["NSR"])/num_markers)
@@ -72,7 +72,7 @@ for i, attack in enumerate(attack_type):
                 me = int(len(results["NSR"])/num_markers) - 3
                 
             elif "cifar10_mobilenetv2_x1_0_w_acc_93_on_Nonecifar10_mobilenetv2_x1_0_w_acc_91_attack_results" in filename:
-                label = "Black Box"
+                label = "Standard Model"
                 c = "blue"
                 m = "v"
                 me = int(len(results["NSR"])/num_markers) - 2

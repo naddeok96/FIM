@@ -12,12 +12,12 @@ import matplotlib.pyplot as plt
 
 class Data:
     def __init__(self,set_name = "MNIST",
-                      gpu = False,
-                      test_batch_size = 256,
-                      desired_image_size = None,
-                      data_augment = False,
-                      maxmin = False,
-                      root   = None):
+                        gpu = False,
+                        test_batch_size = 256,
+                        desired_image_size = None,
+                        data_augment = False,
+                        maxmin = False,
+                        root   = None):
 
         super(Data,self).__init__()
 
@@ -69,7 +69,7 @@ class Data:
             # Image size
             self.num_classes = 10
             self.num_channels = 1
-            self.image_size = 28
+            self.image_size = 28 if self.desired_image_size is None else self.desired_image_size
 
             # Images are of size (1, 28, 28)
             self.mean = (0.1307,)
@@ -78,8 +78,9 @@ class Data:
             # Declare Transforms
             self.set_train_transform()
 
-            self.test_transform = transforms.Compose([transforms.ToTensor(), # Convert the images into tensors
-                                                 transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
+            self.test_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
+                                                    transforms.ToTensor(), # Convert the images into tensors
+                                                    transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
 
             self.inverse_transform = UnNormalize(mean=self.mean,
                                                  std=self.std)
@@ -123,7 +124,6 @@ class Data:
             self.test_set = datasets.ImageFolder(root      = '../../../data/tiny-imagenet-200/' + 'train',
                                                   transform = self.train_transform)
 
-
         elif self.set_name == "ImageNet":
             self.train_transform = transforms.Compose([transforms.Resize(256),
                                                 transforms.CenterCrop(224),
@@ -154,6 +154,9 @@ class Data:
             # plt.imshow(np.transpose(img.cpu().numpy(), (1 , 2 , 0)))
             # plt.savefig("img2.png")
             # exit()
+
+        elif self.set_name == "Drone Detection":
+            print("Put Stuff here")
 
         else:
             print("Please enter vaild dataset.")

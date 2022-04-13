@@ -1,0 +1,16 @@
+New Datasets
+Fruits, TinyImageNet
+
+
+Story:
+1) Can we link to linear encoding, 
+
+2) Design of Unitary Matrix optimally
+
+3) Comparing data manifolds???
+- highest eigenvecotr
+- can we determine it from the rotation given by U, what angle theta (is it pi/2)
+
+Try a unitary transformation that swaps first and last eigenvector
+-> First write a matrix in a basis of the highest and lowest eigenvector than convert to real numbers
+-->> Normalize v_max and v_min, then take space spaned by them, check email from Nidhal

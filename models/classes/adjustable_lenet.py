@@ -101,5 +101,3 @@ class AdjLeNet(nn.Module):
         return x
 
     
-
-

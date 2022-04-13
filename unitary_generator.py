@@ -35,6 +35,8 @@ data = Data(set_name        = set_name,
             test_batch_size = batch_size)
 
 # Collect Stats
+
+
 for images, labels in data.test_loader:
     # Rotate Images
     ortho_images = net.orthogonal_operation(images)

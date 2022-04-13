@@ -27,7 +27,8 @@ net.eval()
 
 # Initialize data
 data = Data(set_name = set_name,
-            root     = "../data/")
+            root     = "../data/",
+            desired_image_size=32)
 
 # Load Images
 image, _ = next(iter(data.get_train_loader(batch_size = 1)))

@@ -417,7 +417,6 @@ def train(rank, world_size, config, project_name):
                 "Val Loss"    : val_loss,
                 "Val Acc"     : val_acc})
 
-            print("Log")
             if config["test_robustness"]:
                 fool_ratio_table = wandb.Table( columns = ["NSR", "Fool Ratio"],
                                             data    = [[eps, int(fool.item())] for eps, fool in zip(config["attacker epsilons"], fool_ratio)])
@@ -604,6 +603,7 @@ if __name__ == "__main__":
     
     # WandB
     project_name = None # "DDP LSR CIFAR10"
+    # entity_name  =  Need to add
 
     # Network
     config = {  
