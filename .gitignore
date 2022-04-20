@@ -7,3 +7,4 @@ test.txt
 text.py
 wandb/*
 outputs/*
+models/pretrained/*
