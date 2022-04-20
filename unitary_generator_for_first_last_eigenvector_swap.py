@@ -75,8 +75,10 @@ def build_excel(dict_of_matrices):
             
         # Plot Eigenvectors
         borders = xlwt.Borders()
-        borders.top = 5
-        borders.bottom = 5
+        borders.top = xlwt.Borders.THIN
+        borders.top_colour = 0xBFBFBF
+        borders.bottom = xlwt.Borders.THIN
+        borders.bottom_colour = 0xBFBFBF
         style = xlwt.XFStyle()
         style.borders = borders
         
