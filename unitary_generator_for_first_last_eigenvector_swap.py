@@ -76,14 +76,12 @@ def build_excel(dict_of_matrices):
         # Plot Eigenvectors
         borders = xlwt.Borders()
         borders.top = 5
-        borders.top_colour = 0x40b
         borders.bottom = 5
-        borders.bottom_colour = 0x40b
         style = xlwt.XFStyle()
         style.borders = borders
         
         
-        sheet.write(i*(nrows+4) + 4, ncols + 1, "Eigenvectors", style)
+        sheet.write(i*(nrows+4) + 4, ncols + 1, "Eigenvectors")
         for j in range(nrows):
             for k in range(ncols):
                 sheet.write(i*(nrows+4)+5+j, ncols + 1 + k, round(torch.real(eigenvectors[j,k]).item(),2), style)
