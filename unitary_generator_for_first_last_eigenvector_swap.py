@@ -13,8 +13,8 @@ import copy
 def GramSchmidt(A):
     # Get eigensystem
     _, eigenvectors = torch.linalg.eig(A)
-    eig_min = eigenvectors[-1]
-    eig_max = eigenvectors[ 0]
+    eig_min = eigenvectors[:,-1]
+    eig_max = eigenvectors[:, 0]
     
     
     # Generate initial matrix to transform into unitary
@@ -35,7 +35,7 @@ def GramSchmidt(A):
             
         V[i] = Ui / torch.linalg.norm(Ui, ord = 2)
 
-    return V
+    return V.t()
 
 # Matrix Multiplication
 def mm(A, B):
@@ -47,6 +47,18 @@ def t(A):
 
 # Build excel sheet with eigensystem
 def build_excel(dict_of_matrices):
+    # from openpyxl import load_workbook
+    # workbook = load_workbook("EigensystemComparison.csv")
+    # sheet = workbook['Eigensystem Comparison']
+
+    # exit()
+    # from xlrd import open_workbook
+    # from xlutils.copy import copy
+    
+    # rb = open_workbook("EigensystemComparison.xls")
+    # workbook = copy(rb)
+    # sheet = workbook.get_sheet("Eigensystem Comparison")
+
     workbook = xlwt.Workbook() 
 
     sheet = workbook.add_sheet("Eigensystem Comparison")
@@ -86,11 +98,16 @@ def build_excel(dict_of_matrices):
         sheet.write(i*(nrows+4) + 4, ncols + 1, "Eigenvectors")
         for j in range(nrows):
             for k in range(ncols):
-                sheet.write(i*(nrows+4)+5+j, ncols + 1 + k, round(torch.real(eigenvectors[j,k]).item(),2), style)
+                sheet.write(i*(nrows+4)+5+j, ncols + 1 + k, round(torch.real(eigenvectors[k, j]).item(),2), style)
                 
-        # Save        
-        workbook.save("EigensystemComparison.xls")
+    # Save        
+    workbook.save("EigensystemComparison.xls")
 
+    import pyexcel as p
+
+    p.save_book_as(file_name="EigensystemComparison.xls",
+               dest_file_name="EigensystemComparison.xlsx")
+    
 
 
 # Main
@@ -102,7 +119,7 @@ if __name__ == "__main__":
 
     # Get unitary
     V = GramSchmidt(A)
-    
+
     # Basis change
     R = torch.eye(5)
     index = torch.tensor(range(R.size(0)))
@@ -119,8 +136,11 @@ if __name__ == "__main__":
     F = mm(mm(V, E), t(V))
 
     # G = VFTVT A VFVT
-    G = mm(mm(mm(mm(mm(mm(V, t(F)), t(V)), A), V), F), t(V))
+    # G = mm(mm(mm(mm(mm(mm(t(V), R), V), A), t(V)), R), V)
 
     # Print to excel
-    dict_of_matrices = {"A": A, "V": V, "G": G}
+    # dict_of_matrices = {"A": A, "V":V, "D":D,"E":E,"F":F}
+    dict_of_matrices = {"A": A, "F":F}
     build_excel(dict_of_matrices)
+
+
