@@ -12,9 +12,16 @@ import copy
 # GramSchmidt Algorithm
 def GramSchmidt(A):
     # Get eigensystem
-    _, eigenvectors = torch.linalg.eig(A)
-    eig_min = eigenvectors[:,-1]
-    eig_max = eigenvectors[:, 0]
+    eigenvalues, eigenvectors = torch.linalg.eig(A)
+    min_idx = torch.argmin(torch.abs(torch.real(eigenvalues)))
+    max_idx = torch.argmax(torch.abs(torch.real(eigenvalues)))
+   
+    eig_min = eigenvectors[:, min_idx]
+    eig_max = eigenvectors[:, max_idx]
+    print("Min/Max", torch.dot(eig_min,eig_max))
+    # eig_min = eigenvectors[:, -1]
+    # eig_max = eigenvectors[:, 0]
+
     
     
     # Generate initial matrix to transform into unitary
@@ -80,6 +87,7 @@ def build_excel(dict_of_matrices):
         # Get eigensystem
         eigenvalues, eigenvectors = torch.linalg.eig(M)
         
+        
         # Plot Eigenvalues
         sheet.write(i*(nrows+4) + 2, ncols + 1, "Eigenvalues")
         for j in range(nrows):
@@ -115,32 +123,45 @@ if __name__ == "__main__":
     # Generate Random Positive Definite
     A = torch.rand(5, 5)
     A = mm(A, t(A))
-    A.add_(torch.eye(5))
+    # A.add_(torch.eye(5))
 
     # Get unitary
-    V = GramSchmidt(A)
-
+    D = GramSchmidt(A)
+  
     # Basis change
-    R = torch.eye(5)
-    index = torch.tensor(range(R.size(0)))
+    P = torch.eye(5)
+    index = torch.tensor(range(P.size(0)))
     index[0:2] = torch.tensor([1, 0])
-    R = R[index]
-    
-    # D = VT A V
-    D = mm(mm(t(V), A), V)
-    
-    # E = RT Q R
-    E = mm(mm(t(R), D), R)
-    
-    # F = V E Vt
-    F = mm(mm(V, E), t(V))
+    P = P[index]
 
-    # G = VFTVT A VFVT
-    # G = mm(mm(mm(mm(mm(mm(t(V), R), V), A), t(V)), R), V)
+    N = mm(mm(D,P),t(D))
+    
+    B = mm(mm(N,A),t(N))
+    
+    # # D = DT A D
+    G = mm(mm(t(D), A), D)
+    
+    # E = RT Q P
+    E = mm(mm(t(P), G), P)
+    
+    # F = D E Dt
+    F = mm(mm(D, E), t(D))
+
+    eigenvaluesA, eigenvectorsA = torch.linalg.eig(A)
+    eigenvaluesB, eigenvectorsB = torch.linalg.eig(B)
+    min_idxA = torch.argmin(torch.abs(torch.real(eigenvaluesA)))
+    max_idxA = torch.argmax(torch.abs(torch.real(eigenvaluesA)))
+
+    min_idxB = torch.argmin(torch.abs(torch.real(eigenvaluesB)))
+    max_idxB = torch.argmax(torch.abs(torch.real(eigenvaluesB)))
+
+    print(torch.div(eigenvectorsA[min_idxA], eigenvectorsB[max_idxB]))
+    print(torch.div(eigenvectorsA[max_idxA], eigenvectorsB[min_idxB]))
+
 
     # Print to excel
-    # dict_of_matrices = {"A": A, "V":V, "D":D,"E":E,"F":F}
-    dict_of_matrices = {"A": A, "F":F}
+    # dict_of_matrices = {"A": A, "D":D, "D":D,"E":E,"F":F}
+    dict_of_matrices = {"A": A, "B":B, "F":F}
     build_excel(dict_of_matrices)
 
 
