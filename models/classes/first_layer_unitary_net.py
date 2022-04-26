@@ -105,9 +105,63 @@ class FstLayUniNet(nn.Module):
         # Calculate an orthoganal matrix the size of A
         return torch.nn.init.orthogonal_(torch.empty(size, size))
 
+    def get_optimal_orthogonal_matrix(self, source_network, source_image):
+        '''
+        Generates an optimal orthoganal matrix of input size
+        '''
+        # Orthogonal matrix with first 2 columns as the eigenvectors associated with the min and max eigenvalues
+        D = GramSchmidt(source_image)
+
+        # Permutation matrix
+        P = torch.eye(mat_size)
+        index = torch.tensor(range(P.size(0)))
+        index[0:2] = torch.tensor([1, 0])
+        P = P[index]
+
+        # Basis change of D from P
+        N = mm(mm(D,P),t(D))
+
+    # GramSchmidt Algorithm
+    def GramSchmidt(A):
+        # Get eigensystem
+        eigenvalues, eigenvectors = torch.linalg.eig(A)
+
+        # Get eigenvectors associated with the min/max eigenvalues
+        min_idx = torch.argmin(torch.abs(torch.real(eigenvalues)))
+        max_idx = torch.argmax(torch.abs(torch.real(eigenvalues)))
+    
+        eig_min = eigenvectors[:, min_idx]
+        eig_max = eigenvectors[:, max_idx]
+
+        # Generate random matrix to transform into unitary
+        V = torch.randn_like(A)
+
+        # Replace first and second column with eigenvectors associated with the min/max eigenvalues
+        V[0,:] = torch.real(eig_min)
+        V[1,:] = torch.real(eig_max)
+
+        # Orthogonal complement of V in n-dimension 
+        for i in range(A.size(0)):
+            # Orthonormalize
+            Ui = copy.copy(V[i])
+
+            for j in range(i):
+                Uj = copy.copy(V[j])
+
+                
+                Ui = Ui - ((torch.dot(Uj.view(-1), Ui.view(-1)) / (torch.linalg.norm(Uj, ord = 2)**2)))*Uj
+                
+            V[i] = Ui / torch.linalg.norm(Ui, ord = 2)
+            
+        return V.t()
+
+
     # Set a new U with no Mean or STD Stats
-    def set_orthogonal_matrix(self):
-        self.U = self.get_orthogonal_matrix(self.image_size)
+    def set_orthogonal_matrix(self, source_network = None, source_image = None):
+        if source_image:
+            self.U = self.get_optimal_orthognal_matrix(source_image)
+        else:
+            self.U = self.get_orthogonal_matrix(self.image_size)
 
         # Organize GPUs
         if isinstance(self.gpu, bool):
@@ -116,7 +170,7 @@ class FstLayUniNet(nn.Module):
 
         else:
             # Push to rank of gpu
-            self.U = self.U.to(gpu)
+            self.U = self.U.to(self.gpu)
         
     # Load unitary matrix from file
     def load_U_from_Ufilename(self):
