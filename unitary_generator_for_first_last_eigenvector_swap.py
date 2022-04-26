@@ -18,7 +18,8 @@ def GramSchmidt(A):
    
     eig_min = eigenvectors[:, min_idx]
     eig_max = eigenvectors[:, max_idx]
-    print("Min/Max", torch.dot(eig_min,eig_max))
+    # print("Min/Max", torch.dot(eig_max,eig_max))
+    # exit()
     # eig_min = eigenvectors[:, -1]
     # eig_max = eigenvectors[:, 0]
 
@@ -121,47 +122,24 @@ def build_excel(dict_of_matrices):
 # Main
 if __name__ == "__main__":
     # Generate Random Positive Definite
-    A = torch.rand(5, 5)
+    mat_size = 5
+    A = torch.rand(mat_size, mat_size)
     A = mm(A, t(A))
-    # A.add_(torch.eye(5))
+    A.add_(torch.eye(mat_size))
 
-    # Get unitary
+    # Orthogonal matrix with first 2 columns as the eigenvectors associated with the min and max eigenvalues
     D = GramSchmidt(A)
   
-    # Basis change
-    P = torch.eye(5)
+    # Permutation matrix
+    P = torch.eye(mat_size)
     index = torch.tensor(range(P.size(0)))
     index[0:2] = torch.tensor([1, 0])
     P = P[index]
 
+    # Basis change of D from P
     N = mm(mm(D,P),t(D))
     
+    # New matrix with 
     B = mm(mm(N,A),t(N))
+
     
-    # # D = DT A D
-    G = mm(mm(t(D), A), D)
-    
-    # E = RT Q P
-    E = mm(mm(t(P), G), P)
-    
-    # F = D E Dt
-    F = mm(mm(D, E), t(D))
-
-    eigenvaluesA, eigenvectorsA = torch.linalg.eig(A)
-    eigenvaluesB, eigenvectorsB = torch.linalg.eig(B)
-    min_idxA = torch.argmin(torch.abs(torch.real(eigenvaluesA)))
-    max_idxA = torch.argmax(torch.abs(torch.real(eigenvaluesA)))
-
-    min_idxB = torch.argmin(torch.abs(torch.real(eigenvaluesB)))
-    max_idxB = torch.argmax(torch.abs(torch.real(eigenvaluesB)))
-
-    print(torch.div(eigenvectorsA[min_idxA], eigenvectorsB[max_idxB]))
-    print(torch.div(eigenvectorsA[max_idxA], eigenvectorsB[min_idxB]))
-
-
-    # Print to excel
-    # dict_of_matrices = {"A": A, "D":D, "D":D,"E":E,"F":F}
-    dict_of_matrices = {"A": A, "B":B, "F":F}
-    build_excel(dict_of_matrices)
-
-
