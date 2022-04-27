@@ -5,6 +5,7 @@ This class builds a NN an optional Unitary Operator on the image
 import torch
 from torch import nn
 from copy import copy
+from torch.autograd import Variable
 import sys
 sys.path.append(".")
 from .adjustable_lenet import AdjLeNet
@@ -91,11 +92,17 @@ class FstLayUniNet(nn.Module):
         # Organize GPUs
         if isinstance(self.gpu, bool):
             # Push to GPU if True
-            self.net = self.net.cuda() if self.gpu else self.net
+            if self.gpu:
+                self.net = self.net.cuda() 
 
         else:
             # Push to rank of gpu
             self.net = self.net.to(gpu)
+
+        # Evaluation Tools 
+        self.criterion      = torch.nn.CrossEntropyLoss()
+        self.indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
+        self.soft_max       = torch.nn.Softmax(dim = 1)
         
     # Generate orthoganal matrix with no Mean or STD Stats
     def get_orthogonal_matrix(self, size):
@@ -105,21 +112,78 @@ class FstLayUniNet(nn.Module):
         # Calculate an orthoganal matrix the size of A
         return torch.nn.init.orthogonal_(torch.empty(size, size))
 
-    def get_optimal_orthogonal_matrix(self, source_network, source_image):
+    def get_FIM(self, images):
+        """Calculate the Fisher Information Matrix for all images
+
+        Args:
+            images : Images to be used
+
+        Returns:
+            FIM, Loss for each Image, Predicted Class for each image
+        """
+        # Push to gpu
+        if isinstance(self.gpu, bool):
+            images = Variable(images, requires_grad = True) if self.gpu == False else Variable(images.cuda(), requires_grad = True)
+        else:
+            images = Variable(images.to(self.gpu), requires_grad = True)
+        
+        # Make images require gradients
+        images.requires_grad_(True)
+
+        #Forward pass
+        outputs         = self.net(images)
+        soft_max_output = self.soft_max(outputs)
+
+        # Find size parameters
+        batch_size  = outputs.size(0)
+        num_classes = outputs.size(1)
+
+        # Calculate FIMs
+        fisher = 0 
+        for i in range(num_classes):
+            # Clear Gradients
+            self.net.zero_grad()
+            images.grad = None
+
+            # Cycle through lables (y)
+            temp_labels = torch.tensor([i]).repeat(batch_size) 
+            if isinstance(self.gpu, bool):
+                if self.gpu:
+                    temp_labels = temp_labels.cuda()
+            else:
+                temp_labels= temp_labels.to(self.gpu)
+            
+            # Calculate losses
+            temp_loss = self.criterion(outputs, temp_labels)
+            temp_loss.backward(retain_graph = True)
+
+            # Calculate expectation
+            p    = soft_max_output[:,i].view(batch_size, 1, 1, 1)
+            grad = images.grad.data.view(batch_size, 28*28, 1)
+
+            fisher += p * torch.bmm(grad, torch.transpose(grad, 1, 2)).view(batch_size, 1, 28*28, 28*28)
+       
+        return fisher
+
+    def get_optimal_orthogonal_matrix(self, source_image):
         '''
         Generates an optimal orthoganal matrix of input size
         '''
+        fisher_info_mat = self.get_FIM(source_image)
+        print(fisher_info_mat.size())
+        exit()
+
         # Orthogonal matrix with first 2 columns as the eigenvectors associated with the min and max eigenvalues
-        D = GramSchmidt(source_image)
+        D = self.GramSchmidt(fisher_info_mat)
 
         # Permutation matrix
-        P = torch.eye(mat_size)
+        P = torch.eye(fisher_info_mat.size(0))
         index = torch.tensor(range(P.size(0)))
         index[0:2] = torch.tensor([1, 0])
         P = P[index]
 
         # Basis change of D from P
-        N = mm(mm(D,P),t(D))
+        return torch.mm(torch.mm(D,P),torch.transpose(D, 0, 1))
 
     # GramSchmidt Algorithm
     def GramSchmidt(A):
@@ -154,7 +218,6 @@ class FstLayUniNet(nn.Module):
             V[i] = Ui / torch.linalg.norm(Ui, ord = 2)
             
         return V.t()
-
 
     # Set a new U with no Mean or STD Stats
     def set_orthogonal_matrix(self, source_network = None, source_image = None):
@@ -224,7 +287,6 @@ class FstLayUniNet(nn.Module):
         # Load U 
         self.U = torch.load(self.U_filename)
 
-        # Push to GPU
         # Organize GPUs
         if isinstance(self.gpu, bool):
             # Push to GPU if True

@@ -7,6 +7,6 @@ test.txt
 text.py
 wandb/*
 outputs/*
-
+models/classes/__pycache__/*
 sam/*
 ./.git*
