@@ -112,9 +112,9 @@ class Attacker:
 
             # Calculate expectation
             p = soft_max_output[:,i].view(batch_size, 1, 1, 1)
-            grad = images.grad.data.view(batch_size, 28*28, 1)
-
-            fisher += p * torch.bmm(grad, torch.transpose(grad, 1, 2)).view(batch_size, 1, 28*28, 28*28)
+            grad = images.grad.data.view(batch_size,  images.size(2)* images.size(2), 1)
+            
+            fisher += p * torch.bmm(grad, torch.transpose(grad, 1, 2)).view(batch_size, 1,  images.size(2)* images.size(2),  images.size(2)* images.size(2))
        
         return fisher, losses, predicted
 
