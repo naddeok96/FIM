@@ -3,11 +3,11 @@ This class loads the data data and splits it into training and testing sets
 '''
 
 # Imports
+import os
 import torch
 import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-from unorm import UnNormalize
 import matplotlib.pyplot as plt
 
 class Data:
@@ -50,12 +50,12 @@ class Data:
 
             # Test Set
             self.test_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
-                                                      transforms.ToTensor(), # Convert the images into tensors
-                                                      transforms.Normalize(self.mean, 
-                                                                           self.std)]) #  Normalize
+                                                    transforms.ToTensor(), # Convert the images into tensors
+                                                    transforms.Normalize(self.mean, 
+                                                                        self.std)]) #  Normalize
 
             self.inverse_transform = UnNormalize(mean=self.mean,
-                                                 std=self.std)
+                                                std=self.std)
 
             self.test_set = torchvision.datasets.CIFAR10(root=self.root,
                                                     train=False,
@@ -82,8 +82,8 @@ class Data:
                                                     transforms.ToTensor(), # Convert the images into tensors
                                                     transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
 
-            self.inverse_transform = UnNormalize(mean=self.mean,
-                                                 std=self.std)
+            self.inverse_transform = UnNormalize(   mean=self.mean,
+                                                    std=self.std)
 
             # Generate Datasets
             self.train_set = datasets.MNIST(root=self.root,
@@ -115,27 +115,27 @@ class Data:
                                                         transforms.Normalize(self.mean, self.std)]) # Normalize 
 
             self.inverse_transform = UnNormalize(mean = self.mean,
-                                                 std  = self.std)
+                                                    std  = self.std)
 
             # Generate Datasets
             self.train_set = datasets.ImageFolder(root      = '../../../data/tiny-imagenet-200/' + 'train',
-                                                  transform = self.train_transform)
+                                                    transform = self.train_transform)
 
             self.test_set = datasets.ImageFolder(root      = '../../../data/tiny-imagenet-200/' + 'train',
-                                                  transform = self.train_transform)
+                                                    transform = self.train_transform)
 
         elif self.set_name == "ImageNet":
             self.train_transform = transforms.Compose([transforms.Resize(256),
                                                 transforms.CenterCrop(224),
                                                 transforms.ToTensor(),
                                                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                                                     std=[0.229, 0.224, 0.225])])
+                                                                        std=[0.229, 0.224, 0.225])])
 
             self.test_transform = transforms.Compose([transforms.Resize(256),
                                                 transforms.CenterCrop(224),
                                                 transforms.ToTensor(),
                                                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                                                     std=[0.229, 0.224, 0.225])])
+                                                                        std=[0.229, 0.224, 0.225])])
 
             self.inverse_transform = UnNormalize(mean=[0.485, 0.456, 0.406],
                                                 std=[0.229, 0.224, 0.225])
@@ -173,8 +173,8 @@ class Data:
                                                             pin_memory = True)
             else:
                 self.test_loader = torch.utils.data.DataLoader(self.test_set,
-                                                           batch_size = self.test_batch_size,
-                                                           shuffle = False)
+                                                            batch_size = self.test_batch_size,
+                                                            shuffle = False)
         else:
             test_sampler = torch.utils.data.distributed.DistributedSampler(self.test_set,
                                                                                 num_replicas=torch.cuda.device_count(), 
@@ -189,7 +189,7 @@ class Data:
             
         # Determine test sets min/max pixel values
         if maxmin or True:
-           self.set_testset_min_max()
+            self.set_testset_min_max()
             
     def set_train_transform(self):
         if self.data_augment:
@@ -208,15 +208,15 @@ class Data:
                                                         transforms.RandomHorizontalFlip(),
                                                         transforms.ToTensor(),           # Convert the images into tensors
                                                         transforms.Normalize(self.mean, 
-                                                                             self.std)]) #  Normalize
+                                                                                self.std)]) #  Normalize
 
         else:
             self.train_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
-                                                      transforms.ToTensor(),           # Convert the images into tensors
-                                                      transforms.Normalize(self.mean,  #  Normalize
-                                                                           self.std)]) 
+                                                        transforms.ToTensor(),           # Convert the images into tensors
+                                                        transforms.Normalize(self.mean,  #  Normalize
+                                                                            self.std)]) 
 
-    def get_train_loader(self, batch_size, num_workers = 8):
+    def get_train_loader(self, batch_size, num_workers = 8, shuffle=True):
         '''
         Load the train loader given batch_size
         '''
@@ -225,18 +225,18 @@ class Data:
             if self.gpu:
                 train_loader = torch.utils.data.DataLoader(self.train_set,
                                                             batch_size = batch_size,
-                                                            shuffle = True,
+                                                            shuffle = shuffle,
                                                             num_workers = num_workers,
                                                             pin_memory = True)
             else:
                 train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                           batch_size = batch_size,
-                                                           shuffle = True)
+                                                            batch_size = batch_size,
+                                                            shuffle = shuffle)
         else:
             train_sampler = torch.utils.data.distributed.DistributedSampler(self.train_set,
                                                                                 num_replicas=torch.cuda.device_count(), 
                                                                                 rank=self.gpu, 
-                                                                                shuffle=True)
+                                                                                shuffle=shuffle)
 
             train_loader = torch.utils.data.DataLoader(self.train_set,
                                                             batch_size = batch_size,
@@ -269,7 +269,7 @@ class Data:
         return image_size.squeeze(0).squeeze(0)
 
     def get_single_image(self, index = "random",
-                               show = False):
+                                show = False):
         '''
         Pulls a single image/label out of test set by index
         '''        
@@ -295,4 +295,19 @@ class Data:
         return image, label, index
 
 
+class UnNormalize(object):
+    def __init__(self, mean, std):
+        self.mean = mean
+        self.std = std
 
+    def __call__(self, tensor):
+        """
+        Args:
+            tensor (Tensor): Tensor image of size (C, H, W) to be normalized.
+        Returns:
+            Tensor: Normalized image.
+        """
+        for t, m, s in zip(tensor, self.mean, self.std):
+            t.mul_(s).add_(m)
+            # The normalize code -> t.sub_(m).div_(s)
+        return tensor

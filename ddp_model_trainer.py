@@ -10,6 +10,7 @@ import torch.distributed as dist
 import torch.multiprocessing as mp
 from adversarial_attacks import Attacker
 from data_setup import Data
+from unitary_data_setup import UnitaryData
 import torch.nn.functional as F
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -24,17 +25,19 @@ def get_name_from_filename(filename):
         
     return name
 
-def setup(rank, world_size, config, project_name):
+def setup(rank, world_size, config):
     # Setup rendezvous
     os.environ['MASTER_ADDR'] = 'localhost'
-    os.environ['MASTER_PORT'] = '123456' # str(random.randrange(12340, 12370))
-
-    # Initalize WandB logging on rank 0
-    if rank == 0 and project_name is not None:
+    os.environ['MASTER_PORT'] = '12345' # str(random.randrange(12340, 12370))
+    if rank == 0:
+        print("Rendezvous complete...")
+        
+    # Initialize WandB logging on rank 0
+    if rank == 0 and config["project_name"] is not None:
         run = wandb.init(
                 config  = config,
-                entity  = "naddeok",
-                project = project_name)
+                entity  = config["entity_name"],
+                project = config["project_name"])
     else:
         run = None
         
@@ -47,10 +50,10 @@ def setup(rank, world_size, config, project_name):
     torch.backends.cudnn.benchmark = True
     torch.cuda.set_device(rank)
     torch.cuda.empty_cache()
-     
+    
     return run
 
-def initalize_optimizer(net, config):
+def initialize_optimizer(net, config):
     if config["optim"] =='sgd':
         if config["use_SAM"]:
             optimizer = SAM(net.parameters(), torch.optim.SGD,  lr=config["lr"],
@@ -84,12 +87,12 @@ def initalize_optimizer(net, config):
                                         weight_decay=config["weight_decay"], rho=config["momentum"])
 
     else:
-        print("Unknown optimizer entered, please add to initalize_optimizer func.")
+        print("Unknown optimizer entered, please add to initialize_optimizer func.")
         exit()
 
     return optimizer
 
-def initalize_scheduler(optimizer, config, steps_per_epoch = None):
+def initialize_scheduler(optimizer, config, steps_per_epoch = None):
     if config["sched"] == "Cosine Annealing":
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = int(config["epochs"]))
 
@@ -99,12 +102,12 @@ def initalize_scheduler(optimizer, config, steps_per_epoch = None):
                                                         epochs = config["epochs"],
                                                         steps_per_epoch = steps_per_epoch)
     else:
-        print("Unknown Scheduler entered, please add to initalize_scheduler func.")
+        print("Unknown Scheduler entered, please add to initialize_scheduler func.")
         exit()
     
     return scheduler
 
-def initalize_criterion(config):
+def initialize_criterion(config):
     # Setup Criterion
     if config["crit"] == "cross_entropy":
         criterion = torch.nn.CrossEntropyLoss(reduction='mean')
@@ -142,10 +145,12 @@ def gather_acc_and_loss(rank,  world_size, correct, total_tested, total_loss):
     else:
         return None, None
 
-def train(rank, world_size, config, project_name):
+def train(rank, world_size, config):
 
     # Initialize WandB and Process Group
-    run = setup(rank, world_size, config, project_name)
+    run = setup(rank, world_size, config)
+    if rank == 0:
+        print("WandB and DDP setup complete...")
     
     # Create model and move it to GPU with id rank
     if config["pretrained_weights_filename"] or config["distill"]:
@@ -172,21 +177,33 @@ def train(rank, world_size, config, project_name):
         if config["pretrained_weights_filename"] is not None:
             net.load_state_dict(state_dict)
 
-    net = DDP(net, device_ids=[rank])   
+    net = DDP(net, device_ids=[rank])  
+    if rank == 0: 
+        print("Network setup complete...")
 
     # Load Data
-    data = Data(gpu          = rank, 
+    if config["unitary_data"]:
+        data = UnitaryData(gpu          = rank, 
                 set_name     = config["set_name"], 
                 data_augment = config["data_augment"],
                 maxmin       = True,
                 test_batch_size = config["batch_size"])
+    else: 
+        data = Data(gpu          = rank, 
+                    set_name     = config["set_name"], 
+                    data_augment = config["data_augment"],
+                    maxmin       = True,
+                    test_batch_size = config["batch_size"])
+    if rank == 0:
+        print("Data setup complete...")
+    
     train_loader = data.get_train_loader(config["batch_size"])
 
     # Setup Optimzier and Criterion
-    optimizer = initalize_optimizer(net, config)
-    criterion = initalize_criterion(config)
+    optimizer = initialize_optimizer(net, config)
+    criterion = initialize_criterion(config)
     if config["sched"] and config["epochs"] != 0:
-        scheduler = initalize_scheduler(optimizer, config, steps_per_epoch = len(train_loader))
+        scheduler = initialize_scheduler(optimizer, config, steps_per_epoch = len(train_loader))
 
     # Disable adversarial robustness test while trinaing
     test_robustness = copy(config["test_robustness"])
@@ -209,7 +226,7 @@ def train(rank, world_size, config, project_name):
 
             # Adversarial Training
             if config["attack_type"] and config["epoch_delay"] <= epoch:
-                # Initalize Attacker with current model parameters
+                # Initialize Attacker with current model parameters
                 attacker = Attacker(net = net, data =  data, gpu = rank)
 
                 # Generate attacks and replace them with orginal inputs
@@ -500,11 +517,11 @@ def test(rank, net, data, config):
         attacker_net = DDP(attacker_net, device_ids=[rank])
         attacker_net.eval()
 
-        # Initalize Attacker with current model parameters
+        # Initialize Attacker with current model parameters
         attacker = Attacker(net = attacker_net, data = data, gpu = rank)
 
     #Create loss functions
-    criterion      = initalize_criterion(config)
+    criterion      = initialize_criterion(config)
     indv_criterion = torch.nn.CrossEntropyLoss(reduction = 'none')
 
     # Initialize
@@ -582,13 +599,12 @@ def test(rank, net, data, config):
     dist.barrier()
     return correct, total_tested, total_loss, adv_correct
 
-def run_ddp(func, world_size, config, project_name):
+def run_ddp(func, world_size, config):
     
     # Spawn processes on gpus
     mp.spawn(func,
              args=(world_size, 
-                    config,
-                    project_name,),
+                    config,),
              nprocs = world_size,
              join=True)
 
@@ -599,33 +615,35 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "1,2"
-    
-    # WandB
-    project_name = None # "DDP LSR CIFAR10"
-    # entity_name  =  Need to add
+    gpu_ids = "4,5,6,7"
 
     # Network
     config = {  
+
+                # WandB configuration
+                "entity_name"   : "naddeok",
+                "project_name"  : "Optimal U MNIST",
+                
                 # Network
-                "model_name"                  : "cifar10_mobilenetv2_x1_0", #"lenet", #  
-                "pretrained_weights_filename" : "models/pretrained/CIFAR10/LSR_0.1_cifar10_mobilenetv2_x1_0_w_acc_79.pt", #"models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", #  "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #"models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
+                "model_name"                  : "lenet", # cifar10_mobilenetv2_x1_0", #"lenet", #  
+                "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt", # "models/pretrained/CIFAR10/LSR_0.1_cifar10_mobilenetv2_x1_0_w_acc_79.pt", #"models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", #  "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #"models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
                 "from_ddp"                    : True,
-                "save_model"                  : False,
-                "save_filename"               : None,
-                "logging_period"              : 1,   # Epochs between logging
-                "checkpoint_at_logging"       : False,
+                "save_model"                  : True,
+                "save_filename"               : "optimal_lenet_w_acc_98.pt",
+                "logging_period"              : 2,   # Epochs between logging
+                "checkpoint_at_logging"       : True,
 
                 # Data
-                "set_name"      : "CIFAR10",
+                "set_name"      : "MNIST",
+                "unitary_data"  : True,
                 "batch_size"    : 124,
                 "data_augment"  : False,
                 
                 # Optimizer
-                "optim"         : "sgd",
-                "epochs"        : 0,
-                "lr"            : 0.00001,
-                "sched"         : None, # "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
+                "optim"         : "adam",
+                "epochs"        : 100,
+                "lr"            : 0.01,
+                "sched"         : "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
                 "gradient clip" : None, # 0.1, # None, #   
                 "weight_decay"  : 1e-4,
                 "momentum"      : 0.9,
@@ -652,8 +670,8 @@ if __name__ == "__main__":
                 "distill_temp"  : None,
 
                 # Test Robustness
-                "test_robustness"                       : True,
-                "save_attack_results"                   : True,
+                "test_robustness"                       : False,
+                "save_attack_results"                   : False,
                 "attacker_model_name"                   : "cifar10_mobilenetv2_x1_0",
                 "attacker_pretrained_weights_filename"  : "models/pretrained/CIFAR10/cifar10_mobilenetv2_x1_0_w_acc_93.pt", # "models/pretrained/MNIST/lenet_w_acc_97.pt",
                 "attacker_attack_type"                  : "OSSA", # "CW2", # "PGD", #  "Gaussian Noise", # "FGSM", # 
@@ -669,11 +687,12 @@ if __name__ == "__main__":
     assert n_gpus >= 2, f"Requires at least 2 GPUs to run, but got {n_gpus}"
 
     ## Training using DDP
-    if False:
-        run_ddp(train, n_gpus, config, project_name)
+    if True:
+        print("Begin training...")
+        run_ddp(train, n_gpus, config)
 
     ## Robustness using DDP
-    if True:
+    if False:
         # Attackers
         attacker_attack_types = ["OSSA"]
 
@@ -720,7 +739,7 @@ if __name__ == "__main__":
                     config["U_filename"] = None
 
                 # Run attack on network
-                run_ddp(train, n_gpus, config, project_name)
+                run_ddp(train, n_gpus, config)
                 
                 if "U" in target_network:
                     config["model_name"] = orginal_model_name 
@@ -737,6 +756,6 @@ if __name__ == "__main__":
         for key in sweep_config.keys():
             for value in sweep_config[key]:
                 config[key] = value
-                run_ddp(train, n_gpus, config, project_name)
+                run_ddp(train, n_gpus, config)
             
 

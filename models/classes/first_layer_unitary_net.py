@@ -5,6 +5,7 @@ This class builds a NN an optional Unitary Operator on the image
 import torch
 from torch import nn
 from copy import copy
+import time
 from torch.autograd import Variable
 import sys
 sys.path.append(".")
@@ -112,6 +113,7 @@ class FstLayUniNet(nn.Module):
         # Calculate an orthoganal matrix the size of A
         return torch.nn.init.orthogonal_(torch.empty(size, size))
 
+    # Calculate the Fisher Information Matrix of an Image
     def get_FIM(self, images):
         """Calculate the Fisher Information Matrix for all images
 
@@ -165,28 +167,48 @@ class FstLayUniNet(nn.Module):
        
         return fisher
 
+    # Generate an Orthogonal Matrix that swaps the 
+    # max and min eigenvectors of the FIM of an Image
     def get_optimal_orthogonal_matrix(self, source_image):
         '''
         Generates an optimal orthoganal matrix of input size
         '''
+        # Unload dimension
+        batch_size   = source_image.size(0)
+        num_channels = source_image.size(1)
+        image_width  = source_image.size(2)
+        image_height = source_image.size(3)
+        
+        # Ensure input is well conditioned
+        assert batch_size   == 1           , "Batch size is greater than 1 and get_optimal_orthogonal_matrix() is not set up for this"
+        assert num_channels == 1           , "Number of Channels is greater than 1 and get_optimal_orthogonal_matrix() is not set up for this"
+        assert image_width  == image_height, "Image width and height are not equal and get_optimal_orthogonal_matrix() is not set up for this"
+        
+        # Eiendecomposition
         fisher_info_mat = self.get_FIM(source_image)
-        print(fisher_info_mat.size())
-        exit()
-
+        fisher_info_mat = fisher_info_mat.view(image_width**2, image_height**2)
+        
         # Orthogonal matrix with first 2 columns as the eigenvectors associated with the min and max eigenvalues
         D = self.GramSchmidt(fisher_info_mat)
-
+        
         # Permutation matrix
-        P = torch.eye(fisher_info_mat.size(0))
-        index = torch.tensor(range(P.size(0)))
+        P = torch.eye(image_width**2)
+        index = torch.tensor(range(image_width**2))
         index[0:2] = torch.tensor([1, 0])
         P = P[index]
+        
+        # Push to GPU
+        if self.gpu:
+            D = D.cuda()
+            P = P.cuda()
 
         # Basis change of D from P
-        return torch.mm(torch.mm(D,P),torch.transpose(D, 0, 1))
+        U = torch.mm(torch.mm(D,P),torch.transpose(D, 0, 1)).view(image_width**2, image_height**2)
+        
+        return U
 
     # GramSchmidt Algorithm
-    def GramSchmidt(A):
+    def GramSchmidt(self, A):
         # Get eigensystem
         eigenvalues, eigenvectors = torch.linalg.eig(A)
 
@@ -207,10 +229,10 @@ class FstLayUniNet(nn.Module):
         # Orthogonal complement of V in n-dimension 
         for i in range(A.size(0)):
             # Orthonormalize
-            Ui = copy.copy(V[i])
+            Ui = copy(V[i])
 
             for j in range(i):
-                Uj = copy.copy(V[j])
+                Uj = copy(V[j])
 
                 
                 Ui = Ui - ((torch.dot(Uj.view(-1), Ui.view(-1)) / (torch.linalg.norm(Uj, ord = 2)**2)))*Uj
@@ -220,9 +242,9 @@ class FstLayUniNet(nn.Module):
         return V.t()
 
     # Set a new U with no Mean or STD Stats
-    def set_orthogonal_matrix(self, source_network = None, source_image = None):
-        if source_image:
-            self.U = self.get_optimal_orthognal_matrix(source_image)
+    def set_orthogonal_matrix(self, source_image = None):
+        if source_image is not None:
+            self.U = self.get_optimal_orthogonal_matrix(source_image)
         else:
             self.U = self.get_orthogonal_matrix(self.image_size)
 
@@ -339,26 +361,39 @@ class FstLayUniNet(nn.Module):
             U = U.to(self.gpu)
             input_tensor = input_tensor.to(self.gpu)
             
-        # Repeat U and U transpose for all batches
-        U = U.view((1, A_side_size, A_side_size)).repeat(channel_num * batch_size, 1, 1)
-        
-        # Batch muiltply UA
-        UA = torch.bmm( U, 
-                        input_tensor.view(channel_num * batch_size, A_side_size, A_side_size)
-                        ).view(batch_size, channel_num, A_side_size, A_side_size)
+        # If U and Input are both matricies
+        if U.size(-1) == input_tensor.size(-1): 
+            # Repeat U and U transpose for all batches
+            U = U.view((1, A_side_size, A_side_size)).repeat(channel_num * batch_size, 1, 1)
+            
+            # Batch muiltply UA
+            UA = torch.bmm( U, 
+                            input_tensor.view(channel_num * batch_size, A_side_size, A_side_size)
+                            ).view(batch_size, channel_num, A_side_size, A_side_size)
 
-        
-        # Normalize
-        if self.normalize_U:
-            UA = UA.view(UA.size(0), UA.size(1), -1)
-            batch_means = self.U_means.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
-            batch_stds  = self.U_stds.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
+            
+            # Normalize
+            if self.normalize_U:
+                UA = UA.view(UA.size(0), UA.size(1), -1)
+                batch_means = self.U_means.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
+                batch_stds  = self.U_stds.repeat(UA.size(0), 1).view(UA.size(0), UA.size(1), 1)
 
-            return UA.sub_(batch_means).div_(batch_stds).view(UA.size(0), UA.size(1), self.image_size, self.image_size)
+                return UA.sub_(batch_means).div_(batch_stds).view(UA.size(0), UA.size(1), self.image_size, self.image_size)
 
+            else:
+                return UA
+            
+        # If U is a matrix and Input is vectorized
         else:
+            # Currently on set up for one batch at a time
+            assert batch_size == 1, "UA when A is vectorized is only setup for single batch currently."
+            
+            # Batch muiltply UA
+            UA = torch.mm(  U, 
+                            input_tensor.view(-1, 1)
+                            ).view(channel_num, A_side_size, A_side_size)
+            
             return UA
-
     # Forward pass
     def forward(self, x):
         

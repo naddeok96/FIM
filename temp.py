@@ -1,71 +1,96 @@
 # Imports
+from unitary_data_setup import UnitaryData
 import torch
-import copy
+from models.classes.first_layer_unitary_net import FstLayUniNet
+import numpy as np
 
-# Try a unitary transformation that swaps first and last eigenvector
-# -> First write a matrix in a basis of the highest and lowest eigenvector than convert to real numbers
-# -->> Normalize v_max and v_min, then take space spaned by them, check email from Nidhal
+def add_stats(mean1, std1, weight1, mean2, std2, weight2):
+    '''
+    Takes stats of two sets (assumed to be from the same distribution) and combines them
+    Method from https://www.statstodo.com/CombineMeansSDs_Pgm.php
+    '''
+    # Calculate E[x] and E[x^2] of each
+    sig_x1 = weight1 * mean1
+    sig_x2 = weight2 * mean2
+
+    sig_xx1 = ((std1 ** 2) * (weight1 - 1)) + (((sig_x1 ** 2) / weight1))
+    sig_xx2 = ((std2 ** 2) * (weight2 - 1)) + (((sig_x2 ** 2) / weight2))
+
+    # Calculate sums
+    tn  = weight1 + weight2
+    tx  = sig_x1  + sig_x2
+    txx = sig_xx1 + sig_xx2
+
+    # Calculate combined stats
+    mean = tx / tn
+    std = np.sqrt((txx - (tx**2)/tn) / (tn - 1))
+
+    return mean, std, tn
+
+# Hypers
+set_name   = 'MNIST'
+batch_size = 1 # int(1e4)
+from_ddp   = True
+pretrained_weights_filename = "models/pretrained/MNIST/lenet_w_acc_98.pt"
+gpu = True
+gpu_number = "7"
+
+if gpu:
+    import os
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = gpu_number
 
 
-# GramSchmidt Algorithm
-def GramSchmidt(A):
-    # Get eigensystem
-    eigenvalues, eigenvectors = torch.linalg.eig(A)
-    eig_max = eigenvectors[ 0]
-    eig_min = eigenvectors[-1]
+# Load Source Network
+state_dict = torch.load(pretrained_weights_filename, map_location=torch.device('cpu'))
+
+if from_ddp:  # Remove prefixes if from DDP
+    torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.")
     
-    # Generate initial matrix to transform into unitary
-    V = torch.randn_like(A)
-    V[0,:] = eig_max
-    V[1,:] = eig_min
+net = FstLayUniNet( set_name   = set_name,
+                    model_name = "lenet")
 
-    # Orthogonal complement of V in n-dimension 
-    for i in range(A.size(0)):
-        # Orthonormalize
-        Ui = copy.copy(V[i])
 
-        for j in range(i):
-            Uj = copy.copy(V[j])
+data = UnitaryData(test_batch_size=5)
 
-            
-            Ui = Ui - ((torch.dot(Uj.view(-1), Ui.view(-1)) / (torch.linalg.norm(Uj, ord = 2)**2))*Uj)
-            
-        V[i] = Ui / torch.linalg.norm(Ui, ord = 2)
-
-    return V
-
-# Main
-if __name__ == "__main__":
-    # Generate Random Positive Definite
-    A = torch.rand(5, 5)
-    A = torch.mm(A, A.t())
-    A.add_(torch.eye(5))
-
-    # Get unitary
-    V = GramSchmidt(A)
-    print("V", V)
-    print("VTV")
-    print(print(torch.mm(torch.transpose(V, 0, 1), V)))
+train_loader = data.get_train_loader(batch_size = batch_size, shuffle = False)
+tn = 0
+for i, (images, labels, unitary_images) in enumerate(train_loader):
+    mean_i = unitary_images.mean().detach().numpy()
+    std_i  = unitary_images.std().detach().numpy()
     
-    # Basis change
-    U = torch.eye(5)
-    index = torch.tensor(range(U.size(0)))
-    index[0] = 1
-    index[1] = 0
-    U = U[index]
-    print("U_rot", U)
-    exit()
+    if i == 0:
+        mean    = mean_i
+        std     = std_i
+        tn      = 1
+    else:
+        # Calulate Stats
+        mean, std, tn = add_stats(mean_i, std_i, 1,
+                                  mean, std, tn)
+    # print("Means: ", means)
+    # print("Stds: ", stds)
     
-    U = torch.mm(torch.mm(torch.transpose(V, 0, 1), U), V)
-    
-    print("U", U)
-    print("UTU")
-    print(torch.mm(torch.transpose(U, 0, 1), U))
-    
-    B = torch.mm(torch.mm(torch.transpose(U, 0, 1), A), U)
-    Aval, Avec = torch.linalg.eig(A)
-    Bval, Bvec = torch.linalg.eig(B)
+    if np.isnan(mean_i):
+        print(unitary_images)
+        print("image", i)
+# for images, labels, unitary_images in data.test_loader:
+#     print(images.size(), labels.size(), unitary_images.size())
+#     break
 
-    print("V")
-    Vval, Vvec = torch.linalg.eig(V)
-    print(Vval.real, Vvec.real)
+print("Mean: ", mean, "STD:", std)
+################################################################################################
+
+# import os
+# import numpy as np
+
+# not_done = [1] * int(6e4)
+# for file in os.listdir("../../../data/naddeok/mnist_U_files/optimal_U_for_lenet_w_acc_98/train/"):
+    
+#     idx = int(file[1:])
+    
+#     not_done[idx] = 0
+    
+# not_done = np.asarray(not_done)
+
+# print(np.sum(not_done))
+# print(np.sort(np.argwhere(not_done == 1)))
