@@ -53,6 +53,44 @@ def setup(rank, world_size, config):
     
     return run
 
+def close_out(rank, run):
+    dist.barrier()
+    dist.destroy_process_group()
+    print("Machine closed out")
+
+    # Close WandB
+    if rank == 0 and run:
+        wandb.finish()
+        print("WandB Finished")
+
+def set_save_path(run, val_acc, config):
+
+    if config["save_filename"] is not None:
+        filename = config["save_filename"]
+
+    elif run is not None:
+        filename = run.project + "_" + run.name
+
+    else:
+        filename  = str(config["model_name"]) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3)))
+
+    if config["U_filename"] is not None:
+        filename  = "U_" + filename
+
+    if config["label_smooth_regularization_coeff"] is not None:
+        filename  = "LSR_" + str(config["label_smooth_regularization_coeff"]) + "_" + filename
+    
+    if config["attack_type"] is not None:
+        filename = config["attack_type"] + "_" + str(int(config["epsilon"]*100)) + "_" + filename
+
+    if config["distill"]:
+        filename = "distilled_" + str(config["distill_temp"]) + "_" + filename
+
+    if config["unitary_root"] is not None:
+        filename = config["unitary_root"].split('/')[-2] + "_" + filename 
+        
+    config["save_path"] = "models/pretrained/" + config["set_name"]  + "/" + filename + ".pt"
+
 def initialize_optimizer(net, config):
     if config["optim"] =='sgd':
         if config["use_SAM"]:
@@ -118,7 +156,7 @@ def initialize_criterion(config):
         
     return criterion
 
-def gather_variable(rank, world_size, variable):
+def gather_variable(world_size, variable):
     # Initialize lists
     variable_list = [variable.clone() for _ in range(world_size)]
 
@@ -130,9 +168,9 @@ def gather_variable(rank, world_size, variable):
 
 def gather_acc_and_loss(rank,  world_size, correct, total_tested, total_loss):    
     # Gather values from all machines (ranks)
-    correct_list            = gather_variable(rank, world_size, correct)
-    total_tested_list       = gather_variable(rank, world_size, total_tested)
-    total_loss_list         = gather_variable(rank, world_size, total_loss)
+    correct_list            = gather_variable(world_size, correct)
+    total_tested_list       = gather_variable(world_size, total_tested)
+    total_loss_list         = gather_variable(world_size, total_loss)
     dist.barrier()
     
     # Calculate final metrics
@@ -182,12 +220,12 @@ def train(rank, world_size, config):
         print("Network setup complete...")
 
     # Load Data
-    if config["unitary_data"]:
-        data = UnitaryData(gpu          = rank, 
-                set_name     = config["set_name"], 
-                data_augment = config["data_augment"],
-                maxmin       = True,
-                test_batch_size = config["batch_size"])
+    if config["unitary_root"] is not None:
+        data = UnitaryData( gpu             = rank, 
+                            set_name        = config["set_name"], 
+                            unitary_root    = config["unitary_root"],
+                            data_augment    = config["data_augment"],
+                            test_batch_size = config["batch_size"])
     else: 
         data = Data(gpu          = rank, 
                     set_name     = config["set_name"], 
@@ -196,6 +234,7 @@ def train(rank, world_size, config):
                     test_batch_size = config["batch_size"])
     if rank == 0:
         print("Data setup complete...")
+    dist.barrier()
     
     train_loader = data.get_train_loader(config["batch_size"])
 
@@ -253,7 +292,7 @@ def train(rank, world_size, config):
                     outputs = net(inputs) 
                     
                     # Calculate loss
-                    loss = criterion(outputs, orginal_labels)   
+                    loss = criterion(outputs, labels)   
 
                     # Backward pass and optimize
                     loss.backward() 
@@ -371,6 +410,7 @@ def train(rank, world_size, config):
                         "\tTrain/Val Loss: ", round(epoch_loss.item(),5), "/", round(val_loss.item(),5),
                         "\tTrain/Val Acc: " , round(epoch_acc.item()*100,2), "/", round(val_acc.item()*100,2))
 
+
                 if run:
                     run.log({   "epoch"  : epoch + 1, 
                             "Train Loss" : epoch_loss,
@@ -382,19 +422,11 @@ def train(rank, world_size, config):
                     best_epoch_acc = val_acc
                     print("Saving Model")
 
-                    # Define File Names
-                    filename  = str(config["model_name"]) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
-                    if config["U_filename"] is not None:
-                        filename  = "U_" + filename
-                    
-                    if config["attack_type"] is not None:
-                        filename = config["attack_type"] + "_" + str(int(config["epsilon"]*100)) + "_" + filename
+                    # Define path to saved model
+                    set_save_path(run, val_acc, config)
 
-                    if config["distill"]:
-                        filename = "distilled_" + str(config["distill_temp"]) + "_" + filename
-                        
                     # Save Models
-                    torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + "TEMP_" + filename)
+                    torch.save(net.state_dict(), config["save_path"])
                     print("Model Saved")
 
             dist.barrier()
@@ -469,36 +501,15 @@ def train(rank, world_size, config):
         if config["save_model"]:
             print("Saving Model")
 
-            # Define File Names
-            if config["save_filename"] is None:
-                filename  = str(config["model_name"]) + "_w_acc_" + str(int(round(val_acc.item() * 100, 3))) + ".pt"
-            else:
-                filename = config["save_filename"]
+            # Define path to saved model
+            set_save_path(run, val_acc, config)
 
-            if config["U_filename"] is not None:
-                filename  = "U_" + filename
-
-            if config["label_smooth_regularization_coeff"] is not None:
-                filename  = "LSR_" + str(config["label_smooth_regularization_coeff"]) + "_" + filename
-            
-            if config["attack_type"] is not None:
-                filename = config["attack_type"] + "_" + str(int(config["epsilon"]*100)) + "_" + filename
-
-            if config["distill"]:
-                filename = "distilled_" + str(config["distill_temp"]) + "_" + filename
-                
             # Save Models
-            torch.save(net.state_dict(), "models/pretrained/" + config["set_name"]  + "/" + filename)
+            torch.save(net.state_dict(), config["save_path"])
             print("Model Saved")
 
     # Close all processes
-    dist.barrier()
-    dist.destroy_process_group()
-
-    # Close WandB
-    if rank == 0 and run:
-        wandb.finish()
-        print("WandB Finished")
+    close_out(rank, run)
 
 def test(rank, net, data, config):
     # Set to test mode
@@ -615,28 +626,29 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "4,5,6,7"
+    gpu_ids = "2,3,4,5,6,7"
 
     # Network
     config = {  
 
                 # WandB configuration
                 "entity_name"   : "naddeok",
-                "project_name"  : "Optimal U MNIST",
+                "project_name"  : "Optimal_U_MNIST",
                 
                 # Network
                 "model_name"                  : "lenet", # cifar10_mobilenetv2_x1_0", #"lenet", #  
-                "pretrained_weights_filename" : "models/pretrained/MNIST/lenet_w_acc_98.pt", # "models/pretrained/CIFAR10/LSR_0.1_cifar10_mobilenetv2_x1_0_w_acc_79.pt", #"models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", #  "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #"models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
+                "pretrained_weights_filename" : None, # "models/pretrained/MNIST/lenet_w_acc_98.pt", # "models/pretrained/CIFAR10/LSR_0.1_cifar10_mobilenetv2_x1_0_w_acc_79.pt", #"models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", #  "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #"models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
                 "from_ddp"                    : True,
                 "save_model"                  : True,
-                "save_filename"               : "optimal_lenet_w_acc_98.pt",
+                "save_filename"               : None,
                 "logging_period"              : 2,   # Epochs between logging
                 "checkpoint_at_logging"       : True,
+                "save_path" : None, # DO NOT EDIT, THIS IS AUTO-GENERATED
 
                 # Data
                 "set_name"      : "MNIST",
-                "unitary_data"  : True,
-                "batch_size"    : 124,
+                "unitary_root"  : '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/',
+                "batch_size"    : 256,
                 "data_augment"  : False,
                 
                 # Optimizer
