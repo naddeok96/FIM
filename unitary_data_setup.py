@@ -12,7 +12,6 @@ from torch.utils.data import Dataset, DataLoader
 
 class UnitaryData:
     def __init__(self,  set_name     = "MNIST",
-                        original_root = '../../../data/pytorch/MNIST/processed/', 
                         unitary_root = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/',
                         gpu                 = False,
                         test_batch_size     = 256,
@@ -22,16 +21,15 @@ class UnitaryData:
 
         super(UnitaryData,self).__init__()
 
+        import time
         # Hyperparameters
         self.set_name           = set_name
         self.gpu                = gpu
-        self.original_root       = original_root
         self.unitary_root       = unitary_root
         self.test_batch_size    = test_batch_size
         self.desired_image_size = desired_image_size
         self.data_augment       = data_augment
-        
-        # Pull in data
+
         # Pull in data
         if self.set_name == "CIFAR10":
             assert self.set_name == "CIFAR10", "CIFAR10 is not setup for UnitaryData yet."
@@ -76,26 +74,20 @@ class UnitaryData:
             self.image_size = 28 if self.desired_image_size is None else self.desired_image_size
 
             # Images are of size (1, 28, 28)
-            print("Need to calculate mean and std for unitary images")
-            self.mean = (0.1307,)
-            self.std  = (0.3081,)
+            self.mean = (0.00021970409930378246,)
+            self.std  = (0.14038833820848393,)
 
             # Declare Transforms
-            self.set_train_transform()
-
             self.test_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
                                                     transforms.ToTensor(), # Convert the images into tensors
                                                     transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
 
             self.inverse_transform = UnNormalize(   mean=self.mean,
                                                     std=self.std)
-
             # Generate Datasets
-            self.train_set = UnitaryDataset(original_root = self.original_root + 'training.pt', 
-                                            unitary_root  = self.unitary_root  + 'train/')
-
-            self.test_set = UnitaryDataset( original_root = self.original_root + 'test.pt', 
-                                            unitary_root  = self.unitary_root  + 'test/')
+            self.train_set = UnitaryDataset(unitary_root  = self.unitary_root  + 'train/training.pt')
+                                            
+            self.test_set = UnitaryDataset(unitary_root  = self.unitary_root  + 'test/testing.pt')
 
         elif self.set_name == "TinyImageNet":
             assert self.set_name == "TinyImageNet", "TinyImageNet is not setup for UnitaryData yet."
@@ -182,7 +174,6 @@ class UnitaryData:
                                                                                 num_replicas=torch.cuda.device_count(), 
                                                                                 rank=gpu, 
                                                                                 shuffle=False)
-
             self.test_loader = torch.utils.data.DataLoader(self.test_set,
                                                             batch_size = self.test_batch_size,
                                                             num_workers = 8,
@@ -191,7 +182,7 @@ class UnitaryData:
             
         # Determine test sets min/max pixel values
         if maxmin:
-            assert maxmin, "maxmin is not supported yet"
+            assert not maxmin, "Maxmin is not supported yet"
             self.set_testset_min_max()
             
     def set_train_transform(self):
@@ -219,7 +210,8 @@ class UnitaryData:
             self.train_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
                                                         transforms.ToTensor(),           # Convert the images into tensors
                                                         transforms.Normalize(self.mean,  #  Normalize
-                                                                            self.std)]) 
+                                                                            self.std)
+                                                                            ]) 
 
     def get_train_loader(self, batch_size, num_workers = 8, shuffle=True):
         '''
@@ -304,28 +296,18 @@ class UnitaryDataset(Dataset):
     """Dataset."""
 
     def __init__(self, 
-                    original_root    = '../../../data/pytorch/MNIST/processed/training.pt', 
-                    unitary_root    = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/train/', 
+                    unitary_root    = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/train/training.pt', 
                     transforms      = None
                 ):        
         
-        # Load original images
-        self.original_images, self.labels = torch.load(original_root)
-        
         # Load unitary images
-        self.unitary_images = torch.empty((     self.original_images.size(0),
-                                                1,
-                                                self.original_images.size(1), 
-                                                self.original_images.size(2)))
-        for i in range(self.original_images.size(0)):
-            UA = torch.load(unitary_root + 'UA{}.pt'.format(i))
-            self.unitary_images[i,:,:,:] = UA
+        self.images, self.labels = torch.load(unitary_root)
             
         # Store transforms
         self.transforms = transforms
 
     def __len__(self):
-        return self.unitary_images.size(0)
+        return self.images.size(0)
 
     def __getitem__(self, idx):
         
@@ -333,23 +315,18 @@ class UnitaryDataset(Dataset):
         if torch.is_tensor(idx):
             idx = idx.tolist()
             
-        # Load original image and label
-        original_image, label = self.original_images[idx,:,:], int(self.labels[idx])
-        original_image = original_image.view(1,original_image.size(0),original_image.size(1))
+        # Load image and label
+        image, label = self.images[idx,:,:,:], int(self.labels[idx])
         
-        # Load unitary matrix
-        unitary_image = self.unitary_images[idx,:,:,:]
-        
+        # Disable gradient
+        image = image.detach()
+
         # Perform transform
         if self.transforms:
-            # Standard transform for original_image
-            original_image = self.transforms(original_image)
-            
-            # Transform must be done before unitary matrix is generated
             print("Transform is not properly setup for data augmentation.")
-            unitary_image = self.transforms(unitary_image)
+            image = self.transforms(image)
             
-        return original_image, label, unitary_image
+        return image, label
 
 class UnNormalize(object):
     def __init__(self, mean, std):
