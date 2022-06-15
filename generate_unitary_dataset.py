@@ -123,66 +123,14 @@ for i, (image, label) in enumerate(data.test_loader):
     
 print("donezo")
 
+# Join all images into one dataset
+# unitary_images = torch.empty((  int(1e4),
+#                                 1,
+#                                 28, 
+#                                 28))
 
+# for i in range(original_images.size(0)):
+#     UA = torch.load(unitary_root + 'UA{}.pt'.format(i))
+#     unitary_images[i,:,:,:] = UA
 
-
-
-# # Data Augmentation
-# dataset_list = []
-# for i in range(20):
-#     dataset_list.append(Covid19_CT_Dataset(cts_path[i],masks_path[i],transform1=transforms1['both'], transform2=transforms1['image']))
-
-# dataset_train = torch.utils.data.ConcatDataset(dataset_list[:16])
-# dataset_val = torch.utils.data.ConcatDataset(dataset_list[16:])
-# print(dataset_train.__len__())
-# print(dataset_val.__len__())
-
-# # Save as tensors
-# os.mkdir('/content/train_loader')
-# os.mkdir('/content/val_loader')
-# os.mkdir('/content/train_loader/img')
-# os.mkdir('/content/train_loader/mask')
-# os.mkdir('/content/val_loader/img')
-# os.mkdir('/content/val_loader/mask')
-
-# for i, data in enumerate(dataset_val):
-#   torch.save(data[0], '/content/val_loader/img/val_transformed_img{}'.format(i))
-#   torch.save(data[1], '/content/val_loader/mask/val_transformed_mask{}'.format(i))
-
-# for i, data in enumerate(dataset_train):
-#   torch.save(data[0], '/content/train_loader/img/train_transformed_img{}'.format(i))
-#   torch.save(data[1], '/content/train_loader/mask/train_transformed_mask{}'.format(i))
-  
-  
-# # Create Dataset
-# class transformed_data(Dataset):
-#   def __init__(self, img, mask):
-#     self.img = img  #img path
-#     self.mask = mask  #mask path
-#     self.len = len(os.listdir(self.img))
-
-#   def __getitem__(self, index):
-#     ls_img = sorted(os.listdir(self.img))
-#     ls_mask = sorted(os.listdir(self.mask))
-
-#     img_file_path = os.path.join(self.img, ls_img[index])
-#     img_tensor = torch.load(img_file_path)
-
-#     mask_file_path = os.path.join(self.mask, ls_mask[index])
-#     mask_tensor = torch.load(mask_file_path)
-
-#     return img_tensor, mask_tensor
-
-#   def __len__(self):
-#     return self.len   
-
-# # Load for model training
-# dataset_val = transformed_data('/content/val_loader/img', '/content/val_loader/mask')
-# dataset_train = transformed_data('/content/train_loader/img', '/content/train_loader/mask')
-# print(dataset_val.__len__())
-# print(dataset_train.__len__())
-# unet_train_loader = DataLoader(dataset_train, batch_size=10, shuffle=True, num_workers=2)
-# unet_val_loader = DataLoader(dataset_val, batch_size=5, shuffle=False, num_workers=2)
-# dataset_size = {'train':len(dataset_train), 'val':len(dataset_val)}
-# dataloader = {'train':unet_train_loader, 'val':unet_val_loader}
-
+# torch.save((unitary_images, labels), '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/test/testing.pt')
