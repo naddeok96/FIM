@@ -294,7 +294,6 @@ class Data:
 
         return image, label, index
 
-
 class UnNormalize(object):
     def __init__(self, mean, std):
         self.mean = mean
