@@ -634,9 +634,8 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "0,1,2"
-    # gpu_ids = "4,5"
-    # gpu_ids = "6,7"
+    gpu_ids = "0,1,2,3"
+    # gpu_ids = "4,5,6,7"
 
     # Network
     config = {  
@@ -664,7 +663,7 @@ if __name__ == "__main__":
                 "data_augment"  : False,
                 
                 # Optimizer
-                "optim"         : "SGD",
+                "optim"         : "Adam",
                 "epochs"        : 10,
                 "lr"            : 0.01,
                 "sched"         : "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
@@ -713,6 +712,7 @@ if __name__ == "__main__":
     ## Training using DDP
     if True:
         print("Begin run...")
+        exit()
         run_ddp(train, n_gpus, config)
 
     ## Robustness using DDP
