@@ -10,29 +10,27 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 
 
-class UnitaryData:
+class PertData:
     def __init__(self,  set_name     = "MNIST",
-                        unitary_root = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/',
+                        root = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/',
                         gpu                 = False,
                         test_batch_size     = 256,
                         desired_image_size  = None,
-                        data_augment        = False,
                         maxmin              = False):
 
-        super(UnitaryData,self).__init__()
+        super(PertData,self).__init__()
 
         import time
         # Hyperparameters
         self.set_name           = set_name
         self.gpu                = gpu
-        self.unitary_root       = unitary_root
+        self.root       = root
         self.test_batch_size    = test_batch_size
         self.desired_image_size = desired_image_size
-        self.data_augment       = data_augment
 
         # Pull in data
         if self.set_name == "CIFAR10":
-            assert self.set_name == "CIFAR10", "CIFAR10 is not setup for UnitaryData yet."
+            assert self.set_name == "CIFAR10", "CIFAR10 is not setup for PertData yet."
             
             # Set Root
             self.root = '../../../data/pytorch/' if root is None else root
@@ -73,22 +71,12 @@ class UnitaryData:
             self.num_channels = 1
             self.image_size = 28 if self.desired_image_size is None else self.desired_image_size
 
-            # Images are of size (1, 28, 28)
-            print("Need to add mean and std...")
-            self.mean = (0,) # (0.00021970409930378246,)
-            self.std  = (1,) # (0.14038833820848393,)
-
             # Declare Transforms
-            self.test_transform = transforms.Compose([transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
-
-            self.inverse_transform = UnNormalize(   mean=self.mean,
-                                                    std=self.std)
-            # Generate Datasets
-            self.train_set = UnitaryDataset(unitary_root  = self.unitary_root  + 'train/training.pt',
-                                            transforms = self.test_transform)
-                                            
-            self.test_set = UnitaryDataset(unitary_root  = self.unitary_root  + 'test/testing.pt',
-                                           transforms = self.test_transform)
+            self.test_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
+                                                    transforms.ToTensor() # Convert the images into tensors
+                                                    ])
+                                                    
+            self.test_set = UnitaryDataset(unitary_root  = self.unitary_root  + 'test/testing.pt')
 
         elif self.set_name == "TinyImageNet":
             assert self.set_name == "TinyImageNet", "TinyImageNet is not setup for UnitaryData yet."
@@ -157,7 +145,7 @@ class UnitaryData:
             print("Please enter vaild dataset.")
             exit()
 
-        #Test and validation loaders
+        #Test and validation loaders have constant batch sizes, so we can define them 
         if isinstance(self.gpu, bool):
 
             if self.gpu:
@@ -186,69 +174,11 @@ class UnitaryData:
             assert not maxmin, "Maxmin is not supported yet"
             self.set_testset_min_max()
             
-    def set_train_transform(self):
-        if self.data_augment:
-            assert self.data_augment, "Data augmentation is not yet supported for UnitaryData."
-            
-            if isinstance(self.gpu, bool):
-                print("Augmenting Training Data")
-            else:
-                print("Augmenting Training Data on Rank ", self.gpu)
-
-            self.train_transform = transforms.Compose([ transforms.Resize((self.image_size, self.image_size)),
-                                                        transforms.RandomRotation(10),
-                                                        transforms.RandomAffine(degrees=2, 
-                                                                                translate=(0.02, 0.02), 
-                                                                                scale=(0.98, 1.02), 
-                                                                                shear=2),
-                                                        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
-                                                        transforms.RandomHorizontalFlip(),
-                                                        transforms.ToTensor(),           # Convert the images into tensors
-                                                        transforms.Normalize(self.mean, 
-                                                                                self.std)]) #  Normalize
-
-        else:
-            self.train_transform = transforms.Compose([transforms.Resize((self.image_size, self.image_size)),
-                                                        transforms.ToTensor(),           # Convert the images into tensors
-                                                        transforms.Normalize(self.mean,  #  Normalize
-                                                                            self.std)
-                                                                            ]) 
-
-    def get_train_loader(self, batch_size, num_workers = 8, shuffle=True):
-        '''
-        Load the train loader given batch_size
-        '''
-        if isinstance(self.gpu, bool):
-
-            if self.gpu:
-                train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                            batch_size = batch_size,
-                                                            shuffle = shuffle,
-                                                            num_workers = num_workers,
-                                                            pin_memory = True)
-            else:
-                train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                            batch_size = batch_size,
-                                                            shuffle = shuffle)
-        else:
-            train_sampler = torch.utils.data.distributed.DistributedSampler(self.train_set,
-                                                                                num_replicas=torch.cuda.device_count(), 
-                                                                                rank=self.gpu, 
-                                                                                shuffle=shuffle)
-
-            train_loader = torch.utils.data.DataLoader(self.train_set,
-                                                            batch_size = batch_size,
-                                                            num_workers = 8,
-                                                            pin_memory = True,
-                                                            sampler = train_sampler)
-
-        return train_loader
-
     def set_testset_min_max(self):
         
         set_min = 1e6
         set_max = 1e-6
-        for images, _, unitary_images in self.test_loader:
+        for images, _ in self.test_loader:
             batch_min = torch.min(images.view(-1))
             batch_max = torch.max(images.view(-1))
 
@@ -293,16 +223,16 @@ class UnitaryData:
 
         return image, label, index
 
-class UnitaryDataset(Dataset):
+class PertDataset(Dataset):
     """Dataset."""
 
     def __init__(self, 
-                    unitary_root    = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/train/training.pt', 
+                    root    = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/train/training.pt', 
                     transforms      = None
                 ):        
         
         # Load unitary images
-        self.images, self.labels = torch.load(unitary_root)
+        self.images, self.labels = torch.load(root)
             
         # Store transforms
         self.transforms = transforms
@@ -324,23 +254,7 @@ class UnitaryDataset(Dataset):
 
         # Perform transform
         if self.transforms:
+            print("Transform is not properly setup for data augmentation.")
             image = self.transforms(image)
             
         return image, label
-
-class UnNormalize(object):
-    def __init__(self, mean, std):
-        self.mean = mean
-        self.std = std
-
-    def __call__(self, tensor):
-        """
-        Args:
-            tensor (Tensor): Tensor image of size (C, H, W) to be normalized.
-        Returns:
-            Tensor: Normalized image.
-        """
-        for t, m, s in zip(tensor, self.mean, self.std):
-            t.mul_(s).add_(m)
-            # The normalize code -> t.sub_(m).div_(s)
-        return tensor

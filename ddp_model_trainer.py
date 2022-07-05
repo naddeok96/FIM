@@ -1,7 +1,7 @@
 import os
+from tabnanny import verbose
 import wandb
 import torch
-import random
 import matplotlib
 matplotlib.use('Agg')
 from copy import copy
@@ -457,6 +457,14 @@ def train(rank, world_size, config):
 
     # Log and Save 
     if rank == 0:
+        # Display
+        if config["verbose"]: 
+            print("Epoch",      epoch + 1 if config["epochs"] != 0 else None)
+            print("Train Loss", epoch_loss)
+            print("Train Acc",  epoch_acc)
+            print("Val Loss",   val_loss)
+            print("Val Acc",    val_acc)
+
         # Log WanB
         if run:
             print("Logging")     
@@ -626,39 +634,43 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "2,3,4,5,6,7"
+    gpu_ids = "0,1,2"
+    # gpu_ids = "4,5"
+    # gpu_ids = "6,7"
 
     # Network
     config = {  
+                # Verbosity
+                "verbose" : True,
 
                 # WandB configuration
                 "entity_name"   : "naddeok",
-                "project_name"  : "Optimal_U_MNIST",
+                "project_name"  : "MNIST_Models_for_Optimal_U", # "Optimal_U_MNIST",
                 
                 # Network
                 "model_name"                  : "lenet", # cifar10_mobilenetv2_x1_0", #"lenet", #  
-                "pretrained_weights_filename" : None, # "models/pretrained/MNIST/lenet_w_acc_98.pt", # "models/pretrained/CIFAR10/LSR_0.1_cifar10_mobilenetv2_x1_0_w_acc_79.pt", #"models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", #  "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #"models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
-                "from_ddp"                    : True,
+                "pretrained_weights_filename" : None, # "models/pretrained/MNIST/optimal_UA_for_lenet_w_acc_98_Optimal_U_MNIST_stellar-fog-9.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # "models/pretrained/CIFAR10/LSR_0.1_cifar10_mobilenetv2_x1_0_w_acc_79.pt", #"models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", #  "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #"models/pretrained/CIFAR10/LSR_0.002_cifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # "models/pretrained/MNIST/lenet_w_acc_98.pt", # None, #  "models/pretrained/CIFAR10/Nonecifar10_mobilenetv2_x1_0_w_acc_91.pt", # 
+                "from_ddp"                    : False,
                 "save_model"                  : True,
                 "save_filename"               : None,
                 "logging_period"              : 2,   # Epochs between logging
                 "checkpoint_at_logging"       : True,
-                "save_path" : None, # DO NOT EDIT, THIS IS AUTO-GENERATED
+                "save_path" : None, # DO NOT EDIT UNLESS SPECIAL, THIS IS AUTO-GENERATED
 
                 # Data
                 "set_name"      : "MNIST",
-                "unitary_root"  : '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/',
-                "batch_size"    : 256,
+                "unitary_root"  : None, # '../../../data/naddeok/optimal_UA_for_lenet_w_acc_98/',
+                "batch_size"    : 124,
                 "data_augment"  : False,
                 
                 # Optimizer
-                "optim"         : "adam",
-                "epochs"        : 100,
+                "optim"         : "SGD",
+                "epochs"        : 10,
                 "lr"            : 0.01,
                 "sched"         : "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
                 "gradient clip" : None, # 0.1, # None, #   
-                "weight_decay"  : 1e-4,
-                "momentum"      : 0.9,
+                "weight_decay"  : 1e-3,
+                "momentum"      : 0.95,
                 "use_SAM"       : False, 
 
                 # Criterion
@@ -700,7 +712,7 @@ if __name__ == "__main__":
 
     ## Training using DDP
     if True:
-        print("Begin training...")
+        print("Begin run...")
         run_ddp(train, n_gpus, config)
 
     ## Robustness using DDP
@@ -756,7 +768,6 @@ if __name__ == "__main__":
                 if "U" in target_network:
                     config["model_name"] = orginal_model_name 
                     
-
     ## Train a variety using DDP 
     if False:
         sweep_config = {"lr"            : [0.001, 0.00001],
