@@ -660,7 +660,7 @@ if __name__ == "__main__":
 
                 # Data
                 "set_name"      : "MNIST",
-                "unitary_root"  : '../../../data/naddeok/mnist_U_files/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/',
+                "unitary_root"  : '../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/',
                 "batch_size"    : 256,
                 "data_augment"  : False,
                 
