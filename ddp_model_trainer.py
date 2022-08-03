@@ -14,6 +14,7 @@ from unitary_data_setup import UnitaryData
 import torch.nn.functional as F
 from models.classes.first_layer_unitary_net  import FstLayUniNet
 from torch.nn.parallel import DistributedDataParallel as DDP
+import random
 
 def get_name_from_filename(filename):
     name = ""
@@ -28,7 +29,7 @@ def get_name_from_filename(filename):
 def setup(rank, world_size, config):
     # Setup rendezvous
     os.environ['MASTER_ADDR'] = 'localhost'
-    os.environ['MASTER_PORT'] = '12345' # str(random.randrange(12340, 12370))
+    os.environ['MASTER_PORT'] = '12345' #str(random.randrange(12340, 12350))
     if rank == 0:
         print("Rendezvous complete...")
         
@@ -468,6 +469,7 @@ def train(rank, world_size, config):
         # Log WanB
         if run:
             print("Logging")     
+            print("Check: Train Loss", epoch_loss, "Train Acc", epoch_acc)
             run.log({"Epoch"      : epoch + 1 if config["epochs"] != 0 else None, 
                 "Train Loss"  : epoch_loss,
                 "Train Acc"   : epoch_acc,
@@ -634,7 +636,7 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "0,1,2,3"
+    gpu_ids = "1,2,3,4,5,6,7"
     # gpu_ids = "4,5,6,7"
 
     # Network
@@ -658,15 +660,15 @@ if __name__ == "__main__":
 
                 # Data
                 "set_name"      : "MNIST",
-                "unitary_root"  : None, # '../../../data/naddeok/optimal_UA_for_lenet_w_acc_98/',
-                "batch_size"    : 124,
+                "unitary_root"  : '../../../data/naddeok/mnist_U_files/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/',
+                "batch_size"    : 256,
                 "data_augment"  : False,
                 
                 # Optimizer
-                "optim"         : "Adam",
+                "optim"         : "sgd",
                 "epochs"        : 10,
                 "lr"            : 0.01,
-                "sched"         : "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
+                "sched"         : "Cosine Annealing", # "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
                 "gradient clip" : None, # 0.1, # None, #   
                 "weight_decay"  : 1e-3,
                 "momentum"      : 0.95,
@@ -712,7 +714,6 @@ if __name__ == "__main__":
     ## Training using DDP
     if True:
         print("Begin run...")
-        exit()
         run_ddp(train, n_gpus, config)
 
     ## Robustness using DDP
