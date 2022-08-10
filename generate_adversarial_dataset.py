@@ -17,12 +17,10 @@ gpu_number = "3"
 batch_size = 1
 from_ddp   = True
 pretrained_weights_filename = "models/pretrained/MNIST/MNIST_Models_for_Optimal_U_stellar-rain-5.pt"
-net_name = "stellar-rain-5"
 start_image_index = 0
-attack_types = ["PGD"]
+attack_types = ["FGSM"]
 unitary_root    = "../../../data/naddeok/mnist_U_files/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test"
 pert_root       = unitary_root + "/adversarial_perturbations"
-pert_root = "../../../data/naddeok/mnist_adversarial_perturbations/"
 
 # Ensure save folder exists
 if not os.path.isdir(pert_root):
