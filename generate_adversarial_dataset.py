@@ -12,27 +12,27 @@ from models.classes.first_layer_unitary_net import FstLayUniNet
 
 # Hypers
 set_name   = 'MNIST'
-start_image_index = 0
 gpu        = True
-gpu_number = "1"
+gpu_number = "3"
 batch_size = 1
 from_ddp   = True
-pretrained_weights_filename = "models/pretrained/MNIST/lenet_w_acc_97.pt"
-net_name = pretrained_weights_filename.split(".")[-2].split("/")[-1]
+pretrained_weights_filename = "models/pretrained/MNIST/MNIST_Models_for_Optimal_U_stellar-rain-5.pt"
+net_name = "stellar-rain-5"
+start_image_index = 0
 attack_types = ["PGD"]
-save_root = "../../../data/naddeok/mnist_adversarial_perturbations/"
+unitary_root    = "../../../data/naddeok/mnist_U_files/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test"
+pert_root       = unitary_root + "/adversarial_perturbations"
+pert_root = "../../../data/naddeok/mnist_adversarial_perturbations/"
 
 # Ensure save folder exists
+if not os.path.isdir(pert_root):
+        os.mkdir(pert_root)
+        
 for attack in attack_types:
-    if not os.path.isdir(save_root):
-        os.mkdir(save_root)
+    if not os.path.isdir(pert_root + "/" + attack):
+        os.mkdir(pert_root + "/" + attack)
 
-    if not os.path.isdir(save_root + net_name + "/"):
-        os.mkdir(save_root + net_name + "/")
-
-    if not os.path.isdir(save_root + net_name + "/" + attack):
-        os.mkdir(save_root + net_name + "/" + attack + "/")
-
+# Decalre machines
 if gpu:
     import os
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -47,19 +47,27 @@ data = Data(set_name = set_name,
 # Load Source Network
 state_dict = torch.load(pretrained_weights_filename, map_location=torch.device('cpu'))
 
-if from_ddp:  # Remove prefixes if from DDP
+# Remove prefixes if from DDP
+if from_ddp:  
     torch.nn.modules.utils.consume_prefix_in_state_dict_if_present(state_dict, "module.")
     
+# Initialize network
 net = FstLayUniNet( set_name   = set_name,
                     model_name = "lenet",
                     gpu = gpu)
 
+# Load pretrained parameters
+net.load_state_dict(state_dict)
+net.eval()
+
+# Load into attacker
 attacker = Attacker(net = net, data = data, gpu = gpu)
 
+# Loss criterion
 criterion       = torch.nn.CrossEntropyLoss()
 indv_criterion  = torch.nn.CrossEntropyLoss(reduction = 'none')
 
-# Load PGD
+# Load to GPU
 if isinstance(gpu, bool):
     if gpu:
         device_num  = "cuda:0" 
@@ -72,6 +80,7 @@ else:
     device_num  = "cuda:" + str(gpu)
     device_type = "gpu"
 
+# Adversarial-Robustness-Toolbox Classifier
 classifier = PyTorchClassifier( model       = net,
                                 nb_classes  = data.num_classes,
                                 loss        = criterion,
@@ -96,6 +105,8 @@ elif data.set_name == "CIFAR10":
 else:
     print("Eneter a valid data_set name for PGD")
     exit()
+
+# Load PGD
 attack_pgd = ProjectedGradientDescent(  estimator  = classifier,
                                         norm       = norm,
                                         eps        = eps,     
@@ -111,9 +122,10 @@ if data.set_name == "MNIST":
 elif data.set_name == "CIFAR10":
     max_iter = 20
 else:
-    print("Eneter a valid data_set name for PGD")
+    print("Enter a valid data_set name for PGD")
     exit()
 
+# Load CW2
 attack_cw2 = CarliniL2Method(   classifier  = classifier,
                                 max_iter    = max_iter, 
                                 batch_size  = data.test_batch_size, 
@@ -233,8 +245,8 @@ for attack in attack_types:
 
 
         # Save
-        print(save_root + net_name + "/" + attack + "/P{}.pt".format(i))
-        torch.save(normed_attacks, save_root + net_name + "/" + attack + "/P{}.pt".format(i))
+        print(pert_root + "/P{}.pt".format(i))
+        torch.save(normed_attacks, pert_root + + "/P{}.pt".format(i))
 
         
 print("donezo")

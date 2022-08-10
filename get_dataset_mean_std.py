@@ -33,7 +33,7 @@ batch_size = int(1e5) # int(1e4)
 from_ddp   = True
 pretrained_weights_filename = "models/pretrained/MNIST/lenet_w_acc_98.pt"
 gpu = True
-gpu_number = "7"
+gpu_number = "3"
 
 if gpu:
     import os
@@ -51,12 +51,11 @@ net = FstLayUniNet( set_name   = set_name,
                     model_name = "lenet")
 
 
-data = UnitaryData( original_root = '../../../data/pytorch/MNIST/processed/', 
-                    unitary_root = '../../../data/naddeok/mnist_U_files/optimal_UA_for_lenet_w_acc_98/')
+data = UnitaryData( unitary_root = '../data/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/')
 
 train_loader = data.get_train_loader(batch_size = batch_size, shuffle = False)
 tn = 0
-for i, (images, labels, unitary_images) in enumerate(train_loader):
+for i, (unitary_images, labels) in enumerate(train_loader):
     mean_i = unitary_images.mean().detach().numpy()
     std_i  = unitary_images.std().detach().numpy()
     
@@ -65,9 +64,9 @@ for i, (images, labels, unitary_images) in enumerate(train_loader):
         std     = std_i
         tn      = 1
     else:
-        # Calulate Stats
-        mean, std, tn = add_stats(mean_i, std_i, 1,
-                                  mean, std, tn)
+        # Calculate Stats
+        mean, std, tn = add_stats(  mean_i, std_i, 1,
+                                    mean, std, tn)
     
     if np.isnan(mean_i):
         print(unitary_images)

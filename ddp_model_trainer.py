@@ -57,7 +57,7 @@ def setup(rank, world_size, config):
 def close_out(rank, run):
     dist.barrier()
     dist.destroy_process_group()
-    print("Machine closed out")
+    print("Machines closed out...")
 
     # Close WandB
     if rank == 0 and run:
@@ -439,7 +439,7 @@ def train(rank, world_size, config):
     
     # Gather values from all machines (ranks)
     print("Evaluating Results", rank)
-    epoch_acc, epoch_loss = gather_acc_and_loss(rank,  world_size, epoch_correct, epoch_total_tested, epoch_total_loss) if config["epochs"] != 0 else None, None
+    epoch_acc, epoch_loss = gather_acc_and_loss(rank,  world_size, epoch_correct, epoch_total_tested, epoch_total_loss) if config["epochs"] != 0 else [None, None]
     val_acc, val_loss     = gather_acc_and_loss(rank,  world_size,   val_correct,   val_total_tested,   val_total_loss)
     print("Val Gathered", rank)
 
@@ -469,7 +469,6 @@ def train(rank, world_size, config):
         # Log WanB
         if run:
             print("Logging")     
-            print("Check: Train Loss", epoch_loss, "Train Acc", epoch_acc)
             run.log({"Epoch"      : epoch + 1 if config["epochs"] != 0 else None, 
                 "Train Loss"  : epoch_loss,
                 "Train Acc"   : epoch_acc,
@@ -636,7 +635,7 @@ if __name__ == "__main__":
     # Hyperparameters
     #-------------------------------------#
     # DDP
-    gpu_ids = "1,2,3,4,5,6,7"
+    gpu_ids = "3,6"
     # gpu_ids = "4,5,6,7"
 
     # Network
@@ -660,15 +659,15 @@ if __name__ == "__main__":
 
                 # Data
                 "set_name"      : "MNIST",
-                "unitary_root"  : '../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/',
-                "batch_size"    : 256,
+                "unitary_root"  : '../data/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/',
+                "batch_size"    : 124,
                 "data_augment"  : False,
                 
                 # Optimizer
-                "optim"         : "sgd",
+                "optim"         : "adam",
                 "epochs"        : 10,
                 "lr"            : 0.01,
-                "sched"         : "Cosine Annealing", # "One Cycle LR", # "One Cycle LR", # "Cosine Annealing", # 
+                "sched"         : "One Cycle LR", # "Cosine Annealing", 
                 "gradient clip" : None, # 0.1, # None, #   
                 "weight_decay"  : 1e-3,
                 "momentum"      : 0.95,
