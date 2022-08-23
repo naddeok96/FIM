@@ -18,32 +18,39 @@ def normalize(x):
     return (((x / 255) - data.mean[0]) / data.std[0])
 
 def U_normalize(x):
-    Umean = (0.00021970409930378246,)
-    Ustd  = (0.14038833820848393,)
+    Umean = (0.00023763391,)
+    Ustd  = ( 1.0000256,)
     return ((x - Umean[0]) / Ustd[0])
 
 # Hypers
 project_name                = "Optimal_U_MNIST"
 set_name                    = 'MNIST'
 
-pretrained_weights_filename = "models/pretrained/MNIST/optimal_UA_for_lenet_w_acc_98_Optimal_U_MNIST_stellar-fog-9.pt"
-unitary_root    = "../../../data/naddeok/optimal_U_for_lenet_w_acc_98/test/"
+# # Attacker
+# pretrained_weights_filename = "models/pretrained/MNIST/MNIST_Models_for_Optimal_U_stellar-rain-5.pt"
+# unitary_root    = None
 
-# pretrained_weights_filename = "models/pretrained/MNIST/lenet_w_acc_97.pt"
+# # Standard Black Box
+# pretrained_weights_filename = "models/pretrained/MNIST/MNIST_Models_for_Optimal_U_lilac-butterfly-10.pt"
 # unitary_root = None
 
-# pretrained_weights_filename = "models/pretrained/MNIST/lenet_w_acc_98.pt"
-# unitary_root = None
+# # # U Standard Black Box
+# pretrained_weights_filename = "models/pretrained/MNIST/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5_MNIST_Models_for_Optimal_U_spring-smoke-13.pt"
+# unitary_root = "../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test/"
+
+# U Attacker Black Box
+pretrained_weights_filename = "models/pretrained/MNIST/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5_MNIST_Models_for_Optimal_U_glad-dust-14.pt"
+unitary_root    = "../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test/"
 
 from_ddp                    = True
 gpu                         = True
 
-gpu_number                  = "0"
+gpu_number                  = "4"
 
-attack                      = "PGD"
+attack                      = "Gaussian_Noise"
 epsilons                    =  torch.linspace(0,255,52, dtype=torch.uint8).tolist()
 
-pert_root       = "../../../data/naddeok/mnist_adversarial_perturbations/lenet_w_acc_97/"
+pert_root       = "../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test/adversarial_perturbations/"
 
 
 run = wandb.init(
@@ -77,13 +84,6 @@ data = Data(set_name = set_name,
             test_batch_size = 1,
             gpu = gpu,
             maxmin=True)
-
-# data = UnitaryData( set_name = set_name,
-#                     test_batch_size = 1,
-#                     gpu = gpu,
-#                     unitary_root="../../../data/naddeok/optimal_UA_for_lenet_w_acc_98/")
-
-
 
 # Declare criterion
 criterion = torch.nn.CrossEntropyLoss(reduction='sum')

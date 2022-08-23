@@ -13,13 +13,13 @@ from models.classes.first_layer_unitary_net import FstLayUniNet
 # Hypers
 set_name   = 'MNIST'
 gpu        = True
-gpu_number = "3"
+gpu_number = "6"
 batch_size = 1
 from_ddp   = True
 pretrained_weights_filename = "models/pretrained/MNIST/MNIST_Models_for_Optimal_U_stellar-rain-5.pt"
 start_image_index = 0
-attack_types = ["FGSM"]
-unitary_root    = "../../../data/naddeok/mnist_U_files/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test"
+attack_types = ["Gaussian_Noise", "CW2"]
+unitary_root    = "../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test"
 pert_root       = unitary_root + "/adversarial_perturbations"
 
 # Ensure save folder exists
@@ -243,8 +243,8 @@ for attack in attack_types:
 
 
         # Save
-        print(pert_root + "/P{}.pt".format(i))
-        torch.save(normed_attacks, pert_root + + "/P{}.pt".format(i))
+        # print(pert_root + "/P{}.pt".format(i))
+        torch.save(normed_attacks, pert_root + "/" + attack + "/P{}.pt".format(i))
 
         
 print("donezo")

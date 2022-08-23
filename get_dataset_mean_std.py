@@ -51,7 +51,7 @@ net = FstLayUniNet( set_name   = set_name,
                     model_name = "lenet")
 
 
-data = UnitaryData( unitary_root = '../data/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/')
+data = UnitaryData( unitary_root = '../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/')
 
 train_loader = data.get_train_loader(batch_size = batch_size, shuffle = False)
 tn = 0
