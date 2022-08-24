@@ -223,23 +223,26 @@ class FstLayUniNet(nn.Module):
         V = torch.randn_like(A)
 
         # Replace first and second column with eigenvectors associated with the min/max eigenvalues
-        V[0,:] = torch.real(eig_min)
-        V[1,:] = torch.real(eig_max)
+        # V[0,:] = torch.real(eig_min)
+        # V[1,:] = torch.real(eig_max)
+        V[:,0] = torch.real(eig_min)
+        V[:,1] = torch.real(eig_max)
 
         # Orthogonal complement of V in n-dimension 
-        for i in range(A.size(0)):
+        for i in range(2, A.size(0)):
             # Orthonormalize
-            Ui = copy(V[i])
+            Ui = copy(V[:,i])
 
             for j in range(i):
-                Uj = copy(V[j])
+                Uj = copy(V[:,j])
 
                 
                 Ui = Ui - ((torch.dot(Uj.view(-1), Ui.view(-1)) / (torch.linalg.norm(Uj, ord = 2)**2)))*Uj
                 
-            V[i] = Ui / torch.linalg.norm(Ui, ord = 2)
+            V[:,i] = Ui / torch.linalg.norm(Ui, ord = 2)
             
         return V.t()
+        # return V
 
     # Set a new U with no Mean or STD Stats
     def set_orthogonal_matrix(self, source_image = None):
@@ -352,9 +355,9 @@ class FstLayUniNet(nn.Module):
 
         # If gpu is not bool the DDP is being used
         if isinstance(self.gpu, bool):
-            # Push to GPU if True
-            U = U.cuda() if self.gpu else U
-            input_tensor = input_tensor.cuda() if self.gpu else input_tensor
+            if self.gpu:
+                U = U.cuda() if self.gpu else U
+                input_tensor = input_tensor.cuda() if self.gpu else input_tensor
 
         else:
             # Push to rank of gpu
@@ -385,7 +388,7 @@ class FstLayUniNet(nn.Module):
             
         # If U is a matrix and Input is vectorized
         else:
-            # Currently on set up for one batch at a time
+            # Currently only set up for one batch at a time
             assert batch_size == 1, "UA when A is vectorized is only setup for single batch currently."
             
             # Batch muiltply UA

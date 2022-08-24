@@ -13,12 +13,12 @@ from models.classes.first_layer_unitary_net import FstLayUniNet
 # Hypers
 set_name   = 'MNIST'
 gpu        = True
-gpu_number = "6"
+gpu_number = "1"
 batch_size = 1
 from_ddp   = True
 pretrained_weights_filename = "models/pretrained/MNIST/MNIST_Models_for_Optimal_U_stellar-rain-5.pt"
 start_image_index = 0
-attack_types = ["Gaussian_Noise", "CW2"]
+attack_types = ["FGSM"]
 unitary_root    = "../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test"
 pert_root       = unitary_root + "/adversarial_perturbations"
 
@@ -183,7 +183,7 @@ for attack in attack_types:
         elif attack == "FGSM":
             # Calculate Gradients
             gradients, batch_size, losses, predicted = attacker.get_gradients(images, labels)
-            normed_attacks = attacker.normalize(torch.sign(gradients), p = None, dim = 2)
+            normed_attacks = attacker.normalize(torch.sign(gradients), p = float('inf'), dim = 2)
 
         elif attack == "PGD":
             # Get random targets

@@ -11,19 +11,20 @@ import time
 
 start   = time.time()
 
-def unnormalize(x):
+def unnormalize_image(x):
     return 255 * ((x  * data.std[0]) + data.mean[0])
 
-def normalize(x):
+
+
+def normalize_image(x):
     return (((x / 255) - data.mean[0]) / data.std[0])
 
-def U_normalize(x):
-    Umean = (0.00023763391,)
-    Ustd  = ( 1.0000256,)
-    return ((x - Umean[0]) / Ustd[0])
+def normalize_pert(x):
+    return (((x / 255)) / data.std[0])
+
 
 # Hypers
-project_name                = "Optimal_U_MNIST"
+project_name                = "Optimal U Robustness Test"
 set_name                    = 'MNIST'
 
 # # Attacker
@@ -45,22 +46,22 @@ unitary_root    = "../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_
 from_ddp                    = True
 gpu                         = True
 
-gpu_number                  = "4"
+gpu_number                  = "3"
 
-attack                      = "Gaussian_Noise"
+attack                      = "FGSM"
 epsilons                    =  torch.linspace(0,255,52, dtype=torch.uint8).tolist()
 
 pert_root       = "../../../data/naddeok/optimal_U_for_MNIST_Models_for_Optimal_U_stellar-rain-5/test/adversarial_perturbations/"
 
-
-run = wandb.init(
-                config  =   {
-                    "pretrained_weights_filename" : pretrained_weights_filename.split('.')[0].split('/')[-1],
-                    "attack_type" : attack,
-                    "U" : "Optimal" if unitary_root is not None else None
-                },
-                entity  = "naddeok",
-                project = project_name)
+if project_name:
+    run = wandb.init(
+                    config  =   {
+                        "pretrained_weights_filename" : pretrained_weights_filename.split('.')[0].split('/')[-1],
+                        "attack_type" : attack,
+                        "U" : "Optimal" if unitary_root is not None else None
+                    },
+                    entity  = "naddeok",
+                    project = project_name)
 
 # Declare GPUS
 if gpu:
@@ -90,6 +91,7 @@ criterion = torch.nn.CrossEntropyLoss(reduction='sum')
             
 print("Setup time:", time.time() - start)
 start   = time.time()
+
 # Apply Perturbations
 losses  = [_ for _ in range(len(epsilons))]
 correct = [_ for _ in range(len(epsilons))]
@@ -116,31 +118,36 @@ for i, (image, label) in enumerate(data.test_loader):
     assert set_name == "MNIST", "Rescale to 255 is only supported for single channel"
     
     # Get unnormalized image to add pert
-    unnorm_image = unnormalize(image)
-    unorm_pert   = unnormalize(pert) 
-    max_norm_pert = (unorm_pert / torch.max(unorm_pert))
+    unnorm_image = unnormalize_image(image)
 
     # Cycle over all epsilons
     for j, epsilon in enumerate(epsilons):
-
         # Scale pert and add to image
-        scaled_pert = epsilon * max_norm_pert
-        adv_image   = normalize(torch.clamp(unnorm_image + scaled_pert, 0, 255))
+        scaled_pert = epsilon * pert
+        adv_image = unnorm_image + scaled_pert;
+        adv_image   = normalize_image(torch.clamp(adv_image, 0, 255))
 
         with torch.no_grad(): 
             # Feedforward
             adv_outputs  = net(adv_image.view(1,1,28,28))
 
             adv_loss       = criterion(adv_outputs, label)
+            _, adv_predictions  = torch.max(adv_outputs, 1)
+
             if epsilon == 0:
                 loss = adv_loss.item()
 
-            if epsilon != 0 and adv_loss.item() < loss:
-                adv_image   = normalize(torch.clamp(unnorm_image - scaled_pert, 0, 255))
+            if epsilon !=0 and adv_loss.item() < loss and (label == adv_predictions):
+                original_adv_predictions = adv_predictions
+                adv_image   = normalize_image(torch.clamp(unnorm_image - scaled_pert, 0, 255))
                 adv_outputs = net(adv_image.view(1,1,28,28))
                 adv_loss    = criterion(adv_outputs, label)
+                _, adv_predictions  = torch.max(adv_outputs, 1)
 
-            _, adv_predictions  = torch.max(adv_outputs, 1)
+                if original_adv_predictions != adv_predictions:
+                    print("Label", label)
+                    print("Orginal Prediction:",original_adv_predictions)
+                    print("Flipped Prediction:",adv_predictions)
 
             losses[j]   = losses[j]     + adv_loss.item()
             correct[j]  = correct[j]    + (label == adv_predictions).item()
@@ -151,6 +158,7 @@ for i, (image, label) in enumerate(data.test_loader):
                 run.log({   "Epsilon"       : epsilon, 
                             "Loss"          : losses[j] / (i + 1),
                             "Accuracy"      : accuracy,
+                            "Base Accuracy" : base_accuracy,
                             "Fooling Rate"  : (base_accuracy - accuracy) / base_accuracy 
                             })
 

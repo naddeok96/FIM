@@ -662,7 +662,7 @@ class Attacker:
 
         # Find gradients
         loss.cpu().backward(retain_graph = True)
-        gradients = images.grad.data  .view(batch_size, 1, -1)    
+        gradients = images.grad.data.view(batch_size, 1, -1)    
        
         return gradients, batch_size, losses, predicted
 

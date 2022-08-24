@@ -74,9 +74,12 @@ class UnitaryData:
             self.image_size = 28 if self.desired_image_size is None else self.desired_image_size
 
             # Images are of size (1, 28, 28)
-            print("Need to add mean and std...")
-            self.mean = (0,) # (0.00021970409930378246,)
-            self.std  = (1,) # (0.14038833820848393,)
+            print("No normalization of unitary data")
+            self.mean = (0.0,)
+            self.std  = (1.0,)
+            # self.mean = (0.006481944592784575,)
+            # self.std  = (1.0083528781920104,)
+            # print("Mean and STD for normalizing ", self.unitary_root, " is:", self.mean, " and ", self.std)
 
             # Declare Transforms
             self.test_transform = transforms.Compose([transforms.Normalize((self.mean,), (self.std,))]) # Normalize 
